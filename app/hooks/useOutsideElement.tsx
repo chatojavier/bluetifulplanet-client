@@ -7,13 +7,13 @@ const useOutsideElement = (
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (!Array.isArray(ref)) {
-        if (ref.current && !ref.current.contains(event.target as Node)) {
-          onClickOutside && onClickOutside();
+        if (!ref.current?.contains(event.target as Node)) {
+          onClickOutside();
         }
       } else {
         const elements = ref.map((singleRef) => singleRef.current);
         if (!elements.some((el) => el?.contains(event.target as Node))) {
-          onClickOutside && onClickOutside();
+          onClickOutside();
         }
       }
     };

@@ -10,6 +10,7 @@ const LogoV: FunctionComponent<LogoVProps> = () => {
         id="svg2"
         viewBox="152.803 432.438 464.282 251.987"
         xmlns="http://www.w3.org/2000/svg"
+        data-icon="logo-vertical"
       >
         <defs id="defs6">
           <clipPath clipPathUnits="userSpaceOnUse" id="clipPath16">
@@ -18,7 +19,7 @@ const LogoV: FunctionComponent<LogoVProps> = () => {
         </defs>
         <g id="g8" transform="matrix(1.3333333,0,0,-1.3333333,0,1122.52)">
           <g id="g10">
-            <g id="g12" clip-path="url(#clipPath16)">
+            <g id="g12" clipPath="url(#clipPath16)">
               <g id="g18" transform="translate(150.9707,400.5814)">
                 <path
                   d="m 0,0 h -8.715 v -8.669 h 8.761 c 2.905,0 4.796,1.706 4.796,4.427 C 4.842,-1.937 3.089,0 0,0 M -0.646,11.989 H -8.715 V 5.026 h 8.069 c 2.583,0 3.782,1.752 3.782,3.551 0,2.028 -1.384,3.412 -3.782,3.412 m 0.231,-25.684 h -11.113 c -1.568,0 -2.813,1.291 -2.813,2.859 v 25.038 c 0,1.569 1.245,2.814 2.813,2.814 h 10.652 c 6.133,0 9.684,-3.182 9.684,-7.609 0,-3.09 -1.937,-5.257 -4.889,-6.594 4.012,-0.922 6.548,-3.828 6.548,-7.701 0,-4.565 -3.735,-8.807 -10.882,-8.807"

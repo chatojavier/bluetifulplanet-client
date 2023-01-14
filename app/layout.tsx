@@ -1,12 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { getMenuByLocation } from "./apollo/menus";
 import Header from "./components/Header";
 import "./globals.css";
 
-export default function RootLayout({
+async function getData() {
+  const { menu, loading } = await getMenuByLocation(
+    process.env.MENU_BAR_LOCATION as string
+  );
+
+  return {
+    mainMenu: menu,
+  };
+}
+
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { mainMenu } = await getData();
   return (
     <html lang="en">
       {/*
@@ -15,7 +26,7 @@ export default function RootLayout({
       */}
       <head />
       <body>
-        <Header />
+        <Header menuLinks={mainMenu} />
         <div className="body__wrapper">{children}</div>
       </body>
     </html>

@@ -1,4 +1,4 @@
-import { forwardRef, ForwardRefRenderFunction, FunctionComponent, PropsWithChildren } from "react";
+import { forwardRef, ForwardRefRenderFunction, PropsWithChildren } from "react";
 
 interface DrawerProps {
   open: boolean;
@@ -16,9 +16,10 @@ const Drawer: ForwardRefRenderFunction<HTMLDivElement, PropsWithChildren<DrawerP
     >
       <div
         className={`drawer__card | h-full bg-white overflow-hidden py-16 transition-all duration-1000 ${
-          open ? "w-80 px-16" : "w-0 p-0 delay-300"
+          open ? "open w-80 px-16" : "close w-0 p-0 delay-300"
         }`}
         ref={ref}
+        data-testid="drawer-wrapper"
       >
         {children}
       </div>

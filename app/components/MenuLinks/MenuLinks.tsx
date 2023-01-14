@@ -7,18 +7,13 @@ import {
   useRef,
   useState,
 } from "react";
+import { MenuLink } from "../../types/menus";
 
 interface MenuLinksProps {
-  links: Link[];
+  links: MenuLink[];
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   subMenu?: boolean;
-}
-
-interface Link {
-  name: string;
-  path: string;
-  subMenu?: Link[] | null;
 }
 
 const MenuLinks: FunctionComponent<MenuLinksProps> = ({
@@ -59,7 +54,7 @@ const MenuLinks: FunctionComponent<MenuLinksProps> = ({
           style={{
             transitionDelay: open && !subMenu ? `${index * 100 + 530}ms` : "0s",
           }}
-          key={link.path}
+          key={link.id}
           onClick={() => {
             if (!link.subMenu) {
               router.push(link.path);

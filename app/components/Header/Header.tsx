@@ -8,33 +8,19 @@ import LogoH from "../LogoH";
 import SocialMediaLinks from "../SocialMediaLinks";
 import { useRouter } from "next/navigation";
 import MenuLinks from "../MenuLinks";
+import { MenuLink } from "../../types/menus";
 
 interface HeaderProps {
+  menuLinks?: MenuLink[];
   navBarHeight?: string;
 }
 
-const Header: FunctionComponent<HeaderProps> = ({ navBarHeight = "5rem" }) => {
+const Header: FunctionComponent<HeaderProps> = ({ navBarHeight = "5rem", menuLinks = [] }) => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const drawerRef = useRef<HTMLDivElement>(null);
   const navBarRef = useRef<HTMLDivElement>(null);
   useOutsideElement([drawerRef, navBarRef], () => setDrawerOpen(false));
   const router = useRouter();
-
-  const menuLinks = [
-    { name: "Home", path: "/", subMenu: null },
-    {
-      name: "Photos",
-      path: "/photos",
-      subMenu: [
-        { name: "Main Gallery", path: "main-gallery" },
-        { name: "Personal Favourites", path: "personal-favourites" },
-        { name: "Pollinators & lights", path: "pollinators-and-lights" },
-      ],
-    },
-    { name: "Blog", path: "/blog", subMenu: null },
-    { name: "About Me", path: "/about-us", subMenu: null },
-    { name: "Contact Me", path: "/contact", subMenu: null },
-  ];
 
   return (
     <div className="header">

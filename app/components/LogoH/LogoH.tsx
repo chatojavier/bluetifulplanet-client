@@ -7,13 +7,14 @@ interface LogoHProps {
 
 const LogoH: FunctionComponent<LogoHProps> = ({ className = "", onClick }) => {
   return (
-    <div className={`logo-h-container | ${className}`} onClick={onClick}>
+    <div className={`logo-h-container | ${className}`} onClick={onClick} data-testid="logo-horizontal">
       <svg
         version="1.1"
         id="svg2"
         viewBox="64.112 564.709 525.504 93.037"
         xmlns="http://www.w3.org/2000/svg"
         className="h-full w-full"
+        data-icon="logo-horizontal"
       >
         <defs id="defs6">
           <clipPath clipPathUnits="userSpaceOnUse" id="clipPath16">
