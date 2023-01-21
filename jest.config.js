@@ -14,6 +14,17 @@ const customJestConfig = {
   moduleDirectories: ["node_modules", "<rootDir>/"],
   testEnvironment: "jest-environment-jsdom",
   setupFilesAfterEnv: ["<rootDir>/jest-setup.ts"],
+  moduleNameMapper: {
+    "^@app/(.*)$": ["<rootDir>/app/$1"],
+    "^@components/(.*)$": ["<rootDir>/app/components/$1"],
+    "^@graphql/(.*)$": ["<rootDir>/app/graphql/$1"],
+    "^@hooks/(.*)$": ["<rootDir>/app/hooks/$1"],
+    "^@services/(.*)$": ["<rootDir>/app/services/$1"],
+    "^@utils/(.*)$": ["<rootDir>/app/utils/$1"],
+    "^@pages/(.*)$": ["<rootDir>/app/(pages)/$1"],
+    "^@mocks/(.*)$": ["<rootDir>/app/__mocks__/$1"],
+    "^types/(.*)$": ["<rootDir>/app/types/*"],
+  },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

@@ -19,7 +19,9 @@ describe("Header", () => {
     const user = userEvent.setup()
 
     render(<Header />);
-    const logoElm = screen.getByTestId("logo-horizontal");
+    const logoElm = screen.getByRole('img', {
+      name: /bluetiful planet logo/i
+    });
 
     await user.click(logoElm);
 
