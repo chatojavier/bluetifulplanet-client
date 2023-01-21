@@ -1,7 +1,7 @@
+import { mockMenuLinks } from "@app/__mocks__/menus.mock";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useRouter } from "next/navigation";
-import { mockMenuLinks } from "@mocks/menus.mock";
 import MenuLinks from "./MenuLinks";
 
 jest.mock("next/navigation", () => ({ useRouter: jest.fn() }));

@@ -1,5 +1,5 @@
+import { mockAllMenusNodes, mockMenuLinks, mockMenuNodes } from "@app/__mocks__/menus.mock";
 import { findMenuByLocation, parseHierarchicalMenu } from "./menus";
-import { mockAllMenusNodes, mockMenuLinks, mockMenuNodes } from "@mocks/menus.mock";
 
 describe("parseHierarchicalMenu", () => {
   it("should resturn a hierarchical menu from the graphQL menu nodes.", () => {

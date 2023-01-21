@@ -1,7 +1,6 @@
 "use client";
 
 import { FunctionComponent, useRef, useState } from "react";
-import useOutsideElement from "@hooks/useOutsideElement";
 import BurgerMenu from "@components/BurgerMenu";
 import Drawer from "@components/Drawer";
 import SocialMediaLinks from "@components/SocialMediaLinks";
@@ -9,6 +8,7 @@ import { useRouter } from "next/navigation";
 import MenuLinks from "@components/MenuLinks";
 import { MenuLink } from "types/menus";
 import Image from "next/image";
+import useOutsideElement from "@app/hooks/useOutsideElement";
 
 interface HeaderProps {
   menuLinks?: MenuLink[];
