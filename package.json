@@ -10,7 +10,8 @@
     "dev:turbo": "next dev --turbo",
     "test": "jest --watchAll=false",
     "compile": "env-cmd -f .env.local graphql-codegen",
-    "watch": "env-cmd -f .env.local graphql-codegen -w"
+    "watch": "env-cmd -f .env.local graphql-codegen -w",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@apollo/client": "^3.7.3",
