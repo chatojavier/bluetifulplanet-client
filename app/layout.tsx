@@ -1,14 +1,17 @@
-import { getMenuByLocation } from "./apollo/menus";
-import Header from "./components/Header";
+import Header from "@components/Header";
 import "./globals.css";
+import MenusService from "@services/MenusService";
+import SiteService from "@services/SiteService";
 
 async function getData() {
-  const { menu, loading } = await getMenuByLocation(
+  const { menu } = await MenusService.getMenuByLocation(
     process.env.MENU_BAR_LOCATION as string
   );
+  const { language } = await SiteService.getSiteData();
 
   return {
     mainMenu: menu,
+    language,
   };
 }
 
@@ -17,9 +20,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { mainMenu } = await getData();
+  const { mainMenu, language } = await getData();
   return (
-    <html lang="en">
+    <html lang={(language as string) || "en"}>
       {/*
         <head /> will contain the components returned by the nearest parent
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head

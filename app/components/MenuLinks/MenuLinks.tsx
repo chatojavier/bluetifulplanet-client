@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { MenuLink } from "../../types/menus";
+import { MenuLink } from "types/menus";
 
 interface MenuLinksProps {
   links: MenuLink[];

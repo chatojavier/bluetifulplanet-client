@@ -1,25 +1,12 @@
-export interface QueryAllMenus {
-  menus: {
-    nodes: MenuNode[];
-  };
-}
+import { QueryAllMenusQuery } from "@graphql/__generated__/graphql";
 
-export interface MenuNode {
-  id: string;
-  menuItems: {
-    nodes: MenuItemsNode[];
-  };
-  name: string;
-  slug: string;
-  locations: string[];
-}
+type AllMenus = NonNullable<QueryAllMenusQuery["menus"]>;
 
-export interface MenuItemsNode {
-  id: string;
-  parentId: string | null;
-  label: string;
-  path: string;
-}
+export type MenuNode = AllMenus["nodes"][number];
+
+type MenuItems = NonNullable<MenuNode["menuItems"]>;
+
+export type MenuItemsNode = MenuItems["nodes"][number];
 
 export interface MenuLink {
   id: string;

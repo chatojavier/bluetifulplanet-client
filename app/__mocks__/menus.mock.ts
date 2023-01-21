@@ -1,3 +1,6 @@
+import { MenuLocationEnum } from "@graphql/__generated__/graphql";
+import { MenuNode } from "types/menus";
+
 export const mockMenuNodes = [
   {
     id: "cG9zdDoxNjg2",
@@ -101,7 +104,7 @@ export const mockMenuLinks = [
   },
 ];
 
-export const mockAllMenusNodes = [
+export const mockAllMenusNodes: MenuNode[] = [
   {
     id: "dGVybTozNA==",
     menuItems: {
@@ -158,6 +161,6 @@ export const mockAllMenusNodes = [
     },
     name: "navigation",
     slug: "navigation",
-    locations: ["MAIN_MENU"],
+    locations: [MenuLocationEnum.MainMenu],
   },
 ];

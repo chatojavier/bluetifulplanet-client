@@ -1,0 +1,36 @@
+import { FC } from "react";
+import { SiteData } from "@services/SiteService";
+
+interface FaviconProps {
+  favItems: SiteData['favicon'];
+}
+
+const Favicon: FC<FaviconProps> = ({ favItems }) => (
+  <>
+    {favItems &&
+      favItems?.length > 0 &&
+      favItems.map(({ width, sourceUrl }) => {
+        if (width === "180") {
+          return (
+            <link
+              key={`fav-${width}x${width}`}
+              rel="apple-touch-icon"
+              href={sourceUrl as string}
+              sizes={`${width}x${width}`}
+            />
+          );
+        }
+        return (
+          <link
+            key={`fav-${width}x${width}`}
+            rel="icon"
+            type="image/png"
+            sizes={`${width}x${width}`}
+            href={sourceUrl as string}
+          />
+        );
+      })}
+  </>
+);
+
+export default Favicon

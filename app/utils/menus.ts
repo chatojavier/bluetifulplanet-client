@@ -1,4 +1,4 @@
-import { MenuItemsNode, MenuLink, MenuNode } from "../types/menus";
+import { MenuItemsNode, MenuLink, MenuNode } from "types/menus";
 
 /**
  * findMenuByLocation
@@ -13,15 +13,15 @@ export function findMenuByLocation(menus: MenuNode[], location: string | string[
   const menuLocations = location.map((loc) => loc.toUpperCase());
 
   do {
-    menu = menus.find(({ locations }) =>
-      locations
-        .map((loc) => loc.toUpperCase())
-        .some((loc) => menuLocations.includes(loc))
+    menu = menus.find((menu) =>
+    menu?.locations && menu.locations
+        .map((loc) => loc && loc.toUpperCase())
+        .some((loc) => loc && menuLocations.includes(loc))
     );
     menuLocations.pop();
   } while (!menu && menuLocations.length > 0);
 
-  if (!menu) {
+  if (!menu || !menu.menuItems) {
     return [];
   }
 
@@ -38,8 +38,8 @@ export const parseHierarchicalMenu = (data: MenuItemsNode[]) => {
     data.forEach((item) => {
       const menuLink: MenuLink = {
         id: item.id,
-        name: item.label,
-        path: item.path,
+        name: item.label as string,
+        path: item.path as string,
         subMenu: null,
       };
 

@@ -8,7 +8,9 @@
     "start": "next start",
     "lint": "next lint",
     "dev:turbo": "next dev --turbo",
-    "test": "jest --watchAll=false"
+    "test": "jest --watchAll=false",
+    "compile": "env-cmd -f .env.local graphql-codegen",
+    "watch": "env-cmd -f .env.local graphql-codegen -w"
   },
   "dependencies": {
     "@apollo/client": "^3.7.3",
@@ -28,18 +30,22 @@
     "next": "13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "typescript": "4.9.4"
+    "typescript": "^4.9.4"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^2.16.4",
+    "@graphql-codegen/client-preset": "^1.2.6",
     "@testing-library/dom": "^8.19.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
     "autoprefixer": "^10.4.13",
+    "env-cmd": "^10.1.0",
     "jest": "^29.3.1",
     "jest-environment-jsdom": "^29.3.1",
     "postcss": "^8.4.20",
     "sass": "^1.57.1",
-    "tailwindcss": "^3.2.4"
+    "tailwindcss": "^3.2.4",
+    "ts-node": "^10.9.1"
   }
 }

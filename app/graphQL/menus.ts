@@ -1,7 +1,7 @@
-import { gql } from "@apollo/client";
+import { gql } from "./__generated__";
 
-export const QUERY_ALL_MENUS = gql`
-{
+export const QUERY_ALL_MENUS = gql(/* GraphQL */ `
+query queryAllMenus {
   menus {
     nodes {
       id
@@ -19,4 +19,4 @@ export const QUERY_ALL_MENUS = gql`
     }
   }
 }
-`;
+`);

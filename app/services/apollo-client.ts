@@ -1,5 +1,5 @@
 import { ApolloClient, HttpLink, InMemoryCache, NormalizedCacheObject } from '@apollo/client';
-import { removeLastTrailingSlash } from '../utils/general';
+import { removeLastTrailingSlash } from '@utils/general';
 
 let client: ApolloClient<NormalizedCacheObject>;
 

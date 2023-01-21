@@ -1,21 +1,24 @@
 "use client";
 
 import { FunctionComponent, useRef, useState } from "react";
-import useOutsideElement from "../../hooks/useOutsideElement";
-import BurgerMenu from "../BurgerMenu";
-import Drawer from "../Drawer";
-import LogoH from "../LogoH";
-import SocialMediaLinks from "../SocialMediaLinks";
+import useOutsideElement from "@hooks/useOutsideElement";
+import BurgerMenu from "@components/BurgerMenu";
+import Drawer from "@components/Drawer";
+import SocialMediaLinks from "@components/SocialMediaLinks";
 import { useRouter } from "next/navigation";
-import MenuLinks from "../MenuLinks";
-import { MenuLink } from "../../types/menus";
+import MenuLinks from "@components/MenuLinks";
+import { MenuLink } from "types/menus";
+import Image from "next/image";
 
 interface HeaderProps {
   menuLinks?: MenuLink[];
   navBarHeight?: string;
 }
 
-const Header: FunctionComponent<HeaderProps> = ({ navBarHeight = "5rem", menuLinks = [] }) => {
+const Header: FunctionComponent<HeaderProps> = ({
+  navBarHeight = "5rem",
+  menuLinks = [],
+}) => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const drawerRef = useRef<HTMLDivElement>(null);
   const navBarRef = useRef<HTMLDivElement>(null);
@@ -39,12 +42,17 @@ const Header: FunctionComponent<HeaderProps> = ({ navBarHeight = "5rem", menuLin
             open={drawerOpen}
             setOpen={setDrawerOpen}
           />
-          <LogoH
-            className="h-full cursor-pointer"
+          <Image
+            src={"/bluetiful_logo_h.svg"}
+            alt="Bluetiful Planet Logo"
+            width={180}
+            height={32}
+            priority
             onClick={() => {
               router.push("/");
               setDrawerOpen(false);
             }}
+            className="cursor-pointer"
           />
         </div>
         <div className="header--right">
