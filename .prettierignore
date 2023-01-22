@@ -1,0 +1,40 @@
+# Ignore everything recursively
+*
+
+# But not the .ts and .tsx files
+!*.ts
+!*.tsx
+!*.js
+!*.jsx
+
+# Check subdirectories too
+!*/
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# vercel
+.vercel
+
+# config folders
+/.vscode
+/.husky
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# codegen files
+**/__generated__

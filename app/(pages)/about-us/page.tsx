@@ -1,8 +1,6 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent } from 'react';
 
-interface AboutUsProps {}
-
-const AboutUs: FunctionComponent<AboutUsProps> = () => {
+const AboutUs: FunctionComponent = () => {
   return <h1>About Us</h1>;
 };
 

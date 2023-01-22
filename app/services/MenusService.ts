@@ -1,6 +1,6 @@
-import { QUERY_ALL_MENUS } from "@graphql/menus";
-import { findMenuByLocation } from "@utils/menus";
-import { getApolloClient } from "./apollo-client";
+import { QUERY_ALL_MENUS } from '@graphql/menus';
+import { findMenuByLocation } from '@utils/menus';
+import { getApolloClient } from './apollo-client';
 
 /**
  * getAllMenus

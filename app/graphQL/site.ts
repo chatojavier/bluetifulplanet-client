@@ -1,6 +1,6 @@
-import { gql } from "./__generated__";
+import { gql } from './__generated__';
 
-export const QUERY_SITE_OPTIONS = gql(/* GraphQL */ `
+export const QUERY_SITE_OPTIONS = gql(`
   query querySiteOptions {
     optionsPage {
       socialMedia {

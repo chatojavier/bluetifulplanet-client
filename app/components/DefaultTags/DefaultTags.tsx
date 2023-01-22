@@ -1,5 +1,5 @@
-import SiteService from "@services/SiteService";
-import Favicon from "@components/Favicon";
+import SiteService from '@services/SiteService';
+import Favicon from '@components/Favicon';
 
 async function getData() {
   const { favicon } = await SiteService.getSiteData();

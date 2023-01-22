@@ -13,7 +13,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel-plugin for production.
  */
 const documents = {
-    "\nquery queryAllMenus {\n  menus {\n    nodes {\n      id\n      menuItems {\n        nodes {\n          id\n          parentId\n          label\n          path\n        }\n      }\n      name\n      slug\n      locations\n    }\n  }\n}\n": types.QueryAllMenusDocument,
+    "\n  query queryAllMenus {\n    menus {\n      nodes {\n        id\n        menuItems {\n          nodes {\n            id\n            parentId\n            label\n            path\n          }\n        }\n        name\n        slug\n        locations\n      }\n    }\n  }\n": types.QueryAllMenusDocument,
     "\n  query querySiteOptions {\n    optionsPage {\n      socialMedia {\n        socialMediaFacebook {\n          show\n          url\n        }\n        socialMediaInstagram {\n          show\n          url\n        }\n        socialMediaFlickr {\n          show\n          url\n        }\n        socialMediaBehance {\n          show\n          url\n        }\n      }\n    }\n  }\n": types.QuerySiteOptionsDocument,
     "\n  query querySiteData {\n    generalSettings {\n      description\n      language\n      title\n    }\n    favicon {\n      mediaDetails {\n        sizes {\n          sourceUrl\n          width\n        }\n      }\n    }\n  }\n": types.QuerySiteDataDocument,
 };
@@ -35,7 +35,7 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\nquery queryAllMenus {\n  menus {\n    nodes {\n      id\n      menuItems {\n        nodes {\n          id\n          parentId\n          label\n          path\n        }\n      }\n      name\n      slug\n      locations\n    }\n  }\n}\n"): (typeof documents)["\nquery queryAllMenus {\n  menus {\n    nodes {\n      id\n      menuItems {\n        nodes {\n          id\n          parentId\n          label\n          path\n        }\n      }\n      name\n      slug\n      locations\n    }\n  }\n}\n"];
+export function gql(source: "\n  query queryAllMenus {\n    menus {\n      nodes {\n        id\n        menuItems {\n          nodes {\n            id\n            parentId\n            label\n            path\n          }\n        }\n        name\n        slug\n        locations\n      }\n    }\n  }\n"): (typeof documents)["\n  query queryAllMenus {\n    menus {\n      nodes {\n        id\n        menuItems {\n          nodes {\n            id\n            parentId\n            label\n            path\n          }\n        }\n        name\n        slug\n        locations\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

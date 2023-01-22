@@ -1,14 +1,14 @@
-import { CodegenConfig } from "@graphql-codegen/cli";
+import { CodegenConfig } from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
   schema: process.env.WORDPRESS_GRAPHQL_ENDPOINT,
-  documents: ["app/graphql/*.ts"],
+  documents: ['app/graphql/*.ts'],
   generates: {
-    "./app/graphql/__generated__/": {
-      preset: "client",
+    './app/graphql/__generated__/': {
+      preset: 'client',
       plugins: [],
       presetConfig: {
-        gqlTagName: "gql",
+        gqlTagName: 'gql',
       },
     },
   },

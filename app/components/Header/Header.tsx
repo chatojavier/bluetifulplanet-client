@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { FunctionComponent, useRef, useState } from "react";
-import BurgerMenu from "@components/BurgerMenu";
-import Drawer from "@components/Drawer";
-import SocialMediaLinks from "@components/SocialMediaLinks";
-import { useRouter } from "next/navigation";
-import MenuLinks from "@components/MenuLinks";
-import { MenuLink } from "types/menus";
-import Image from "next/image";
-import useOutsideElement from "@app/hooks/useOutsideElement";
+import { FunctionComponent, useRef, useState } from 'react';
+import BurgerMenu from '@components/BurgerMenu';
+import Drawer from '@components/Drawer';
+import SocialMediaLinks from '@components/SocialMediaLinks';
+import { useRouter } from 'next/navigation';
+import MenuLinks from '@components/MenuLinks';
+import { MenuLink } from 'types/menus';
+import Image from 'next/image';
+import useOutsideElement from '@app/hooks/useOutsideElement';
 
 interface HeaderProps {
   menuLinks?: MenuLink[];
@@ -16,7 +16,7 @@ interface HeaderProps {
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
-  navBarHeight = "5rem",
+  navBarHeight = '5rem',
   menuLinks = [],
 }) => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
@@ -30,7 +30,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       <div
         className="header__nav-bar__white-space"
         style={{ height: navBarHeight }}
-      ></div>
+      />
       <div
         className="header__nav-bar | flex justify-between fixed top-0 z-20 | w-full p-6 bg-white"
         style={{ height: navBarHeight }}
@@ -43,13 +43,13 @@ const Header: FunctionComponent<HeaderProps> = ({
             setOpen={setDrawerOpen}
           />
           <Image
-            src={"/bluetiful_logo_h.svg"}
+            src="/bluetiful_logo_h.svg"
             alt="Bluetiful Planet Logo"
             width={180}
             height={32}
             priority
             onClick={() => {
-              router.push("/");
+              router.push('/');
               setDrawerOpen(false);
             }}
             className="cursor-pointer"

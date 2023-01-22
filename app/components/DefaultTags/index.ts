@@ -1,1 +1,1 @@
-export { default } from "./DefaultTags";
+export { default } from './DefaultTags';

@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
-import Drawer from "./Drawer";
+import { render, screen } from '@testing-library/react';
+import Drawer from './Drawer';
 
-describe("Drawer", () => {
-  const content = "This is the Content";
-  it("should render properly and be visible when open is true", () => {
+describe('Drawer', () => {
+  const content = 'This is the Content';
+  it('should render properly and be visible when open is true', () => {
     render(
       <Drawer open>
         <div>{content}</div>
@@ -24,5 +24,5 @@ describe("Drawer", () => {
     const drawerElement = screen.getByTestId('drawer-wrapper');
     expect(drawerElement).toBeInTheDocument();
     expect(drawerElement).toHaveClass('w-0 p-0');
-  })
+  });
 });

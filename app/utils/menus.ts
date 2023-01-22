@@ -1,32 +1,4 @@
-import { MenuItemsNode, MenuLink, MenuNode } from "types/menus";
-
-/**
- * findMenuByLocation
- */
-
-export function findMenuByLocation(menus: MenuNode[], location: string | string[]) {
-  let menu;
-
-  if (!Array.isArray(location)) {
-    location = [location];
-  }
-  const menuLocations = location.map((loc) => loc.toUpperCase());
-
-  do {
-    menu = menus.find((menu) =>
-    menu?.locations && menu.locations
-        .map((loc) => loc && loc.toUpperCase())
-        .some((loc) => loc && menuLocations.includes(loc))
-    );
-    menuLocations.pop();
-  } while (!menu && menuLocations.length > 0);
-
-  if (!menu || !menu.menuItems) {
-    return [];
-  }
-
-  return parseHierarchicalMenu(menu.menuItems.nodes);
-}
+import { MenuItemsNode, MenuLink, MenuNode } from 'types/menus';
 
 /**
  * parseHierarchicalMenu
@@ -35,7 +7,7 @@ export const parseHierarchicalMenu = (data: MenuItemsNode[]) => {
   const hierarchicalMenu: MenuLink[] = [];
 
   if (data && data.length > 0) {
-    data.forEach((item) => {
+    data.forEach(item => {
       const menuLink: MenuLink = {
         id: item.id,
         name: item.label as string,
@@ -45,7 +17,7 @@ export const parseHierarchicalMenu = (data: MenuItemsNode[]) => {
 
       if (item.parentId) {
         const parentLink = hierarchicalMenu.find(
-          (link) => link.id === item.parentId
+          link => link.id === item.parentId
         );
         if (parentLink)
           parentLink.subMenu = parentLink?.subMenu
@@ -59,3 +31,37 @@ export const parseHierarchicalMenu = (data: MenuItemsNode[]) => {
 
   return hierarchicalMenu;
 };
+
+/**
+ * findMenuByLocation
+ */
+
+export function findMenuByLocation(
+  menus: MenuNode[],
+  location: string | string[]
+) {
+  let menu;
+  let locationUpdated = location;
+
+  if (!Array.isArray(locationUpdated)) {
+    locationUpdated = [locationUpdated];
+  }
+  const menuLocations = locationUpdated.map(loc => loc.toUpperCase());
+
+  do {
+    menu = menus.find(
+      menuItem =>
+        menuItem?.locations &&
+        menuItem.locations
+          .map(loc => loc && loc.toUpperCase())
+          .some(loc => loc && menuLocations.includes(loc))
+    );
+    menuLocations.pop();
+  } while (!menu && menuLocations.length > 0);
+
+  if (!menu || !menu.menuItems) {
+    return [];
+  }
+
+  return parseHierarchicalMenu(menu.menuItems.nodes);
+}

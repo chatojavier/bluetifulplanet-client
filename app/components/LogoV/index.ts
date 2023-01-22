@@ -1,1 +1,1 @@
-export { default } from "./LogoV";
+export { default } from './LogoV';

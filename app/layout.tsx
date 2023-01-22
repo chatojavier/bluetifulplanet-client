@@ -1,7 +1,8 @@
-import Header from "@components/Header";
-import "./globals.css";
-import MenusService from "@services/MenusService";
-import SiteService from "@services/SiteService";
+import Header from '@components/Header';
+import './globals.css';
+import MenusService from '@services/MenusService';
+import SiteService from '@services/SiteService';
+import { ReactNode } from 'react';
 
 async function getData() {
   const { menu } = await MenusService.getMenuByLocation(
@@ -18,11 +19,11 @@ async function getData() {
 export default async function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   const { mainMenu, language } = await getData();
   return (
-    <html lang={(language as string) || "en"}>
+    <html lang={(language as string) || 'en'}>
       {/*
         <head /> will contain the components returned by the nearest parent
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head

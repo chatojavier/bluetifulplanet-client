@@ -1,5 +1,5 @@
-import DefaultTags from "@components/DefaultTags";
-import SiteService from "@services/SiteService";
+import DefaultTags from '@components/DefaultTags';
+import SiteService from '@services/SiteService';
 
 async function getData() {
   return SiteService.getSiteData();

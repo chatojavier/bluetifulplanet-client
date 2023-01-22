@@ -1,14 +1,14 @@
-import useOutsideElement from "./useOutsideElement";
-import { render, screen, waitFor } from "@testing-library/react";
-import { useRef, useState } from "react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, waitFor } from '@testing-library/react';
+import { useRef, useState } from 'react';
+import userEvent from '@testing-library/user-event';
+import useOutsideElement from './useOutsideElement';
 
 const MockComponen1 = () => {
   const elmRef = useRef<HTMLDivElement>(null);
   const [count, setCount] = useState<number>(0);
 
   const actionOutsideElement = () => {
-    setCount((prev) => prev + 1);
+    setCount(prev => prev + 1);
   };
 
   useOutsideElement(elmRef, actionOutsideElement);
@@ -31,7 +31,7 @@ const MockComponen2 = () => {
   const [count, setCount] = useState<number>(0);
 
   const actionOutsideElement = () => {
-    setCount((prev) => prev + 1);
+    setCount(prev => prev + 1);
   };
 
   useOutsideElement([elmRef1, elmRef2], actionOutsideElement);
@@ -49,14 +49,14 @@ const MockComponen2 = () => {
   );
 };
 
-describe("useOutsideElement", () => {
-  it("should fire actionOutsideElement when click outside of main element", async () => {
+describe('useOutsideElement', () => {
+  it('should fire actionOutsideElement when click outside of main element', async () => {
     render(<MockComponen1 />);
 
     const mainElement = screen.getByText(/counter/i);
     userEvent.click(mainElement);
     await waitFor(() => {
-      expect(mainElement).toHaveTextContent("Counter: 0");
+      expect(mainElement).toHaveTextContent('Counter: 0');
     });
 
     const allRegularElements = screen.getAllByText(/regular element/i);
@@ -70,7 +70,7 @@ describe("useOutsideElement", () => {
       expect(mainElement).toHaveTextContent(`Counter: 2`);
     });
   });
-  it("should accept an array of elements as ref parameter and fire action outside these elements", async () => {
+  it('should accept an array of elements as ref parameter and fire action outside these elements', async () => {
     render(<MockComponen2 />);
 
     const mainElement1 = screen.getByText(/counter/i);
@@ -79,14 +79,14 @@ describe("useOutsideElement", () => {
     userEvent.click(mainElement1);
     userEvent.click(mainElement2);
     await waitFor(() => {
-      expect(mainElement1).toHaveTextContent("Counter: 0");
+      expect(mainElement1).toHaveTextContent('Counter: 0');
     });
 
     const regularElement = screen.getByText(/regular element/i);
     userEvent.click(regularElement);
     userEvent.click(regularElement);
     await waitFor(() => {
-      expect(mainElement1).toHaveTextContent("Counter: 2");
+      expect(mainElement1).toHaveTextContent('Counter: 2');
     });
   });
 });

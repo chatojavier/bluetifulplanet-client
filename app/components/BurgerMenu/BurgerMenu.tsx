@@ -1,5 +1,5 @@
-import { Dispatch, FunctionComponent, SetStateAction, useState } from "react";
-import styles from "./BurgerMenu.module.scss";
+import { Dispatch, FunctionComponent, SetStateAction } from 'react';
+import styles from './BurgerMenu.module.scss';
 
 interface BurgerMenuProps {
   className?: string;
@@ -8,7 +8,7 @@ interface BurgerMenuProps {
 }
 
 const BurgerMenu: FunctionComponent<BurgerMenuProps> = ({
-  className = "",
+  className = '',
   open,
   setOpen,
 }) => {
@@ -19,9 +19,13 @@ const BurgerMenu: FunctionComponent<BurgerMenuProps> = ({
           <input
             type="checkbox"
             checked={open}
-            onChange={() => setOpen((prev) => !prev)}
+            onChange={() => setOpen(prev => !prev)}
           />
-          <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" data-icon="burger-menu">
+          <svg
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+            data-icon="burger-menu"
+          >
             <path className="line--1" d="M0 40h62c13 0 6 28-4 18L35 35" />
             <path className="line--2" d="M0 50h70" />
             <path className="line--3" d="M0 60h62c13 0 6-28-4-18L35 65" />

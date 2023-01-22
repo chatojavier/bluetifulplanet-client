@@ -1,16 +1,17 @@
-import { FC } from "react";
-import { SiteData } from "@services/SiteService";
+import { FC } from 'react';
+import { SiteData } from '@services/SiteService';
 
 interface FaviconProps {
   favItems: SiteData['favicon'];
 }
 
 const Favicon: FC<FaviconProps> = ({ favItems }) => (
+  // eslint-disable-next-line react/jsx-no-useless-fragment
   <>
     {favItems &&
       favItems?.length > 0 &&
       favItems.map(({ width, sourceUrl }) => {
-        if (width === "180") {
+        if (width === '180') {
           return (
             <link
               key={`fav-${width}x${width}`}
@@ -33,4 +34,4 @@ const Favicon: FC<FaviconProps> = ({ favItems }) => (
   </>
 );
 
-export default Favicon
+export default Favicon;

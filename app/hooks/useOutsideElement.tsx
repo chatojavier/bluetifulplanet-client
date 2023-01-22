@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { RefObject, useEffect } from 'react';
 
 const useOutsideElement = (
   ref: RefObject<HTMLElement> | RefObject<HTMLElement>[],
@@ -11,15 +11,15 @@ const useOutsideElement = (
           onClickOutside();
         }
       } else {
-        const elements = ref.map((singleRef) => singleRef.current);
-        if (!elements.some((el) => el?.contains(event.target as Node))) {
+        const elements = ref.map(singleRef => singleRef.current);
+        if (!elements.some(el => el?.contains(event.target as Node))) {
           onClickOutside();
         }
       }
     };
-    document.addEventListener("click", handleClickOutside, true);
+    document.addEventListener('click', handleClickOutside, true);
     return () => {
-      document.removeEventListener("click", handleClickOutside, true);
+      document.removeEventListener('click', handleClickOutside, true);
     };
   }, [onClickOutside, ref]);
 };

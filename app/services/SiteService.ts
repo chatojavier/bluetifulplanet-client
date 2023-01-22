@@ -1,5 +1,5 @@
-import { QUERY_SITE_DATA } from "@graphql/site";
-import { getApolloClient } from "./apollo-client";
+import { QUERY_SITE_DATA } from '@graphql/site';
+import { getApolloClient } from './apollo-client';
 
 type TypeWithNull<T> = T | null | undefined;
 
@@ -24,9 +24,10 @@ async function getSiteData() {
       query: QUERY_SITE_DATA,
     });
   } catch (error) {
-    let errorMessage = `[site][getSiteData] Failed to query site data: ${
+    const errorMessage = `[site][getSiteData] Failed to query site data: ${
       (error as Error).message
     }`;
+    // eslint-disable-next-line no-console
     console.log(errorMessage);
 
     throw error;
@@ -46,14 +47,14 @@ async function getSiteData() {
   // is a code, we need to grab the 2char version of it to use ofr
   // the HTML lang attribute
 
-  if (!generalSettings?.language || generalSettings.language === "") {
-    settings.language = "en";
+  if (!generalSettings?.language || generalSettings.language === '') {
+    settings.language = 'en';
   } else {
-    settings.language = generalSettings.language.split("_")[0];
+    settings.language = generalSettings.language.split('_')[0];
   }
 
   if (favicon?.mediaDetails?.sizes && favicon.mediaDetails.sizes.length > 0) {
-    settings.favicon = favicon.mediaDetails.sizes.map((favItem) => ({
+    settings.favicon = favicon.mediaDetails.sizes.map(favItem => ({
       sourceUrl: favItem?.sourceUrl,
       width: favItem?.width,
     }));
