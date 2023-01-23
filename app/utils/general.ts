@@ -1,8 +1,4 @@
-type Entity = '&amp;' | '&quot;' | '&#039;';
-
-type Entities = {
-  [key in Entity]: string;
-};
+import { DeepOmit } from '@app/types/general';
 
 /**
  * removeLastTrailingSlash
@@ -14,26 +10,42 @@ export function removeLastTrailingSlash(url: string): string {
 }
 
 /**
- * decodeHtmlEntities
+ * removeDeepProperty
  */
 
-export function decodeHtmlEntities(text: string) {
-  if (typeof text !== 'string') {
-    throw new Error(
-      `Failed to decode HTML entity: invalid type ${typeof text}`
-    );
+interface Item<Key> {
+  name: Key;
+}
+
+type Items<Name extends string> = {
+  [Key in Name]?: Item<Key>;
+};
+
+export const removeDeepProperty = <T, K extends string>(
+  query: T,
+  property: K
+) => {
+  if (query) {
+    if (typeof query === 'object' && !Array.isArray(query)) {
+      if (Object.keys(query).some(key => key === property)) {
+        // eslint-disable-next-line no-param-reassign
+        delete (query as Items<K>)[property];
+        Object.values(query).forEach(node => {
+          removeDeepProperty(node, property);
+        });
+      }
+      if (Object.keys(query).length > 0) {
+        Object.values(query).forEach(node => {
+          removeDeepProperty(node, property);
+        });
+      }
+    }
+    if (Array.isArray(query)) {
+      query.forEach(item => {
+        removeDeepProperty(item, property);
+      });
+    }
   }
 
-  const decoded = text;
-
-  const entities: Entities = {
-    '&amp;': '\u0026',
-    '&quot;': '\u0022',
-    '&#039;': '\u0027',
-  };
-
-  return decoded.replace(
-    /&amp;|&quot;|&#039;/g,
-    char => entities[char as Entity]
-  );
-}
+  return query as DeepOmit<T, K>;
+};

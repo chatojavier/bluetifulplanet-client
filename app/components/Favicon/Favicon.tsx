@@ -1,5 +1,5 @@
+import { SiteData } from '@app/types/site';
 import { FC } from 'react';
-import { SiteData } from '@services/SiteService';
 
 interface FaviconProps {
   favItems: SiteData['favicon'];
@@ -14,7 +14,7 @@ const Favicon: FC<FaviconProps> = ({ favItems }) => (
         if (width === '180') {
           return (
             <link
-              key={`fav-${width}x${width}`}
+              key={`fav-apple-${width}x${width}`}
               rel="apple-touch-icon"
               href={sourceUrl as string}
               sizes={`${width}x${width}`}

@@ -58,7 +58,7 @@ const MenuLinks: FunctionComponent<MenuLinksProps> = ({
       ref={subMenuRef}
     >
       {links.map((link, index) => (
-        <li>
+        <li key={link.id}>
           <div
             className={`menu-links__single | cursor-pointer transition-opacity duration-500 ${
               open ? 'opacity-100' : 'opacity-0'

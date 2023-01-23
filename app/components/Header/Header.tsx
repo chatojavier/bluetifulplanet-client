@@ -9,15 +9,18 @@ import MenuLinks from '@components/MenuLinks';
 import { MenuLink } from 'types/menus';
 import Image from 'next/image';
 import useOutsideElement from '@app/hooks/useOutsideElement';
+import { SocialMedia } from '@app/types/site';
 
 interface HeaderProps {
   menuLinks?: MenuLink[];
   navBarHeight?: string;
+  socialMedia?: SocialMedia;
 }
 
 const Header: FunctionComponent<HeaderProps> = ({
   navBarHeight = '5rem',
   menuLinks = [],
+  socialMedia,
 }) => {
   const [drawerOpen, setDrawerOpen] = useState<boolean>(false);
   const drawerRef = useRef<HTMLDivElement>(null);
@@ -56,7 +59,7 @@ const Header: FunctionComponent<HeaderProps> = ({
           />
         </div>
         <div className="header--right">
-          <SocialMediaLinks />
+          <SocialMediaLinks socialMediaData={socialMedia} />
         </div>
       </div>
       <Drawer open={drawerOpen} ref={drawerRef}>

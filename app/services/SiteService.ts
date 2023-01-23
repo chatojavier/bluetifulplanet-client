@@ -1,18 +1,9 @@
-import { QUERY_SITE_DATA } from '@graphql/site';
+import { cloneDeep } from '@apollo/client/utilities';
+import { SiteData } from '@app/types/site';
+import { QUERY_SITE_DATA, QUERY_SITE_OPTIONS } from '@graphql/site';
+import { removeDeepProperty } from '@utils/general';
+import { uniqBy } from 'lodash';
 import { getApolloClient } from './apollo-client';
-
-type TypeWithNull<T> = T | null | undefined;
-
-export type SiteData = {
-  title: TypeWithNull<string>;
-  siteTitle: TypeWithNull<string>;
-  description: TypeWithNull<string>;
-  language?: TypeWithNull<string>;
-  favicon?: {
-    sourceUrl: TypeWithNull<string>;
-    width: TypeWithNull<string>;
-  }[];
-};
 
 async function getSiteData() {
   const apolloClient = getApolloClient();
@@ -54,7 +45,8 @@ async function getSiteData() {
   }
 
   if (favicon?.mediaDetails?.sizes && favicon.mediaDetails.sizes.length > 0) {
-    settings.favicon = favicon.mediaDetails.sizes.map(favItem => ({
+    const faviconSizes = uniqBy([...favicon.mediaDetails.sizes], 'sourceUrl');
+    settings.favicon = faviconSizes.map(favItem => ({
       sourceUrl: favItem?.sourceUrl,
       width: favItem?.width,
     }));
@@ -63,8 +55,33 @@ async function getSiteData() {
   return settings;
 }
 
+const getSiteOptions = async () => {
+  const apolloClient = getApolloClient();
+
+  let siteOptions;
+
+  try {
+    siteOptions = await apolloClient.query({
+      query: QUERY_SITE_OPTIONS,
+    });
+  } catch (error) {
+    const errorMessage = `[site][getSiteOptions] Failed to query site data: ${
+      (error as Error).message
+    }`;
+    // eslint-disable-next-line no-console
+    console.log(errorMessage);
+
+    throw error;
+  }
+
+  const { socialMedia } = siteOptions?.data?.optionsPage || {};
+
+  return removeDeepProperty(cloneDeep(socialMedia), '__typename');
+};
+
 const SiteService = {
   getSiteData,
+  getSiteOptions,
 };
 
 export default SiteService;
