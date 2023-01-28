@@ -29,7 +29,8 @@
       "@utils/*": ["app/utils/*"],
       "@pages/*": ["app/(pages)/*"],
       "@mocks/*": ["app/__mocks__/*"],
-      "types/*": ["app/types/*"]
+      "types/*": ["app/types/*"],
+      "@swiper/*": ["node_modules/swiper/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],

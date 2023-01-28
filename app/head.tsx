@@ -12,7 +12,7 @@ export default async function Head() {
     <>
       {/* @ts-expect-error Server Component */}
       <DefaultTags />
-      <title>{siteTitle}</title>
+      <title>{`${siteTitle} - ${description}`}</title>
       <meta name="description" content={description as string} />
     </>
   );

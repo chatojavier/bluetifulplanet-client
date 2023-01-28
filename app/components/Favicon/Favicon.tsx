@@ -13,12 +13,21 @@ const Favicon: FC<FaviconProps> = ({ favItems }) => (
       favItems.map(({ width, sourceUrl }) => {
         if (width === '180') {
           return (
-            <link
-              key={`fav-apple-${width}x${width}`}
-              rel="apple-touch-icon"
-              href={sourceUrl as string}
-              sizes={`${width}x${width}`}
-            />
+            <>
+              <link
+                key={`fav-apple-${width}x${width}`}
+                rel="apple-touch-icon"
+                href={sourceUrl as string}
+                sizes={`${width}x${width}`}
+              />
+              <link
+                key={`fav-${width}x${width}`}
+                rel="icon"
+                type="image/png"
+                sizes={`${width}x${width}`}
+                href={sourceUrl as string}
+              />
+            </>
           );
         }
         return (

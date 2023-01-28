@@ -24,16 +24,21 @@ export default async function RootLayout({
   children: ReactNode;
 }) {
   const { mainMenu, language, socialMedia } = await getData();
+  const navBarHeight = '5rem';
   return (
-    <html lang={(language as string) || 'en'}>
+    <html lang={(language as string) || 'en'} className="h-full">
       {/*
         <head /> will contain the components returned by the nearest parent
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body>
-        <Header menuLinks={mainMenu} socialMedia={socialMedia} />
-        <div className="body__wrapper">{children}</div>
+      <body className="h-full overflow-hidden">
+        <Header
+          menuLinks={mainMenu}
+          socialMedia={socialMedia}
+          navBarHeight={navBarHeight}
+        />
+        <div className="h-[calc(100%-5rem)]">{children}</div>
       </body>
     </html>
   );

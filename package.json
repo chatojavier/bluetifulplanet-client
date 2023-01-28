@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "dev:turbo": "next dev --turbo",
-    "test": "jest --watchAll=false",
+    "test": "jest --watchAll=false --transformIgnorePatterns \"node_modules/(?!swiper)/\"",
+    "test:coverage": "jest --coverage --transformIgnorePatterns \"node_modules/(?!swiper)/\"",
     "compile": "env-cmd -f .env.local graphql-codegen",
     "watch": "env-cmd -f .env.local graphql-codegen -w",
     "prepare": "husky install"
@@ -28,6 +29,7 @@
     "next": "13.1.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "swiper": "^8.4.6",
     "typescript": "^4.9.4"
   },
   "devDependencies": {

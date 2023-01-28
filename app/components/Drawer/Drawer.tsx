@@ -10,7 +10,7 @@ const Drawer: ForwardRefRenderFunction<
 > = ({ children, open }, ref) => {
   return (
     <div
-      className={`drawer | absolute z-10 bottom-0 | w-screen h-[calc(100vh-5rem)] | bg-black bg-opacity-70 transition-all duration-1000 ${
+      className={`drawer | fixed z-10 bottom-0 | w-screen h-[calc(100vh-5rem)] | bg-black bg-opacity-70 transition-all duration-1000 ${
         open ? 'bg-opacity-70 visible' : 'bg-opacity-0 invisible'
       }`}
     >

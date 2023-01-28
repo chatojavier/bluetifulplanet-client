@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  query queryAllMenus {\n    menus {\n      nodes {\n        id\n        menuItems {\n          nodes {\n            id\n            parentId\n            label\n            path\n          }\n        }\n        name\n        slug\n        locations\n      }\n    }\n  }\n": types.QueryAllMenusDocument,
+    "query queryHomePage {\n  nodeByUri(uri: \"/\") {\n    ... on Page {\n      id\n      title\n      slider {\n        sliderDesktop {\n          id\n          sourceUrl\n          mediaDetails {\n            height\n            width\n          }\n          altText\n        }\n        sliderMobile {\n          id\n          sourceUrl\n          mediaDetails {\n            height\n            width\n          }\n          altText\n        }\n      }\n    }\n  }\n}": types.QueryHomePageDocument,
     "\n  query querySiteOptions {\n    optionsPage {\n      socialMedia {\n        socialMediaFacebook {\n          show\n          url\n        }\n        socialMediaInstagram {\n          show\n          url\n        }\n        socialMediaFlickr {\n          show\n          url\n        }\n        socialMediaBehance {\n          show\n          url\n        }\n      }\n    }\n  }\n": types.QuerySiteOptionsDocument,
     "\n  query querySiteData {\n    generalSettings {\n      description\n      language\n      title\n    }\n    favicon {\n      mediaDetails {\n        sizes {\n          sourceUrl\n          width\n        }\n      }\n    }\n  }\n": types.QuerySiteDataDocument,
 };
@@ -36,6 +37,10 @@ export function gql(source: string): unknown;
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query queryAllMenus {\n    menus {\n      nodes {\n        id\n        menuItems {\n          nodes {\n            id\n            parentId\n            label\n            path\n          }\n        }\n        name\n        slug\n        locations\n      }\n    }\n  }\n"): (typeof documents)["\n  query queryAllMenus {\n    menus {\n      nodes {\n        id\n        menuItems {\n          nodes {\n            id\n            parentId\n            label\n            path\n          }\n        }\n        name\n        slug\n        locations\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "query queryHomePage {\n  nodeByUri(uri: \"/\") {\n    ... on Page {\n      id\n      title\n      slider {\n        sliderDesktop {\n          id\n          sourceUrl\n          mediaDetails {\n            height\n            width\n          }\n          altText\n        }\n        sliderMobile {\n          id\n          sourceUrl\n          mediaDetails {\n            height\n            width\n          }\n          altText\n        }\n      }\n    }\n  }\n}"): (typeof documents)["query queryHomePage {\n  nodeByUri(uri: \"/\") {\n    ... on Page {\n      id\n      title\n      slider {\n        sliderDesktop {\n          id\n          sourceUrl\n          mediaDetails {\n            height\n            width\n          }\n          altText\n        }\n        sliderMobile {\n          id\n          sourceUrl\n          mediaDetails {\n            height\n            width\n          }\n          altText\n        }\n      }\n    }\n  }\n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
