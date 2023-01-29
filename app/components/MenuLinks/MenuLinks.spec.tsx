@@ -47,7 +47,7 @@ describe('MenuLinks', () => {
     render(<MenuLinks links={mockMenuLinks} open setOpen={setOpen} />);
     const blogLink = screen.getByText('Blog');
 
-    await user.click(blogLink);
+    await user.type(blogLink, '{enter}');
 
     expect(mockPush).toHaveBeenCalledWith('/blog/');
   });

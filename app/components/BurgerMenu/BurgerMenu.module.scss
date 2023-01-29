@@ -23,7 +23,7 @@
 
   :global .cross input:checked + svg {
     .line--1 {
-      --length: 22.627416998;
+      --length: 24;
     }
     .line--2 {
       --length: 0;
@@ -48,7 +48,7 @@
     input:checked + svg {
       .line--1,
       .line--3 {
-        --offset: -94.1149185097;
+        --offset: -93.4;
       }
       .line--2 {
         --offset: -50;

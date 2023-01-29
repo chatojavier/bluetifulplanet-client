@@ -33,6 +33,7 @@ const FullSlider: FunctionComponent<FullSliderProps> = ({ gallery }) => {
       modules={[Autoplay]}
       autoplay={{ disableOnInteraction: false }}
       loop
+      speed={1000}
       className="h-full relative"
     >
       {gallery.map(imageObj => {

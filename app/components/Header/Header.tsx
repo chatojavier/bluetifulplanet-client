@@ -41,7 +41,7 @@ const Header: FunctionComponent<HeaderProps> = ({
       >
         <div className="header--left | flex items-center space-x-3">
           <BurgerMenu
-            className="w-[60px]"
+            className="w-[18px] mr-4"
             open={drawerOpen}
             setOpen={setDrawerOpen}
           />
