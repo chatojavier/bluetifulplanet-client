@@ -6,7 +6,15 @@ module.exports = {
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ['var(--font-raleway)', 'sans-serif'],
+        nunito: ['var(--font-nunito)', 'var(--font-raleway)', 'sans-serif'],
+      },
+      maxWidth: {
+        '1/2': '50%',
+      },
+    },
   },
   plugins: [],
 };

@@ -1,0 +1,122 @@
+.SafeHTML {
+  :global {
+    p {
+      font-style: normal;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.6em;
+      text-rendering: geometricPrecision;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    strong {
+      font-weight: 600;
+    }
+
+    em {
+      font-style: italic;
+    }
+
+    blockquote {
+      position: relative;
+      clear: both;
+      text-align: center;
+      border: 0;
+    }
+
+    blockquote p {
+      font-size: 18px;
+      font-weight: 500;
+      color: #151515;
+      line-height: 1.16;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    blockquote cite {
+      color: #151515;
+      font-size: 12px;
+      font-style: normal;
+    }
+
+    cite {
+      display: block;
+      margin-top: 20px;
+    }
+
+    figure {
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .has-text-align-center {
+      text-align: center;
+    }
+
+    .wp-block-quote {
+      overflow-wrap: break-word;
+    }
+
+    .wp-block-query-title,
+    .wp-block-quote {
+      box-sizing: border-box;
+    }
+
+    .wp-block-separator {
+      border: 1px solid;
+      border-left: none;
+      border-right: none;
+    }
+
+    hr {
+      max-width: 97.5rem;
+      height: 0;
+      border-right: 0;
+      border-top: 0;
+      border-bottom: 1px solid #cacaca;
+      border-left: 0;
+      margin: 1.25rem auto;
+      clear: both;
+    }
+
+    blockquote,
+    q {
+      quotes: none;
+    }
+
+    h1,
+    h2,
+    H3,
+    h4,
+    h5,
+    h6 {
+      @apply font-nunito;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: 32px;
+    }
+    h2 {
+      font-size: 28px;
+    }
+    h3 {
+      font-size: 22px;
+    }
+    h4 {
+      font-size: 16px;
+    }
+    h5 {
+      font-size: 12px;
+    }
+    h5 {
+      font-size: 8px;
+    }
+
+    @media only screen and (min-width: 48.063em) {
+      blockquote p {
+        font-size: 22px;
+      }
+    }
+  }
+}

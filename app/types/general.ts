@@ -27,3 +27,9 @@ export type DeepOmit<T, K> = T extends Primitive
     };
 
 export type TypeWithNull<T> = T | null | undefined;
+
+// eslint-disable-next-line no-shadow
+export enum PageTemplate {
+  PLAIN_CONTENT = 'Plain Content',
+  DEFAULT = 'Default',
+}

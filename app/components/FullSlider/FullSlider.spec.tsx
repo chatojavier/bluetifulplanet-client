@@ -1,7 +1,13 @@
 import { MockImagesGallery } from '@app/__mocks__/homePage.mock';
-import { render, screen } from '@testing-library/react';
+import { act, render, screen } from '@testing-library/react';
 import { cloneDeep } from 'lodash';
 import FullSlider from './FullSlider';
+
+function fireResize(width: number, height: number) {
+  window.innerWidth = width;
+  window.innerHeight = height;
+  window.dispatchEvent(new Event('resize'));
+}
 
 describe('FullSlider', () => {
   it('should render slider with mock images with loop clones', async () => {
@@ -57,5 +63,30 @@ describe('FullSlider', () => {
       );
       expect(el.src).toMatch(regEx);
     });
+  });
+
+  it('should render only the orientation selected (when selected)', async () => {
+    const { rerender } = render(
+      <FullSlider gallery={MockImagesGallery} displayOrientation="landscape" />
+    );
+
+    const imageElementsLandscape = screen.queryAllByRole(
+      'img'
+    ) as HTMLImageElement[];
+
+    expect(imageElementsLandscape).toHaveLength(7);
+
+    act(() => {
+      fireResize(200, 500);
+    });
+    rerender(
+      <FullSlider gallery={MockImagesGallery} displayOrientation="landscape" />
+    );
+
+    const imageElementsPortrait = screen.queryAllByRole(
+      'img'
+    ) as HTMLImageElement[];
+
+    expect(imageElementsPortrait).toHaveLength(0);
   });
 });

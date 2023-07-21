@@ -3,6 +3,7 @@ import './globals.css';
 import MenusService from '@services/MenusService';
 import SiteService from '@services/SiteService';
 import { ReactNode } from 'react';
+import { Nunito, Raleway } from 'next/font/google';
 
 async function getData() {
   const { menu } = await MenusService.getMenuByLocation(
@@ -18,6 +19,18 @@ async function getData() {
   };
 }
 
+const raleway = Raleway({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-raleway',
+});
+
+const nunito = Nunito({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-nunito',
+});
+
 export default async function RootLayout({
   children,
 }: {
@@ -26,19 +39,22 @@ export default async function RootLayout({
   const { mainMenu, language, socialMedia } = await getData();
   const navBarHeight = '5rem';
   return (
-    <html lang={(language as string) || 'en'} className="h-full">
+    <html
+      lang={(language as string) || 'en'}
+      className={`h-full ${raleway.variable} ${nunito.variable} font-sans`}
+    >
       {/*
         <head /> will contain the components returned by the nearest parent
         head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body className="h-full overflow-hidden">
+      <body className="h-full">
         <Header
           menuLinks={mainMenu}
           socialMedia={socialMedia}
           navBarHeight={navBarHeight}
         />
-        <div className="h-[calc(100%-5rem)]">{children}</div>
+        <div className="content | h-[calc(100%-5rem)]">{children}</div>
       </body>
     </html>
   );

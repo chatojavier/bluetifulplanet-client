@@ -6,6 +6,8 @@
 !*.tsx
 !*.js
 !*.jsx
+!*.scss
+!*.css
 
 # Check subdirectories too
 !*/

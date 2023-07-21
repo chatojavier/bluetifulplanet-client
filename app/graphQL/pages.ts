@@ -28,3 +28,53 @@ export const QUERY_HOME_PAGE = gql(`query queryHomePage {
     }
   }
 }`);
+
+export const QUERY_PAGES = gql(`query queryPages {
+  pages {
+    nodes {
+      id
+      title
+      uri
+      template {
+        templateName
+      }
+      status
+      content
+      featuredImage {
+        node {
+          altText
+          id
+          sourceUrl
+          mediaDetails {
+            height
+            width
+          }
+        }
+      }
+    }
+  }
+}`);
+
+export const QUERY_PAGE_BY_URI = gql(`query queryPageByUri($uri: ID!) {
+  page(id: $uri, idType: URI) {
+      id
+      title
+      uri
+      template {
+        templateName
+      }
+      status
+      content
+      featuredImage {
+        node {
+          altText
+          id
+          sourceUrl
+          mediaDetails {
+            height
+            width
+          }
+        }
+      }
+    }
+}`);

@@ -11,7 +11,7 @@ const nextConfig = {
     appDir: true,
   },
   env: {
-    APP_ENV: process.env.APP_ENV || 'development',
+    APP_ENV: process.env.APP_ENV || 'dev',
     WORDPRESS_GRAPHQL_ENDPOINT: process.env.WORDPRESS_GRAPHQL_ENDPOINT,
     MENU_BAR_LOCATION: process.env.MENU_BAR_LOCATION,
     IMAGE_FOLDER_URL: process.env.IMAGE_FOLDER_URL,

@@ -9,6 +9,11 @@ export function removeLastTrailingSlash(url: string): string {
   return url.replace(/\/$/, '');
 }
 
+export function removeAllTrailingSlash(url: string): string {
+  if (typeof url !== 'string') return url;
+  return url.replace(/\//g, '');
+}
+
 /**
  * removeDeepProperty
  */

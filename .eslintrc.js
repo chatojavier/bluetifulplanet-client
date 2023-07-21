@@ -26,7 +26,7 @@ module.exports = {
     },
   },
 
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'risxss'],
   extends: [
     'next/core-web-vitals',
     'plugin:@typescript-eslint/recommended',
@@ -89,6 +89,13 @@ module.exports = {
         },
       },
     ],
+    'risxss/catch-potential-xss-react': [
+      'error',
+      {
+        trustedLibraries: ['xss'],
+      },
+    ],
+    'react/no-danger': 'off',
   },
   ignorePatterns: [
     '!.*',

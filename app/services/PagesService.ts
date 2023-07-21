@@ -1,11 +1,16 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 import { cloneDeep } from '@apollo/client/utilities';
-import { QUERY_HOME_PAGE } from '@app/graphql/pages';
+import {
+  QUERY_HOME_PAGE,
+  QUERY_PAGES,
+  QUERY_PAGE_BY_URI,
+} from '@app/graphql/pages';
 import { removeDeepProperty } from '@app/utils/general';
+import { mapPageData } from '@app/utils/pages';
 import { getApolloClient } from './apollo-client';
 
-export const getHomePage = async () => {
+const getHomePage = async () => {
   const apolloClient = getApolloClient();
 
   let pageData;
@@ -14,6 +19,7 @@ export const getHomePage = async () => {
     pageData = await apolloClient.query({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       query: QUERY_HOME_PAGE,
+      fetchPolicy: 'no-cache',
     });
   } catch (e) {
     console.log(
@@ -32,3 +38,59 @@ export const getHomePage = async () => {
 
   return null;
 };
+
+const getAllPages = async () => {
+  const apolloClient = getApolloClient();
+
+  let pagesData;
+
+  try {
+    pagesData = await apolloClient.query({
+      query: QUERY_PAGES,
+      fetchPolicy: 'no-cache',
+    });
+  } catch (e) {
+    console.log(
+      `[pages][getAllPages] Failed to query page data: ${(e as Error).message}`
+    );
+    throw e;
+  }
+
+  if (!pagesData.data.pages) return null;
+
+  const pages = pagesData.data.pages?.nodes.map(mapPageData);
+
+  return { pages };
+};
+
+const getPageByUri = async (uri: string) => {
+  const apolloClient = getApolloClient();
+
+  let pageData;
+
+  try {
+    pageData = await apolloClient.query({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      query: QUERY_PAGE_BY_URI,
+      variables: {
+        uri,
+      },
+      fetchPolicy: 'no-cache',
+    });
+  } catch (e) {
+    console.log(
+      `[pages][getPageByUri] Failed to query page data: ${(e as Error).message}`
+    );
+    throw e;
+  }
+
+  if (!pageData.data.page) return null;
+
+  const [page] = [pageData.data.page].map(mapPageData);
+
+  return { page };
+};
+
+const PagesService = { getHomePage, getAllPages, getPageByUri };
+
+export default PagesService;
