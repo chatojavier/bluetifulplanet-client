@@ -13,6 +13,7 @@ h3 {
   font-size: 22px;
   line-height: 1.135;
   margin-bottom: 20px;
+  color: #043299;
 }
 
 body p {
@@ -21,4 +22,8 @@ body p {
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
   margin-bottom: 1rem;
+}
+
+:focus-visible {
+  outline: 0;
 }

@@ -17,7 +17,6 @@ const getHomePage = async () => {
 
   try {
     pageData = await apolloClient.query({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       query: QUERY_HOME_PAGE,
       fetchPolicy: 'no-cache',
     });
@@ -70,7 +69,6 @@ const getPageByUri = async (uri: string) => {
 
   try {
     pageData = await apolloClient.query({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       query: QUERY_PAGE_BY_URI,
       variables: {
         uri,

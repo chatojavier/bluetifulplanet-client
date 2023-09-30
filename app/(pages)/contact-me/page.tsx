@@ -3,6 +3,7 @@ import PagesService from '@app/services/PagesService';
 import { PageTemplate } from '@app/types/general';
 import { removeAllTrailingSlash } from '@app/utils/general';
 import { notFound } from 'next/navigation';
+import ContactForm from './ContactForm';
 
 export type PageProps = {
   params: {
@@ -10,15 +11,14 @@ export type PageProps = {
   };
 };
 
-const getPageData = async (params: PageProps['params']) => {
-  const result =
-    params.pageSlug && !Array.isArray(params.pageSlug)
-      ? await PagesService.getPageByUri(params.pageSlug)
-      : null;
+const pageSlug = 'contact-me';
+
+const getPageData = async () => {
+  const result = await PagesService.getPageByUri(pageSlug);
 
   if (
     !result ||
-    result.page.template !== PageTemplate.PLAIN_CONTENT ||
+    result.page.template !== PageTemplate.CONTACT_ME ||
     result.page.status !== 'publish'
   ) {
     notFound();
@@ -27,21 +27,24 @@ const getPageData = async (params: PageProps['params']) => {
   return result;
 };
 
-const Page = async ({ params }: PageProps) => {
+const Page = async () => {
   const {
     page: { title, content = '' },
-  } = await getPageData(params);
+  } = await getPageData();
 
   // eslint-disable-next-line no-console
-  console.log(`Rendering page [${params.pageSlug}]`);
-  const id = removeAllTrailingSlash(params.pageSlug);
+  console.log(`Rendering page [${pageSlug}]`);
+  const id = removeAllTrailingSlash(pageSlug);
 
   return (
-    <div id={id} className="page | py-12">
+    <div id={id} className="page | h-full flex">
       <h1 className="hidden">{title}</h1>
       {content && (
-        <div className="wp-content | max-w-1/2 m-auto px-4">
-          <SafeHTML html={content} />
+        <div className="wp-content | max-w-5xl w-full m-auto px-4 py-12 flex justify-between">
+          <div className="contact-info">
+            <SafeHTML html={content} />
+          </div>
+          <ContactForm />
         </div>
       )}
     </div>
@@ -49,17 +52,3 @@ const Page = async ({ params }: PageProps) => {
 };
 
 export default Page;
-
-export const generateStaticParams = async () => {
-  const { pages } = (await PagesService.getAllPages()) || { pages: [] };
-
-  return pages
-    ?.filter(
-      page =>
-        page.template === PageTemplate.PLAIN_CONTENT &&
-        page.status === 'publish'
-    )
-    .map(page => ({
-      pageSlug: page.uri as string,
-    }));
-};

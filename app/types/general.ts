@@ -30,6 +30,7 @@ export type TypeWithNull<T> = T | null | undefined;
 
 // eslint-disable-next-line no-shadow
 export enum PageTemplate {
+  CONTACT_ME = 'Contact Me',
   PLAIN_CONTENT = 'Plain Content',
   DEFAULT = 'Default',
 }
