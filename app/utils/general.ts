@@ -1,4 +1,6 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { DeepOmit } from '@app/types/general';
+import format from 'date-fns/format';
 
 /**
  * removeLastTrailingSlash
@@ -53,4 +55,43 @@ export const removeDeepProperty = <T, K extends string>(
   }
 
   return query as DeepOmit<T, K>;
+};
+
+export function objectToFormData(obj: Record<string, string | Blob>) {
+  const formData = new FormData();
+
+  Object.entries(obj).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+
+  return formData;
+}
+
+export const formatDate = (date: string | number | Date, pattern = 'PPP') => {
+  return format(new Date(date), pattern);
+};
+
+export const emailPattern =
+  // eslint-disable-next-line security/detect-unsafe-regex, no-useless-escape
+  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+export const fetchPostForm = async (
+  data: Record<string, string | Blob>,
+  input: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  config?: any
+) => {
+  const payload = objectToFormData(data);
+  const configDefault = {
+    method: 'POST',
+    cache: 'no-cache',
+    headers: {
+      Accept: 'application/json',
+    },
+    body: payload,
+  };
+
+  const res = await fetch(input, { ...configDefault, ...config });
+
+  return res.json();
 };

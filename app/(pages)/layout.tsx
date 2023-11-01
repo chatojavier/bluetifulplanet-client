@@ -1,9 +1,9 @@
 import Header from '@components/Header';
-import './globals.css';
+import './globals.scss';
 import MenusService from '@services/MenusService';
 import SiteService from '@services/SiteService';
 import { ReactNode } from 'react';
-import { Nunito, Raleway } from 'next/font/google';
+import { gilda, nunito, raleway } from './fonts';
 
 async function getData() {
   const { menu } = await MenusService.getMenuByLocation(
@@ -19,18 +19,6 @@ async function getData() {
   };
 }
 
-const raleway = Raleway({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-raleway',
-});
-
-const nunito = Nunito({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-nunito',
-});
-
 export default async function RootLayout({
   children,
 }: {
@@ -41,7 +29,7 @@ export default async function RootLayout({
   return (
     <html
       lang={(language as string) || 'en'}
-      className={`h-full ${raleway.variable} ${nunito.variable} font-sans`}
+      className={`h-full ${raleway.variable} ${nunito.variable} ${gilda.variable} font-sans scroll-smooth`}
     >
       {/*
         <head /> will contain the components returned by the nearest parent

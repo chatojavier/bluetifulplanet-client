@@ -9,6 +9,14 @@ jest.mock('next/navigation', () => ({
   notFound: jest.fn(),
 }));
 
+jest.mock('@app/services/PagesService', () => ({
+  __esModule: true,
+  default: {
+    getPageByUri: jest.fn(),
+    getAllPages: jest.fn(),
+  },
+}));
+
 describe('Page component', () => {
   const pageData = {
     page: {

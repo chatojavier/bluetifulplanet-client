@@ -23,12 +23,18 @@ describe('mapPageData', () => {
   it('should remove __typename property from page data correctly', () => {
     const page = { __typename: 'Page' } as Page;
 
-    expect(mapPageData(page)).toEqual({});
+    expect(mapPageData(page)).toEqual({
+      featuredImage: null,
+      template: null,
+    });
   });
 
   it('should return empty object when no featuredImage is provided', () => {
     const page = {} as Page;
 
-    expect(mapPageData(page)).toEqual({});
+    expect(mapPageData(page)).toEqual({
+      featuredImage: null,
+      template: null,
+    });
   });
 });

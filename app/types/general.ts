@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-use-before-define */
 /* eslint-disable @typescript-eslint/ban-types */
@@ -28,9 +29,17 @@ export type DeepOmit<T, K> = T extends Primitive
 
 export type TypeWithNull<T> = T | null | undefined;
 
-// eslint-disable-next-line no-shadow
 export enum PageTemplate {
   CONTACT_ME = 'Contact Me',
   PLAIN_CONTENT = 'Plain Content',
   DEFAULT = 'Default',
 }
+
+export enum Endpoints {
+  GRAPHQL = '/graphql',
+  FORM = '/wp-json/contact-form-7/v1/contact-forms',
+}
+
+export type DeepNonNullable<T> = {
+  [K in keyof T]: NonNullable<DeepNonNullable<T[K]>>;
+} & {};

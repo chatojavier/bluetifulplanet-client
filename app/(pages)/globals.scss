@@ -3,17 +3,20 @@
 @tailwind utilities;
 
 h1, h2, h3, h4, h5, h6 {
-  margin-top: 0;
-  font-weight: 600;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
+  @apply font-nunito mt-0 mb-4 font-bold;
 }
 
 h3 {
   font-size: 22px;
   line-height: 1.135;
   margin-bottom: 20px;
-  color: #043299;
+  @apply text-bluetifulBlue;
+}
+
+a {
+  @apply text-bluetifulBlue;
 }
 
 body p {
@@ -21,7 +24,13 @@ body p {
   font-weight: 400;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
-  margin-bottom: 1rem;
+  &:not(:last-child) {
+    margin-bottom: 1rem;
+  }
+}
+
+address {
+  @apply not-italic;
 }
 
 :focus-visible {

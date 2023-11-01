@@ -1,64 +1,105 @@
 'use client';
 
-import { FunctionComponent } from 'react';
+import ButtonSquare from '@app/components/ButtonSquare/ButtonSquare';
+import InputText from '@app/components/InputText/InputText';
+import InputTextArea from '@app/components/InputTextArea';
+import useOSAndBrowserInfo from '@app/hooks/useOsAndBrowserInfo';
+import FormService from '@app/services/FormService';
+import { emailPattern } from '@app/utils/general';
+import { usePathname } from 'next/navigation';
+import { FunctionComponent, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-// interface ContactFormProps {}
-
-interface ContactFormOutput {
-  name: string;
-  email: string;
-  message: string;
+// eslint-disable-next-line no-shadow
+enum InputLabel {
+  NAME = 'fullname',
+  EMAIL = 'email',
+  MESSAGE = 'message',
 }
 
+export type ContactFormOutput = {
+  [key in InputLabel]: string;
+};
+
 const ContactForm: FunctionComponent = () => {
+  const [message, setMessage] = useState('');
+  const [isServerError, setIsServerError] = useState(false);
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
+    formState: { errors, isSubmitting },
+    reset,
   } = useForm<ContactFormOutput>();
-  const inputCommonClasses =
-    'border border-gray-100 bg-gray-100 text-xs p-3 | focus:rounded-none focus:border-black focus:bg-white transition-all duration-700 | placeholder:text-gray-500 placeholder:font-semibold';
 
-  const onSubmit: SubmitHandler<ContactFormOutput> = data => {
-    console.log(data);
+  const { os, browser } = useOSAndBrowserInfo();
+  const pathname = usePathname();
+
+  const errorMessages = {
+    required: 'This field should not be empty',
+    email: 'The email format is wrong',
   };
 
-  console.log(watch('message'));
+  const onSubmit: SubmitHandler<ContactFormOutput> = async data => {
+    setMessage('');
+    const payload = {
+      ...data,
+      system: `OS: ${os}; Browser: ${browser};`,
+      source: pathname ?? '',
+    };
+    try {
+      const res = await FormService.postContactForm(payload);
+
+      if (res.message) {
+        if (res.status === 'mail_sent') {
+          setIsServerError(false);
+          reset();
+        } else {
+          setIsServerError(true);
+        }
+        setMessage(res.message as string);
+      }
+    } catch (error) {
+      setIsServerError(true);
+      setMessage("We're having some problems, please try again later.");
+    }
+  };
 
   return (
     <form className="w-1/2" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-inputs | flex flex-col gap-4 mb-6">
-        <input
-          {...register('name', { required: true })}
-          type="text"
-          size={40}
-          className={inputCommonClasses}
-          placeholder="NAME"
+        <InputText
+          {...register(InputLabel.NAME, { required: errorMessages.required })}
+          placeholder="Name"
+          error={errors[InputLabel.NAME]?.message}
         />
-        {errors.name && <span>This field is required</span>}
-        <input
-          {...register('email')}
-          type="text"
-          size={40}
-          className={inputCommonClasses}
-          placeholder="EMAIL"
+        <InputText
+          {...register(InputLabel.EMAIL, {
+            required: errorMessages.required,
+            pattern: { value: emailPattern, message: errorMessages.email },
+          })}
+          placeholder="Email"
+          error={errors[InputLabel.EMAIL]?.message}
         />
-        <textarea
-          {...register('message')}
-          cols={40}
-          rows={5}
-          className={`${inputCommonClasses} min-h-[200px]`}
-          placeholder="MESSAGE"
+        <InputTextArea
+          {...register(InputLabel.MESSAGE, {
+            required: errorMessages.required,
+          })}
+          placeholder="Message"
+          error={errors[InputLabel.MESSAGE]?.message}
         />
       </div>
-      <button
-        type="submit"
-        className="block uppercase text-xs font-semibold px-10 py-2 border-2 border-black"
-      >
+      <ButtonSquare type="submit" loading={isSubmitting}>
         Send
-      </button>
+      </ButtonSquare>
+      {message && (
+        <div
+          className={`p-2 border text-sm ${
+            isServerError ? 'border-red-600' : 'border-green-600'
+          }`}
+        >
+          {message}
+        </div>
+      )}
     </form>
   );
 };

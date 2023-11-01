@@ -1,24 +1,19 @@
-const deconstructImageFolderURL = url => {
-  const [protocolDirty, , hostname, ...rest] = url.split('/');
-  const protocol = protocolDirty.replace(/:/g, '');
-  const pathname = `/${rest.join('/')}**`;
-  return { protocol, hostname, pathname };
-};
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    appDir: true,
-  },
   env: {
     APP_ENV: process.env.APP_ENV || 'dev',
-    WORDPRESS_GRAPHQL_ENDPOINT: process.env.WORDPRESS_GRAPHQL_ENDPOINT,
+    WORDPRESS_HOST: process.env.WORDPRESS_HOST,
     MENU_BAR_LOCATION: process.env.MENU_BAR_LOCATION,
     IMAGE_FOLDER_URL: process.env.IMAGE_FOLDER_URL,
+    IMAGE_AVATAR_URL: process.env.IMAGE_AVATAR_URL,
   },
   images: {
-    remotePatterns: [
-      { ...deconstructImageFolderURL(process.env.IMAGE_FOLDER_URL), port: '' },
+    domains: [
+      '0.gravatar.com',
+      '1.gravatar.com',
+      '2.gravatar.com',
+      '3.gravatar.com',
+      'admin.bluetifulplanet.local',
     ],
   },
 };
