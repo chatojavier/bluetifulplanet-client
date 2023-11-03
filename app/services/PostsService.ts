@@ -3,9 +3,8 @@ import {
   QUERY_POSTS,
   QUERY_POSTS_BASIC,
   QUERY_POST_BY_URI,
-  QUERY_PREV_NEXT_POST,
 } from '@app/graphql/posts';
-import { mapPostData, mapPostsBasic, mapPrevNextPost } from '@app/utils/posts';
+import { mapPostData, mapPostsBasic } from '@app/utils/posts';
 import { getApolloClient } from './apollo-client';
 
 const getAllPosts = async () => {
@@ -85,41 +84,10 @@ const getPostByUri = async (uri: string) => {
   return { post };
 };
 
-const getPrevNextPost = async (cursor: string) => {
-  const apolloClient = getApolloClient();
-
-  let postData;
-
-  try {
-    postData = await apolloClient.query({
-      query: QUERY_PREV_NEXT_POST,
-      variables: {
-        after: cursor,
-        before: cursor,
-      },
-      fetchPolicy: 'no-cache',
-    });
-  } catch (e) {
-    console.log(
-      `[posts][getPrevNextPost] Failed to query post data: ${
-        (e as Error).message
-      }`
-    );
-    throw e;
-  }
-
-  if (!postData.data.posts) return { posts: null };
-
-  const posts = mapPrevNextPost(postData.data.posts);
-
-  return { posts };
-};
-
 const PostsService = {
   getAllPosts,
   getAllPostsBasic,
   getPostByUri,
-  getPrevNextPost,
 };
 
 export default PostsService;

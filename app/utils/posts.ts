@@ -2,7 +2,6 @@ import { cloneDeep } from '@apollo/client/utilities/common/cloneDeep';
 import {
   PostFieldsFragment,
   QueryPostsBasicQuery,
-  QueryPrevNextPostQuery,
 } from '@app/graphql/__generated__/graphql';
 import { removeDeepProperty } from './general';
 import { mapCommentData } from './comments';
@@ -36,26 +35,4 @@ export const mapPostsBasic = (
   };
 
   return removeDeepProperty(data, '__typename');
-};
-
-type RelatedPost = NonNullable<QueryPrevNextPostQuery['posts']>;
-
-export const mapPrevNextPost = (post: RelatedPost) => {
-  const {
-    pageInfo: { hasNextPage, hasPreviousPage },
-    nodes: [prevPost, nextPost],
-  } = post;
-  const getLink = (node: RelatedPost['nodes'][number]) =>
-    node && node.title && node.slug
-      ? {
-          id: node.id,
-          label: node.title,
-          url: node.slug,
-        }
-      : null;
-  return {
-    prevLink: hasPreviousPage ? getLink(prevPost) : null,
-    nextLink:
-      hasNextPage && !hasPreviousPage ? getLink(prevPost) : getLink(nextPost),
-  };
 };

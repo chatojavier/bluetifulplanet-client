@@ -28,14 +28,6 @@ const getPostData = async (params: PostProps['params']) => {
   return result;
 };
 
-const getPostRelatedLinks = async (params: PostProps['params']) => {
-  const { posts } = (await PostsService.getAllPostsBasic()) || { posts: [] };
-  const postCursor =
-    posts.find(post => post.slug === params.post)?.cursor || '';
-
-  return PostsService.getPrevNextPost(postCursor);
-};
-
 const Post = async ({ params }: PostProps) => {
   const {
     post: {
@@ -49,11 +41,10 @@ const Post = async ({ params }: PostProps) => {
       tags,
       commentCount,
       comments,
+      previous,
+      next,
     },
   } = await getPostData(params);
-
-  const { posts: relatedLinks } = await getPostRelatedLinks(params);
-  const { prevLink, nextLink } = relatedLinks || {};
 
   const { sourceUrl = '', altText, mediaDetails } = featuredImage || {};
 
@@ -123,16 +114,16 @@ const Post = async ({ params }: PostProps) => {
           initialComments={comments}
         />
       </div>
-      {prevLink && (
+      {previous && (
         <NavigationArrows
-          label={prevLink.label}
-          url={`/blog/${prevLink.url}`}
+          label={previous.title as string}
+          url={`/blog/${previous.slug}`}
         />
       )}
-      {nextLink && (
+      {next && (
         <NavigationArrows
-          label={nextLink.label}
-          url={`/blog/${nextLink.url}`}
+          label={next.title as string}
+          url={`/blog/${next.slug}`}
           next
         />
       )}

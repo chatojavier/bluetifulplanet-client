@@ -1,5 +1,13 @@
 import { gql } from './__generated__';
 
+export const PREV_NEXT_POST = gql(`
+  fragment PrevNextPost on Post {
+    id
+    title(format: RAW)
+    slug
+  }
+`);
+
 export const POST_FIELDS = gql(`
   fragment PostFields on Post {
     id
@@ -31,6 +39,12 @@ export const POST_FIELDS = gql(`
       }
     }
     commentCount
+    next {
+      ...PrevNextPost
+    }
+    previous {
+      ...PrevNextPost
+    }
   }
 `);
 
@@ -61,20 +75,5 @@ export const QUERY_POSTS_BASIC = gql(`query queryPostsBasic {
 export const QUERY_POST_BY_URI = gql(`query queryPostByUri($uri: ID!) {
   post(id: $uri, idType: URI) {
     ...PostFields
-  }
-}`);
-
-export const QUERY_PREV_NEXT_POST =
-  gql(`query queryPrevNextPost($after: String, $before: String) {
-  posts(first: 1, after: $after, before: $before) {
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-    }
-    nodes {
-      id
-      title(format: RAW)
-      slug
-    }
   }
 }`);
