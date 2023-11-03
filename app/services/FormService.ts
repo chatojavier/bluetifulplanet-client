@@ -19,8 +19,6 @@ const fetchPostData = async (url: string, body: unknown) => {
     body: JSON.stringify(body),
   });
 
-  console.log('fetchPostData', res);
-
   const data = await res.json();
 
   if (res.status >= 400) throw new Error(data.message);

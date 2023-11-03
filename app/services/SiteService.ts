@@ -19,7 +19,7 @@ async function getSiteData() {
       (error as Error).message
     }`;
     // eslint-disable-next-line no-console
-    console.log(errorMessage);
+    console.error(errorMessage);
 
     throw error;
   }

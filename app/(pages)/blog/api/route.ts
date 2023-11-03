@@ -18,14 +18,12 @@ export async function POST(req: NextRequest) {
       parent
     );
 
-    console.log('createComment', createComment);
-
     if (createComment)
       return NextResponse.json<CreateCommentMapped>(createComment);
 
     throw new Error('Failed to load data');
   } catch (error) {
-    console.log('Route Api error ', error);
+    console.error('Route Api error ', error);
     return new Response(JSON.stringify(error), {
       status: 500,
       statusText: 'Failed to load data',

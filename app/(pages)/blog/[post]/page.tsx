@@ -30,8 +30,6 @@ const getPostData = async (params: PostProps['params']) => {
 
 const getPostRelatedLinks = async (params: PostProps['params']) => {
   const { posts } = (await PostsService.getAllPostsBasic()) || { posts: [] };
-  console.log('posts', posts);
-  console.log('uri', params.post);
   const postCursor =
     posts.find(post => post.slug === params.post)?.cursor || '';
 

@@ -12,7 +12,6 @@ import { mapPageData } from '@app/utils/pages';
 import { getApolloClient } from './apollo-client';
 
 const getHomePage = async () => {
-  console.log('URGENTEEEEE');
   const apolloClient = getApolloClient();
 
   let pageData;

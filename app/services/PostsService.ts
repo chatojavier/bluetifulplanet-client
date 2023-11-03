@@ -112,9 +112,6 @@ const getPrevNextPost = async (cursor: string) => {
 
   const posts = mapPrevNextPost(postData.data.posts);
 
-  // console.log('postData.data.posts', postData.data.posts);
-  // console.log('posts', posts);
-
   return { posts };
 };
 
