@@ -50,7 +50,6 @@ const CommentReplyForm: FunctionComponent<CommentReplyFormProps> = ({
   const submitErrorHandler: SubmitErrorHandler<
     CommentFormOutput
   > = async err => {
-    console.log(err);
     if (onSubmitError) await onSubmitError(err);
     reset();
   };

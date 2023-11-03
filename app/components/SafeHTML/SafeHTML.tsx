@@ -46,8 +46,21 @@ const options: IFilterXSSOptions = {
 export const cleanHTML = (htmlInput: string) => xss(htmlInput, options);
 
 export const decodeHTML = (html: string) => {
-  const map = { gt: '>' /* , … */ };
-  return html.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gi, ($0, $1) => {
+  const map: Record<string, string> = {
+    amp: '&',
+    gt: '>',
+    lt: '<',
+    quot: '"',
+    apos: "'",
+    AElig: 'Æ',
+    aelig: 'æ',
+    Agrave: 'À',
+    agrave: 'à',
+    Acirc: 'Â',
+    acirc: 'â',
+    // Add more entities as needed
+  };
+  return html.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gi, ($0, $1: string) => {
     if ($1[0] === '#') {
       return String.fromCharCode(
         $1[1].toLowerCase() === 'x'
@@ -56,7 +69,7 @@ export const decodeHTML = (html: string) => {
       );
     }
     // eslint-disable-next-line no-prototype-builtins
-    return map.hasOwnProperty($1) ? map[$1 as 'gt'] : $0;
+    return map.hasOwnProperty($1) ? map[$1] : $0;
   });
 };
 

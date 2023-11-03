@@ -10,7 +10,9 @@ const CommentReplyHeader: FunctionComponent<CommentReplyHeaderProps> = ({
   onCancel,
 }) => {
   const handleCancelKeyDown: KeyboardEventHandler<HTMLSpanElement> = e => {
-    if (e.key === 'enter' && onCancel) onCancel();
+    if (e.key === 'Enter' && onCancel) {
+      onCancel();
+    }
   };
   return (
     <h3
