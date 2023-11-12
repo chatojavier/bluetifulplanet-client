@@ -1,11 +1,11 @@
 import SafeHTML from '@app/components/SafeHTML/SafeHTML';
 import PostsService from '@app/services/PostsService';
-import { formatDate } from '@app/utils/general';
 import Image from 'next/image';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import TagLink from '@app/components/TagLink/TagLink';
 import NavigationArrows from '@app/components/NavigationArrows/NavigationArrows';
+import HeaderInfo from '@app/components/HeaderInfo';
+import HeaderTitle from '@app/components/HeaderTitle';
+import TagsContainer from '@app/components/TagsContainer/TagsContainer';
 import styles from './page.module.scss';
 import PostComments from './PostComments';
 
@@ -48,9 +48,6 @@ const Post = async ({ params }: PostProps) => {
 
   const { sourceUrl = '', altText, mediaDetails } = featuredImage || {};
 
-  // eslint-disable-next-line no-console
-  console.log(`Rendering post [${params.post}]`);
-
   return (
     <>
       <div id={slug as string} className={styles.paralaxWrapper}>
@@ -70,41 +67,17 @@ const Post = async ({ params }: PostProps) => {
           itemType="http://schema.org/Article"
           className="max-w-5xl m-auto px-18 pt-12 pb-20 bg-white"
         >
-          <aside className="post-related | text-xs uppercase mb-4">
-            {author && (
-              <address className="inline">
-                <Link href="/about-me">{author.name}</Link>
-              </address>
-            )}
-            {date && (
-              <>
-                <span> &nbsp; &mdash; &nbsp; </span>
-                <time dateTime={date} className="inline">
-                  {formatDate(date as string)}
-                </time>
-              </>
-            )}
-          </aside>
+          <HeaderInfo author={author} date={date} />
           <header className="post-title">
-            <h1 className="post-title | text-bluetifulBlue text-4xl">
-              {title}
-            </h1>
+            {title && (
+              <HeaderTitle title={title} className="text-bluetifulBlue" />
+            )}
           </header>
           <section className="post-content | mb-8">
             {content && <SafeHTML html={content} />}
           </section>
           <footer className="post-footer">
-            {tags && (
-              <div className="tag-links | flex justify-center gap-4">
-                {tags.map(({ uri: tagUri, name }) =>
-                  tagUri ? (
-                    <TagLink href={`/blog${tagUri}`} key={tagUri}>
-                      {name}
-                    </TagLink>
-                  ) : null
-                )}
-              </div>
-            )}
+            {tags && <TagsContainer tags={tags} />}
           </footer>
         </article>
         <PostComments

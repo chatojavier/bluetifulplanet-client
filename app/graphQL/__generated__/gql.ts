@@ -23,14 +23,17 @@ const documents = {
     "query queryPages {\n  pages {\n    nodes {\n      ...PageFields\n    }\n  }\n}": types.QueryPagesDocument,
     "query queryPagesBasic {\n  pages {\n    nodes {\n      id\n      uri\n      template {\n        templateName\n      }\n      status\n    }\n  }\n}": types.QueryPagesBasicDocument,
     "query queryPageByUri($uri: ID!) {\n  page(id: $uri, idType: URI) {\n      ...PageFields\n    }\n}": types.QueryPageByUriDocument,
-    "\n  fragment PrevNextPost on Post {\n    id\n    title(format: RAW)\n    slug\n  }\n": types.PrevNextPostFragmentDoc,
-    "\n  fragment PostFields on Post {\n    id\n    databaseId\n    title\n    slug\n    date\n    status\n    content\n    featuredImage {\n      node {\n        ...MediaItemFields\n      }\n    }\n    author {\n      node {\n        name\n      }\n    }\n    tags {\n      nodes {\n        uri\n        name\n      }\n    }\n    comments {\n      nodes {\n        ...CommentFields\n      }\n    }\n    commentCount\n    next {\n      ...PrevNextPost\n    }\n    previous {\n      ...PrevNextPost\n    }\n  }\n": types.PostFieldsFragmentDoc,
+    "\n  fragment PrevNextPost on Post {\n    id\n    title\n    slug\n  }\n": types.PrevNextPostFragmentDoc,
+    "\n  fragment PostBasic on Post {\n    id\n    databaseId\n    title\n    slug\n    date\n    status\n  }\n": types.PostBasicFragmentDoc,
+    "\n  fragment PostFields on Post {\n    ...PostBasic\n    content\n    featuredImage {\n      node {\n        ...MediaItemFields\n      }\n    }\n    author {\n      node {\n        ...UserBasic\n      }\n    }\n    tags {\n      nodes {\n        uri\n        name\n      }\n    }\n    comments {\n      nodes {\n        ...CommentFields\n      }\n    }\n    commentCount\n    next {\n      ...PrevNextPost\n    }\n    previous {\n      ...PrevNextPost\n    }\n  }\n": types.PostFieldsFragmentDoc,
     "\n  query queryPosts {\n    posts {\n      nodes {\n        ...PostFields\n      }\n    }\n  }\n": types.QueryPostsDocument,
-    "query queryPostsBasic {\n  posts {\n    edges {\n      cursor\n      node {\n        id\n        slug\n        status\n        title\n    \t}\n    }\n  }\n}": types.QueryPostsBasicDocument,
+    "query queryPostsBasic {\n  posts(first: 100) {\n    nodes {\n      ...PostBasic\n    }\n  }\n}": types.QueryPostsBasicDocument,
+    "query queryPostsResumes {\n  posts {\n    nodes {\n      ...PostBasic\n      excerpt\n      featuredImage {\n        node {\n          ...MediaItemFields\n        }\n      }\n      author {\n        node {\n          ...UserBasic\n        }\n      }\n    }\n  }\n}": types.QueryPostsResumesDocument,
     "query queryPostByUri($uri: ID!) {\n  post(id: $uri, idType: URI) {\n    ...PostFields\n  }\n}": types.QueryPostByUriDocument,
     "\n  fragment MediaItemFields on MediaItem {\n    altText\n    id\n    sourceUrl\n    mediaDetails {\n      height\n      width\n    }\n  }\n": types.MediaItemFieldsFragmentDoc,
     "\n  query querySiteOptions {\n    optionsPage {\n      socialMedia {\n        socialMediaFacebook {\n          show\n          url\n        }\n        socialMediaInstagram {\n          show\n          url\n        }\n        socialMediaFlickr {\n          show\n          url\n        }\n        socialMediaBehance {\n          show\n          url\n        }\n      }\n    }\n  }\n": types.QuerySiteOptionsDocument,
     "\n  query querySiteData {\n    generalSettings {\n      description\n      language\n      title\n    }\n    favicon {\n      mediaDetails {\n        sizes {\n          sourceUrl\n          width\n        }\n      }\n    }\n  }\n": types.QuerySiteDataDocument,
+    "\n  fragment UserBasic on User {\n    name\n    url\n  }\n": types.UserBasicFragmentDoc,
 };
 
 /**
@@ -90,11 +93,15 @@ export function gql(source: "query queryPageByUri($uri: ID!) {\n  page(id: $uri,
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  fragment PrevNextPost on Post {\n    id\n    title(format: RAW)\n    slug\n  }\n"): (typeof documents)["\n  fragment PrevNextPost on Post {\n    id\n    title(format: RAW)\n    slug\n  }\n"];
+export function gql(source: "\n  fragment PrevNextPost on Post {\n    id\n    title\n    slug\n  }\n"): (typeof documents)["\n  fragment PrevNextPost on Post {\n    id\n    title\n    slug\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  fragment PostFields on Post {\n    id\n    databaseId\n    title\n    slug\n    date\n    status\n    content\n    featuredImage {\n      node {\n        ...MediaItemFields\n      }\n    }\n    author {\n      node {\n        name\n      }\n    }\n    tags {\n      nodes {\n        uri\n        name\n      }\n    }\n    comments {\n      nodes {\n        ...CommentFields\n      }\n    }\n    commentCount\n    next {\n      ...PrevNextPost\n    }\n    previous {\n      ...PrevNextPost\n    }\n  }\n"): (typeof documents)["\n  fragment PostFields on Post {\n    id\n    databaseId\n    title\n    slug\n    date\n    status\n    content\n    featuredImage {\n      node {\n        ...MediaItemFields\n      }\n    }\n    author {\n      node {\n        name\n      }\n    }\n    tags {\n      nodes {\n        uri\n        name\n      }\n    }\n    comments {\n      nodes {\n        ...CommentFields\n      }\n    }\n    commentCount\n    next {\n      ...PrevNextPost\n    }\n    previous {\n      ...PrevNextPost\n    }\n  }\n"];
+export function gql(source: "\n  fragment PostBasic on Post {\n    id\n    databaseId\n    title\n    slug\n    date\n    status\n  }\n"): (typeof documents)["\n  fragment PostBasic on Post {\n    id\n    databaseId\n    title\n    slug\n    date\n    status\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  fragment PostFields on Post {\n    ...PostBasic\n    content\n    featuredImage {\n      node {\n        ...MediaItemFields\n      }\n    }\n    author {\n      node {\n        ...UserBasic\n      }\n    }\n    tags {\n      nodes {\n        uri\n        name\n      }\n    }\n    comments {\n      nodes {\n        ...CommentFields\n      }\n    }\n    commentCount\n    next {\n      ...PrevNextPost\n    }\n    previous {\n      ...PrevNextPost\n    }\n  }\n"): (typeof documents)["\n  fragment PostFields on Post {\n    ...PostBasic\n    content\n    featuredImage {\n      node {\n        ...MediaItemFields\n      }\n    }\n    author {\n      node {\n        ...UserBasic\n      }\n    }\n    tags {\n      nodes {\n        uri\n        name\n      }\n    }\n    comments {\n      nodes {\n        ...CommentFields\n      }\n    }\n    commentCount\n    next {\n      ...PrevNextPost\n    }\n    previous {\n      ...PrevNextPost\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -102,7 +109,11 @@ export function gql(source: "\n  query queryPosts {\n    posts {\n      nodes {\
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "query queryPostsBasic {\n  posts {\n    edges {\n      cursor\n      node {\n        id\n        slug\n        status\n        title\n    \t}\n    }\n  }\n}"): (typeof documents)["query queryPostsBasic {\n  posts {\n    edges {\n      cursor\n      node {\n        id\n        slug\n        status\n        title\n    \t}\n    }\n  }\n}"];
+export function gql(source: "query queryPostsBasic {\n  posts(first: 100) {\n    nodes {\n      ...PostBasic\n    }\n  }\n}"): (typeof documents)["query queryPostsBasic {\n  posts(first: 100) {\n    nodes {\n      ...PostBasic\n    }\n  }\n}"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "query queryPostsResumes {\n  posts {\n    nodes {\n      ...PostBasic\n      excerpt\n      featuredImage {\n        node {\n          ...MediaItemFields\n        }\n      }\n      author {\n        node {\n          ...UserBasic\n        }\n      }\n    }\n  }\n}"): (typeof documents)["query queryPostsResumes {\n  posts {\n    nodes {\n      ...PostBasic\n      excerpt\n      featuredImage {\n        node {\n          ...MediaItemFields\n        }\n      }\n      author {\n        node {\n          ...UserBasic\n        }\n      }\n    }\n  }\n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -119,6 +130,10 @@ export function gql(source: "\n  query querySiteOptions {\n    optionsPage {\n  
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query querySiteData {\n    generalSettings {\n      description\n      language\n      title\n    }\n    favicon {\n      mediaDetails {\n        sizes {\n          sourceUrl\n          width\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query querySiteData {\n    generalSettings {\n      description\n      language\n      title\n    }\n    favicon {\n      mediaDetails {\n        sizes {\n          sourceUrl\n          width\n        }\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  fragment UserBasic on User {\n    name\n    url\n  }\n"): (typeof documents)["\n  fragment UserBasic on User {\n    name\n    url\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

@@ -3,19 +3,25 @@ import { gql } from './__generated__';
 export const PREV_NEXT_POST = gql(`
   fragment PrevNextPost on Post {
     id
-    title(format: RAW)
+    title
     slug
   }
 `);
 
-export const POST_FIELDS = gql(`
-  fragment PostFields on Post {
+export const POST_BASIC = gql(`
+  fragment PostBasic on Post {
     id
     databaseId
     title
     slug
     date
     status
+  }
+`);
+
+export const POST_FIELDS = gql(`
+  fragment PostFields on Post {
+    ...PostBasic
     content
     featuredImage {
       node {
@@ -24,7 +30,7 @@ export const POST_FIELDS = gql(`
     }
     author {
       node {
-        name
+        ...UserBasic
       }
     }
     tags {
@@ -59,15 +65,28 @@ export const QUERY_POSTS = gql(`
 `);
 
 export const QUERY_POSTS_BASIC = gql(`query queryPostsBasic {
+  posts(first: 100) {
+    nodes {
+      ...PostBasic
+    }
+  }
+}`);
+
+export const QUERY_POSTS_RESUME = gql(`query queryPostsResumes {
   posts {
-    edges {
-      cursor
-      node {
-        id
-        slug
-        status
-        title
-    	}
+    nodes {
+      ...PostBasic
+      excerpt
+      featuredImage {
+        node {
+          ...MediaItemFields
+        }
+      }
+      author {
+        node {
+          ...UserBasic
+        }
+      }
     }
   }
 }`);

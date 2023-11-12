@@ -2,9 +2,11 @@
 import {
   QUERY_POSTS,
   QUERY_POSTS_BASIC,
+  QUERY_POSTS_RESUME,
   QUERY_POST_BY_URI,
 } from '@app/graphql/posts';
-import { mapPostData, mapPostsBasic } from '@app/utils/posts';
+import { mapPostData, mapPostResumeData } from '@app/utils/posts';
+import { removeDeepProperty } from '@app/utils/general';
 import { getApolloClient } from './apollo-client';
 
 const getAllPosts = async () => {
@@ -31,6 +33,30 @@ const getAllPosts = async () => {
   return { posts };
 };
 
+const getAllPostsResume = async () => {
+  const apolloClient = getApolloClient();
+
+  let postsData;
+
+  try {
+    postsData = await apolloClient.query({
+      query: QUERY_POSTS_RESUME,
+      fetchPolicy: 'no-cache',
+    });
+  } catch (e) {
+    console.log(
+      `[posts][getAllPosts] Failed to query post data: ${(e as Error).message}`
+    );
+    throw e;
+  }
+
+  if (!postsData.data.posts) return null;
+
+  const posts = postsData.data.posts?.nodes.map(mapPostResumeData);
+
+  return { posts };
+};
+
 const getAllPostsBasic = async () => {
   const apolloClient = getApolloClient();
 
@@ -52,7 +78,9 @@ const getAllPostsBasic = async () => {
 
   if (!postsData.data.posts) return null;
 
-  const posts = postsData.data.posts.edges.map(mapPostsBasic);
+  const posts = postsData.data.posts.nodes.map(node =>
+    removeDeepProperty(node, '__typename')
+  );
 
   return { posts };
 };
@@ -86,6 +114,7 @@ const getPostByUri = async (uri: string) => {
 
 const PostsService = {
   getAllPosts,
+  getAllPostsResume,
   getAllPostsBasic,
   getPostByUri,
 };

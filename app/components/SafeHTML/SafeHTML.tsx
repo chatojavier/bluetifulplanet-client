@@ -58,6 +58,8 @@ export const decodeHTML = (html: string) => {
     agrave: 'à',
     Acirc: 'Â',
     acirc: 'â',
+    nbsp: ' ',
+    hellip: '…',
     // Add more entities as needed
   };
   return html.replace(/&(#(?:x[0-9a-f]+|\d+)|[a-z]+);?/gi, ($0, $1: string) => {
@@ -81,4 +83,11 @@ const SafeHTML: FC<SafeHTMLProps> = ({ html }) => {
     />
   );
 };
+
+export const plainText = (html: string) => {
+  const clean = xss(html);
+  const decoded = decodeHTML(clean);
+  return decoded.replace(/(<([^>]+)>)/gi, '');
+};
+
 export default SafeHTML;

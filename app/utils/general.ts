@@ -1,6 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { DeepOmit } from '@app/types/general';
 import format from 'date-fns/format';
+import parseISO from 'date-fns/parseISO';
 
 /**
  * removeLastTrailingSlash
@@ -68,7 +69,8 @@ export function objectToFormData(obj: Record<string, string | Blob>) {
 }
 
 export const formatDate = (date: string | number | Date, pattern = 'PPP') => {
-  return format(new Date(date), pattern);
+  const parsedDate = typeof date === 'string' ? parseISO(date) : date;
+  return format(parsedDate, pattern);
 };
 
 export const emailPattern =

@@ -1,23 +1,18 @@
-import { cloneDeep } from '@apollo/client/utilities/common/cloneDeep';
 import {
   PostFieldsFragment,
-  QueryPostsBasicQuery,
+  QueryPostsResumesQuery,
 } from '@app/graphql/__generated__/graphql';
 import { removeDeepProperty } from './general';
 import { mapCommentData } from './comments';
 
 export const mapPostData = (post: PostFieldsFragment) => {
-  const postUpdated = cloneDeep(post);
-
   const data = {
-    ...postUpdated,
-    featuredImage: postUpdated.featuredImage
-      ? postUpdated.featuredImage.node
-      : null,
-    author: postUpdated.author ? postUpdated.author.node : null,
-    tags: postUpdated.tags ? postUpdated.tags.nodes : null,
-    comments: postUpdated.comments
-      ? postUpdated.comments.nodes.map(comment => mapCommentData(comment))
+    ...post,
+    featuredImage: post.featuredImage ? post.featuredImage.node : null,
+    author: post.author ? post.author.node : null,
+    tags: post.tags ? post.tags.nodes : null,
+    comments: post.comments
+      ? post.comments.nodes.map(comment => mapCommentData(comment))
       : null,
   };
 
@@ -26,13 +21,16 @@ export const mapPostData = (post: PostFieldsFragment) => {
 
 export type PostMapped = ReturnType<typeof mapPostData>;
 
-export const mapPostsBasic = (
-  edge: NonNullable<QueryPostsBasicQuery['posts']>['edges'][number]
+export const mapPostResumeData = (
+  post: NonNullable<QueryPostsResumesQuery['posts']>['nodes'][0]
 ) => {
   const data = {
-    cursor: edge.cursor,
-    ...edge.node,
+    ...post,
+    featuredImage: post.featuredImage ? post.featuredImage.node : null,
+    author: post.author ? post.author.node : null,
   };
 
   return removeDeepProperty(data, '__typename');
 };
+
+export type PostResumeMapped = ReturnType<typeof mapPostResumeData>;

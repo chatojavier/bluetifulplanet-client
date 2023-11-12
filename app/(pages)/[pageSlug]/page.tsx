@@ -32,8 +32,6 @@ const Page = async ({ params }: PageProps) => {
     page: { title, content = '' },
   } = await getPageData(params);
 
-  // eslint-disable-next-line no-console
-  console.log(`Rendering page [${params.pageSlug}]`);
   const id = removeAllTrailingSlash(params.pageSlug);
 
   return (
