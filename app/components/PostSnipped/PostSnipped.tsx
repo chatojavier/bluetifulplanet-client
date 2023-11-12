@@ -29,22 +29,22 @@ const PostSnipped: FunctionComponent<PostSnippedProps> = ({
   const { width, height } = mediaDetails || { width: 0, height: 0 };
   const path = `/blog/${slug}`;
   return (
-    <div className="post-snipped | px-3">
+    <div className="post-snipped | px-3 | sm:w-10/12 sm:mx-auto | lg:w-3/4">
       {sourceUrl && (
         <Link href={path}>
-          <figure>
+          <figure className="aspect-w-16 aspect-h-9">
             <Image
               src={sourceUrl}
               alt={altText as string}
               width={width as number}
               height={height as number}
               sizes="(min-width: 1024px) 75vw, (min-width: 640px) 83.33vw, 100vw"
-              className="h-72 object-cover"
+              className="object-cover"
             />
           </figure>
         </Link>
       )}
-      <div className="flex flex-col items-center py-8 px-4">
+      <div className="flex flex-col items-center py-8 px-4 bg-white | md:relative md:p-12 md:-mt-[90px] md:mx-[10%]">
         <HeaderInfo author={author} date={date} />
         {title && (
           <Link href={path}>
@@ -56,7 +56,7 @@ const PostSnipped: FunctionComponent<PostSnippedProps> = ({
           </Link>
         )}
         {excerpt && (
-          <p className="line-clamp-4 !mb-5 text-center">
+          <p className="!mb-5 text-center text-sm line-clamp-4">
             {plainText(excerpt).replace(/\s*[[\]]/g, '')}
           </p>
         )}

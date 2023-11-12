@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const aspectRatio = require('@tailwindcss/aspect-ratio');
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -23,5 +26,8 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  corePlugins: {
+    aspectRatio: false,
+  },
+  plugins: [aspectRatio],
 };

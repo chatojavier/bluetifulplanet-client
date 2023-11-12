@@ -16,7 +16,7 @@ const Blog: NextPage = async () => {
     <div className="blog-page">
       <h1 className="sr-only">Blog</h1>
       {posts ? (
-        <ul className="space-y-10">
+        <ul className="space-y-10 mx-auto mt-16">
           {posts.map(post => {
             return (
               <li key={post.slug}>
