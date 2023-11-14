@@ -12,55 +12,38 @@ interface SocialMediaLinksProps {
   socialMediaData?: SocialMedia;
 }
 
+type SocialMediaKey = keyof NonNullable<SocialMedia>;
+
 const SocialMediaLinks: FunctionComponent<SocialMediaLinksProps> = ({
   socialMediaData,
 }) => {
+  const mediaIcons = {
+    socialMediaFacebook: faFacebookF,
+    socialMediaInstagram: faInstagram,
+    socialMediaFlickr: faFlickr,
+    socialMediaBehance: faBehance,
+  };
   return (
     <div
-      className={`flex space-x-4 h-full items-center ${
+      className={`flex space-x-3 md:space-x-4 h-full items-center ${
         !socialMediaData && 'hidden'
       }`}
     >
-      {socialMediaData && (
-        <>
-          {socialMediaData.socialMediaFacebook?.show &&
-            socialMediaData.socialMediaFacebook?.url && (
-              <a
-                href={socialMediaData.socialMediaFacebook.url}
-                data-testid="facebook"
-              >
-                <FontAwesomeIcon icon={faFacebookF} className="h-4" />
+      {socialMediaData &&
+        (Object.keys(socialMediaData) as SocialMediaKey[]).map(key => {
+          const media = socialMediaData[key];
+          return (
+            media?.show &&
+            media.url && (
+              <a href={media.url} data-testid={key} key={key}>
+                <FontAwesomeIcon
+                  icon={mediaIcons[key]}
+                  className="h-[14px] md:h-4"
+                />
               </a>
-            )}
-          {socialMediaData.socialMediaInstagram?.show &&
-            socialMediaData.socialMediaInstagram?.url && (
-              <a
-                href={socialMediaData.socialMediaInstagram.url}
-                data-testid="instagram"
-              >
-                <FontAwesomeIcon icon={faInstagram} className="h-4" />
-              </a>
-            )}
-          {socialMediaData.socialMediaFlickr?.show &&
-            socialMediaData.socialMediaFlickr?.url && (
-              <a
-                href={socialMediaData.socialMediaFlickr?.url}
-                data-testid="flickr"
-              >
-                <FontAwesomeIcon icon={faFlickr} className="h-4" />
-              </a>
-            )}
-          {socialMediaData.socialMediaBehance?.show &&
-            socialMediaData.socialMediaBehance?.url && (
-              <a
-                href={socialMediaData.socialMediaBehance?.url}
-                data-testid="behance"
-              >
-                <FontAwesomeIcon icon={faBehance} className="h-4" />
-              </a>
-            )}
-        </>
-      )}
+            )
+          );
+        })}
     </div>
   );
 };

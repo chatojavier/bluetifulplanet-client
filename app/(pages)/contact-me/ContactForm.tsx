@@ -65,7 +65,7 @@ const ContactForm: FunctionComponent = () => {
   };
 
   return (
-    <form className="w-1/2" onSubmit={handleSubmit(onSubmit)}>
+    <form className="md:w-1/2" onSubmit={handleSubmit(onSubmit)}>
       <div className="form-inputs | flex flex-col gap-4 mb-6">
         <InputText
           {...register(InputLabel.NAME, { required: errorMessages.required })}

@@ -38,7 +38,7 @@ const Page = async ({ params }: PageProps) => {
     <div id={id} className="page | py-12">
       <h1 className="hidden">{title}</h1>
       {content && (
-        <div className="wp-content | max-w-1/2 m-auto px-4">
+        <div className="wp-content | md:max-w-3xl m-auto px-4">
           <SafeHTML html={content} />
         </div>
       )}

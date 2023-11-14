@@ -40,7 +40,7 @@ const Page = async () => {
     <div id={id} className="page | h-full flex">
       <h1 className="hidden">{title}</h1>
       {content && (
-        <div className="wp-content | max-w-5xl w-full m-auto px-4 py-12 flex justify-between">
+        <div className="wp-content | max-w-5xl w-full m-auto px-4 py-12 md:flex justify-between">
           <div className="contact-info">
             <SafeHTML html={content} />
           </div>

@@ -2,15 +2,16 @@ import { forwardRef, ForwardRefRenderFunction, PropsWithChildren } from 'react';
 
 interface DrawerProps {
   open: boolean;
+  className?: string;
 }
 
 const Drawer: ForwardRefRenderFunction<
   HTMLDivElement,
   PropsWithChildren<DrawerProps>
-> = ({ children, open }, ref) => {
+> = ({ children, open, className = '' }, ref) => {
   return (
     <div
-      className={`drawer | fixed z-10 bottom-0 | w-screen h-[calc(100vh-5rem)] | bg-black bg-opacity-70 transition-all duration-1000 ${
+      className={`drawer | fixed z-10 bottom-0 | w-screen | bg-black bg-opacity-70 transition-all duration-1000 ${className} ${
         open ? 'bg-opacity-70 visible' : 'bg-opacity-0 invisible'
       }`}
     >

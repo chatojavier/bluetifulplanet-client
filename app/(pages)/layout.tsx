@@ -25,7 +25,6 @@ export default async function RootLayout({
   children: ReactNode;
 }) {
   const { mainMenu, language, socialMedia } = await getData();
-  const navBarHeight = '5rem';
   return (
     <html
       lang={(language as string) || 'en'}
@@ -37,11 +36,7 @@ export default async function RootLayout({
       */}
       <head />
       <body className="h-full">
-        <Header
-          menuLinks={mainMenu}
-          socialMedia={socialMedia}
-          navBarHeight={navBarHeight}
-        />
+        <Header menuLinks={mainMenu} socialMedia={socialMedia} />
         <div className="content | h-[calc(100%-5rem)]">{children}</div>
       </body>
     </html>
