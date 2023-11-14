@@ -8,10 +8,10 @@ describe('SocialMediaLinks', () => {
     const SocialMediaData = mockOptionsPageResult.optionsPage.socialMedia;
     render(<SocialMediaLinks socialMediaData={SocialMediaData} />);
 
-    expect(screen.queryByTestId('facebook')).toBeInTheDocument();
-    expect(screen.queryByTestId('instagram')).toBeInTheDocument();
-    expect(screen.queryByTestId('flickr')).toBeNull();
-    expect(screen.queryByTestId('behance')).toBeNull();
+    expect(screen.queryByTestId('socialMediaFacebook')).toBeInTheDocument();
+    expect(screen.queryByTestId('socialMediaInstagram')).toBeInTheDocument();
+    expect(screen.queryByTestId('socialMediaFlickr')).toBeNull();
+    expect(screen.queryByTestId('socialMediaBehance')).toBeNull();
   });
   it('should render correctly flickr and behance icons', () => {
     const SocialMediaData: SocialMedia =
@@ -29,9 +29,9 @@ describe('SocialMediaLinks', () => {
 
     render(<SocialMediaLinks socialMediaData={SocialMediaData} />);
 
-    expect(screen.queryByTestId('facebook')).toBeNull();
-    expect(screen.queryByTestId('instagram')).toBeNull();
-    expect(screen.queryByTestId('flickr')).toBeInTheDocument();
-    expect(screen.queryByTestId('behance')).toBeInTheDocument();
+    expect(screen.queryByTestId('socialMediaFacebook')).toBeNull();
+    expect(screen.queryByTestId('socialMediaInstagram')).toBeNull();
+    expect(screen.queryByTestId('socialMediaFlickr')).toBeInTheDocument();
+    expect(screen.queryByTestId('socialMediaBehance')).toBeInTheDocument();
   });
 });
