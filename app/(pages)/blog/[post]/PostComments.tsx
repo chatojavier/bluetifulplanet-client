@@ -88,7 +88,7 @@ const PostComments: FunctionComponent<PostCommentsProps> = ({
   return (
     <section
       id="post-comments"
-      className="post-comments | max-w-5xl m-auto px-12 pb-18"
+      className="post-comments | max-w-5xl m-auto px-4 md:px-12 pb-18"
       ref={sectionRef}
     >
       <div className="comments-container | pt-11 pb-11 border-t border-gray-400">

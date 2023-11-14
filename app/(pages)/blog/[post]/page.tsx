@@ -65,7 +65,7 @@ const Post = async ({ params }: PostProps) => {
         <article
           itemScope
           itemType="http://schema.org/Article"
-          className="max-w-5xl m-auto px-18 pt-12 pb-20 bg-white"
+          className="m-auto bg-white px-6 py-7 | md:px-12 py-10 md:mx-[5%] | lg:px-18 lg:pt-12 lg:pb-20 | xl:mx-auto xl:max-w-5xl"
         >
           <HeaderInfo author={author} date={date} />
           <header className="post-title">

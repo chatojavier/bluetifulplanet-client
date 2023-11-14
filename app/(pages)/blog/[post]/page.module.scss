@@ -1,23 +1,17 @@
+@import '/app/scss/breakpoints.scss';
+
 .paralaxWrapper {
-  height: 100%;
   perspective: 10px;
-  overflow-y: auto;
-  overflow-x: hidden;
+  @apply h-full overflow-y-auto overflow-x-hidden;
 }
 
 .paralaxContainer {
   transform-style: preserve-3d;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: -1;
-  height: 60vh;
-  position: relative;
+  @apply flex justify-center items-center -z-10 h-[30%] relative md:h-1/3 landscape:h-3/5;
 }
 .paralaxImg {
   transform: translateZ(-10px);
   scale: 2;
-  object-fit: cover;
-  width: 100%;
-  height: 135%;
+  @apply object-cover w-full h-[135%] relative -top-[275px] landscape:static;
 }
+

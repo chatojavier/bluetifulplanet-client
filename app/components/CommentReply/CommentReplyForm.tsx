@@ -63,7 +63,7 @@ const CommentReplyForm: FunctionComponent<CommentReplyFormProps> = ({
       <p className="comment-notes text-xs">
         Your email address will not be published. Required fields are marked *
       </p>
-      <div className="comment-inputs grid grid-cols-2 gap-4 mb-4">
+      <div className="comment-inputs grid-cols-2 mb-4 space-y-2 | md:grid md:gap-4 md:space-y-0">
         <InputTextArea
           {...register(InputLabel.COMMENT, {
             required: errorMessages.required,

@@ -1,0 +1,17 @@
+@mixin breakpoint($point) {
+  @if $point == sm {
+    @media (min-width: 640px) { @content; }
+  }
+  @elseif $point == md {
+    @media (min-width: 768px) { @content; }
+  }
+  @elseif $point == lg {
+    @media (min-width: 1024px) { @content; }
+  }
+  @elseif $point == xl {
+    @media (min-width: 1280px) { @content; }
+  }
+  @elseif $point == 2xl {
+    @media (min-width: 1536px) { @content; }
+  }
+}

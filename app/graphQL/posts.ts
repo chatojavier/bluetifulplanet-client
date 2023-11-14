@@ -72,24 +72,33 @@ export const QUERY_POSTS_BASIC = gql(`query queryPostsBasic {
   }
 }`);
 
-export const QUERY_POSTS_RESUME = gql(`query queryPostsResumes {
-  posts {
-    nodes {
-      ...PostBasic
-      excerpt
-      featuredImage {
-        node {
-          ...MediaItemFields
+export const QUERY_POSTS_RESUME = gql(`
+  query queryPostsResumes($offsetPagination: OffsetPagination) {
+    posts(where: {offsetPagination: $offsetPagination}) {
+      nodes {
+        ...PostBasic
+        excerpt
+        featuredImage {
+          node {
+            ...MediaItemFields
+          }
+        }
+        author {
+          node {
+            ...UserBasic
+          }
         }
       }
-      author {
-        node {
-          ...UserBasic
+      pageInfo {
+        offsetPagination {
+          hasMore
+          hasPrevious
+          total
         }
       }
     }
   }
-}`);
+`);
 
 export const QUERY_POST_BY_URI = gql(`query queryPostByUri($uri: ID!) {
   post(id: $uri, idType: URI) {

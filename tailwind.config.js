@@ -24,6 +24,9 @@ module.exports = {
       spacing: {
         18: '4.5rem',
       },
+      scale: {
+        200: '2',
+      },
     },
   },
   corePlugins: {

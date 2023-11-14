@@ -33,7 +33,7 @@ const getAllPosts = async () => {
   return { posts };
 };
 
-const getAllPostsResume = async () => {
+const getAllPostsResume = async (offset = 0, size = 10) => {
   const apolloClient = getApolloClient();
 
   let postsData;
@@ -42,6 +42,12 @@ const getAllPostsResume = async () => {
     postsData = await apolloClient.query({
       query: QUERY_POSTS_RESUME,
       fetchPolicy: 'no-cache',
+      variables: {
+        offsetPagination: {
+          offset,
+          size,
+        },
+      },
     });
   } catch (e) {
     console.log(
@@ -52,9 +58,10 @@ const getAllPostsResume = async () => {
 
   if (!postsData.data.posts) return null;
 
-  const posts = postsData.data.posts?.nodes.map(mapPostResumeData);
+  const posts = postsData.data.posts.nodes.map(mapPostResumeData);
+  const pageInfo = postsData.data.posts.pageInfo.offsetPagination;
 
-  return { posts };
+  return { posts, pageInfo };
 };
 
 const getAllPostsBasic = async () => {
