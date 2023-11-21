@@ -10,9 +10,8 @@ import '@swiper/swiper.min.css';
 import '@swiper/modules/autoplay/autoplay.min.css';
 import '@swiper/modules/navigation/navigation.min.css';
 import useWindowSize from '@app/hooks/useWindowSize';
-import FullSliderNavigation from './FullSliderNavigation';
-
-type DisplayOrientation = 'landscape' | 'portrait';
+import { DisplayOrientation } from '@app/types/general';
+import FullSliderNavigation from '@components/FullSlider/FullSliderNavigation';
 
 export type ImageGallery = ({
   sourceUrl: string | null | undefined;
@@ -36,9 +35,7 @@ const FullSlider: FunctionComponent<FullSliderProps> = ({
   gallery,
   displayOrientation,
 }) => {
-  const [width, heigth] = useWindowSize();
-  const windowOrientation: DisplayOrientation =
-    width >= heigth ? 'landscape' : 'portrait';
+  const { windowOrientation } = useWindowSize();
 
   return (
     <>

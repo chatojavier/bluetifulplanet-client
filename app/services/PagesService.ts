@@ -82,7 +82,17 @@ const getAllPagesBasic = async () => {
 
   if (!pagesData.data.pages) return null;
 
-  const pages = pagesData.data.pages?.nodes.map(mapPageData);
+  const pages = pagesData.data.pages?.nodes.map(page => {
+    const { id, slug, template, status } = page;
+
+    const pageUpdated = {
+      id,
+      slug,
+      template: template?.templateName,
+      status,
+    };
+    return removeDeepProperty(pageUpdated, '__typename');
+  });
 
   return { pages };
 };

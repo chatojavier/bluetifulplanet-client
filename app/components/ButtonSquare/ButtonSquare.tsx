@@ -31,7 +31,7 @@ const ButtonSquare: FunctionComponent<ButtonSquareProps> = ({
       disabled={loading || disabled}
       {...restProps}
     >
-      {loading && <Spinner />}
+      {loading && <Spinner size="xs" className="mr-3" />}
       {children || value}
     </button>
   );

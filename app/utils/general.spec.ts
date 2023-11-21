@@ -10,6 +10,13 @@ import {
   removeAllTrailingSlash,
   objectToFormData,
   fetchPostForm,
+  isObject,
+  isFunction,
+  isBrowser,
+  isString,
+  isBoolean,
+  isNumber,
+  isUndef,
 } from './general';
 
 describe('removeLastTrailingSlash', () => {
@@ -82,5 +89,103 @@ describe('fetchPostForm', () => {
     const data = await fetchPostForm(mockFormPayload, url);
     expect(fetch).toHaveBeenCalled();
     expect(data).toBe(MOCK_RETURN);
+  });
+});
+describe('isBrowser', () => {
+  it('should return true if running in a browser environment', () => {
+    expect(isBrowser()).toBe(true);
+  });
+
+  it('should return false if not running in a browser environment', () => {
+    const getWindowMock = jest
+      .spyOn(global, 'window', 'get')
+      .mockImplementation(() => undefined as unknown as Window & typeof global);
+
+    expect(isBrowser()).toBe(false);
+    getWindowMock.mockRestore();
+  });
+});
+describe('isObject', () => {
+  it('should return true if the value is an object', () => {
+    const value = { name: 'John', age: 30 };
+    const result = isObject(value);
+    expect(result).toBe(true);
+  });
+
+  it('should return false if the value is null', () => {
+    const value = null;
+    const result = isObject(value);
+    expect(result).toBe(false);
+  });
+
+  it('should return false if the value is not an object', () => {
+    const value = 'Hello';
+    const result = isObject(value);
+    expect(result).toBe(false);
+  });
+});
+describe('isFunction', () => {
+  it('should return true if the value is a function', () => {
+    const value = () => 'Hello';
+    const result = isFunction(value);
+    expect(result).toBe(true);
+  });
+
+  it('should return false if the value is not a function', () => {
+    const value = 'Hello';
+    const result = isFunction(value);
+    expect(result).toBe(false);
+  });
+});
+describe('isString', () => {
+  it('should return true if the value is a string', () => {
+    const value = 'Hello';
+    const result = isString(value);
+    expect(result).toBe(true);
+  });
+
+  it('should return false if the value is not a string', () => {
+    const value = 123;
+    const result = isString(value);
+    expect(result).toBe(false);
+  });
+});
+describe('isBoolean', () => {
+  it('should return true if the value is a boolean', () => {
+    const value = true;
+    const result = isBoolean(value);
+    expect(result).toBe(true);
+  });
+
+  it('should return false if the value is not a boolean', () => {
+    const value = 'Hello';
+    const result = isBoolean(value);
+    expect(result).toBe(false);
+  });
+});
+describe('isNumber', () => {
+  it('should return true if the value is a number', () => {
+    const value = 123;
+    const result = isNumber(value);
+    expect(result).toBe(true);
+  });
+
+  it('should return false if the value is not a number', () => {
+    const value = 'Hello';
+    const result = isNumber(value);
+    expect(result).toBe(false);
+  });
+});
+describe('isUndef', () => {
+  it('should return true if the value is undefined', () => {
+    const value = undefined;
+    const result = isUndef(value);
+    expect(result).toBe(true);
+  });
+
+  it('should return false if the value is not undefined', () => {
+    const value = null;
+    const result = isUndef(value);
+    expect(result).toBe(false);
   });
 });

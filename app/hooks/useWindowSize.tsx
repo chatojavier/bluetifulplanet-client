@@ -1,9 +1,14 @@
+import { Breakpoint, DisplayOrientation } from '@app/types/general';
 import { useEffect, useState } from 'react';
 
-type Size = number[];
+type WindowSize = {
+  size: [number, number];
+  breakpoint: Breakpoint | undefined;
+  windowOrientation: DisplayOrientation;
+};
 
-const useWindowSize = (): Size => {
-  const [size, setSize] = useState<Size>([0, 0]);
+const useWindowSize = (): WindowSize => {
+  const [size, setSize] = useState<WindowSize['size']>([0, 0]);
   useEffect(() => {
     const updateSize = () => {
       setSize([window.innerWidth, window.innerHeight]);
@@ -12,7 +17,21 @@ const useWindowSize = (): Size => {
     updateSize();
     return () => window.removeEventListener('resize', updateSize);
   }, []);
-  return size;
+
+  const [width, heigth] = size;
+
+  let breakpoint;
+  if (width >= Breakpoint.XS) breakpoint = Breakpoint.XS;
+  if (width >= Breakpoint.SM) breakpoint = Breakpoint.SM;
+  if (width >= Breakpoint.MD) breakpoint = Breakpoint.MD;
+  if (width >= Breakpoint.LG) breakpoint = Breakpoint.LG;
+  if (width >= Breakpoint.XL) breakpoint = Breakpoint.XL;
+  if (width >= Breakpoint.XXL) breakpoint = Breakpoint.XXL;
+
+  const windowOrientation: DisplayOrientation =
+    width >= heigth ? 'landscape' : 'portrait';
+
+  return { size, breakpoint, windowOrientation };
 };
 
 export default useWindowSize;

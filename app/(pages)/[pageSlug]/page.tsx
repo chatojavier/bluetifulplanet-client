@@ -49,7 +49,7 @@ const Page = async ({ params }: PageProps) => {
 export default Page;
 
 export const generateStaticParams = async () => {
-  const { pages } = (await PagesService.getAllPages()) || { pages: [] };
+  const { pages } = (await PagesService.getAllPagesBasic()) || { pages: [] };
 
   return pages
     ?.filter(
@@ -58,6 +58,6 @@ export const generateStaticParams = async () => {
         page.status === 'publish'
     )
     .map(page => ({
-      pageSlug: page.uri as string,
+      pageSlug: page.slug as string,
     }));
 };

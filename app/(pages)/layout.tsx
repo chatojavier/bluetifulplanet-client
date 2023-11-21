@@ -37,7 +37,9 @@ export default async function RootLayout({
       <head />
       <body className="h-full">
         <Header menuLinks={mainMenu} socialMedia={socialMedia} />
-        <div className="content | h-[calc(100%-5rem)]">{children}</div>
+        <div className="content | h-[calc(100%-3rem)] md:h-[calc(100%-5rem)]">
+          {children}
+        </div>
       </body>
     </html>
   );

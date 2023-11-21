@@ -47,7 +47,7 @@ export const QUERY_PAGES_BASIC = gql(`query queryPagesBasic {
   pages {
     nodes {
       id
-      uri
+      slug
       template {
         templateName
       }

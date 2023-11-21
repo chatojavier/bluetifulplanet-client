@@ -17,11 +17,15 @@ const documents = {
     "\nquery commentsByPostId($contentId: ID, $first: Int = 10, $after: String = \"\") {\n  comments(where: {contentId: $contentId}, first: $first, after: $after) {\n    nodes {\n      ...CommentFields\n    }\n  }\n}\n": types.CommentsByPostIdDocument,
     "\n  mutation CreateComment($author: String, $authorEmail: String, $clientMutationId: String, $commentOn: Int, $content: String, $authorUrl: String = \"\", $parent: ID = \"\") {\n    createComment(\n      input: {author: $author, authorEmail: $authorEmail, clientMutationId: $clientMutationId, commentOn: $commentOn, content: $content, authorUrl: $authorUrl, parent: $parent}\n    ) {\n      success\n      comment {\n        ...CommentFields\n        databaseId\n        status\n      }\n      clientMutationId\n    }\n  }\n": types.CreateCommentDocument,
     "\n  query GetCommentsByEmail {\n    comments(where: {authorEmail: \"chato.javier@gmail.com\"}) {\n      nodes {\n        ...CommentFields\n      }\n    }\n  }\n": types.GetCommentsByEmailDocument,
+    "\n  query queryGalleriesBasic {\n    galleries {\n      nodes {\n        id\n        slug\n        status\n      }\n    }\n  }\n": types.QueryGalleriesBasicDocument,
+    "\n  query queryGalleryBySlug($slug: ID!) {\n    gallery(id: $slug, idType: SLUG) {\n      id\n      title\n      slug\n      status\n      gallerySettings {\n        galleryPhotos {\n          databaseId\n        }\n      }\n    }\n  }\n": types.QueryGalleryBySlugDocument,
+    "\n  fragment MediaItemFields on MediaItem {\n    altText\n    id\n    sourceUrl\n    mediaDetails {\n      height\n      width\n    }\n  }\n": types.MediaItemFieldsFragmentDoc,
+    "\n  query queryMediaItemsById($in: [ID]) {\n    mediaItems(where: {in: $in}, , first: 100) {\n      nodes {\n        ...MediaItemFields\n      }\n    }\n  }\n": types.QueryMediaItemsByIdDocument,
     "\n  query queryAllMenus {\n    menus {\n      nodes {\n        id\n        menuItems {\n          nodes {\n            id\n            parentId\n            label\n            path\n          }\n        }\n        name\n        slug\n        locations\n      }\n    }\n  }\n": types.QueryAllMenusDocument,
     "\n  fragment PageFields on Page {\n    id\n    title\n    uri\n    template {\n      templateName\n    }\n    status\n    content\n    featuredImage {\n      node {\n        ...MediaItemFields\n      }\n    }\n  }\n": types.PageFieldsFragmentDoc,
     "query queryHomePage {\n  nodeByUri(uri: \"/\") {\n    ... on Page {\n      id\n      title\n      slider {\n        sliderDesktop {\n          ...MediaItemFields\n        }\n        sliderMobile {\n          ...MediaItemFields\n        }\n      }\n    }\n  }\n}": types.QueryHomePageDocument,
     "query queryPages {\n  pages {\n    nodes {\n      ...PageFields\n    }\n  }\n}": types.QueryPagesDocument,
-    "query queryPagesBasic {\n  pages {\n    nodes {\n      id\n      uri\n      template {\n        templateName\n      }\n      status\n    }\n  }\n}": types.QueryPagesBasicDocument,
+    "query queryPagesBasic {\n  pages {\n    nodes {\n      id\n      slug\n      template {\n        templateName\n      }\n      status\n    }\n  }\n}": types.QueryPagesBasicDocument,
     "query queryPageByUri($uri: ID!) {\n  page(id: $uri, idType: URI) {\n      ...PageFields\n    }\n}": types.QueryPageByUriDocument,
     "\n  fragment PrevNextPost on Post {\n    id\n    title\n    slug\n  }\n": types.PrevNextPostFragmentDoc,
     "\n  fragment PostBasic on Post {\n    id\n    databaseId\n    title\n    slug\n    date\n    status\n  }\n": types.PostBasicFragmentDoc,
@@ -30,7 +34,6 @@ const documents = {
     "query queryPostsBasic {\n  posts(first: 100) {\n    nodes {\n      ...PostBasic\n    }\n  }\n}": types.QueryPostsBasicDocument,
     "\n  query queryPostsResumes($offsetPagination: OffsetPagination) {\n    posts(where: {offsetPagination: $offsetPagination}) {\n      nodes {\n        ...PostBasic\n        excerpt\n        featuredImage {\n          node {\n            ...MediaItemFields\n          }\n        }\n        author {\n          node {\n            ...UserBasic\n          }\n        }\n      }\n      pageInfo {\n        offsetPagination {\n          hasMore\n          hasPrevious\n          total\n        }\n      }\n    }\n  }\n": types.QueryPostsResumesDocument,
     "query queryPostByUri($uri: ID!) {\n  post(id: $uri, idType: URI) {\n    ...PostFields\n  }\n}": types.QueryPostByUriDocument,
-    "\n  fragment MediaItemFields on MediaItem {\n    altText\n    id\n    sourceUrl\n    mediaDetails {\n      height\n      width\n    }\n  }\n": types.MediaItemFieldsFragmentDoc,
     "\n  query querySiteOptions {\n    optionsPage {\n      socialMedia {\n        socialMediaFacebook {\n          show\n          url\n        }\n        socialMediaInstagram {\n          show\n          url\n        }\n        socialMediaFlickr {\n          show\n          url\n        }\n        socialMediaBehance {\n          show\n          url\n        }\n      }\n    }\n  }\n": types.QuerySiteOptionsDocument,
     "\n  query querySiteData {\n    generalSettings {\n      description\n      language\n      title\n    }\n    favicon {\n      mediaDetails {\n        sizes {\n          sourceUrl\n          width\n        }\n      }\n    }\n  }\n": types.QuerySiteDataDocument,
     "\n  fragment UserBasic on User {\n    name\n    url\n  }\n": types.UserBasicFragmentDoc,
@@ -69,6 +72,22 @@ export function gql(source: "\n  query GetCommentsByEmail {\n    comments(where:
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n  query queryGalleriesBasic {\n    galleries {\n      nodes {\n        id\n        slug\n        status\n      }\n    }\n  }\n"): (typeof documents)["\n  query queryGalleriesBasic {\n    galleries {\n      nodes {\n        id\n        slug\n        status\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query queryGalleryBySlug($slug: ID!) {\n    gallery(id: $slug, idType: SLUG) {\n      id\n      title\n      slug\n      status\n      gallerySettings {\n        galleryPhotos {\n          databaseId\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query queryGalleryBySlug($slug: ID!) {\n    gallery(id: $slug, idType: SLUG) {\n      id\n      title\n      slug\n      status\n      gallerySettings {\n        galleryPhotos {\n          databaseId\n        }\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  fragment MediaItemFields on MediaItem {\n    altText\n    id\n    sourceUrl\n    mediaDetails {\n      height\n      width\n    }\n  }\n"): (typeof documents)["\n  fragment MediaItemFields on MediaItem {\n    altText\n    id\n    sourceUrl\n    mediaDetails {\n      height\n      width\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query queryMediaItemsById($in: [ID]) {\n    mediaItems(where: {in: $in}, , first: 100) {\n      nodes {\n        ...MediaItemFields\n      }\n    }\n  }\n"): (typeof documents)["\n  query queryMediaItemsById($in: [ID]) {\n    mediaItems(where: {in: $in}, , first: 100) {\n      nodes {\n        ...MediaItemFields\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  query queryAllMenus {\n    menus {\n      nodes {\n        id\n        menuItems {\n          nodes {\n            id\n            parentId\n            label\n            path\n          }\n        }\n        name\n        slug\n        locations\n      }\n    }\n  }\n"): (typeof documents)["\n  query queryAllMenus {\n    menus {\n      nodes {\n        id\n        menuItems {\n          nodes {\n            id\n            parentId\n            label\n            path\n          }\n        }\n        name\n        slug\n        locations\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
@@ -85,7 +104,7 @@ export function gql(source: "query queryPages {\n  pages {\n    nodes {\n      .
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "query queryPagesBasic {\n  pages {\n    nodes {\n      id\n      uri\n      template {\n        templateName\n      }\n      status\n    }\n  }\n}"): (typeof documents)["query queryPagesBasic {\n  pages {\n    nodes {\n      id\n      uri\n      template {\n        templateName\n      }\n      status\n    }\n  }\n}"];
+export function gql(source: "query queryPagesBasic {\n  pages {\n    nodes {\n      id\n      slug\n      template {\n        templateName\n      }\n      status\n    }\n  }\n}"): (typeof documents)["query queryPagesBasic {\n  pages {\n    nodes {\n      id\n      slug\n      template {\n        templateName\n      }\n      status\n    }\n  }\n}"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -118,10 +137,6 @@ export function gql(source: "\n  query queryPostsResumes($offsetPagination: Offs
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "query queryPostByUri($uri: ID!) {\n  post(id: $uri, idType: URI) {\n    ...PostFields\n  }\n}"): (typeof documents)["query queryPostByUri($uri: ID!) {\n  post(id: $uri, idType: URI) {\n    ...PostFields\n  }\n}"];
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(source: "\n  fragment MediaItemFields on MediaItem {\n    altText\n    id\n    sourceUrl\n    mediaDetails {\n      height\n      width\n    }\n  }\n"): (typeof documents)["\n  fragment MediaItemFields on MediaItem {\n    altText\n    id\n    sourceUrl\n    mediaDetails {\n      height\n      width\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
