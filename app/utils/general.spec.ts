@@ -114,13 +114,13 @@ describe('isObject', () => {
 
   it('should return false if the value is null', () => {
     const value = null;
-    const result = isObject(value);
+    const result = isObject(value as unknown as Record<string, unknown>);
     expect(result).toBe(false);
   });
 
   it('should return false if the value is not an object', () => {
     const value = 'Hello';
-    const result = isObject(value);
+    const result = isObject(value as unknown as Record<string, unknown>);
     expect(result).toBe(false);
   });
 });
