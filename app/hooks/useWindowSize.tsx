@@ -5,6 +5,7 @@ type WindowSize = {
   size: [number, number];
   breakpoint: Breakpoint | undefined;
   windowOrientation: DisplayOrientation;
+  isMobile: boolean;
 };
 
 const useWindowSize = (): WindowSize => {
@@ -31,7 +32,11 @@ const useWindowSize = (): WindowSize => {
   const windowOrientation: DisplayOrientation =
     width >= heigth ? 'landscape' : 'portrait';
 
-  return { size, breakpoint, windowOrientation };
+  const isMobile =
+    (width <= Breakpoint.SM && windowOrientation === 'portrait') ||
+    (heigth <= Breakpoint.SM && windowOrientation === 'landscape');
+
+  return { size, breakpoint, windowOrientation, isMobile };
 };
 
 export default useWindowSize;

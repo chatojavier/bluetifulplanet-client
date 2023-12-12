@@ -1,8 +1,21 @@
 import { QUERY_MEDIA_ITEMS_BY_ID } from '@app/graphql/mediaItems';
 import { removeDeepProperty } from '@app/utils/general';
+import { MediaItemsByIdQuery } from '@app/graphql/__generated__/graphql';
+import { DeepOmit } from '@apollo/client/utilities';
 import { getApolloClient } from './apollo-client';
 
-const getMediaItemsById = async (mediaItemsId: string[]) => {
+export type MediaItemComplete = DeepOmit<
+  NonNullable<MediaItemsByIdQuery['mediaItems']>['nodes'][0],
+  '__typename'
+>;
+
+type GetMediaItemsByIdResponse = {
+  mediaItems: MediaItemComplete[];
+};
+
+const getMediaItemsById = async (
+  mediaItemsId: string[]
+): Promise<GetMediaItemsByIdResponse | null> => {
   const apolloClient = getApolloClient();
 
   let mediaItemsData;

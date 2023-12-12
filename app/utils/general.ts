@@ -105,8 +105,9 @@ export const isBrowser = () =>
     window.document.createElement
   );
 
-export const isObject = (value: unknown): value is Record<string, unknown> =>
-  value !== null && typeof value === 'object';
+export const isObject = <T extends Record<string, unknown>>(
+  value: T
+): boolean => value !== null && typeof value === 'object';
 export const isFunction = (
   value: unknown
 ): value is (...args: unknown[]) => unknown => typeof value === 'function';

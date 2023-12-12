@@ -1,16 +1,24 @@
 'use client';
 
-import Image from 'next/image';
-import { FunctionComponent, useEffect, useMemo } from 'react';
+import {
+  FunctionComponent,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import useSWRInfinite from 'swr/infinite';
 import useWindowSize from '@app/hooks/useWindowSize';
-import { Breakpoint } from '@app/types/general';
 import useOnScreen from '@app/hooks/useOnScreen';
+import { Breakpoint } from '@app/types/general';
+import { MediaItemComplete } from '@app/services/MediaItemsService';
 import Spinner from '../Spinner/Spinner';
-import { Image as ImageType, getItemsPerPage, concatColumns } from './utils';
+import { getItemsPerPage, concatColumns, concatNestedArray } from './utils';
+import GalleryImage from '../GalleryImage/GalleryImage';
+import GalleryModal from '../GalleryModal/GalleryModal';
 
-type ImageResponse = {
-  mediaItems: ImageType[];
+export type ImageResponse = {
+  mediaItems: MediaItemComplete[];
 };
 
 interface GalleryGridProps {
@@ -27,6 +35,11 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
   photosPerPage = 15,
   fallback = { mediaItems: [] },
 }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [scrollRef, isVisible] = useOnScreen({
+    threshold: 0,
+  });
   const { breakpoint } = useWindowSize();
   const totalPages = Math.ceil(photosId.length / photosPerPage);
 
@@ -50,17 +63,21 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
     }
   );
 
-  const [scrollRef, isVisible] = useOnScreen({
-    threshold: 0,
-  });
-
   useEffect(() => {
+    console.log('isVisible', isVisible);
+    console.log('!isLoading', !isLoading);
+    console.log('pageSize < totalPages', pageSize < totalPages);
+    console.log('breakpoint != null', breakpoint != null);
+    console.log(
+      "!(typeof data?.[pageSize - 1] === 'undefined')",
+      !(typeof data?.[pageSize - 1] === 'undefined')
+    );
     const timeout = setTimeout(async () => {
       if (
         isVisible &&
         !isLoading &&
         pageSize < totalPages &&
-        breakpoint &&
+        breakpoint != null &&
         !(typeof data?.[pageSize - 1] === 'undefined')
       ) {
         await setSize(pageSize + 1);
@@ -79,7 +96,7 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
       [Breakpoint.XXL]: 4,
     };
 
-    return breakpoint
+    return breakpoint != null
       ? concatColumns(data || [fallback], numColumns[breakpoint])
       : [];
   }, [breakpoint, data, fallback]);
@@ -87,6 +104,54 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
   const isLoadingMore =
     isLoading ||
     (pageSize > 0 && data && typeof data[pageSize - 1] === 'undefined');
+
+  const notNestedDataArray = concatNestedArray(columns);
+
+  const handleGalleryImageClick = (image: MediaItemComplete) => {
+    const imageIndex = notNestedDataArray.findIndex(
+      item => item.id === image.id
+    );
+    setCurrentImageIndex(imageIndex);
+    setIsOpen(true);
+  };
+
+  const handlePrevNext = useCallback(
+    (variant: 'next' | 'prev') => {
+      if (
+        currentImageIndex === null ||
+        (variant === 'prev' && currentImageIndex === 0)
+      )
+        return;
+      if (
+        variant === 'next' &&
+        currentImageIndex === (notNestedDataArray?.length || 0) - 1
+      ) {
+        if (pageSize < totalPages) {
+          setCurrentImageIndex(prev => prev + 1);
+        } else {
+          setCurrentImageIndex(0);
+        }
+      }
+      if (
+        currentImageIndex === notNestedDataArray.length - 4 &&
+        pageSize < totalPages
+      ) {
+        setSize(pageSize + 1);
+      }
+      const indexToCall =
+        variant === 'prev' ? currentImageIndex - 1 : currentImageIndex + 1;
+      if (indexToCall >= 0 && indexToCall < (notNestedDataArray?.length || 0)) {
+        setCurrentImageIndex(indexToCall);
+      }
+    },
+    [
+      notNestedDataArray?.length,
+      currentImageIndex,
+      pageSize,
+      setSize,
+      totalPages,
+    ]
+  );
 
   return (
     <div className="gallery-grid" data-testid="gallery-grid">
@@ -100,21 +165,18 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
             {column.map(
               image =>
                 image.sourceUrl && (
-                  <div
+                  <GalleryImage
                     key={image.id}
-                    className="grid-row | relative w-full overflow-hidden h-auto"
-                  >
-                    <Image
-                      src={image.sourceUrl}
-                      alt={image.altText || ''}
-                      width={image.mediaDetails?.width || 0}
-                      height={image.mediaDetails?.height || 0}
-                      sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33.33vw, (min-width: 640px) 50vw, 100vw"
-                      placeholder="blur"
-                      blurDataURL="/blurImage.jpg"
-                      className="object-cover w-full h-full"
-                    />
-                  </div>
+                    src={image.sourceUrl}
+                    alt={image.altText || ''}
+                    width={image.mediaDetails?.width || 0}
+                    height={image.mediaDetails?.height || 0}
+                    sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33.33vw, (min-width: 640px) 50vw, 100vw"
+                    placeholder="blur"
+                    blurDataURL="/blurImage.jpg"
+                    className="cursor-pointer"
+                    onClick={() => handleGalleryImageClick(image)}
+                  />
                 )
             )}
           </div>
@@ -127,8 +189,18 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
           <div className="mx-auto my-8 p-4" />
         ))}
       {(!isLoadingMore || breakpoint || columns.length > 0) && (
-        <span ref={scrollRef} />
+        <span ref={scrollRef} data-testid="observable-element" />
       )}
+      <GalleryModal
+        imageData={notNestedDataArray[currentImageIndex]}
+        open={isOpen}
+        onClose={() => setIsOpen(false)}
+        onPrev={() => handlePrevNext('prev')}
+        onNext={() => handlePrevNext('next')}
+        loading={isLoadingMore && !notNestedDataArray[currentImageIndex]}
+        hasPrev={currentImageIndex > 0}
+        hasNext={currentImageIndex < (notNestedDataArray?.length || 0) - 1}
+      />
     </div>
   );
 };

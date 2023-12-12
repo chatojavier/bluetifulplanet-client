@@ -41,3 +41,13 @@ address {
 :focus-visible {
   outline: 0;
 }
+
+.w-screen-sm {
+  width: 100svw;
+  width: 100vw;
+}
+
+.h-screen-sm {
+  height: 100svh;
+  height: 100vh;
+}

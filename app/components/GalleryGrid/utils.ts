@@ -1,12 +1,4 @@
-export type Image = {
-  altText?: string | null;
-  id: string;
-  sourceUrl?: string | null;
-  mediaDetails?: {
-    height?: number | null;
-    width?: number | null;
-  } | null;
-};
+import { MediaItemComplete } from '@app/services/MediaItemsService';
 
 type FictionalImg = {
   id: string;
@@ -14,7 +6,9 @@ type FictionalImg = {
   index: number;
 };
 
-const createFictionalHeightArray = (images: Image[]): FictionalImg[] => {
+const createFictionalHeightArray = (
+  images: MediaItemComplete[]
+): FictionalImg[] => {
   const fictionalWidth = Math.max(
     ...images.map(img => img.mediaDetails?.width as number)
   );
@@ -29,7 +23,10 @@ const createFictionalHeightArray = (images: Image[]): FictionalImg[] => {
   }));
 };
 
-export function organizeImages(images: Image[], numColumns: number): Image[][] {
+export function organizeImages(
+  images: MediaItemComplete[],
+  numColumns: number
+): MediaItemComplete[][] {
   const areAllHaveHeight = images.every(image => image.mediaDetails?.height);
   if (!areAllHaveHeight) {
     return [];
@@ -46,13 +43,15 @@ export function organizeImages(images: Image[], numColumns: number): Image[][] {
     () => []
   );
 
-  const getColumnHeight2 = (column: FictionalImg[]) =>
+  const getColumnFictionalHeight = (column: FictionalImg[]) =>
     column.reduce((sum, img) => sum + img.height, 0);
 
   for (let i = 0; i < sortedFictionalHeightArray.length; i += 1) {
     const minColumn = columns.reduce(
       (min, column) =>
-        getColumnHeight2(column) < getColumnHeight2(min) ? column : min,
+        getColumnFictionalHeight(column) < getColumnFictionalHeight(min)
+          ? column
+          : min,
       columns[0]
     );
 
@@ -72,11 +71,13 @@ export function organizeImages(images: Image[], numColumns: number): Image[][] {
     });
 
   return sortedColumns.map(column =>
-    column.map(item => images.find(img => img.id === item.id) as Image)
+    column.map(
+      item => images.find(img => img.id === item.id) as MediaItemComplete
+    )
   );
 }
 
-const getColumnHeight = (column: Image[]) => {
+const getColumnHeight = (column: MediaItemComplete[]) => {
   const fictionalWidth = 1000;
   return column.reduce(
     (height, image) =>
@@ -90,7 +91,7 @@ const getColumnHeight = (column: Image[]) => {
 export const concatColumns = (
   data:
     | {
-        mediaItems: Image[];
+        mediaItems: MediaItemComplete[];
       }[]
     | undefined,
   numColumns: number
@@ -140,7 +141,7 @@ export const concatColumns = (
     }
 
     return acc;
-  }, [] as Image[][]);
+  }, [] as MediaItemComplete[][]);
 };
 
 export const getItemsPerPage = (
@@ -151,4 +152,19 @@ export const getItemsPerPage = (
   const start = page * photosPerPage;
   const end = start + photosPerPage;
   return items.slice(start, end);
+};
+
+export const concatNestedArray = <T>(arrays: T[][]) => {
+  const result = [];
+  const maxLength = Math.max(...arrays.map(arr => arr.length));
+
+  for (let i = 0; i < maxLength; i += 1) {
+    for (let j = 0; j < arrays.length; j += 1) {
+      if (arrays[j][i] !== undefined) {
+        result.push(arrays[j][i]);
+      }
+    }
+  }
+
+  return result;
 };

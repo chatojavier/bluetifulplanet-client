@@ -96,6 +96,13 @@ module.exports = {
       },
     ],
     'react/no-danger': 'off',
+    'no-unused-expressions': [
+      'error',
+      {
+        allowShortCircuit: true,
+        allowTernary: true,
+      },
+    ],
   },
   ignorePatterns: [
     '!.*',

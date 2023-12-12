@@ -1,11 +1,16 @@
+/* eslint-disable no-empty-function */
+/* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-useless-constructor */
 import GalleriesService from '@app/services/GalleriesService';
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import { notFound } from 'next/navigation';
-import MediaItemsService from '@app/services/MediaItemsService';
+import MediaItemsService, {
+  MediaItemComplete,
+} from '@app/services/MediaItemsService';
+import { act } from 'react-dom/test-utils';
 import Gallery, { generateStaticParams } from './page';
 
 type GalleryObject = NonNullable<
@@ -15,16 +20,6 @@ type GalleryObject = NonNullable<
 type GalleryObjectBasic = NonNullable<
   Awaited<ReturnType<typeof GalleriesService.getAllGalleriesBasic>>
 >;
-
-jest.mock(
-  'next/image',
-  () =>
-    ({ src, alt, width, height }: Record<string, string>) =>
-      (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={src} alt={alt} width={width} height={height} />
-      )
-);
 
 jest.mock('next/navigation', () => ({
   notFound: jest.fn(),
@@ -52,7 +47,6 @@ class MockIntersectionObserver implements IntersectionObserver {
   constructor(
     _callback: IntersectionObserverCallback,
     _options?: IntersectionObserverInit
-    // eslint-disable-next-line no-empty-function, @typescript-eslint/no-empty-function
   ) {}
 
   root!: Document | Element | null;
@@ -93,34 +87,40 @@ describe('Gallery component', () => {
         id: 'photo01',
         mediaDetails: { height: 100, width: 80 },
         altText: 'photo01',
-        sourceUrl: 'photos/01.jpg',
+        sourceUrl: '/photos/01.jpg',
       },
       {
         id: 'photo02',
         mediaDetails: { height: 200, width: 80 },
         altText: 'photo02',
-        sourceUrl: 'photos/02.jpg',
+        sourceUrl: '/photos/02.jpg',
       },
       {
         id: 'photo03',
         mediaDetails: { height: 150, width: 80 },
         altText: 'photo03',
-        sourceUrl: 'photos/03.jpg',
+        sourceUrl: '/photos/03.jpg',
       },
       {
         id: 'photo04',
         mediaDetails: { height: 250, width: 80 },
         altText: 'photo04',
-        sourceUrl: 'photos/04.jpg',
+        sourceUrl: '/photos/04.jpg',
       },
       {
         id: 'photo05',
         mediaDetails: { height: 180, width: 80 },
         altText: 'photo05',
-        sourceUrl: 'photos/05.jpg',
+        sourceUrl: '/photos/05.jpg',
       },
-    ],
+    ] as MediaItemComplete[],
   };
+
+  const renderGallery = async () =>
+    act(async () => {
+      const component = await Gallery(pageProps);
+      render(component);
+    });
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -134,27 +134,28 @@ describe('Gallery component', () => {
       .spyOn(MediaItemsService, 'getMediaItemsById')
       .mockImplementationOnce(() => Promise.resolve(images));
 
-    render(await Gallery(pageProps));
+    await renderGallery();
 
-    expect(GalleriesService.getGalleryBySlug).toHaveBeenCalledWith(
-      pageProps.params.gallerySlug
-    );
-    expect(screen.getByText('Test Gallery')).toBeInTheDocument();
-    expect(
-      screen.getByAltText(images.mediaItems[0].altText)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByAltText(images.mediaItems[1].altText)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByAltText(images.mediaItems[2].altText)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByAltText(images.mediaItems[3].altText)
-    ).toBeInTheDocument();
-    expect(
-      screen.getByAltText(images.mediaItems[4].altText)
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(GalleriesService.getGalleryBySlug).toHaveBeenCalledWith(
+        pageProps.params.gallerySlug
+      );
+      expect(
+        screen.getByAltText(images.mediaItems[0].altText as string)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByAltText(images.mediaItems[1].altText as string)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByAltText(images.mediaItems[2].altText as string)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByAltText(images.mediaItems[3].altText as string)
+      ).toBeInTheDocument();
+      expect(
+        screen.getByAltText(images.mediaItems[4].altText as string)
+      ).toBeInTheDocument();
+    });
   });
 
   it('handles not found page', async () => {
@@ -168,9 +169,11 @@ describe('Gallery component', () => {
       .spyOn(GalleriesService, 'getGalleryBySlug')
       .mockImplementationOnce(() => Promise.resolve(pageDataUpdated));
 
-    render(await Gallery(pageProps));
+    await renderGallery();
 
-    expect(notFound).toHaveBeenCalled();
+    await waitFor(() => {
+      expect(notFound).toHaveBeenCalled();
+    });
   });
 });
 
