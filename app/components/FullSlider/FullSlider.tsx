@@ -4,11 +4,11 @@
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Autoplay } from 'swiper';
+import { Autoplay } from 'swiper/modules';
 
-import '@swiper/swiper.min.css';
-import '@swiper/modules/autoplay/autoplay.min.css';
-import '@swiper/modules/navigation/navigation.min.css';
+import 'swiper/css';
+import 'swiper/css/autoplay';
+import 'swiper/css/navigation';
 import useWindowSize from '@app/hooks/useWindowSize';
 import { DisplayOrientation } from '@app/types/general';
 import FullSliderNavigation from '@components/FullSlider/FullSliderNavigation';

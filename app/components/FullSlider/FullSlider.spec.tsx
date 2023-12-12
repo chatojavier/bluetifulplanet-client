@@ -17,14 +17,11 @@ describe('FullSlider', () => {
       'img'
     )) as HTMLImageElement[];
 
-    const imgNums = ['004', '000', '001', '002', '003', '004', '000'];
     imageElements.forEach((el, i) => {
-      // eslint-disable-next-line security/detect-non-literal-regexp
-      const regEx = new RegExp(
-        `(?=.*admin.bluetifulplanet.local)(?=.*image${imgNums[i]})`,
-        'gi'
+      const uriEncoded = encodeURIComponent(
+        MockImagesGallery[i]?.sourceUrl as string
       );
-      expect(el.src).toMatch(regEx);
+      expect(el.src).toContain(uriEncoded);
     });
   });
 
@@ -54,15 +51,14 @@ describe('FullSlider', () => {
       'img'
     )) as HTMLImageElement[];
 
-    const imgNums = ['004', '000', '003', '004', '000'];
-    imageElements.forEach((el, i) => {
-      // eslint-disable-next-line security/detect-non-literal-regexp
-      const regEx = new RegExp(
-        `(?=.*admin.bluetifulplanet.local)(?=.*image${imgNums[i]})`,
-        'gi'
-      );
-      expect(el.src).toMatch(regEx);
-    });
+    const encodedUrls = MockImagesGalleryUpdated.map(image =>
+      encodeURIComponent(image?.sourceUrl as string)
+    );
+
+    expect(imageElements).toHaveLength(3);
+    expect(imageElements[0].src).toContain(encodedUrls[0]);
+    expect(imageElements[1].src).toContain(encodedUrls[3]);
+    expect(imageElements[2].src).toContain(encodedUrls[4]);
   });
 
   it('should render only the orientation selected (when selected)', async () => {
@@ -74,7 +70,7 @@ describe('FullSlider', () => {
       'img'
     ) as HTMLImageElement[];
 
-    expect(imageElementsLandscape).toHaveLength(7);
+    expect(imageElementsLandscape).toHaveLength(5);
 
     act(() => {
       fireResize(200, 500);

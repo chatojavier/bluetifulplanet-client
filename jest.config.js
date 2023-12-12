@@ -25,8 +25,12 @@ const customJestConfig = {
     '^@pages/(.*)$': ['<rootDir>/app/(pages)/$1'],
     '^@mocks/(.*)$': ['<rootDir>/app/__mocks__/$1'],
     '^types/(.*)$': ['<rootDir>/app/types/*'],
+    'swiper/css': 'identity-obj-proxy',
   },
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
-module.exports = createJestConfig(customJestConfig);
+module.exports = async () => ({
+  ...(await createJestConfig(customJestConfig)()),
+  transformIgnorePatterns: ['node_modules/(?!(swiper|ssr-window|dom7)/)'],
+});

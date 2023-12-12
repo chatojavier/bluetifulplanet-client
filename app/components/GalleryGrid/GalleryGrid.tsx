@@ -64,14 +64,6 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
   );
 
   useEffect(() => {
-    console.log('isVisible', isVisible);
-    console.log('!isLoading', !isLoading);
-    console.log('pageSize < totalPages', pageSize < totalPages);
-    console.log('breakpoint != null', breakpoint != null);
-    console.log(
-      "!(typeof data?.[pageSize - 1] === 'undefined')",
-      !(typeof data?.[pageSize - 1] === 'undefined')
-    );
     const timeout = setTimeout(async () => {
       if (
         isVisible &&
