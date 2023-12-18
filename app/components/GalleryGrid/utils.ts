@@ -1,4 +1,4 @@
-import { MediaItemComplete } from '@app/services/MediaItemsService';
+import { MediaItemComplete } from '@app/apollo/MediaItemsService';
 
 type FictionalImg = {
   id: string;

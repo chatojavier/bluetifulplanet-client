@@ -1,4 +1,4 @@
-import CommentsService, { CommentFields } from '@app/services/commentsService';
+import CommentsService, { CommentFields } from '@app/apollo/commentsService';
 import { CreateCommentMapped } from '@app/utils/comments';
 import { NextRequest, NextResponse } from 'next/server';
 
@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   const { postId, commentFields, parent }: RequestBody = await req.json();
 
   try {
-    const { createComment } = await CommentsService.createPostComment(
+    const { createComment } = await CommentsService.mutatePostComment(
       postId,
       commentFields,
       parent
@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
 
     throw new Error('Failed to load data');
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Route Api error ', error);
     return new Response(JSON.stringify(error), {
       status: 500,

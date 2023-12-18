@@ -14,11 +14,12 @@ const useOnScreen = <T,>(
 
   useEffect(() => {
     const observer = new IntersectionObserver(callbackFunction, options as any);
+    const container = containerRef?.current;
 
-    if (containerRef.current) observer.observe(containerRef?.current);
+    if (container) observer.observe(container);
 
     return () => {
-      if (containerRef.current) observer.unobserve(containerRef?.current);
+      if (container) observer.unobserve(container);
     };
   }, [containerRef, options]);
 

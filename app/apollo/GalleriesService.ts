@@ -5,7 +5,7 @@ import {
 import { removeDeepProperty } from '@app/utils/general';
 import { getApolloClient } from './apollo-client';
 
-const getAllGalleriesBasic = async () => {
+const queryAllGalleriesBasic = async () => {
   const apolloClient = getApolloClient();
 
   let galleriesData;
@@ -16,8 +16,9 @@ const getAllGalleriesBasic = async () => {
       fetchPolicy: 'no-cache',
     });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(
-      `[galleries][getAllGalleriesBasic] Failed to query page data: ${
+      `[galleries][queryAllGalleriesBasic] Failed to query page data: ${
         (e as Error).message
       }`
     );
@@ -33,7 +34,7 @@ const getAllGalleriesBasic = async () => {
   return { galleries };
 };
 
-const getGalleryBySlug = async (gallerySlug: string) => {
+const queryGalleryBySlug = async (gallerySlug: string) => {
   const apolloClient = getApolloClient();
 
   let galleryData;
@@ -47,8 +48,9 @@ const getGalleryBySlug = async (gallerySlug: string) => {
       fetchPolicy: 'no-cache',
     });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(
-      `[galleries][getGalleryBySlug] Failed to query page data: ${
+      `[galleries][queryGalleryBySlug] Failed to query page data: ${
         (e as Error).message
       }`
     );
@@ -76,8 +78,8 @@ const getGalleryBySlug = async (gallerySlug: string) => {
 };
 
 const GalleriesService = {
-  getAllGalleriesBasic,
-  getGalleryBySlug,
+  queryAllGalleriesBasic,
+  queryGalleryBySlug,
 };
 
 export default GalleriesService;

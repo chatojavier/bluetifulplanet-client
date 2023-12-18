@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 'use client';
 
 import {
@@ -12,10 +14,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import useWindowSize from '@app/hooks/useWindowSize';
 import useOutsideElement from '@app/hooks/useOutsideElement';
-import { MediaItemComplete } from '@app/services/MediaItemsService';
+import { MediaItemComplete } from '@app/apollo/MediaItemsService';
 import useSwipe from '@app/hooks/useSwipe';
 import useFixDocumentBody from '@app/hooks/useFixDocumentBody';
-import { plainText } from '../SafeHTML/SafeHTML';
 import Spinner from '../Spinner';
 import InfoSection from './InfoSection';
 import ImageSection from './ImageSection';
@@ -50,7 +51,7 @@ const GalleryModalOpen: FunctionComponent<Omit<GalleryModalProps, 'open'>> = ({
 
   const {
     title,
-    caption,
+    mediaTags,
     altText: alt = '',
     sourceUrl: src = '',
     description: subcopy,
@@ -58,11 +59,8 @@ const GalleryModalOpen: FunctionComponent<Omit<GalleryModalProps, 'open'>> = ({
   } = imageData || {};
   const { width, height, meta } = mediaDetails || {};
   const tags =
-    plainText(caption || '')
-      .replace(/\s/gm, '')
-      .split('#')
-      .splice(1)
-      .map(tag => ({ label: tag.trim(), query: '' })) || [];
+    mediaTags?.map(tag => ({ label: tag.name || '', query: tag.slug || '' })) ||
+    [];
 
   const handleResize = useCallback(() => {
     document.body.style.backgroundColor = '#fff';
@@ -130,6 +128,7 @@ const GalleryModalOpen: FunctionComponent<Omit<GalleryModalProps, 'open'>> = ({
     if (!expanded) {
       handleResize();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleResize, windowSize, imageData, loading]);
 
   return (

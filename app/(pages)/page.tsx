@@ -1,7 +1,7 @@
 import FullSlider from '@components/FullSlider';
-import PagesService from '@services/PagesService';
+import PagesService from '@app/apollo/PagesService';
 
-const getData = () => PagesService.getHomePage();
+const getData = () => PagesService.queryHomePage();
 
 const Home = async () => {
   const { page } = (await getData()) || {};

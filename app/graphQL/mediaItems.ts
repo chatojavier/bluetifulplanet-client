@@ -27,7 +27,11 @@ export const QUERY_MEDIA_ITEMS_BY_ID = gql(`
         }
         title
         description
-        caption
+        mediaTags {
+          nodes {
+					...MediaTagFields
+          }
+        }
       }
     }
   }

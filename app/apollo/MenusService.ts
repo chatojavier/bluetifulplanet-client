@@ -3,10 +3,10 @@ import { findMenuByLocation } from '@utils/menus';
 import { getApolloClient } from './apollo-client';
 
 /**
- * getAllMenus
+ * queryAllMenus
  */
 
-async function getAllMenus() {
+async function queryAllMenus() {
   const apolloClient = getApolloClient();
 
   const { data, loading } = await apolloClient.query({
@@ -21,14 +21,14 @@ async function getAllMenus() {
   };
 }
 
-const getMenuByLocation = async (location: string) => {
-  const { menus, loading } = await getAllMenus();
+const queryMenuByLocation = async (location: string) => {
+  const { menus, loading } = await queryAllMenus();
   return { menu: findMenuByLocation(menus, location), loading };
 };
 
 const MenusService = {
-  getAllMenus,
-  getMenuByLocation,
+  queryAllMenus,
+  queryMenuByLocation,
 };
 
 export default MenusService;

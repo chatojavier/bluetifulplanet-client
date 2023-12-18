@@ -5,17 +5,28 @@ import { DeepOmit } from '@apollo/client/utilities';
 import { getApolloClient } from './apollo-client';
 
 export type MediaItemComplete = DeepOmit<
-  NonNullable<MediaItemsByIdQuery['mediaItems']>['nodes'][0],
+  Omit<
+    NonNullable<MediaItemsByIdQuery['mediaItems']>['nodes'][0],
+    'mediaTags'
+  > & {
+    mediaTags:
+      | NonNullable<
+          NonNullable<
+            MediaItemsByIdQuery['mediaItems']
+          >['nodes'][0]['mediaTags']
+        >['nodes']
+      | undefined;
+  },
   '__typename'
 >;
 
-type GetMediaItemsByIdResponse = {
+type QueryMediaItemsByIdResponse = {
   mediaItems: MediaItemComplete[];
 };
 
-const getMediaItemsById = async (
+const queryMediaItemsById = async (
   mediaItemsId: string[]
-): Promise<GetMediaItemsByIdResponse | null> => {
+): Promise<QueryMediaItemsByIdResponse | null> => {
   const apolloClient = getApolloClient();
 
   let mediaItemsData;
@@ -29,8 +40,9 @@ const getMediaItemsById = async (
       fetchPolicy: 'no-cache',
     });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.log(
-      `[mediaItems][getMediaItemsById] Failed to query media item data: ${
+      `[mediaItems][queryMediaItemsById] Failed to query media item data: ${
         (e as Error).message
       }`
     );
@@ -39,15 +51,19 @@ const getMediaItemsById = async (
 
   if (!mediaItemsData.data.mediaItems) return null;
 
-  const mediaItems = mediaItemsData.data.mediaItems?.nodes.map(photo =>
-    removeDeepProperty(photo, '__typename')
-  );
+  const mediaItems = mediaItemsData.data.mediaItems?.nodes.map(photo => {
+    const mediaItemUpdated = {
+      ...photo,
+      mediaTags: photo.mediaTags?.nodes.map(tag => tag),
+    };
+    return removeDeepProperty(mediaItemUpdated, '__typename');
+  });
 
   return { mediaItems };
 };
 
 const MediaItemsService = {
-  getMediaItemsById,
+  queryMediaItemsById,
 };
 
 export default MediaItemsService;

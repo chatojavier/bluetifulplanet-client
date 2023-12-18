@@ -1,16 +1,16 @@
 import Header from '@components/Header';
 import './globals.scss';
-import MenusService from '@services/MenusService';
-import SiteService from '@services/SiteService';
+import MenusService from '@app/apollo/MenusService';
+import SiteService from '@app/apollo/SiteService';
 import { ReactNode } from 'react';
 import { gilda, nunito, raleway } from './fonts';
 
 async function getData() {
-  const { menu } = await MenusService.getMenuByLocation(
+  const { menu } = await MenusService.queryMenuByLocation(
     process.env.MENU_BAR_LOCATION as string
   );
-  const { language } = await SiteService.getSiteData();
-  const socialMedia = await SiteService.getSiteOptions();
+  const { language } = await SiteService.querySiteData();
+  const socialMedia = await SiteService.querySiteOptions();
 
   return {
     mainMenu: menu,

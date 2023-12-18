@@ -1,8 +1,8 @@
-import SiteService from '@services/SiteService';
+import SiteService from '@app/apollo/SiteService';
 import Favicon from '@components/Favicon';
 
 async function getData() {
-  const { favicon } = await SiteService.getSiteData();
+  const { favicon } = await SiteService.querySiteData();
   return { favicon };
 }
 

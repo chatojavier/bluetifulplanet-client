@@ -4,8 +4,7 @@ import CommentBox, { CommentBoxSkeleton } from '@app/components/CommentBox';
 import CommentReply from '@app/components/CommentReply';
 import { CommentFormOutput } from '@app/components/CommentReply/CommentReplyForm';
 import { decodeHTML } from '@app/components/SafeHTML/SafeHTML';
-import FormService from '@app/services/FormService';
-import CommentsService from '@app/services/commentsService';
+import commentsService from '@app/services/commentsService';
 import { CommentMapped } from '@app/utils/comments';
 import {
   FunctionComponent,
@@ -40,7 +39,7 @@ const PostComments: FunctionComponent<PostCommentsProps> = ({
 
   const getAndSetComments = useCallback(async () => {
     if (!initialComments) setLoading(true);
-    const gettedComments = await CommentsService.getCommentsByPostId(postId);
+    const gettedComments = await commentsService.getCommentsByPostId(postId);
     setLoading(false);
     if (gettedComments?.comments) setComments(gettedComments?.comments);
   }, [initialComments, postId]);
@@ -59,7 +58,7 @@ const PostComments: FunctionComponent<PostCommentsProps> = ({
       sectionRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
     try {
-      const createComment = await FormService.postCommentForm(
+      const createComment = await commentsService.postCommentForm(
         postId,
         data,
         parent

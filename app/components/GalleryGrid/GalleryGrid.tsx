@@ -11,7 +11,7 @@ import useSWRInfinite from 'swr/infinite';
 import useWindowSize from '@app/hooks/useWindowSize';
 import useOnScreen from '@app/hooks/useOnScreen';
 import { Breakpoint } from '@app/types/general';
-import { MediaItemComplete } from '@app/services/MediaItemsService';
+import { MediaItemComplete } from '@app/apollo/MediaItemsService';
 import Spinner from '../Spinner/Spinner';
 import { getItemsPerPage, concatColumns, concatNestedArray } from './utils';
 import GalleryImage from '../GalleryImage/GalleryImage';

@@ -1,6 +1,6 @@
 import Pagination from '@app/components/Pagination';
 import PostSnipped from '@app/components/PostSnipped/PostSnipped';
-import PostsService from '@app/services/PostsService';
+import PostsService from '@app/apollo/PostsService';
 import { NextPage } from 'next';
 
 interface BlogProps {
@@ -9,7 +9,7 @@ interface BlogProps {
 
 const getPostData = async (page: number, postsPerPage: number) => {
   const offset = (page - 1) * postsPerPage;
-  const result = await PostsService.getAllPostsResume(offset, postsPerPage);
+  const result = await PostsService.queryAllPostsResume(offset, postsPerPage);
   if (!result) {
     return null;
   }

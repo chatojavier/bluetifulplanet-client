@@ -1,5 +1,5 @@
 import SafeHTML from '@app/components/SafeHTML/SafeHTML';
-import PagesService from '@app/services/PagesService';
+import PagesService from '@app/apollo/PagesService';
 import { PageTemplate } from '@app/types/general';
 import { removeAllTrailingSlash } from '@app/utils/general';
 import { notFound } from 'next/navigation';
@@ -13,7 +13,7 @@ export type PageProps = {
 const getPageData = async (params: PageProps['params']) => {
   const result =
     params.pageSlug && !Array.isArray(params.pageSlug)
-      ? await PagesService.getPageByUri(params.pageSlug)
+      ? await PagesService.queryPageByUri(params.pageSlug)
       : null;
 
   if (
@@ -49,7 +49,7 @@ const Page = async ({ params }: PageProps) => {
 export default Page;
 
 export const generateStaticParams = async () => {
-  const { pages } = (await PagesService.getAllPagesBasic()) || { pages: [] };
+  const { pages } = (await PagesService.queryAllPagesBasic()) || { pages: [] };
 
   return pages
     ?.filter(

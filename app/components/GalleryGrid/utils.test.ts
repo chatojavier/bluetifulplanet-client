@@ -1,4 +1,4 @@
-import { MediaItemComplete } from '@app/services/MediaItemsService';
+import { MediaItemComplete } from '@app/apollo/MediaItemsService';
 import { organizeImages, concatColumns } from './utils';
 
 describe('organizeImages', () => {

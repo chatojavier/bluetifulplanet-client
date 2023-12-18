@@ -1,5 +1,5 @@
 import SafeHTML from '@app/components/SafeHTML/SafeHTML';
-import PostsService from '@app/services/PostsService';
+import PostsService from '@app/apollo/PostsService';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import NavigationArrows from '@app/components/NavigationArrows/NavigationArrows';
@@ -107,7 +107,7 @@ const Post = async ({ params }: PostProps) => {
 export default Post;
 
 export const generateStaticParams = async () => {
-  const { posts } = (await PostsService.getAllPostsBasic()) || { posts: [] };
+  const { posts } = (await PostsService.queryAllPostsBasic()) || { posts: [] };
 
   const postsFiltered = posts?.filter(post => post.status === 'publish');
 

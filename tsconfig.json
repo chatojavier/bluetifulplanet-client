@@ -25,7 +25,7 @@
       "@components/*": ["app/components/*"],
       "@graphql/*": ["app/graphql/*"],
       "@hooks/*": ["app/hooks/*"],
-      "@services/*": ["app/services/*"],
+      "@services/*": ["app/apollo/*"],
       "@utils/*": ["app/utils/*"],
       "@pages/*": ["app/(pages)/*"],
       "@mocks/*": ["app/__mocks__/*"],

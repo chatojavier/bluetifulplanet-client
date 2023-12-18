@@ -5,7 +5,7 @@ import { removeDeepProperty } from '@utils/general';
 import { uniqBy } from 'lodash';
 import { getApolloClient } from './apollo-client';
 
-async function getSiteData() {
+async function querySiteData() {
   const apolloClient = getApolloClient();
 
   let siteData;
@@ -15,7 +15,7 @@ async function getSiteData() {
       query: QUERY_SITE_DATA,
     });
   } catch (error) {
-    const errorMessage = `[site][getSiteData] Failed to query site data: ${
+    const errorMessage = `[site][querySiteData] Failed to query site data: ${
       (error as Error).message
     }`;
     // eslint-disable-next-line no-console
@@ -55,7 +55,7 @@ async function getSiteData() {
   return settings;
 }
 
-const getSiteOptions = async () => {
+const querySiteOptions = async () => {
   const apolloClient = getApolloClient();
 
   let siteOptions;
@@ -65,7 +65,7 @@ const getSiteOptions = async () => {
       query: QUERY_SITE_OPTIONS,
     });
   } catch (error) {
-    const errorMessage = `[site][getSiteOptions] Failed to query site data: ${
+    const errorMessage = `[site][querySiteOptions] Failed to query site data: ${
       (error as Error).message
     }`;
     // eslint-disable-next-line no-console
@@ -80,8 +80,8 @@ const getSiteOptions = async () => {
 };
 
 const SiteService = {
-  getSiteData,
-  getSiteOptions,
+  querySiteData,
+  querySiteOptions,
 };
 
 export default SiteService;

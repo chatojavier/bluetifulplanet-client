@@ -15,13 +15,12 @@ jest.mock('@app/hooks/useWindowSize', () => jest.fn());
 const createPhotosId = (length: number): string[] =>
   Array.from({ length }, (_, i) => `image${i + 1}`);
 
-const getFetchedData = (ids: string[]): ImageResponse => ({
+const getFetchedData = (ids: string[]) => ({
   mediaItems: ids.map(id => ({
     id,
     title: `Image ${id} title`,
     sourceUrl: `/img/${id}.jpg`,
     altText: `Alt ${id} text`,
-    caption: '#tag1 #tag2 #tag3',
     description: `This is the description of ${id}`,
     mediaDetails: {
       width: 100,
@@ -33,6 +32,23 @@ const getFetchedData = (ids: string[]): ImageResponse => ({
         shutterSpeed: 0.01,
       },
     },
+    mediaTags: [
+      {
+        id: 'tag1',
+        name: '#tag1',
+        slug: 'tag1',
+      },
+      {
+        id: 'tag2',
+        name: '#tag2',
+        slug: 'tag2',
+      },
+      {
+        id: 'tag3',
+        name: '#tag3',
+        slug: 'tag3',
+      },
+    ],
   })),
 });
 

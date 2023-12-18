@@ -11,7 +11,7 @@ import { removeDeepProperty } from '@app/utils/general';
 import { mapPageData } from '@app/utils/pages';
 import { getApolloClient } from './apollo-client';
 
-const getHomePage = async () => {
+const queryHomePage = async () => {
   const apolloClient = getApolloClient();
 
   let pageData;
@@ -23,7 +23,9 @@ const getHomePage = async () => {
     });
   } catch (e) {
     console.log(
-      `[pages][getHomePage] Failed to query page data: ${(e as Error).message}`
+      `[pages][queryHomePage] Failed to query page data: ${
+        (e as Error).message
+      }`
     );
     throw e;
   }
@@ -39,7 +41,7 @@ const getHomePage = async () => {
   return null;
 };
 
-const getAllPages = async () => {
+const queryAllPages = async () => {
   const apolloClient = getApolloClient();
 
   let pagesData;
@@ -51,7 +53,9 @@ const getAllPages = async () => {
     });
   } catch (e) {
     console.log(
-      `[pages][getAllPages] Failed to query page data: ${(e as Error).message}`
+      `[pages][queryAllPages] Failed to query page data: ${
+        (e as Error).message
+      }`
     );
     throw e;
   }
@@ -63,7 +67,7 @@ const getAllPages = async () => {
   return { pages };
 };
 
-const getAllPagesBasic = async () => {
+const queryAllPagesBasic = async () => {
   const apolloClient = getApolloClient();
 
   let pagesData;
@@ -75,7 +79,9 @@ const getAllPagesBasic = async () => {
     });
   } catch (e) {
     console.log(
-      `[pages][getAllPages] Failed to query page data: ${(e as Error).message}`
+      `[pages][queryAllPages] Failed to query page data: ${
+        (e as Error).message
+      }`
     );
     throw e;
   }
@@ -97,7 +103,7 @@ const getAllPagesBasic = async () => {
   return { pages };
 };
 
-const getPageByUri = async (uri: string) => {
+const queryPageByUri = async (uri: string) => {
   const apolloClient = getApolloClient();
 
   let pageData;
@@ -112,7 +118,9 @@ const getPageByUri = async (uri: string) => {
     });
   } catch (e) {
     console.log(
-      `[pages][getPageByUri] Failed to query page data: ${(e as Error).message}`
+      `[pages][queryPageByUri] Failed to query page data: ${
+        (e as Error).message
+      }`
     );
     throw e;
   }
@@ -125,10 +133,10 @@ const getPageByUri = async (uri: string) => {
 };
 
 const PagesService = {
-  getHomePage,
-  getAllPages,
-  getAllPagesBasic,
-  getPageByUri,
+  queryHomePage,
+  queryAllPages,
+  queryAllPagesBasic,
+  queryPageByUri,
 };
 
 export default PagesService;

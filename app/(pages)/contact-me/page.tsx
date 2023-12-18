@@ -1,5 +1,5 @@
 import SafeHTML from '@app/components/SafeHTML/SafeHTML';
-import PagesService from '@app/services/PagesService';
+import PagesService from '@app/apollo/PagesService';
 import { PageTemplate } from '@app/types/general';
 import { removeAllTrailingSlash } from '@app/utils/general';
 import { notFound } from 'next/navigation';
@@ -14,7 +14,7 @@ export type PageProps = {
 const pageSlug = 'contact-me';
 
 const getPageData = async () => {
-  const result = await PagesService.getPageByUri(pageSlug);
+  const result = await PagesService.queryPageByUri(pageSlug);
 
   if (
     !result ||

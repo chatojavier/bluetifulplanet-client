@@ -1,102 +1,26 @@
-import { COMMENTS_BY_POST_ID, CREATE_COMMENT } from '@app/graphql/comments';
-import {
-  CreateCommentMapped,
-  mapCommentData,
-  mapCreateComment,
-} from '@app/utils/comments';
-import { getApolloClient } from './apollo-client';
+import { CreateCommentMapped } from '@app/utils/comments';
+import commentsQueries, { CommentFields } from '../apollo/commentsService';
+import fetchData from './fetchData';
 
-export type CommentFields = {
-  author: string;
-  authorEmail: string;
-  authorUrl?: string;
-  content: string;
-};
-
-type CreatePostComment = {
-  createComment: CreateCommentMapped | null;
-};
-
-const getCommentsByPostId = async (postId: number | string) => {
-  const apolloClient = getApolloClient();
-
-  let commentsData;
-
-  try {
-    commentsData = await apolloClient.query({
-      query: COMMENTS_BY_POST_ID,
-      variables: {
-        contentId: postId.toString(),
-      },
-      fetchPolicy: 'no-cache',
-    });
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(
-      `[comments][getCommentsByPostId] Failed to query post data: ${
-        (e as Error).message
-      }`
-    );
-    throw e;
-  }
-
-  if (!commentsData.data.comments) return null;
-
-  const comments = commentsData.data.comments.nodes.map(mapCommentData);
-
-  return {
-    comments,
-    error: commentsData.error,
-  };
-};
-
-const createPostComment = async (
-  postId: number | string,
+const postCommentForm = async (
+  postId: string | number,
   commentFields: CommentFields,
-  parent?: string
-): Promise<CreatePostComment> => {
-  const { author, authorEmail, authorUrl, content } = commentFields;
-
-  const apolloClient = getApolloClient();
-
-  let response;
-
-  try {
-    response = await apolloClient.query({
-      query: CREATE_COMMENT,
-      variables: {
-        commentOn: Number(postId),
-        author,
-        authorEmail,
-        authorUrl,
-        content,
-        parent,
-        clientMutationId: `createCommentOn${postId}`,
-      },
-      fetchPolicy: 'no-cache',
-    });
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.log(
-      `[comments][createPostComment] Failed to query post data: ${
-        (e as Error).message
-      }`
-    );
-    throw e;
-  }
-
-  if (!response.data.createComment) return { createComment: null };
-
-  const createComment: CreateCommentMapped = mapCreateComment(
-    response.data.createComment
-  );
-
-  return { createComment };
+  parent?: string | null
+): Promise<CreateCommentMapped> => {
+  const url = '/blog/api';
+  return fetchData.post(url, { postId, commentFields, parent });
 };
 
-const CommentsService = {
+const getCommentsByPostId = async (
+  postId: string | number
+): Promise<ReturnType<typeof commentsQueries.queryCommentsByPostId>> => {
+  const url = `/blog/api/${postId}`;
+  return fetchData.get(url);
+};
+
+const commentsService = {
+  postCommentForm,
   getCommentsByPostId,
-  createPostComment,
 };
 
-export default CommentsService;
+export default commentsService;

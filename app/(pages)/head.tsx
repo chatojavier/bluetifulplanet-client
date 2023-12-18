@@ -1,8 +1,8 @@
 import DefaultTags from '@components/DefaultTags';
-import SiteService from '@services/SiteService';
+import SiteService from '@app/apollo/SiteService';
 
 async function getData() {
-  return SiteService.getSiteData();
+  return SiteService.querySiteData();
 }
 
 export default async function Head() {

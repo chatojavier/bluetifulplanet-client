@@ -9,7 +9,7 @@
     "lint": "next lint",
     "dev:turbo": "next dev --turbo",
     "test": "env-cmd -f .env.local jest --watchAll=false",
-    "test:coverage": "env-cmd -f .env.local jest --coverage --transformIgnorePatterns \"node_modules/(?!swiper)/\"",
+    "test:coverage": "env-cmd -f .env.local jest --coverage",
     "compile": "env-cmd -f .env.local graphql-codegen",
     "watch": "env-cmd -f .env.local graphql-codegen -w",
     "prepare": "husky install",

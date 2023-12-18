@@ -9,7 +9,7 @@ import { mapPostData, mapPostResumeData } from '@app/utils/posts';
 import { removeDeepProperty } from '@app/utils/general';
 import { getApolloClient } from './apollo-client';
 
-const getAllPosts = async () => {
+const queryAllPosts = async () => {
   const apolloClient = getApolloClient();
 
   let postsData;
@@ -21,7 +21,9 @@ const getAllPosts = async () => {
     });
   } catch (e) {
     console.log(
-      `[posts][getAllPosts] Failed to query post data: ${(e as Error).message}`
+      `[posts][queryAllPosts] Failed to query post data: ${
+        (e as Error).message
+      }`
     );
     throw e;
   }
@@ -33,7 +35,7 @@ const getAllPosts = async () => {
   return { posts };
 };
 
-const getAllPostsResume = async (offset = 0, size = 10) => {
+const queryAllPostsResume = async (offset = 0, size = 10) => {
   const apolloClient = getApolloClient();
 
   let postsData;
@@ -51,7 +53,9 @@ const getAllPostsResume = async (offset = 0, size = 10) => {
     });
   } catch (e) {
     console.log(
-      `[posts][getAllPosts] Failed to query post data: ${(e as Error).message}`
+      `[posts][queryAllPosts] Failed to query post data: ${
+        (e as Error).message
+      }`
     );
     throw e;
   }
@@ -64,7 +68,7 @@ const getAllPostsResume = async (offset = 0, size = 10) => {
   return { posts, pageInfo };
 };
 
-const getAllPostsBasic = async () => {
+const queryAllPostsBasic = async () => {
   const apolloClient = getApolloClient();
 
   let postsData;
@@ -76,7 +80,7 @@ const getAllPostsBasic = async () => {
     });
   } catch (e) {
     console.log(
-      `[posts][getAllPostsBasic] Failed to query post data: ${
+      `[posts][queryAllPostsBasic] Failed to query post data: ${
         (e as Error).message
       }`
     );
@@ -120,9 +124,9 @@ const getPostByUri = async (uri: string) => {
 };
 
 const PostsService = {
-  getAllPosts,
-  getAllPostsResume,
-  getAllPostsBasic,
+  queryAllPosts,
+  queryAllPostsResume,
+  queryAllPostsBasic,
   getPostByUri,
 };
 
