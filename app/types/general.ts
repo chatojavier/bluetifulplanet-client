@@ -27,7 +27,7 @@ export type DeepOmit<T, K> = T extends Primitive
         : never;
     };
 
-export type TypeWithNull<T> = T | null | undefined;
+export type Nullable<T> = T | null | undefined;
 
 export enum PageTemplate {
   CONTACT_ME = 'Contact Me',

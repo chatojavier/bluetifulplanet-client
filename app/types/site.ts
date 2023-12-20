@@ -1,5 +1,5 @@
 import { QuerySiteOptionsQuery } from '@app/graphql/__generated__/graphql';
-import { DeepOmit, TypeWithNull } from './general';
+import { DeepOmit, Nullable } from './general';
 
 export type SocialMedia = DeepOmit<
   NonNullable<QuerySiteOptionsQuery['optionsPage']>['socialMedia'],
@@ -7,12 +7,12 @@ export type SocialMedia = DeepOmit<
 >;
 
 export type SiteData = {
-  title: TypeWithNull<string>;
-  siteTitle: TypeWithNull<string>;
-  description: TypeWithNull<string>;
-  language?: TypeWithNull<string>;
+  title: Nullable<string>;
+  siteTitle: Nullable<string>;
+  description: Nullable<string>;
+  language?: Nullable<string>;
   favicon?: {
-    sourceUrl: TypeWithNull<string>;
-    width: TypeWithNull<string>;
+    sourceUrl: Nullable<string>;
+    width: Nullable<string>;
   }[];
 };

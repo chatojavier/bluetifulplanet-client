@@ -20,3 +20,24 @@ export const QUERY_ALL_MENUS = gql(`
     }
   }
 `);
+
+export const QUERY_MENU_BY_LOCATION = gql(`
+  query queryMenuByLocation($location: MenuLocationEnum) {
+    menus(where: { location: $location }) {
+      nodes {
+        id
+        menuItems {
+          nodes {
+            id
+            parentId
+            label
+            path
+          }
+        }
+        name
+        slug
+        locations
+      }
+    }
+  }
+`);
