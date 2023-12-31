@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import getPostByUri from './service';
+import queryPostByUri from './service';
 
 type RequestParams = {
   params: {
@@ -10,7 +10,7 @@ type RequestParams = {
 export async function GET(_req: NextRequest, { params }: RequestParams) {
   const { uri } = params;
   try {
-    const { data, errors } = await getPostByUri(uri);
+    const { data, errors } = await queryPostByUri(uri);
 
     if (errors) {
       throw new Error(errors[0].message);
@@ -23,7 +23,7 @@ export async function GET(_req: NextRequest, { params }: RequestParams) {
     return NextResponse.json(data);
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[api/wp/posts/resume] error ', error);
+    console.error('[api/wp/posts/[uri]] error ', error);
 
     return new Response(JSON.stringify(error), {
       status: 500,

@@ -1,5 +1,5 @@
 import SafeHTML from '@app/components/SafeHTML/SafeHTML';
-import PagesService from '@app/apollo/PagesService';
+import PagesService from '@app/services/PagesService';
 import { PageTemplate } from '@app/types/general';
 import { removeAllTrailingSlash } from '@app/utils/general';
 import { notFound } from 'next/navigation';
@@ -13,12 +13,12 @@ export type PageProps = {
 const getPageData = async (params: PageProps['params']) => {
   const result =
     params.pageSlug && !Array.isArray(params.pageSlug)
-      ? await PagesService.queryPageByUri(params.pageSlug)
+      ? await PagesService.getPageByUri(params.pageSlug)
       : null;
 
   if (
     !result ||
-    result.page.template !== PageTemplate.PLAIN_CONTENT ||
+    result.page?.template !== PageTemplate.PLAIN_CONTENT ||
     result.page.status !== 'publish'
   ) {
     notFound();
@@ -28,9 +28,8 @@ const getPageData = async (params: PageProps['params']) => {
 };
 
 const Page = async ({ params }: PageProps) => {
-  const {
-    page: { title, content = '' },
-  } = await getPageData(params);
+  const { page } = await getPageData(params);
+  const { title, content } = page || {};
 
   const id = removeAllTrailingSlash(params.pageSlug);
 
@@ -49,10 +48,10 @@ const Page = async ({ params }: PageProps) => {
 export default Page;
 
 export const generateStaticParams = async () => {
-  const { pages } = (await PagesService.queryAllPagesBasic()) || { pages: [] };
+  const { pages } = await PagesService.getAllPagesBasic();
 
   return pages
-    ?.filter(
+    .filter(
       page =>
         page.template === PageTemplate.PLAIN_CONTENT &&
         page.status === 'publish'

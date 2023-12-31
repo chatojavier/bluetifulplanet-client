@@ -18,9 +18,9 @@ export const PAGE_FIELDS = gql(`
   }
 `);
 
-export const QUERY_HOME_PAGE = gql(`query queryHomePage {
-  nodeByUri(uri: "/") {
-    ... on Page {
+export const QUERY_HOME_PAGE = gql(`
+  query queryHomePage {
+    page(id: "/", idType: URI) {
       id
       title
       slider {
@@ -33,7 +33,7 @@ export const QUERY_HOME_PAGE = gql(`query queryHomePage {
       }
     }
   }
-}`);
+`);
 
 export const QUERY_PAGES = gql(`query queryPages {
   pages {

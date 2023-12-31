@@ -1,6 +1,6 @@
 import GalleryGrid from '@app/components/GalleryGrid/GalleryGrid';
-import GalleriesService from '@app/apollo/GalleriesService';
-import MediaItemsService from '@app/apollo/MediaItemsService';
+import GalleriesService from '@app/services/GalleriesService';
+import MediaItemsService from '@app/services/MediaItemsService';
 import { notFound } from 'next/navigation';
 
 export type GalleryProps = {
@@ -12,10 +12,10 @@ export type GalleryProps = {
 const getGalleryData = async (params: GalleryProps['params']) => {
   const result =
     params.gallerySlug && !Array.isArray(params.gallerySlug)
-      ? await GalleriesService.queryGalleryBySlug(params.gallerySlug)
+      ? await GalleriesService.getGalleryBySlug(params.gallerySlug)
       : null;
 
-  if (!result || result.gallery.status !== 'publish') {
+  if (!result || result.gallery?.status !== 'publish') {
     notFound();
   }
 
@@ -23,13 +23,12 @@ const getGalleryData = async (params: GalleryProps['params']) => {
 };
 
 const getFallbackGalleryData = async (photosId: string[]) => {
-  return MediaItemsService.queryMediaItemsById(photosId);
+  return MediaItemsService.getMediaItemsById(photosId);
 };
 
 const Gallery = async ({ params }: GalleryProps) => {
-  const {
-    gallery: { title, id, photosId },
-  } = await getGalleryData(params);
+  const { gallery } = await getGalleryData(params);
+  const { title, id, photosId } = gallery || {};
 
   const photosPerPage = 15;
   const idsPageOne = photosId ? photosId.slice(0, photosPerPage) : [];
@@ -49,7 +48,7 @@ const Gallery = async ({ params }: GalleryProps) => {
 export default Gallery;
 
 export const generateStaticParams = async () => {
-  const { galleries } = (await GalleriesService.queryAllGalleriesBasic()) || {
+  const { galleries } = (await GalleriesService.getAllGalleriesBasic()) || {
     galleries: [],
   };
 

@@ -1,31 +1,28 @@
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { getApolloClient } from '@app/utils/apollo-client';
 import { CREATE_COMMENT } from '@app/graphql/comments';
-import { CreateCommentMapped, mapCreateComment } from '@app/utils/comments';
-import { GraphQLError } from 'graphql/error/GraphQLError';
+import { ApiWpReturn } from '@app/api/api.types';
+import { Comment, mapCommentData } from './utils';
 
-export type CommentFields = {
+type CommentFields = {
   author: string;
   authorEmail: string;
   authorUrl?: string;
   content: string;
 };
 
-type CreatePostComment = {
-  data: CreateCommentMapped | null;
-  errors: readonly GraphQLError[] | undefined;
-};
-
 export type MutatePostCommentParams = {
   postId: number | string;
   commentFields: CommentFields;
-  parent?: string;
+  parent?: string | null;
 };
 
 const mutatePostComment = async ({
   postId,
   commentFields,
   parent,
-}: MutatePostCommentParams): Promise<CreatePostComment> => {
+}: MutatePostCommentParams): Promise<
+  ApiWpReturn<{ createdComment: Comment | null }>
+> => {
   const { author, authorEmail, authorUrl, content } = commentFields;
 
   const apolloClient = getApolloClient();
@@ -58,11 +55,11 @@ const mutatePostComment = async ({
 
   const { data, errors } = response;
 
-  const createComment = data.createComment
-    ? mapCreateComment(data.createComment)
+  const createdComment = data.createComment?.comment
+    ? mapCommentData(data.createComment.comment)
     : null;
 
-  return { data: createComment, errors };
+  return { data: { createdComment }, errors };
 };
 
 export default mutatePostComment;

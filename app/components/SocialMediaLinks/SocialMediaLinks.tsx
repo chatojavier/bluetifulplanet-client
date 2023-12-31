@@ -6,7 +6,7 @@ import {
   faFlickr,
   faInstagram,
 } from '@fortawesome/free-brands-svg-icons';
-import { SocialMedia } from '@app/types/site';
+import { SocialMedia } from '@api/wp/options/utils';
 
 interface SocialMediaLinksProps {
   socialMediaData?: SocialMedia;

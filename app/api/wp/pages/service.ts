@@ -1,6 +1,6 @@
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_PAGES } from '@app/graphql/pages';
-import { mapPageData } from '@app/utils/pages';
+import { mapPageData } from './utils';
 
 const queryAllPages = async () => {
   const apolloClient = getApolloClient();
@@ -24,7 +24,7 @@ const queryAllPages = async () => {
 
   const { data, errors } = pagesData;
 
-  const pages = data.pages?.nodes ? data.pages.nodes.map(mapPageData) : [];
+  const pages = data?.pages?.nodes ? data.pages.nodes.map(mapPageData) : [];
 
   return { data: { pages }, errors };
 };

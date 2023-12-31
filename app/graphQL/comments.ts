@@ -3,6 +3,7 @@ import { gql } from './__generated__';
 export const COMMENT_FIELDS = gql(`
   fragment CommentFields on Comment {
     id
+    databaseId
     content
     date
     parentId
@@ -38,8 +39,6 @@ export const CREATE_COMMENT = gql(`
       success
       comment {
         ...CommentFields
-        databaseId
-        status
       }
       clientMutationId
     }

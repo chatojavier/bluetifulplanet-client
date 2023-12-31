@@ -1,7 +1,17 @@
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { ApiWpReturn } from '@app/api/api.types';
+import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_GALLERY_BY_SLUG } from '@app/graphql/galleries';
+import { Gallery, mapGallery } from '../utils';
 
-const queryGalleryBySlug = async (gallerySlug: string) => {
+/**
+ * Queries a gallery by its slug.
+ * @param gallerySlug - The slug of the gallery.
+ * @returns A promise that resolves to an object containing the gallery data and any errors.
+ */
+
+const queryGalleryBySlug = async (
+  gallerySlug: string
+): Promise<ApiWpReturn<{ gallery: Gallery | null }>> => {
   const apolloClient = getApolloClient();
 
   let galleryData;
@@ -26,19 +36,7 @@ const queryGalleryBySlug = async (gallerySlug: string) => {
 
   const { data, errors } = galleryData;
 
-  const { id, title, slug, status, gallerySettings } = data.gallery || {};
-
-  const gallery = {
-    id,
-    title,
-    slug,
-    status,
-    ...(gallerySettings?.galleryPhotos && {
-      photosId: gallerySettings.galleryPhotos.map(photo =>
-        photo?.databaseId ? photo?.databaseId.toString() : ''
-      ),
-    }),
-  };
+  const gallery = data.gallery ? mapGallery(data.gallery) : null;
 
   return { data: { gallery }, errors };
 };

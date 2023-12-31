@@ -1,4 +1,4 @@
-import { SiteData } from '@app/types/site';
+import { SiteData } from '@api/wp/settings/utils';
 import { FC } from 'react';
 
 interface FaviconProps {

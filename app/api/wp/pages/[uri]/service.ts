@@ -1,8 +1,11 @@
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { ApiWpReturn } from '@app/api/api.types';
+import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_PAGE_BY_URI } from '@app/graphql/pages';
-import { mapPageData } from '@app/utils/pages';
+import { Page, mapPageData } from '../utils';
 
-const queryPageByUri = async (uri: string) => {
+const queryPageByUri = async (
+  uri: string
+): Promise<ApiWpReturn<{ page: Page | null }>> => {
   const apolloClient = getApolloClient();
 
   let pageData;
@@ -27,7 +30,7 @@ const queryPageByUri = async (uri: string) => {
 
   const { data, errors } = pageData;
 
-  const page = data.page ? mapPageData(data.page) : null;
+  const page = data?.page ? mapPageData(data.page) : null;
 
   return { data: { page }, errors };
 };

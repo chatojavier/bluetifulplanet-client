@@ -1,8 +1,11 @@
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { getApolloClient } from '@app/utils/apollo-client';
 import { COMMENTS_BY_POST_ID } from '@app/graphql/comments';
-import { mapCommentData } from '@app/utils/comments';
+import { ApiWpReturn } from '@app/api/api.types';
+import { Comment, mapCommentData } from '../utils';
 
-const queryCommentsByPostId = async (postId: string) => {
+const queryCommentsByPostId = async (
+  postId: string
+): Promise<ApiWpReturn<{ comments: Comment[] }>> => {
   const apolloClient = getApolloClient();
 
   let commentsData;

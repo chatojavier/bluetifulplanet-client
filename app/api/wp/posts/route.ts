@@ -13,7 +13,7 @@ export async function GET() {
       throw new Error('Failed to load data');
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json(data.posts);
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('[api/wp/posts] error ', error);

@@ -4,7 +4,7 @@ import ButtonSquare from '@app/components/ButtonSquare/ButtonSquare';
 import InputText from '@app/components/InputText/InputText';
 import InputTextArea from '@app/components/InputTextArea';
 import useOSAndBrowserInfo from '@app/hooks/useOsAndBrowserInfo';
-import contactService from '@app/services/contactService';
+import ContactService from '@app/services/contactService';
 import { emailPattern } from '@app/utils/general';
 import { usePathname } from 'next/navigation';
 import { FunctionComponent, useState } from 'react';
@@ -47,7 +47,7 @@ const ContactForm: FunctionComponent = () => {
       source: pathname ?? '',
     };
     try {
-      const res = await contactService.postContactForm(payload);
+      const res = await ContactService.postContactForm(payload);
 
       if (res.message) {
         if (res.status === 'mail_sent') {

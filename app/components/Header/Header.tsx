@@ -6,13 +6,13 @@ import Drawer from '@components/Drawer';
 import SocialMediaLinks from '@components/SocialMediaLinks';
 import { useRouter } from 'next/navigation';
 import MenuLinks from '@components/MenuLinks';
-import { MenuLink } from 'types/menus';
 import Image from 'next/image';
 import useOutsideElement from '@app/hooks/useOutsideElement';
-import { SocialMedia } from '@app/types/site';
+import { MenuItem } from '@api/wp/menus/utils';
+import { SocialMedia } from '@api/wp/options/utils';
 
 interface HeaderProps {
-  menuLinks?: MenuLink[];
+  menuLinks?: MenuItem[];
   socialMedia?: SocialMedia;
 }
 

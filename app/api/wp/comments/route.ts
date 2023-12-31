@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(data);
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[api/wp/posts/resume] error ', error);
+    console.error('[api/wp/coments] error ', error);
 
     return new Response(JSON.stringify(error), {
       status: 500,

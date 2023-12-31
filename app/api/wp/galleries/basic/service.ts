@@ -1,8 +1,12 @@
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { ApiWpReturn } from '@app/api/api.types';
+import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_GALLERIES_BASIC } from '@app/graphql/galleries';
 import { removeDeepProperty } from '@app/utils/general';
+import { GalleryBasic } from '../utils';
 
-const queryAllGalleriesBasic = async () => {
+const queryAllGalleriesBasic = async (): Promise<
+  ApiWpReturn<{ galleries: GalleryBasic[] }>
+> => {
   const apolloClient = getApolloClient();
 
   let galleriesData;

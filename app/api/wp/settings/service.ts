@@ -1,7 +1,7 @@
-import { getApolloClient } from '@app/apollo/apollo-client';
-import { SiteData } from '@app/types/site';
+import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_SITE_DATA } from '@graphql/site';
 import { uniqBy } from 'lodash';
+import { SiteData } from './utils';
 
 async function querySiteData() {
   const apolloClient = getApolloClient();

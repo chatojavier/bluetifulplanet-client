@@ -1,13 +1,13 @@
 import { FunctionComponent, PropsWithChildren } from 'react';
-import { CommentMapped } from '@app/utils/comments';
 import { SubmitHandler } from 'react-hook-form';
+import { Comment } from '@api/wp/comments/utils';
 import CommentBoxAvatar from './CommentBoxAvatar';
 import CommentBoxContent from './CommentBoxContent';
 import CommentReply from '../CommentReply/CommentReply';
 import { CommentFormOutput } from '../CommentReply/CommentReplyForm';
 
 interface CommentBoxProps {
-  commentData: CommentMapped;
+  commentData: Comment;
   onSubmitValid?: SubmitHandler<CommentFormOutput>;
   reply?: boolean;
   showReplyForm?: boolean;

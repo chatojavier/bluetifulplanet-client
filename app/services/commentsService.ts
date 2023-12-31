@@ -1,26 +1,59 @@
-import { CreateCommentMapped } from '@app/utils/comments';
-import commentsQueries, { CommentFields } from '../apollo/commentsService';
-import fetchData from './fetchData';
+import fetchData from '@app/utils/fetchData';
+import { ApiRoutes } from '@app/api/api.types';
+import { Comment } from '@api/wp/comments/utils';
+import { isBrowser } from '@app/utils/general';
 
-const postCommentForm = async (
-  postId: string | number,
-  commentFields: CommentFields,
-  parent?: string | null
-): Promise<CreateCommentMapped> => {
-  const url = '/blog/api';
-  return fetchData.post(url, { postId, commentFields, parent });
+export type CommentFields = {
+  author: string;
+  authorEmail: string;
+  authorUrl?: string;
+  content: string;
 };
 
 const getCommentsByPostId = async (
-  postId: string | number
-): Promise<ReturnType<typeof commentsQueries.queryCommentsByPostId>> => {
-  const url = `/blog/api/${postId}`;
-  return fetchData.get(url);
+  postId: string
+): Promise<{ comments: Comment[] }> => {
+  if (!isBrowser()) {
+    const queryCommentsByPostId = (
+      await import('@app/api/wp/comments/[postId]/service')
+    ).default;
+    const { data, errors } = await queryCommentsByPostId(postId);
+    if (errors) {
+      throw new Error(errors[0].message);
+    }
+    return data;
+  }
+
+  return fetchData.get(`${ApiRoutes.COMMENTS}/${postId}`);
 };
 
-const commentsService = {
-  postCommentForm,
+const postCommentForm = async (
+  postId: number | string,
+  commentFields: CommentFields,
+  parent?: string | null
+): Promise<{ createdComment: Comment | null }> => {
+  const body = {
+    postId,
+    commentFields,
+    parent,
+  };
+
+  if (!isBrowser()) {
+    const mutatePostComment = (await import('@api/wp/comments/service'))
+      .default;
+    const { data, errors } = await mutatePostComment(body);
+    if (errors) {
+      throw new Error(errors[0].message);
+    }
+    return data;
+  }
+
+  return fetchData.post(ApiRoutes.COMMENTS, body);
+};
+
+const CommentsService = {
   getCommentsByPostId,
+  postCommentForm,
 };
 
-export default commentsService;
+export default CommentsService;

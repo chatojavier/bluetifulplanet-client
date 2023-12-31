@@ -1,10 +1,10 @@
 import { formatDate } from '@app/utils/general';
 import { FunctionComponent } from 'react';
-import { CommentMapped } from '@app/utils/comments';
+import { Comment } from '@api/wp/comments/utils';
 import SafeHTML from '../SafeHTML';
 
 interface CommentBoxContentProps {
-  commentData: CommentMapped;
+  commentData: Comment;
   reply?: boolean;
   onReply?: () => void;
 }

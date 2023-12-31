@@ -1,9 +1,13 @@
-import { cloneDeep } from '@apollo/client/utilities';
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { ApiWpReturn } from '@app/api/api.types';
+import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_SITE_OPTIONS } from '@graphql/site';
 import { removeDeepProperty } from '@utils/general';
+import { cloneDeep } from '@apollo/client/utilities';
+import { SocialMedia } from './utils';
 
-const querySiteOptions = async () => {
+const querySiteOptions = async (): Promise<
+  ApiWpReturn<{ socialMedia: SocialMedia }>
+> => {
   const apolloClient = getApolloClient();
 
   let siteOptions;

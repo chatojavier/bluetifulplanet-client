@@ -1,4 +1,4 @@
-import { MediaItemComplete } from '@app/apollo/MediaItemsService';
+import { MediaItem } from '@app/api/wp/media-items/utils';
 import { organizeImages, concatColumns } from './utils';
 
 describe('organizeImages', () => {
@@ -7,7 +7,7 @@ describe('organizeImages', () => {
       { id: 1, mediaDetails: { height: 100, width: 80 } },
       { id: 2, mediaDetails: { height: undefined, width: 80 } },
       { id: 3, mediaDetails: { height: 200, width: 80 } },
-    ] as unknown as MediaItemComplete[];
+    ] as unknown as MediaItem[];
     const numColumns = 3;
 
     const result = organizeImages(images, numColumns);
@@ -22,7 +22,7 @@ describe('organizeImages', () => {
       { id: 3, mediaDetails: { height: 150, width: 80 } },
       { id: 4, mediaDetails: { height: 250, width: 80 } },
       { id: 5, mediaDetails: { height: 180, width: 80 } },
-    ] as unknown as MediaItemComplete[];
+    ] as unknown as MediaItem[];
     const numColumns = 3;
 
     const result = organizeImages(images, numColumns);
@@ -41,7 +41,7 @@ describe('organizeImages', () => {
   });
 
   it('should handle empty images array', () => {
-    const images: MediaItemComplete[] = [];
+    const images: MediaItem[] = [];
     const numColumns = 3;
 
     const result = organizeImages(images, numColumns);
@@ -51,7 +51,7 @@ describe('organizeImages', () => {
 });
 describe('concatColumns', () => {
   it('should return an empty array if data is undefined', () => {
-    const data: { mediaItems: MediaItemComplete[] }[] | undefined = undefined;
+    const data: { mediaItems: MediaItem[] }[] | undefined = undefined;
     const numColumns = 3;
 
     const result = concatColumns(data, numColumns);
@@ -60,7 +60,7 @@ describe('concatColumns', () => {
   });
 
   it('should return an empty array if data is an empty array', () => {
-    const data: { mediaItems: MediaItemComplete[] }[] = [];
+    const data: { mediaItems: MediaItem[] }[] = [];
     const numColumns = 3;
 
     const result = concatColumns(data, numColumns);
@@ -72,7 +72,7 @@ describe('concatColumns', () => {
     const data = [
       { mediaItems: undefined },
       { mediaItems: undefined },
-    ] as unknown as { mediaItems: MediaItemComplete[] }[];
+    ] as unknown as { mediaItems: MediaItem[] }[];
     const numColumns = 3;
 
     const result = concatColumns(data, numColumns);
@@ -95,7 +95,7 @@ describe('concatColumns', () => {
           { id: 5, mediaDetails: { height: 180, width: 80 } },
         ],
       },
-    ] as unknown as { mediaItems: MediaItemComplete[] }[];
+    ] as unknown as { mediaItems: MediaItem[] }[];
     const numColumns = 3;
 
     const result = concatColumns(data, numColumns);

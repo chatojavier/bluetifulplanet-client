@@ -1,36 +1,11 @@
 import { QUERY_MEDIA_ITEMS_BY_ID } from '@app/graphql/mediaItems';
-import { removeDeepProperty } from '@app/utils/general';
-import { MediaItemsByIdQuery } from '@app/graphql/__generated__/graphql';
-import { DeepOmit } from '@apollo/client/utilities';
-import { getApolloClient } from '@app/apollo/apollo-client';
-import { GraphQLError } from 'graphql';
-
-export type MediaItemComplete = DeepOmit<
-  Omit<
-    NonNullable<MediaItemsByIdQuery['mediaItems']>['nodes'][0],
-    'mediaTags'
-  > & {
-    mediaTags:
-      | NonNullable<
-          NonNullable<
-            MediaItemsByIdQuery['mediaItems']
-          >['nodes'][0]['mediaTags']
-        >['nodes']
-      | undefined;
-  },
-  '__typename'
->;
-
-type QueryMediaItemsByIdResponse = {
-  data: {
-    mediaItems: MediaItemComplete[];
-  };
-  errors: readonly GraphQLError[] | undefined;
-};
+import { getApolloClient } from '@app/utils/apollo-client';
+import { ApiWpReturn } from '@app/api/api.types';
+import { MediaItem, mapMediaItem } from './utils';
 
 const queryMediaItemsById = async (
   mediaItemsId: string[]
-): Promise<QueryMediaItemsByIdResponse> => {
+): Promise<ApiWpReturn<{ mediaItems: MediaItem[] }>> => {
   const apolloClient = getApolloClient();
 
   let mediaItemsData;
@@ -55,15 +30,7 @@ const queryMediaItemsById = async (
 
   const { data, errors } = mediaItemsData;
 
-  const mediaItems = data.mediaItems?.nodes
-    ? data.mediaItems?.nodes.map(photo => {
-        const mediaItemUpdated = {
-          ...photo,
-          mediaTags: photo.mediaTags?.nodes.map(tag => tag),
-        };
-        return removeDeepProperty(mediaItemUpdated, '__typename');
-      })
-    : [];
+  const mediaItems = data.mediaItems?.nodes.map(mapMediaItem) ?? [];
 
   return { data: { mediaItems }, errors };
 };

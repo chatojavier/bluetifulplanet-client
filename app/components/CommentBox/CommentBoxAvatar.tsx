@@ -1,9 +1,9 @@
-import { CommentMapped } from '@app/utils/comments';
+import { Comment } from '@api/wp/comments/utils';
 import Image from 'next/image';
 import { FunctionComponent } from 'react';
 
 interface CommentBoxAvatarProps {
-  avatar: NonNullable<CommentMapped['author']>['avatar'];
+  avatar: NonNullable<Comment['author']>['avatar'];
   reply?: boolean;
 }
 

@@ -1,42 +1,35 @@
-/* eslint-disable no-empty-function */
-/* eslint-disable @typescript-eslint/no-empty-function */
-/* eslint-disable no-undef */
-/* eslint-disable no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable no-useless-constructor */
-import GalleriesService from '@app/apollo/GalleriesService';
+import GalleriesService from '@app/services/GalleriesService';
 import { render, screen, waitFor } from '@testing-library/react';
 import { notFound } from 'next/navigation';
-import MediaItemsService, {
-  MediaItemComplete,
-} from '@app/apollo/MediaItemsService';
+import MediaItemsService from '@app/services/MediaItemsService';
 import { act } from 'react-dom/test-utils';
+import { MediaItem } from '@app/api/wp/media-items/utils';
 import Gallery, { generateStaticParams } from './page';
 
 type GalleryObject = NonNullable<
-  Awaited<ReturnType<typeof GalleriesService.queryGalleryBySlug>>
+  Awaited<ReturnType<typeof GalleriesService.getGalleryBySlug>>
 >;
 
 type GalleryObjectBasic = NonNullable<
-  Awaited<ReturnType<typeof GalleriesService.queryAllGalleriesBasic>>
+  Awaited<ReturnType<typeof GalleriesService.getAllGalleriesBasic>>
 >;
 
 jest.mock('next/navigation', () => ({
   notFound: jest.fn(),
 }));
 
-jest.mock('@app/apollo/GalleriesService', () => ({
+jest.mock('@app/services/GalleriesService', () => ({
   __esModule: true,
   default: {
-    queryGalleryBySlug: jest.fn(),
-    queryAllGalleriesBasic: jest.fn(),
+    getGalleryBySlug: jest.fn(),
+    getAllGalleriesBasic: jest.fn(),
   },
 }));
 
-jest.mock('@app/apollo/MediaItemsService', () => ({
+jest.mock('@app/services/MediaItemsService', () => ({
   __esModule: true,
   default: {
-    queryMediaItemsById: jest.fn(),
+    getMediaItemsById: jest.fn(),
   },
 }));
 
@@ -44,9 +37,13 @@ const observe = jest.fn();
 const unobserve = jest.fn();
 
 class MockIntersectionObserver implements IntersectionObserver {
+  // eslint-disable-next-line no-useless-constructor
   constructor(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars, no-undef
     _callback: IntersectionObserverCallback,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, no-unused-vars, no-undef
     _options?: IntersectionObserverInit
+    // eslint-disable-next-line no-empty-function, @typescript-eslint/no-empty-function
   ) {}
 
   root!: Document | Element | null;
@@ -113,7 +110,7 @@ describe('Gallery component', () => {
         altText: 'photo05',
         sourceUrl: '/photos/05.jpg',
       },
-    ] as MediaItemComplete[],
+    ] as MediaItem[],
   };
 
   const renderGallery = async () =>
@@ -128,16 +125,16 @@ describe('Gallery component', () => {
 
   it('renders the page with title and content', async () => {
     jest
-      .spyOn(GalleriesService, 'queryGalleryBySlug')
-      .mockImplementationOnce(() => Promise.resolve(galleryData));
+      .spyOn(GalleriesService, 'getGalleryBySlug')
+      .mockResolvedValue(galleryData);
     jest
-      .spyOn(MediaItemsService, 'queryMediaItemsById')
-      .mockImplementationOnce(() => Promise.resolve(images));
+      .spyOn(MediaItemsService, 'getMediaItemsById')
+      .mockResolvedValue(images);
 
     await renderGallery();
 
     await waitFor(() => {
-      expect(GalleriesService.queryGalleryBySlug).toHaveBeenCalledWith(
+      expect(GalleriesService.getGalleryBySlug).toHaveBeenCalledWith(
         pageProps.params.gallerySlug
       );
       expect(
@@ -164,9 +161,9 @@ describe('Gallery component', () => {
         ...galleryData.gallery,
         status: 'draft',
       },
-    };
+    } as GalleryObject;
     jest
-      .spyOn(GalleriesService, 'queryGalleryBySlug')
+      .spyOn(GalleriesService, 'getGalleryBySlug')
       .mockImplementationOnce(() => Promise.resolve(pageDataUpdated));
 
     await renderGallery();
@@ -190,7 +187,7 @@ describe('generateStaticParams', () => {
     ];
 
     jest
-      .spyOn(GalleriesService, 'queryAllGalleriesBasic')
+      .spyOn(GalleriesService, 'getAllGalleriesBasic')
       .mockResolvedValue({ galleries });
   });
 
@@ -202,8 +199,8 @@ describe('generateStaticParams', () => {
 
   it('should return an empty array if no pages are provided', async () => {
     jest
-      .spyOn(GalleriesService, 'queryAllGalleriesBasic')
-      .mockResolvedValue(null);
+      .spyOn(GalleriesService, 'getAllGalleriesBasic')
+      .mockResolvedValue({ galleries: [] });
 
     const staticParams = await generateStaticParams();
 

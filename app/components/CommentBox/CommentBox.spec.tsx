@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { CommentMapped } from '@app/utils/comments';
 import { CommentStatusEnum } from '@app/graphql/__generated__/graphql';
 import userEvent from '@testing-library/user-event';
+import { Comment } from '@app/api/wp/comments/utils';
 import CommentBox from './CommentBox';
 
 jest.mock('next/image', () => ({ src, alt }: Record<string, string>) => (
@@ -10,7 +10,7 @@ jest.mock('next/image', () => ({ src, alt }: Record<string, string>) => (
   <img src={src} alt={alt} />
 ));
 
-const mockCommentData: CommentMapped = {
+const mockCommentData: Comment = {
   author: {
     avatar: {
       url: 'avatar-url.jpg',
@@ -21,6 +21,7 @@ const mockCommentData: CommentMapped = {
   },
   status: CommentStatusEnum.Approve,
   id: 'moced-comment-id',
+  databaseId: 1,
   content: 'Some mocked content',
   date: '2023-11-01 00:28:31',
   parentId: null,

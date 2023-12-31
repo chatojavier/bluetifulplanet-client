@@ -1,13 +1,8 @@
-import SiteService from '@app/apollo/SiteService';
+import SiteService from '@app/services/SiteService';
 import Favicon from '@components/Favicon';
 
-async function getData() {
-  const { favicon } = await SiteService.querySiteData();
-  return { favicon };
-}
-
 export default async function DefaultTags() {
-  const { favicon } = await getData();
+  const { favicon } = await SiteService.getSiteData();
   return (
     <>
       <meta name="viewport" content="width=device-width, initial-scale=1" />

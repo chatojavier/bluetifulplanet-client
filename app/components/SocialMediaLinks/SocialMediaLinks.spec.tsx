@@ -1,6 +1,6 @@
-import { SocialMedia } from '@app/types/site';
 import { mockOptionsPageResult } from '@app/__mocks__/queries.mock';
 import { render, screen } from '@testing-library/react';
+import { SocialMedia } from '@api/wp/options/utils';
 import SocialMediaLinks from './SocialMediaLinks';
 
 describe('SocialMediaLinks', () => {

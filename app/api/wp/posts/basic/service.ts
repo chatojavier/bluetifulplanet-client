@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { QUERY_POSTS_BASIC } from '@app/graphql/posts';
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { getApolloClient } from '@app/utils/apollo-client';
 import { removeDeepProperty } from '@app/utils/general';
 
 const queryAllPostsBasic = async () => {

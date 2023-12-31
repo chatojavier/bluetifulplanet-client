@@ -11,14 +11,15 @@ import useSWRInfinite from 'swr/infinite';
 import useWindowSize from '@app/hooks/useWindowSize';
 import useOnScreen from '@app/hooks/useOnScreen';
 import { Breakpoint } from '@app/types/general';
-import { MediaItemComplete } from '@app/apollo/MediaItemsService';
+import { MediaItem } from '@app/api/wp/media-items/utils';
+import MediaItemsService from '@app/services/MediaItemsService';
 import Spinner from '../Spinner/Spinner';
 import { getItemsPerPage, concatColumns, concatNestedArray } from './utils';
 import GalleryImage from '../GalleryImage/GalleryImage';
 import GalleryModal from '../GalleryModal/GalleryModal';
 
 export type ImageResponse = {
-  mediaItems: MediaItemComplete[];
+  mediaItems: MediaItem[];
 };
 
 interface GalleryGridProps {
@@ -26,9 +27,6 @@ interface GalleryGridProps {
   photosPerPage?: number;
   fallback?: ImageResponse;
 }
-
-const fetcher = (key: string) =>
-  fetch(key).then<ImageResponse>(res => res.json());
 
 const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
   photosId,
@@ -50,9 +48,8 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
     setSize,
   } = useSWRInfinite(
     index =>
-      index < totalPages &&
-      `/galleries/api?ids=${getItemsPerPage(photosId, index, photosPerPage)}`,
-    fetcher,
+      index < totalPages && getItemsPerPage(photosId, index, photosPerPage),
+    key => MediaItemsService.getMediaItemsById(key),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
@@ -99,7 +96,7 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
 
   const notNestedDataArray = concatNestedArray(columns);
 
-  const handleGalleryImageClick = (image: MediaItemComplete) => {
+  const handleGalleryImageClick = (image: MediaItem) => {
     const imageIndex = notNestedDataArray.findIndex(
       item => item.id === image.id
     );

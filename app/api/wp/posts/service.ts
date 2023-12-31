@@ -1,9 +1,10 @@
 /* eslint-disable no-console */
 import { QUERY_POSTS } from '@app/graphql/posts';
-import { mapPostData } from '@app/utils/posts';
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { getApolloClient } from '@app/utils/apollo-client';
+import { ApiWpReturn } from '@app/api/api.types';
+import { Post, mapPostData } from './utils';
 
-const queryAllPosts = async () => {
+const queryAllPosts = async (): Promise<ApiWpReturn<{ posts: Post[] }>> => {
   const apolloClient = getApolloClient();
 
   let postsData;

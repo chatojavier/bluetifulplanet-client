@@ -6,11 +6,12 @@ import useSWRInfinite from 'swr/infinite';
 import userEvent from '@testing-library/user-event';
 import useOnScreen from '@app/hooks/useOnScreen';
 import useWindowSize from '@app/hooks/useWindowSize';
-import GalleryGrid, { ImageResponse } from './GalleryGrid';
+import GalleryGrid from './GalleryGrid';
 
 jest.mock('swr/infinite', () => jest.fn());
 jest.mock('@app/hooks/useOnScreen', () => jest.fn());
 jest.mock('@app/hooks/useWindowSize', () => jest.fn());
+jest.mock('@app/utils/apollo-client');
 
 const createPhotosId = (length: number): string[] =>
   Array.from({ length }, (_, i) => `image${i + 1}`);
@@ -99,9 +100,13 @@ describe('GalleryGrid', () => {
   it('should pass the correct fetcher function to useSWRInfinite', () => {
     render(<GalleryGrid photosId={photosId} />);
     const fetcherFn = (useSWRInfinite as jest.Mock).mock.calls[0][0];
-    expect(fetcherFn(0)).toBe(
-      `/galleries/api?ids=${photosId.slice(0, photosPerPage).join(',')}`
-    );
+    expect(fetcherFn(0)).toEqual([
+      'image1',
+      'image2',
+      'image3',
+      'image4',
+      'image5',
+    ]);
   });
 
   it('should display the loading spinner while data is being fetched', () => {

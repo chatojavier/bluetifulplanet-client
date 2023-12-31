@@ -1,9 +1,22 @@
 /* eslint-disable no-console */
 import { QUERY_POSTS_RESUME } from '@app/graphql/posts';
-import { mapPostResumeData } from '@app/utils/posts';
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { getApolloClient } from '@app/utils/apollo-client';
+import { ApiWpReturn } from '@app/api/api.types';
+import {
+  Maybe,
+  OffsetPaginationPageInfo,
+} from '@app/graphql/__generated__/graphql';
+import { PostResume, mapPostResumeData } from '../utils';
 
-const queryAllPostsResume = async (offset = 0, size = 10) => {
+const queryAllPostsResume = async (
+  offset = 0,
+  size = 10
+): Promise<
+  ApiWpReturn<{
+    posts: PostResume[];
+    pageInfo: Maybe<OffsetPaginationPageInfo> | undefined;
+  }>
+> => {
   const apolloClient = getApolloClient();
 
   let postsData;

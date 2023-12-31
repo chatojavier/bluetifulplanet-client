@@ -2,14 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { MenuLocationEnum } from '@app/graphql/__generated__/graphql';
 import getPostByUri from './service';
 
-type RequestParams = {
-  params: {
-    location: MenuLocationEnum;
-  };
-};
-
-export async function GET(_req: NextRequest, { params }: RequestParams) {
-  const { location } = params;
+export async function GET(req: NextRequest) {
+  const { searchParams } = req.nextUrl;
+  const location = searchParams.get('location') as MenuLocationEnum;
   try {
     const { data, errors } = await getPostByUri(location);
 
@@ -24,7 +19,7 @@ export async function GET(_req: NextRequest, { params }: RequestParams) {
     return NextResponse.json(data);
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[api/wp/menus/location] error ', error);
+    console.error('[api/wp/menus/[location]] error ', error);
 
     return new Response(JSON.stringify(error), {
       status: 500,

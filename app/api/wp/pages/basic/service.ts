@@ -1,9 +1,12 @@
 /* eslint-disable no-console */
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_PAGES_BASIC } from '@app/graphql/pages';
-import { removeDeepProperty } from '@app/utils/general';
+import { ApiWpReturn } from '@app/api/api.types';
+import { PageBasic, mapPageBasicData } from '../utils';
 
-const queryAllPagesBasic = async () => {
+const queryAllPagesBasic = async (): Promise<
+  ApiWpReturn<{ pages: PageBasic[] }>
+> => {
   const apolloClient = getApolloClient();
 
   let pagesData;
@@ -24,18 +27,8 @@ const queryAllPagesBasic = async () => {
 
   const { data, errors } = pagesData;
 
-  const pages = data.pages?.nodes
-    ? data.pages.nodes.map(page => {
-        const { id, slug, template, status } = page;
-
-        const pageUpdated = {
-          id,
-          slug,
-          template: template?.templateName,
-          status,
-        };
-        return removeDeepProperty(pageUpdated, '__typename');
-      })
+  const pages = data?.pages?.nodes
+    ? data.pages.nodes.map(mapPageBasicData)
     : [];
 
   return { data: { pages }, errors };

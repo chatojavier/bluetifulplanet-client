@@ -1,8 +1,12 @@
 import { QUERY_MENU_BY_LOCATION } from '@graphql/menus';
 import { MenuLocationEnum } from '@app/graphql/__generated__/graphql';
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { getApolloClient } from '@app/utils/apollo-client';
+import { ApiWpReturn } from '@api/api.types';
+import { Menu, mapMenu } from '../utils';
 
-const queryMenuByLocation = async (location: MenuLocationEnum) => {
+const queryMenuByLocation = async (
+  location: MenuLocationEnum
+): Promise<ApiWpReturn<{ menu: Menu | null }>> => {
   const apolloClient = getApolloClient();
 
   const { data, errors } = await apolloClient.query({
@@ -12,9 +16,9 @@ const queryMenuByLocation = async (location: MenuLocationEnum) => {
     },
   });
 
-  const menus = data?.menus?.nodes ?? [];
+  const menu = data?.menus?.nodes.map(mapMenu)?.[0] ?? null;
 
-  return { data: { menus }, errors };
+  return { data: { menu }, errors };
 };
 
 export default queryMenuByLocation;

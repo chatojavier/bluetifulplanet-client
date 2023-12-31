@@ -1,3 +1,4 @@
+import { MenuItem } from '@app/api/wp/menus/utils';
 import { useRouter } from 'next/navigation';
 import {
   Dispatch,
@@ -7,10 +8,9 @@ import {
   useRef,
   useState,
 } from 'react';
-import { MenuLink } from 'types/menus';
 
 interface MenuLinksProps {
-  links: MenuLink[];
+  links: MenuItem[];
   open: boolean;
   setOpen: Dispatch<SetStateAction<boolean>>;
   subMenu?: boolean;
@@ -32,7 +32,7 @@ const MenuLinks: FunctionComponent<MenuLinksProps> = ({
     if (!subMenu && !open) setOpenSubMenu(prev => prev.map(() => false));
   }, [open, subMenu]);
 
-  const handleClickLink = (link: MenuLink, index: number) => {
+  const handleClickLink = (link: MenuItem, index: number) => {
     if (!link.subMenu) {
       router.push(link.path);
       setOpen(false);
@@ -76,7 +76,7 @@ const MenuLinks: FunctionComponent<MenuLinksProps> = ({
             role="link"
             tabIndex={0}
           >
-            {link.name}
+            {link.label}
             {link.subMenu && (
               <MenuLinks
                 links={link.subMenu}

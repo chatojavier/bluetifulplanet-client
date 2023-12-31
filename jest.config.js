@@ -17,6 +17,7 @@ const customJestConfig = {
   setupFilesAfterEnv: ['<rootDir>/jest-setup.ts'],
   moduleNameMapper: {
     '^@app/(.*)$': ['<rootDir>/app/$1'],
+    '^@api/(.*)$': ['<rootDir>/app/api/$1'],
     '^@components/(.*)$': ['<rootDir>/app/components/$1'],
     '^@graphql/(.*)$': ['<rootDir>/app/graphql/$1'],
     '^@hooks/(.*)$': ['<rootDir>/app/hooks/$1'],

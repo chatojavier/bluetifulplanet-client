@@ -16,7 +16,7 @@ export async function GET() {
     return NextResponse.json(data);
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error('[api/wp/pages/basic] error ', error);
+    console.error('[api/wp/galleries/basic] error ', error);
 
     return new Response(JSON.stringify(error), {
       status: 500,

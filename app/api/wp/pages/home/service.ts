@@ -1,11 +1,13 @@
 /* eslint-disable no-console */
-/* eslint-disable no-underscore-dangle */
-import { cloneDeep } from '@apollo/client/utilities';
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_HOME_PAGE } from '@app/graphql/pages';
 import { removeDeepProperty } from '@app/utils/general';
+import { ApiWpReturn } from '@app/api/api.types';
+import { HomePage } from '../utils';
 
-const queryHomePage = async () => {
+const queryHomePage = async (): Promise<
+  ApiWpReturn<{ page: HomePage | null }>
+> => {
   const apolloClient = getApolloClient();
 
   let pageData;
@@ -26,10 +28,7 @@ const queryHomePage = async () => {
 
   const { data, errors } = pageData;
 
-  const isPage = data.nodeByUri && data.nodeByUri.__typename === 'Page';
-  const page = isPage
-    ? removeDeepProperty(cloneDeep(data.nodeByUri), '__typename')
-    : null;
+  const page = data.page ? removeDeepProperty(data.page, '__typename') : null;
 
   return { data: { page }, errors };
 };

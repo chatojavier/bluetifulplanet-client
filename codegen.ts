@@ -1,8 +1,8 @@
+import { ApiRoutes } from '@app/api/api.types';
 import { CodegenConfig } from '@graphql-codegen/cli';
-import { Endpoints } from './app/types/general';
 
 const host = process.env.WORDPRESS_HOST;
-const endpoint = Endpoints.GRAPHQL;
+const endpoint = ApiRoutes.GRAPHQL;
 
 const config: CodegenConfig = {
   schema: `${host}${endpoint}`,

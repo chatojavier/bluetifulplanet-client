@@ -1,11 +1,11 @@
 'use client';
 
+import { Comment } from '@api/wp/comments/utils';
 import CommentBox, { CommentBoxSkeleton } from '@app/components/CommentBox';
 import CommentReply from '@app/components/CommentReply';
 import { CommentFormOutput } from '@app/components/CommentReply/CommentReplyForm';
 import { decodeHTML } from '@app/components/SafeHTML/SafeHTML';
 import commentsService from '@app/services/commentsService';
-import { CommentMapped } from '@app/utils/comments';
 import {
   FunctionComponent,
   useCallback,
@@ -16,9 +16,9 @@ import {
 
 interface PostCommentsProps {
   title: string;
-  postId: string | number;
+  postId: string;
   commentCount: number;
-  initialComments?: CommentMapped[] | null;
+  initialComments?: Comment[] | null;
 }
 
 const PostComments: FunctionComponent<PostCommentsProps> = ({
@@ -30,9 +30,7 @@ const PostComments: FunctionComponent<PostCommentsProps> = ({
   const [selectedCommentIndex, setSelectedCommentIndex] = useState<
     number | null
   >(null);
-  const [comments, setComments] = useState<CommentMapped[]>(
-    initialComments ?? []
-  );
+  const [comments, setComments] = useState<Comment[]>(initialComments ?? []);
   const [loading, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const sectionRef = useRef<HTMLElement>(null);
@@ -58,18 +56,17 @@ const PostComments: FunctionComponent<PostCommentsProps> = ({
       sectionRef.current?.scrollIntoView({ behavior: 'smooth' });
     }
     try {
-      const createComment = await commentsService.postCommentForm(
+      const { createdComment } = await commentsService.postCommentForm(
         postId,
         data,
         parent
       );
       setLoading(false);
       setSelectedCommentIndex(null);
-      if (createComment.success && createComment.comment) {
-        const comment = createComment.comment;
+      if (createdComment) {
         setComments(currentComments => {
           const commentsUpdated = [...currentComments];
-          commentsUpdated.unshift(comment);
+          commentsUpdated.unshift(createdComment);
           return commentsUpdated;
         });
       } else {

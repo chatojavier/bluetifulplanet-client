@@ -1,8 +1,8 @@
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
 import { MediaItemFieldsFragment } from '@app/graphql/__generated__/graphql';
-import { PostResumeMapped } from '@app/utils/posts';
 import Link from 'next/link';
+import { PostResume } from '@api/wp/posts/utils';
 import HeaderInfo from '../HeaderInfo';
 import HeaderTitle from '../HeaderTitle';
 import { plainText } from '../SafeHTML';
@@ -12,9 +12,9 @@ interface PostSnippedProps {
   title: string | null | undefined;
   excerpt: string | null | undefined;
   featuredImage: MediaItemFieldsFragment | null;
-  author: PostResumeMapped['author'] | null;
-  date: PostResumeMapped['date'] | null;
-  slug: PostResumeMapped['slug'] | null;
+  author: PostResume['author'] | null;
+  date: PostResume['date'] | null;
+  slug: PostResume['slug'] | null;
 }
 
 const PostSnipped: FunctionComponent<PostSnippedProps> = ({

@@ -14,16 +14,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import useWindowSize from '@app/hooks/useWindowSize';
 import useOutsideElement from '@app/hooks/useOutsideElement';
-import { MediaItemComplete } from '@app/apollo/MediaItemsService';
 import useSwipe from '@app/hooks/useSwipe';
 import useFixDocumentBody from '@app/hooks/useFixDocumentBody';
+import { MediaItem } from '@api/wp/media-items/utils';
 import Spinner from '../Spinner';
 import InfoSection from './InfoSection';
 import ImageSection from './ImageSection';
 import PrevNextButton from './PrevNextButton';
 
 interface GalleryModalProps {
-  imageData: MediaItemComplete;
+  imageData: MediaItem;
   open: boolean;
   loading?: boolean;
   hasPrev?: boolean;
@@ -164,11 +164,11 @@ const GalleryModalOpen: FunctionComponent<Omit<GalleryModalProps, 'open'>> = ({
               expanded={expanded}
               onClickExpand={handleExpand}
               ref={imgRef}
-              {...(!expanded && swipeHandlers)}
+              {...swipeHandlers}
             />
           )}
         </div>
-        <div className="gallery-modal__info | bg-white shrink-0 | landscape:h-full landscape:w-[350px]">
+        <div className="gallery-modal__info | bg-white shrink-0 w-full | landscape:h-full landscape:w-[350px]">
           {loading ? (
             <div className="image-loading">
               <Spinner size="sm" className="mx-auto !block my-8" />

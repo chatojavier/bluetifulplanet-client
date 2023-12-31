@@ -1,16 +1,17 @@
 import Header from '@components/Header';
 import './globals.scss';
-import MenusService from '@app/apollo/MenusService';
-import SiteService from '@app/apollo/SiteService';
+import MenusService from '@app/services/MenusService';
 import { ReactNode } from 'react';
+import SiteService from '@app/services/SiteService';
+import { MenuLocationEnum } from '@app/graphql/__generated__/graphql';
 import { gilda, nunito, raleway } from './fonts';
 
 async function getData() {
-  const { menu } = await MenusService.queryMenuByLocation(
-    process.env.MENU_BAR_LOCATION as string
+  const { menu } = await MenusService.getMenuByLocation(
+    MenuLocationEnum.MainMenu
   );
-  const { language } = await SiteService.querySiteData();
-  const socialMedia = await SiteService.querySiteOptions();
+  const { language } = await SiteService.getSiteData();
+  const { socialMedia } = await SiteService.getSiteOptions();
 
   return {
     mainMenu: menu,
@@ -36,7 +37,7 @@ export default async function RootLayout({
       */}
       <head />
       <body className="h-full">
-        <Header menuLinks={mainMenu} socialMedia={socialMedia} />
+        <Header menuLinks={mainMenu?.menuItems} socialMedia={socialMedia} />
         <div className="content | h-[calc(100%-3rem)] md:h-[calc(100%-5rem)]">
           {children}
         </div>

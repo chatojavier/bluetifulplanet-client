@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import { QUERY_POST_BY_URI } from '@app/graphql/posts';
-import { mapPostData } from '@app/utils/posts';
-import { getApolloClient } from '@app/apollo/apollo-client';
+import { getApolloClient } from '@app/utils/apollo-client';
+import { mapPostData } from '../utils';
 
-const getPostByUri = async (uri: string) => {
+const queryPostByUri = async (uri: string) => {
   const apolloClient = getApolloClient();
 
   let postData;
@@ -18,7 +18,9 @@ const getPostByUri = async (uri: string) => {
     });
   } catch (e) {
     console.log(
-      `[posts][getPostByUri] Failed to query post data: ${(e as Error).message}`
+      `[posts][queryPostByUri] Failed to query post data: ${
+        (e as Error).message
+      }`
     );
     throw e;
   }
@@ -30,4 +32,4 @@ const getPostByUri = async (uri: string) => {
   return { data: { post }, errors };
 };
 
-export default getPostByUri;
+export default queryPostByUri;

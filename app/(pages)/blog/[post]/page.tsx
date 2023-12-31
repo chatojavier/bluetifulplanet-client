@@ -1,5 +1,5 @@
 import SafeHTML from '@app/components/SafeHTML/SafeHTML';
-import PostsService from '@app/apollo/PostsService';
+import PostsService from '@app/services/PostsService';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import NavigationArrows from '@app/components/NavigationArrows/NavigationArrows';
@@ -29,22 +29,21 @@ const getPostData = async (params: PostProps['params']) => {
 };
 
 const Post = async ({ params }: PostProps) => {
+  const { post } = await getPostData(params);
   const {
-    post: {
-      databaseId: postId,
-      title,
-      content = '',
-      slug,
-      author,
-      date,
-      featuredImage,
-      tags,
-      commentCount,
-      comments,
-      previous,
-      next,
-    },
-  } = await getPostData(params);
+    databaseId: postId,
+    title,
+    content = '',
+    slug,
+    author,
+    date,
+    featuredImage,
+    tags,
+    commentCount,
+    comments,
+    previous,
+    next,
+  } = post || {};
 
   const { sourceUrl = '', altText, mediaDetails } = featuredImage || {};
 
@@ -80,12 +79,14 @@ const Post = async ({ params }: PostProps) => {
             {tags && <TagsContainer tags={tags} />}
           </footer>
         </article>
-        <PostComments
-          title={title as string}
-          postId={postId}
-          commentCount={commentCount ?? 0}
-          initialComments={comments}
-        />
+        {postId && (
+          <PostComments
+            title={title as string}
+            postId={postId.toString()}
+            commentCount={commentCount ?? 0}
+            initialComments={comments}
+          />
+        )}
       </div>
       {previous && (
         <NavigationArrows
@@ -107,7 +108,7 @@ const Post = async ({ params }: PostProps) => {
 export default Post;
 
 export const generateStaticParams = async () => {
-  const { posts } = (await PostsService.queryAllPostsBasic()) || { posts: [] };
+  const { posts } = (await PostsService.getAllPostsBasic()) || { posts: [] };
 
   const postsFiltered = posts?.filter(post => post.status === 'publish');
 

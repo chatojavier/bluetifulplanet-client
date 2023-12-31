@@ -1,20 +1,20 @@
-import PagesService from '@app/apollo/PagesService';
-import { PageMapped } from '@app/utils/pages';
+import PagesService from '@app/services/PagesService';
 import { render, screen } from '@testing-library/react';
 import { notFound } from 'next/navigation';
 import { PageTemplate } from '@app/types/general';
+import { Page as PageType } from '@app/api/wp/pages/utils';
 import Page, { generateStaticParams } from './page';
 
 jest.mock('next/navigation', () => ({
   notFound: jest.fn(),
 }));
 
-jest.mock('@app/apollo/PagesService', () => ({
+jest.mock('@app/services/PagesService', () => ({
   __esModule: true,
   default: {
-    queryPageByUri: jest.fn(),
-    queryAllPages: jest.fn(),
-    queryAllPagesBasic: jest.fn(),
+    getPageByUri: jest.fn(),
+    getAllPages: jest.fn(),
+    getAllPagesBasic: jest.fn(),
   },
 }));
 
@@ -25,7 +25,7 @@ describe('Page component', () => {
       content: '<p>Test Content</p>',
       template: 'Plain Content',
       status: 'publish',
-    } as PageMapped,
+    } as PageType,
   };
 
   const pageProps = { params: { pageSlug: 'test-page-slug' } };
@@ -36,12 +36,12 @@ describe('Page component', () => {
 
   it('renders the page with title and content', async () => {
     jest
-      .spyOn(PagesService, 'queryPageByUri')
+      .spyOn(PagesService, 'getPageByUri')
       .mockImplementationOnce(() => Promise.resolve(pageData));
 
     render(await Page(pageProps));
 
-    expect(PagesService.queryPageByUri).toHaveBeenCalledWith(
+    expect(PagesService.getPageByUri).toHaveBeenCalledWith(
       pageProps.params.pageSlug
     );
     expect(screen.getByText('Test Page')).toBeInTheDocument();
@@ -56,7 +56,7 @@ describe('Page component', () => {
       },
     };
     jest
-      .spyOn(PagesService, 'queryPageByUri')
+      .spyOn(PagesService, 'getPageByUri')
       .mockImplementationOnce(() => Promise.resolve(pageDataUpdated));
 
     render(await Page(pageProps));
@@ -78,7 +78,7 @@ describe('generateStaticParams', () => {
       },
     ];
 
-    jest.spyOn(PagesService, 'queryAllPagesBasic').mockResolvedValue({ pages });
+    jest.spyOn(PagesService, 'getAllPagesBasic').mockResolvedValue({ pages });
   });
 
   it('should generate static params from the given pages', async () => {
@@ -88,7 +88,9 @@ describe('generateStaticParams', () => {
   });
 
   it('should return an empty array if no pages are provided', async () => {
-    jest.spyOn(PagesService, 'queryAllPagesBasic').mockResolvedValue(null);
+    jest
+      .spyOn(PagesService, 'getAllPagesBasic')
+      .mockResolvedValue({ pages: [] });
 
     const staticParams = await generateStaticParams();
 

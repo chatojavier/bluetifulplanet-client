@@ -1,6 +1,9 @@
 /* eslint-disable sonarjs/no-duplicate-string */
-import { MenuLocationEnum } from '@graphql/__generated__/graphql';
-import { MenuNode } from 'types/menus';
+import { MenuItem } from '@app/api/wp/menus/utils';
+import {
+  MenuLocationEnum,
+  QueryAllMenusQuery,
+} from '@graphql/__generated__/graphql';
 
 export const mockMenuNodes = [
   {
@@ -53,33 +56,33 @@ export const mockMenuNodes = [
   },
 ];
 
-export const mockMenuLinks = [
+export const mockMenuLinks: MenuItem[] = [
   {
     id: 'cG9zdDoxNjg2',
-    name: 'Home',
+    label: 'Home',
     path: '/',
     subMenu: null,
   },
   {
     id: 'cG9zdDoxNjg3',
-    name: 'Photos',
+    label: 'Photos',
     path: '#',
     subMenu: [
       {
         id: 'cG9zdDoxNjkz',
-        name: 'Main Gallery',
+        label: 'Main Gallery',
         path: '/galleries/main-gallery/',
         subMenu: null,
       },
       {
         id: 'cG9zdDoxNjky',
-        name: 'Personal Favorites',
+        label: 'Personal Favorites',
         path: '/galleries/personal-favorites/',
         subMenu: null,
       },
       {
         id: 'cG9zdDoxNjkx',
-        name: 'Pollinators & Light',
+        label: 'Pollinators & Light',
         path: '/galleries/pollinators-light/',
         subMenu: null,
       },
@@ -87,25 +90,27 @@ export const mockMenuLinks = [
   },
   {
     id: 'cG9zdDozNzM=',
-    name: 'Blog',
+    label: 'Blog',
     path: '/blog/',
     subMenu: null,
   },
   {
     id: 'cG9zdDo0ODY=',
-    name: 'About Me',
+    label: 'About Me',
     path: '/about-me/',
     subMenu: null,
   },
   {
     id: 'cG9zdDozODM=',
-    name: 'Contact Me',
+    label: 'Contact Me',
     path: '/contact-me/',
     subMenu: null,
   },
 ];
 
-export const mockAllMenusNodes: MenuNode[] = [
+export const mockAllMenusNodes: NonNullable<
+  QueryAllMenusQuery['menus']
+>['nodes'] = [
   {
     id: 'dGVybTozNA==',
     menuItems: {

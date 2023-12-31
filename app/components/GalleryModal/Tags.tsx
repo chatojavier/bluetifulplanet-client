@@ -13,7 +13,7 @@ const Tags = ({ tagArray }: { tagArray: MediaTag[] }) => (
         tag =>
           tag.label &&
           tag.query && (
-            <Link href={`/media-tag/${tag.query}`}>
+            <Link href={`/media-tag/${tag.query}`} key={tag.label}>
               <span key={tag.label} className="tag">
                 #{tag.label}
               </span>

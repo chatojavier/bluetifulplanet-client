@@ -1,4 +1,4 @@
-import { MediaItemComplete } from '@app/apollo/MediaItemsService';
+import { MediaItem } from '@app/api/wp/media-items/utils';
 
 type FictionalImg = {
   id: string;
@@ -6,9 +6,7 @@ type FictionalImg = {
   index: number;
 };
 
-const createFictionalHeightArray = (
-  images: MediaItemComplete[]
-): FictionalImg[] => {
+const createFictionalHeightArray = (images: MediaItem[]): FictionalImg[] => {
   const fictionalWidth = Math.max(
     ...images.map(img => img.mediaDetails?.width as number)
   );
@@ -24,9 +22,9 @@ const createFictionalHeightArray = (
 };
 
 export function organizeImages(
-  images: MediaItemComplete[],
+  images: MediaItem[],
   numColumns: number
-): MediaItemComplete[][] {
+): MediaItem[][] {
   const areAllHaveHeight = images.every(image => image.mediaDetails?.height);
   if (!areAllHaveHeight) {
     return [];
@@ -71,13 +69,11 @@ export function organizeImages(
     });
 
   return sortedColumns.map(column =>
-    column.map(
-      item => images.find(img => img.id === item.id) as MediaItemComplete
-    )
+    column.map(item => images.find(img => img.id === item.id) as MediaItem)
   );
 }
 
-const getColumnHeight = (column: MediaItemComplete[]) => {
+const getColumnHeight = (column: MediaItem[]) => {
   const fictionalWidth = 1000;
   return column.reduce(
     (height, image) =>
@@ -91,7 +87,7 @@ const getColumnHeight = (column: MediaItemComplete[]) => {
 export const concatColumns = (
   data:
     | {
-        mediaItems: MediaItemComplete[];
+        mediaItems: MediaItem[];
       }[]
     | undefined,
   numColumns: number
@@ -100,7 +96,7 @@ export const concatColumns = (
     return [];
   }
   return data.reduce((acc, curr) => {
-    if (!curr.mediaItems) {
+    if (!curr?.mediaItems) {
       return acc;
     }
     const organizedImages = organizeImages(curr.mediaItems, numColumns);
@@ -141,11 +137,11 @@ export const concatColumns = (
     }
 
     return acc;
-  }, [] as MediaItemComplete[][]);
+  }, [] as MediaItem[][]);
 };
 
-export const getItemsPerPage = (
-  items: unknown[],
+export const getItemsPerPage = <T = unknown>(
+  items: T[],
   page: number,
   photosPerPage: number
 ) => {
