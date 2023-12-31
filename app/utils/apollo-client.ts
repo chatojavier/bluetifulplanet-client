@@ -36,6 +36,7 @@ export const createApolloClient = () => {
   return new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
+    ssrMode: true,
   });
 };
 

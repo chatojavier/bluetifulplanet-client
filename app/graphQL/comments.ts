@@ -44,13 +44,3 @@ export const CREATE_COMMENT = gql(`
     }
   }
 `);
-
-export const GET_COMMENTS_BY_EMAIL = gql(`
-  query GetCommentsByEmail {
-    comments(where: {authorEmail: "chato.javier@gmail.com"}) {
-      nodes {
-        ...CommentFields
-      }
-    }
-  }
-`);
