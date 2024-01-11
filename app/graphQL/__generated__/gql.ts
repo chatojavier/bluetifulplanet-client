@@ -16,7 +16,6 @@ const documents = {
     "\n  fragment CommentFields on Comment {\n    id\n    databaseId\n    content\n    date\n    parentId\n    status\n    author {\n      node {\n        name\n        avatar {\n          url\n          width\n          height\n        }\n      }\n    }\n  }\n": types.CommentFieldsFragmentDoc,
     "\nquery commentsByPostId($contentId: ID, $first: Int = 10, $after: String = \"\") {\n  comments(where: {contentId: $contentId}, first: $first, after: $after) {\n    nodes {\n      ...CommentFields\n    }\n  }\n}\n": types.CommentsByPostIdDocument,
     "\n  mutation CreateComment($author: String, $authorEmail: String, $clientMutationId: String, $commentOn: Int, $content: String, $authorUrl: String = \"\", $parent: ID = \"\") {\n    createComment(\n      input: {author: $author, authorEmail: $authorEmail, clientMutationId: $clientMutationId, commentOn: $commentOn, content: $content, authorUrl: $authorUrl, parent: $parent}\n    ) {\n      success\n      comment {\n        ...CommentFields\n      }\n      clientMutationId\n    }\n  }\n": types.CreateCommentDocument,
-    "\n  query GetCommentsByEmail {\n    comments(where: {authorEmail: \"chato.javier@gmail.com\"}) {\n      nodes {\n        ...CommentFields\n      }\n    }\n  }\n": types.GetCommentsByEmailDocument,
     "\n  query queryGalleriesBasic {\n    galleries {\n      nodes {\n        id\n        slug\n        status\n      }\n    }\n  }\n": types.QueryGalleriesBasicDocument,
     "\n  query queryGalleryBySlug($slug: ID!) {\n    gallery(id: $slug, idType: SLUG) {\n      id\n      title\n      slug\n      status\n      gallerySettings {\n        galleryPhotos {\n          databaseId\n        }\n      }\n    }\n  }\n": types.QueryGalleryBySlugDocument,
     "\n  fragment MediaItemFields on MediaItem {\n    altText\n    id\n    sourceUrl\n    mediaDetails {\n      height\n      width\n    }\n  }\n": types.MediaItemFieldsFragmentDoc,
@@ -39,6 +38,8 @@ const documents = {
     "\n  query querySiteOptions {\n    optionsPage {\n      socialMedia {\n        socialMediaFacebook {\n          show\n          url\n        }\n        socialMediaInstagram {\n          show\n          url\n        }\n        socialMediaFlickr {\n          show\n          url\n        }\n        socialMediaBehance {\n          show\n          url\n        }\n      }\n    }\n  }\n": types.QuerySiteOptionsDocument,
     "\n  query querySiteData {\n    generalSettings {\n      description\n      language\n      title\n    }\n    favicon {\n      mediaDetails {\n        sizes {\n          sourceUrl\n          width\n        }\n      }\n    }\n  }\n": types.QuerySiteDataDocument,
     "\n  fragment MediaTagFields on MediaTag {\n    id\n    name\n    slug\n  }\n": types.MediaTagFieldsFragmentDoc,
+    "\n  query queryAllMediaTags {\n    mediaTags(first: 1000) {\n      nodes {\n        ...MediaTagFields\n      }\n    }\n  }\n": types.QueryAllMediaTagsDocument,
+    "\n  query QueryMediaTagBySlug($slug: ID!) {\n    mediaTag(id: $slug, idType: SLUG) {\n      id\n      name\n      slug\n      mediaItems(first: 1000) {\n        nodes {\n          databaseId\n        }\n      }\n    }\n  }\n": types.QueryMediaTagBySlugDocument,
     "\n  fragment UserBasic on User {\n    name\n    url\n  }\n": types.UserBasicFragmentDoc,
 };
 
@@ -68,10 +69,6 @@ export function gql(source: "\nquery commentsByPostId($contentId: ID, $first: In
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation CreateComment($author: String, $authorEmail: String, $clientMutationId: String, $commentOn: Int, $content: String, $authorUrl: String = \"\", $parent: ID = \"\") {\n    createComment(\n      input: {author: $author, authorEmail: $authorEmail, clientMutationId: $clientMutationId, commentOn: $commentOn, content: $content, authorUrl: $authorUrl, parent: $parent}\n    ) {\n      success\n      comment {\n        ...CommentFields\n      }\n      clientMutationId\n    }\n  }\n"): (typeof documents)["\n  mutation CreateComment($author: String, $authorEmail: String, $clientMutationId: String, $commentOn: Int, $content: String, $authorUrl: String = \"\", $parent: ID = \"\") {\n    createComment(\n      input: {author: $author, authorEmail: $authorEmail, clientMutationId: $clientMutationId, commentOn: $commentOn, content: $content, authorUrl: $authorUrl, parent: $parent}\n    ) {\n      success\n      comment {\n        ...CommentFields\n      }\n      clientMutationId\n    }\n  }\n"];
-/**
- * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
- */
-export function gql(source: "\n  query GetCommentsByEmail {\n    comments(where: {authorEmail: \"chato.javier@gmail.com\"}) {\n      nodes {\n        ...CommentFields\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetCommentsByEmail {\n    comments(where: {authorEmail: \"chato.javier@gmail.com\"}) {\n      nodes {\n        ...CommentFields\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
@@ -160,6 +157,14 @@ export function gql(source: "\n  query querySiteData {\n    generalSettings {\n 
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  fragment MediaTagFields on MediaTag {\n    id\n    name\n    slug\n  }\n"): (typeof documents)["\n  fragment MediaTagFields on MediaTag {\n    id\n    name\n    slug\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query queryAllMediaTags {\n    mediaTags(first: 1000) {\n      nodes {\n        ...MediaTagFields\n      }\n    }\n  }\n"): (typeof documents)["\n  query queryAllMediaTags {\n    mediaTags(first: 1000) {\n      nodes {\n        ...MediaTagFields\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query QueryMediaTagBySlug($slug: ID!) {\n    mediaTag(id: $slug, idType: SLUG) {\n      id\n      name\n      slug\n      mediaItems(first: 1000) {\n        nodes {\n          databaseId\n        }\n      }\n    }\n  }\n"): (typeof documents)["\n  query QueryMediaTagBySlug($slug: ID!) {\n    mediaTag(id: $slug, idType: SLUG) {\n      id\n      name\n      slug\n      mediaItems(first: 1000) {\n        nodes {\n          databaseId\n        }\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

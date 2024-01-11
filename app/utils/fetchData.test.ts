@@ -18,7 +18,7 @@ describe('post', () => {
 
     expect(fetch).toHaveBeenCalledWith(MOCK_URL, {
       method: 'POST',
-      cache: 'no-cache',
+      cache: 'no-store',
       headers: {
         'Content-Type': 'application/json',
       },
@@ -48,7 +48,6 @@ describe('post', () => {
 
     expect(fetch).toHaveBeenCalledWith(MOCK_URL, {
       method: 'GET',
-      cache: 'no-cache',
     });
   });
 });

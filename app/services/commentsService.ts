@@ -24,7 +24,9 @@ const getCommentsByPostId = async (
     return data;
   }
 
-  return fetchData.get(`${ApiRoutes.COMMENTS}/${postId}`);
+  return fetchData.get(`${ApiRoutes.COMMENTS}/${postId}`, {
+    tags: ['comments'],
+  });
 };
 
 const postCommentForm = async (

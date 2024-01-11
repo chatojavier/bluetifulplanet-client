@@ -1,14 +1,17 @@
-/* global HeadersInit */
+/* global RequestInit */
+/* global NextFetchRequestConfig */
+
+type CustomInit = Omit<RequestInit, 'next'> & NextFetchRequestConfig;
 
 const post = async <T = unknown>(
   url: string,
   body: Record<string, unknown>,
-  headers?: HeadersInit
+  init?: CustomInit
 ) => {
   const res = await fetch(url, {
     method: 'POST',
-    cache: 'no-cache',
-    headers: headers ?? {
+    cache: 'no-store',
+    headers: init?.headers ?? {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify(body),
@@ -19,14 +22,12 @@ const post = async <T = unknown>(
   return data;
 };
 
-const get = async <T = unknown>(
-  url: string,
-  headers?: HeadersInit
-): Promise<T> => {
+const get = async <T = unknown>(url: string, init?: CustomInit): Promise<T> => {
   const res = await fetch(url, {
     method: 'GET',
-    cache: 'no-cache',
-    ...(headers && { headers }),
+    ...(init?.tags ? { next: { tags: init.tags } } : {}),
+    ...(init?.revalidate ? { next: { revalidate: init.revalidate } } : {}),
+    ...init,
   });
 
   const data: T = await res.json();

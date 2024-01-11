@@ -19,6 +19,7 @@ export enum ApiRoutes {
   GALLERIES_BASIC = `${wp}/galleries/basic`,
   MEDIA_ITEMS = `${wp}/media-items`,
   CONTACT = `${wp}/contact`,
+  MEDIA_TAGS = `${wp}/taxnomies/media-tags`,
   GRAPHQL = '/graphql',
   CONTACT_FORM = '/wp-json/contact-form-7/v1/contact-forms',
 }

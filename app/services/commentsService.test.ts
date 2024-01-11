@@ -125,7 +125,8 @@ describe('CommentsService', () => {
       await CommentsService.getCommentsByPostId(MOCK_POST_ID);
 
       expect(fetchData.get).toHaveBeenCalledWith(
-        `/api/wp/comments/${MOCK_POST_ID}`
+        `/api/wp/comments/${MOCK_POST_ID}`,
+        { tags: ['comments'] }
       );
     });
 
