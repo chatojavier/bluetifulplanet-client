@@ -1,12 +1,29 @@
-import SafeHTML from '@app/components/SafeHTML/SafeHTML';
 import PagesService from '@app/services/PagesService';
 import { PageTemplate } from '@app/types/general';
 import { removeAllTrailingSlash } from '@app/utils/general';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 
 export type PageProps = {
   params: {
     pageSlug: string;
+  };
+};
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: PageProps['params'];
+}): Promise<Metadata> => {
+  const { page = null } =
+    params.pageSlug && !Array.isArray(params.pageSlug)
+      ? await PagesService.getPageByUri(params.pageSlug)
+      : {};
+
+  const { title } = page || {};
+
+  return {
+    title,
   };
 };
 
@@ -18,7 +35,8 @@ const getPageData = async (params: PageProps['params']) => {
 
   if (
     !result ||
-    result.page?.template !== PageTemplate.PLAIN_CONTENT ||
+    (result?.page?.template !== PageTemplate.PLAIN_CONTENT &&
+      result?.page?.template !== PageTemplate.CONTACT_ME) ||
     result.page.status !== 'publish'
   ) {
     notFound();
@@ -33,16 +51,20 @@ const Page = async ({ params }: PageProps) => {
 
   const id = removeAllTrailingSlash(params.pageSlug);
 
-  return (
-    <div id={id} className="page | py-12">
-      <h1 className="hidden">{title}</h1>
-      {content && (
-        <div className="wp-content | md:max-w-3xl m-auto px-4">
-          <SafeHTML html={content} />
-        </div>
-      )}
-    </div>
-  );
+  switch (page?.template) {
+    case PageTemplate.CONTACT_ME: {
+      const { default: ContactMe } = await import('@app/templates/ContactMe');
+      return <ContactMe id={id} title={title || ''} content={content} />;
+    }
+    case PageTemplate.PLAIN_CONTENT: {
+      const { default: PlainContent } = await import(
+        '@app/templates/PlainContent'
+      );
+      return <PlainContent id={id} title={title || ''} content={content} />;
+    }
+    default:
+      return null;
+  }
 };
 
 export default Page;
@@ -53,7 +75,8 @@ export const generateStaticParams = async () => {
   return pages
     .filter(
       page =>
-        page.template === PageTemplate.PLAIN_CONTENT &&
+        page.template ===
+          (PageTemplate.PLAIN_CONTENT || PageTemplate.CONTACT_ME) &&
         page.status === 'publish'
     )
     .map(page => ({

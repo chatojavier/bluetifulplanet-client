@@ -1,11 +1,15 @@
 import Pagination from '@app/components/Pagination';
 import PostSnipped from '@app/components/PostSnipped/PostSnipped';
 import PostsService from '@app/services/PostsService';
-import { NextPage } from 'next';
+import { Metadata, NextPage } from 'next';
 
 interface BlogProps {
   searchParams: Record<string, string | string[] | undefined>;
 }
+
+export const metadata: Metadata = {
+  title: 'Blog',
+};
 
 const getPostData = async (page: number, postsPerPage: number) => {
   const offset = (page - 1) * postsPerPage;

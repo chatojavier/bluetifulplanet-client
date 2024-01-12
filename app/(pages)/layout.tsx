@@ -4,7 +4,44 @@ import MenusService from '@app/services/MenusService';
 import { ReactNode } from 'react';
 import SiteService from '@app/services/SiteService';
 import { MenuLocationEnum } from '@app/graphql/__generated__/graphql';
+import { Metadata } from 'next';
 import { gilda, nunito, raleway } from './fonts';
+
+export const generateMetadata = async (): Promise<Metadata> => {
+  const { siteTitle, description, favicon } = await SiteService.getSiteData();
+
+  return {
+    title: {
+      default: `${siteTitle} - ${description}`,
+      template: `%s - ${siteTitle}`,
+    },
+    description,
+    icons: {
+      icon:
+        favicon && favicon?.length > 0
+          ? favicon
+              .map(({ width, sourceUrl }) => ({
+                url: sourceUrl as string,
+                href: sourceUrl as string,
+                sizes: `${width}x${width}`,
+                type: 'image/png',
+                rel: 'icon',
+              }))
+              .concat(
+                favicon
+                  .filter(({ width }) => width === '180')
+                  .map(({ width, sourceUrl }) => ({
+                    url: sourceUrl as string,
+                    href: sourceUrl as string,
+                    sizes: `${width}x${width}`,
+                    type: 'image/png',
+                    rel: 'apple-touch-icon',
+                  }))
+              )
+          : [],
+    },
+  };
+};
 
 async function getData() {
   const { menu } = await MenusService.getMenuByLocation(
@@ -31,11 +68,6 @@ export default async function RootLayout({
       lang={(language as string) || 'en'}
       className={`h-full ${raleway.variable} ${nunito.variable} ${gilda.variable} font-sans scroll-smooth`}
     >
-      {/*
-        <head /> will contain the components returned by the nearest parent
-        head.tsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
-      */}
-      <head />
       <body className="h-full">
         <Header menuLinks={mainMenu?.menuItems} socialMedia={socialMedia} />
         <div className="content | h-[calc(100%-3rem)] md:h-[calc(100%-5rem)]">

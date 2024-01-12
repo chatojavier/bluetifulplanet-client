@@ -6,12 +6,30 @@ import NavigationArrows from '@app/components/NavigationArrows/NavigationArrows'
 import HeaderInfo from '@app/components/HeaderInfo';
 import HeaderTitle from '@app/components/HeaderTitle';
 import TagsContainer from '@app/components/TagsContainer/TagsContainer';
+import { Metadata } from 'next';
 import styles from './page.module.scss';
 import PostComments from './PostComments';
 
 export type PostProps = {
   params: {
     post: string;
+  };
+};
+
+export const generateMetadata = async ({
+  params,
+}: {
+  params: PostProps['params'];
+}): Promise<Metadata> => {
+  const { post = null } =
+    params.post && !Array.isArray(params.post)
+      ? await PostsService.getPostByUri(params.post)
+      : {};
+
+  const { title } = post || {};
+
+  return {
+    title,
   };
 };
 

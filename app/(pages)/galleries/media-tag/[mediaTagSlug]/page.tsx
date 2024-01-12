@@ -8,6 +8,23 @@ export type MediaTagProps = {
   };
 };
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: MediaTagProps['params'];
+}) => {
+  const { mediaTag = null } =
+    params.mediaTagSlug && !Array.isArray(params.mediaTagSlug)
+      ? await TaxonomiesService.getMediaTagBySlug(params.mediaTagSlug)
+      : {};
+
+  const { name: title } = mediaTag || {};
+
+  return {
+    title,
+  };
+};
+
 const getMediaTagData = async (params: MediaTagProps['params']) =>
   params.mediaTagSlug && !Array.isArray(params.mediaTagSlug)
     ? TaxonomiesService.getMediaTagBySlug(params.mediaTagSlug)

@@ -9,6 +9,23 @@ export type GalleryProps = {
   };
 };
 
+export const generateMetadata = async ({
+  params,
+}: {
+  params: GalleryProps['params'];
+}) => {
+  const { gallery = null } =
+    params.gallerySlug && !Array.isArray(params.gallerySlug)
+      ? await GalleriesService.getGalleryBySlug(params.gallerySlug)
+      : {};
+
+  const { title } = gallery || {};
+
+  return {
+    title,
+  };
+};
+
 const getGalleryData = async (params: GalleryProps['params']) => {
   const result =
     params.gallerySlug && !Array.isArray(params.gallerySlug)
@@ -39,7 +56,7 @@ const Gallery = async ({ params }: GalleryProps) => {
 
   return (
     <div id={id} className="gallery | py-4">
-      <h1 className="hidden">{title}</h1>
+      <h1 className="sr-only">{title}</h1>
       {photosId && <GalleryGrid photosId={photosId} fallback={fallback} />}
     </div>
   );

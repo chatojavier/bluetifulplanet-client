@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import PagesService from '@app/services/PagesService';
 import { render, screen } from '@testing-library/react';
 import { notFound } from 'next/navigation';
@@ -39,7 +40,7 @@ describe('Page component', () => {
       .spyOn(PagesService, 'getPageByUri')
       .mockImplementationOnce(() => Promise.resolve(pageData));
 
-    render(await Page(pageProps));
+    render((await Page(pageProps)) as ReactElement);
 
     expect(PagesService.getPageByUri).toHaveBeenCalledWith(
       pageProps.params.pageSlug
@@ -59,7 +60,7 @@ describe('Page component', () => {
       .spyOn(PagesService, 'getPageByUri')
       .mockImplementationOnce(() => Promise.resolve(pageDataUpdated));
 
-    render(await Page(pageProps));
+    render((await Page(pageProps)) as ReactElement);
 
     expect(notFound).toHaveBeenCalled();
   });
