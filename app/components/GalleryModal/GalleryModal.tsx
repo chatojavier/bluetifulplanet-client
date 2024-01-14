@@ -43,6 +43,7 @@ const GalleryModalOpen: FunctionComponent<Omit<GalleryModalProps, 'open'>> = ({
   onNext,
 }) => {
   const [expanded, setExpanded] = useState<boolean>(false);
+  const [isVisible, setIsVisible] = useState<boolean>(false);
   const { size: windowSize, isMobile } = useWindowSize();
   const dialogRef = useRef<HTMLDivElement>(null);
   const prevRef = useRef<HTMLDivElement>(null);
@@ -96,19 +97,26 @@ const GalleryModalOpen: FunctionComponent<Omit<GalleryModalProps, 'open'>> = ({
     }, 550);
   }, [expanded, handleResize]);
 
+  const handleClose = useCallback(() => {
+    setIsVisible(false);
+    setTimeout(() => {
+      onClose();
+    }, 500);
+  }, [onClose]);
+
   const swipeHandlers = useSwipe({
     onSwipedLeft: onNext || (() => null),
     onSwipedRight: onPrev || (() => null),
-    onSwipedDown: expanded ? handleExpand : onClose,
+    onSwipedDown: expanded ? handleExpand : handleClose,
   });
 
   useFixDocumentBody();
-  useOutsideElement([dialogRef, prevRef, nextRef], onClose);
+  useOutsideElement([dialogRef, prevRef, nextRef], handleClose);
 
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        expanded ? handleExpand() : onClose();
+        expanded ? handleExpand() : handleClose();
       }
       if (e.key === 'ArrowRight' && onNext && hasNext) {
         onNext();
@@ -122,7 +130,7 @@ const GalleryModalOpen: FunctionComponent<Omit<GalleryModalProps, 'open'>> = ({
     return () => {
       document.removeEventListener('keydown', listener);
     };
-  }, [expanded, handleExpand, onClose, onNext, onPrev]);
+  }, [expanded, handleExpand, handleClose, onNext, onPrev]);
 
   useLayoutEffect(() => {
     if (!expanded) {
@@ -131,9 +139,15 @@ const GalleryModalOpen: FunctionComponent<Omit<GalleryModalProps, 'open'>> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [handleResize, windowSize, imageData, loading]);
 
+  useEffect(() => {
+    setIsVisible(true);
+  }, []);
+
   return (
     <div
-      className="gallery-modal | fixed top-0 w-screen h-screen-sm bg-black bg-opacity-60 flex justify-center items-center z-20"
+      className={`gallery-modal | fixed top-0 w-screen h-screen-sm bg-black bg-opacity-60 flex justify-center items-center z-20 ${
+        isVisible ? 'opacity-100' : 'opacity-0'
+      } transition-opacity duration-500`}
       data-testid="gallery-modal"
     >
       {onPrev && !isMobile && (
@@ -187,7 +201,7 @@ const GalleryModalOpen: FunctionComponent<Omit<GalleryModalProps, 'open'>> = ({
           className={`close-button | absolute top-4 right-6 text-white z-10 'transition-all', 'duration-500' ${
             expanded ? 'opacity-0' : 'pointer'
           }`}
-          onClick={onClose}
+          onClick={handleClose}
           data-testid="close-button"
         >
           <FontAwesomeIcon icon={faXmark} />

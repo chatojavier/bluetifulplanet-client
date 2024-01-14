@@ -144,7 +144,12 @@ describe('GalleryModal', () => {
     );
     const closeButton = screen.getByTestId('close-button');
     await userEvent.click(closeButton);
-    expect(onClose).toHaveBeenCalled();
+    await waitFor(
+      () => {
+        expect(onClose).toHaveBeenCalled();
+      },
+      { timeout: 600 }
+    );
   });
 
   it('should call the onClose function when the background is clicked', async () => {
@@ -158,7 +163,12 @@ describe('GalleryModal', () => {
     );
     const background = screen.getByTestId('gallery-modal');
     await userEvent.click(background);
-    expect(onClose).toHaveBeenCalled();
+    await waitFor(
+      () => {
+        expect(onClose).toHaveBeenCalled();
+      },
+      { timeout: 600 }
+    );
   });
 
   it('should call the onClose function when the escape key is pressed', async () => {
@@ -172,7 +182,12 @@ describe('GalleryModal', () => {
     );
     const background = screen.getByTestId('gallery-modal');
     await userEvent.type(background, '{esc}');
-    expect(onClose).toHaveBeenCalled();
+    await waitFor(
+      () => {
+        expect(onClose).toHaveBeenCalled();
+      },
+      { timeout: 600 }
+    );
   });
 
   it('should call the onPrev and onNext function when the left and right arrow keys are pressed', async () => {
@@ -241,7 +256,12 @@ describe('GalleryModal', () => {
     });
 
     await userEvent.type(document.documentElement, '{Escape}');
-    expect(onClose).toHaveBeenCalled();
+    await waitFor(
+      () => {
+        expect(onClose).toHaveBeenCalled();
+      },
+      { timeout: 600 }
+    );
   });
 
   it('should call the onPrev and onNext function when user swipes left and right', async () => {
