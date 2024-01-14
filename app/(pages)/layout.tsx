@@ -5,6 +5,7 @@ import { ReactNode } from 'react';
 import SiteService from '@app/services/SiteService';
 import { MenuLocationEnum } from '@app/graphql/__generated__/graphql';
 import { Metadata } from 'next';
+import PreventContextMenu from '@app/components/PreventContextMenu';
 import { gilda, nunito, raleway } from './fonts';
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -69,6 +70,7 @@ export default async function RootLayout({
       className={`h-full ${raleway.variable} ${nunito.variable} ${gilda.variable} font-sans scroll-smooth`}
     >
       <body className="h-full">
+        <PreventContextMenu />
         <Header menuLinks={mainMenu?.menuItems} socialMedia={socialMedia} />
         <div className="content | h-[calc(100%-3rem)] md:h-[calc(100%-5rem)]">
           {children}
