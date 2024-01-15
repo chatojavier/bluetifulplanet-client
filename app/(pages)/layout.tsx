@@ -49,12 +49,14 @@ async function getData() {
     MenuLocationEnum.MainMenu
   );
   const { language } = await SiteService.getSiteData();
-  const { socialMedia } = await SiteService.getSiteOptions();
+  const { socialMedia, disableContextMenu } =
+    await SiteService.getSiteOptions();
 
   return {
     mainMenu: menu,
     language,
     socialMedia,
+    disableContextMenu,
   };
 }
 
@@ -63,14 +65,20 @@ export default async function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  const { mainMenu, language, socialMedia } = await getData();
+  const { mainMenu, language, socialMedia, disableContextMenu } =
+    await getData();
+
   return (
     <html
       lang={(language as string) || 'en'}
       className={`h-full ${raleway.variable} ${nunito.variable} ${gilda.variable} font-sans scroll-smooth`}
     >
       <body className="h-full">
-        <PreventContextMenu />
+        {disableContextMenu && disableContextMenu.disabled ? (
+          <PreventContextMenu
+            message={disableContextMenu.messageToAlert as string}
+          />
+        ) : null}
         <Header menuLinks={mainMenu?.menuItems} socialMedia={socialMedia} />
         <div className="content | h-[calc(100%-3rem)] md:h-[calc(100%-5rem)]">
           {children}

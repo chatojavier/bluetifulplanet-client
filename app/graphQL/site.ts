@@ -21,6 +21,12 @@ export const QUERY_SITE_OPTIONS = gql(`
           url
         }
       }
+      websiteSettings {
+        disableContextMenu {
+          disabled
+          messageToAlert
+        }
+      }
     }
   }
 `);

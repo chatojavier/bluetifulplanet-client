@@ -1,6 +1,6 @@
 import { ApiRoutes } from '@api/api.types';
 import fetchData from '@utils/fetchData';
-import { SocialMedia } from '@api/wp/options/utils';
+import { SocialMedia, DisableContextMenu } from '@api/wp/options/utils';
 import { SiteData } from '@api/wp/settings/utils';
 import { isBrowser } from '@app/utils/general';
 import querySiteData from '@app/api/wp/settings/service';
@@ -27,7 +27,10 @@ const getSiteOptions = async () => {
     return data;
   }
 
-  return fetchData.get<{ socialMedia: SocialMedia }>(ApiRoutes.OPTIONS);
+  return fetchData.get<{
+    socialMedia: SocialMedia;
+    disableContextMenu: DisableContextMenu;
+  }>(ApiRoutes.OPTIONS);
 };
 
 const SiteService = {

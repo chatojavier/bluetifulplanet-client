@@ -7,7 +7,13 @@ import {
   useState,
 } from 'react';
 
-const PreventContextMenu: FunctionComponent = () => {
+interface PreventContextMenuProps {
+  message?: string;
+}
+
+const PreventContextMenu: FunctionComponent<PreventContextMenuProps> = ({
+  message,
+}) => {
   const [showMessage, setShowMessage] = useState<boolean>(false);
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -52,7 +58,7 @@ const PreventContextMenu: FunctionComponent = () => {
       onClick={handleClick}
     >
       <div className="text-white">
-        Images cannot be downloaded from this website.
+        {message || 'Images cannot be downloaded from this website.'}
       </div>
     </div>
   ) : null;

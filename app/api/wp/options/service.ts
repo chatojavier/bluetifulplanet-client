@@ -3,10 +3,13 @@ import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_SITE_OPTIONS } from '@graphql/site';
 import { removeDeepProperty } from '@utils/general';
 import { cloneDeep } from '@apollo/client/utilities';
-import { SocialMedia } from './utils';
+import { DisableContextMenu, SocialMedia } from './utils';
 
 const querySiteOptions = async (): Promise<
-  ApiWpReturn<{ socialMedia: SocialMedia }>
+  ApiWpReturn<{
+    socialMedia: SocialMedia;
+    disableContextMenu: DisableContextMenu;
+  }>
 > => {
   const apolloClient = getApolloClient();
 
@@ -28,14 +31,22 @@ const querySiteOptions = async (): Promise<
 
   const { data, errors } = siteOptions;
 
-  const { socialMedia: wpSocialMedia } = data?.optionsPage || {};
+  const { socialMedia: wpSocialMedia, websiteSettings } =
+    data?.optionsPage || {};
 
   const socialMedia = removeDeepProperty(
     cloneDeep(wpSocialMedia),
     '__typename'
   );
 
-  return { data: { socialMedia }, errors };
+  const { disableContextMenu: wpDisableContextMenu } = websiteSettings || {};
+
+  const disableContextMenu = removeDeepProperty(
+    cloneDeep(wpDisableContextMenu),
+    '__typename'
+  );
+
+  return { data: { socialMedia, disableContextMenu }, errors };
 };
 
 export default querySiteOptions;
