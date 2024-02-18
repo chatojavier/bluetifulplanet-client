@@ -2,15 +2,15 @@
 import fetchData from '@app/utils/fetchData';
 import { ApiRoutes } from '@api/api.types';
 import { Post, PostBasic, PostResume } from '@api/wp/posts/utils';
-import {
-  Maybe,
-  OffsetPaginationPageInfo,
-} from '@app/graphql/__generated__/graphql';
 import { isBrowser } from '@app/utils/general';
 import queryAllPosts from '@app/api/wp/posts/service';
 import queryAllPostsResume from '@app/api/wp/posts/resume/service';
 import queryAllPostsBasic from '@app/api/wp/posts/basic/service';
 import queryPostByUri from '@app/api/wp/posts/[uri]/service';
+import {
+  Maybe,
+  OffsetPaginationPageInfo,
+} from '@app/graphql/__generated__/graphql';
 
 const getAllPosts = async () => {
   if (!isBrowser()) {

@@ -83,7 +83,7 @@ export type Category = DatabaseIdentifier & HierarchicalNode & HierarchicalTermN
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean'];
@@ -391,7 +391,7 @@ export type CategoryToContentNodeConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -489,7 +489,7 @@ export type CategoryToPostConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -962,7 +962,7 @@ export type ContentNode = {
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
   guid?: Maybe<Scalars['String']>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean'];
@@ -1354,7 +1354,7 @@ export type ContentTypeToContentNodeConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -1833,7 +1833,7 @@ export type DeleteCategoryInput = {
 /** The payload for the deleteCategory mutation. */
 export type DeleteCategoryPayload = {
   __typename?: 'DeleteCategoryPayload';
-  /** The deteted term object */
+  /** The deleted term object */
   category?: Maybe<Category>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: Maybe<Scalars['String']>;
@@ -1921,7 +1921,7 @@ export type DeleteMediaTagPayload = {
   clientMutationId?: Maybe<Scalars['String']>;
   /** The ID of the deleted object */
   deletedId?: Maybe<Scalars['ID']>;
-  /** The deteted term object */
+  /** The deleted term object */
   mediaTag?: Maybe<MediaTag>;
 };
 
@@ -1963,7 +1963,7 @@ export type DeletePostFormatPayload = {
   clientMutationId?: Maybe<Scalars['String']>;
   /** The ID of the deleted object */
   deletedId?: Maybe<Scalars['ID']>;
-  /** The deteted term object */
+  /** The deleted term object */
   postFormat?: Maybe<PostFormat>;
 };
 
@@ -2005,7 +2005,7 @@ export type DeleteTagPayload = {
   clientMutationId?: Maybe<Scalars['String']>;
   /** The ID of the deleted object */
   deletedId?: Maybe<Scalars['ID']>;
-  /** The deteted term object */
+  /** The deleted term object */
   tag?: Maybe<Tag>;
 };
 
@@ -2049,11 +2049,23 @@ export type Edge = {
 
 /** Asset enqueued by the CMS */
 export type EnqueuedAsset = {
-  /** @todo */
+  /** The inline code to be run after the asset is loaded. */
+  after?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /**
+   * Deprecated
+   * @deprecated Use `EnqueuedAsset.media` instead.
+   */
   args?: Maybe<Scalars['Boolean']>;
+  /** The inline code to be run before the asset is loaded. */
+  before?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc */
+  conditional?: Maybe<Scalars['String']>;
   /** Dependencies needed to use this asset */
-  dependencies?: Maybe<Array<Maybe<EnqueuedScript>>>;
-  /** Extra information needed for the script */
+  dependencies?: Maybe<Array<Maybe<EnqueuedAsset>>>;
+  /**
+   * Extra information needed for the script
+   * @deprecated Use `EnqueuedScript.extraData` instead.
+   */
   extra?: Maybe<Scalars['String']>;
   /** The handle of the enqueued asset */
   handle?: Maybe<Scalars['String']>;
@@ -2068,19 +2080,35 @@ export type EnqueuedAsset = {
 /** Script enqueued by the CMS */
 export type EnqueuedScript = EnqueuedAsset & Node & {
   __typename?: 'EnqueuedScript';
-  /** @todo */
+  /** The inline code to be run after the asset is loaded. */
+  after?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /**
+   * Deprecated
+   * @deprecated Use `EnqueuedAsset.media` instead.
+   */
   args?: Maybe<Scalars['Boolean']>;
+  /** The inline code to be run before the asset is loaded. */
+  before?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc */
+  conditional?: Maybe<Scalars['String']>;
   /** Dependencies needed to use this asset */
   dependencies?: Maybe<Array<Maybe<EnqueuedScript>>>;
-  /** Extra information needed for the script */
+  /**
+   * Extra information needed for the script
+   * @deprecated Use `EnqueuedScript.extraData` instead.
+   */
   extra?: Maybe<Scalars['String']>;
+  /** Extra data supplied to the enqueued script */
+  extraData?: Maybe<Scalars['String']>;
   /** The handle of the enqueued asset */
   handle?: Maybe<Scalars['String']>;
-  /** The ID of the enqueued asset */
+  /** The global ID of the enqueued script */
   id: Scalars['ID'];
   /** The source of the asset */
   src?: Maybe<Scalars['String']>;
-  /** The version of the enqueued asset */
+  /** The loading strategy to use on the script tag */
+  strategy?: Maybe<ScriptLoadingStrategyEnum>;
+  /** The version of the enqueued script */
   version?: Maybe<Scalars['String']>;
 };
 
@@ -2119,19 +2147,43 @@ export type EnqueuedScriptConnectionPageInfo = {
 /** Stylesheet enqueued by the CMS */
 export type EnqueuedStylesheet = EnqueuedAsset & Node & {
   __typename?: 'EnqueuedStylesheet';
-  /** @todo */
+  /** The inline code to be run after the asset is loaded. */
+  after?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /**
+   * Deprecated
+   * @deprecated Use `EnqueuedAsset.media` instead.
+   */
   args?: Maybe<Scalars['Boolean']>;
+  /** The inline code to be run before the asset is loaded. */
+  before?: Maybe<Array<Maybe<Scalars['String']>>>;
+  /** The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc */
+  conditional?: Maybe<Scalars['String']>;
   /** Dependencies needed to use this asset */
-  dependencies?: Maybe<Array<Maybe<EnqueuedScript>>>;
-  /** Extra information needed for the script */
+  dependencies?: Maybe<Array<Maybe<EnqueuedStylesheet>>>;
+  /**
+   * Extra information needed for the script
+   * @deprecated Use `EnqueuedScript.extraData` instead.
+   */
   extra?: Maybe<Scalars['String']>;
   /** The handle of the enqueued asset */
   handle?: Maybe<Scalars['String']>;
-  /** The ID of the enqueued asset */
+  /** The global ID of the enqueued stylesheet */
   id: Scalars['ID'];
+  /** Whether the enqueued style is RTL or not */
+  isRtl?: Maybe<Scalars['Boolean']>;
+  /** The media attribute to use for the link */
+  media?: Maybe<Scalars['String']>;
+  /** The absolute path to the enqueued style. Set when the stylesheet is meant to load inline. */
+  path?: Maybe<Scalars['String']>;
+  /** The `rel` attribute to use for the link */
+  rel?: Maybe<Scalars['String']>;
   /** The source of the asset */
   src?: Maybe<Scalars['String']>;
-  /** The version of the enqueued asset */
+  /** Optional suffix, used in combination with RTL */
+  suffix?: Maybe<Scalars['String']>;
+  /** The title of the enqueued style. Used for preferred/alternate stylesheets. */
+  title?: Maybe<Scalars['String']>;
+  /** The version of the enqueued style */
   version?: Maybe<Scalars['String']>;
 };
 
@@ -2524,7 +2576,7 @@ export type HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -2599,7 +2651,7 @@ export type HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -3340,7 +3392,7 @@ export type MediaTag = DatabaseIdentifier & MenuItemLinkable & Node & TermNode &
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean'];
@@ -3512,7 +3564,7 @@ export type MediaTagToContentNodeConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -3593,7 +3645,7 @@ export type MediaTagToMediaItemConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -3789,7 +3841,7 @@ export type MenuItemConnectionPageInfo = {
 export type MenuItemLinkable = {
   /** The unique identifier stored in the database */
   databaseId: Scalars['Int'];
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean'];
@@ -3952,187 +4004,187 @@ export type MenuToMenuItemConnectionWhereArgs = {
 
 /** The MimeType of the object */
 export enum MimeTypeEnum {
-  /** MimeType application/java */
+  /** application/java mime type. */
   ApplicationJava = 'APPLICATION_JAVA',
-  /** MimeType application/javascript */
+  /** application/javascript mime type. */
   ApplicationJavascript = 'APPLICATION_JAVASCRIPT',
-  /** MimeType application/msword */
+  /** application/msword mime type. */
   ApplicationMsword = 'APPLICATION_MSWORD',
-  /** MimeType application/octet-stream */
+  /** application/octet-stream mime type. */
   ApplicationOctetStream = 'APPLICATION_OCTET_STREAM',
-  /** MimeType application/onenote */
+  /** application/onenote mime type. */
   ApplicationOnenote = 'APPLICATION_ONENOTE',
-  /** MimeType application/oxps */
+  /** application/oxps mime type. */
   ApplicationOxps = 'APPLICATION_OXPS',
-  /** MimeType application/pdf */
+  /** application/pdf mime type. */
   ApplicationPdf = 'APPLICATION_PDF',
-  /** MimeType application/rar */
+  /** application/rar mime type. */
   ApplicationRar = 'APPLICATION_RAR',
-  /** MimeType application/rtf */
+  /** application/rtf mime type. */
   ApplicationRtf = 'APPLICATION_RTF',
-  /** MimeType application/ttaf+xml */
+  /** application/ttaf+xml mime type. */
   ApplicationTtafXml = 'APPLICATION_TTAF_XML',
-  /** MimeType application/vnd.apple.keynote */
+  /** application/vnd.apple.keynote mime type. */
   ApplicationVndAppleKeynote = 'APPLICATION_VND_APPLE_KEYNOTE',
-  /** MimeType application/vnd.apple.numbers */
+  /** application/vnd.apple.numbers mime type. */
   ApplicationVndAppleNumbers = 'APPLICATION_VND_APPLE_NUMBERS',
-  /** MimeType application/vnd.apple.pages */
+  /** application/vnd.apple.pages mime type. */
   ApplicationVndApplePages = 'APPLICATION_VND_APPLE_PAGES',
-  /** MimeType application/vnd.ms-access */
+  /** application/vnd.ms-access mime type. */
   ApplicationVndMsAccess = 'APPLICATION_VND_MS_ACCESS',
-  /** MimeType application/vnd.ms-excel */
+  /** application/vnd.ms-excel mime type. */
   ApplicationVndMsExcel = 'APPLICATION_VND_MS_EXCEL',
-  /** MimeType application/vnd.ms-excel.addin.macroEnabled.12 */
+  /** application/vnd.ms-excel.addin.macroEnabled.12 mime type. */
   ApplicationVndMsExcelAddinMacroenabled_12 = 'APPLICATION_VND_MS_EXCEL_ADDIN_MACROENABLED_12',
-  /** MimeType application/vnd.ms-excel.sheet.binary.macroEnabled.12 */
+  /** application/vnd.ms-excel.sheet.binary.macroEnabled.12 mime type. */
   ApplicationVndMsExcelSheetBinaryMacroenabled_12 = 'APPLICATION_VND_MS_EXCEL_SHEET_BINARY_MACROENABLED_12',
-  /** MimeType application/vnd.ms-excel.sheet.macroEnabled.12 */
+  /** application/vnd.ms-excel.sheet.macroEnabled.12 mime type. */
   ApplicationVndMsExcelSheetMacroenabled_12 = 'APPLICATION_VND_MS_EXCEL_SHEET_MACROENABLED_12',
-  /** MimeType application/vnd.ms-excel.template.macroEnabled.12 */
+  /** application/vnd.ms-excel.template.macroEnabled.12 mime type. */
   ApplicationVndMsExcelTemplateMacroenabled_12 = 'APPLICATION_VND_MS_EXCEL_TEMPLATE_MACROENABLED_12',
-  /** MimeType application/vnd.ms-powerpoint */
+  /** application/vnd.ms-powerpoint mime type. */
   ApplicationVndMsPowerpoint = 'APPLICATION_VND_MS_POWERPOINT',
-  /** MimeType application/vnd.ms-powerpoint.addin.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.addin.macroEnabled.12 mime type. */
   ApplicationVndMsPowerpointAddinMacroenabled_12 = 'APPLICATION_VND_MS_POWERPOINT_ADDIN_MACROENABLED_12',
-  /** MimeType application/vnd.ms-powerpoint.presentation.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.presentation.macroEnabled.12 mime type. */
   ApplicationVndMsPowerpointPresentationMacroenabled_12 = 'APPLICATION_VND_MS_POWERPOINT_PRESENTATION_MACROENABLED_12',
-  /** MimeType application/vnd.ms-powerpoint.slideshow.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.slideshow.macroEnabled.12 mime type. */
   ApplicationVndMsPowerpointSlideshowMacroenabled_12 = 'APPLICATION_VND_MS_POWERPOINT_SLIDESHOW_MACROENABLED_12',
-  /** MimeType application/vnd.ms-powerpoint.slide.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.slide.macroEnabled.12 mime type. */
   ApplicationVndMsPowerpointSlideMacroenabled_12 = 'APPLICATION_VND_MS_POWERPOINT_SLIDE_MACROENABLED_12',
-  /** MimeType application/vnd.ms-powerpoint.template.macroEnabled.12 */
+  /** application/vnd.ms-powerpoint.template.macroEnabled.12 mime type. */
   ApplicationVndMsPowerpointTemplateMacroenabled_12 = 'APPLICATION_VND_MS_POWERPOINT_TEMPLATE_MACROENABLED_12',
-  /** MimeType application/vnd.ms-project */
+  /** application/vnd.ms-project mime type. */
   ApplicationVndMsProject = 'APPLICATION_VND_MS_PROJECT',
-  /** MimeType application/vnd.ms-word.document.macroEnabled.12 */
+  /** application/vnd.ms-word.document.macroEnabled.12 mime type. */
   ApplicationVndMsWordDocumentMacroenabled_12 = 'APPLICATION_VND_MS_WORD_DOCUMENT_MACROENABLED_12',
-  /** MimeType application/vnd.ms-word.template.macroEnabled.12 */
+  /** application/vnd.ms-word.template.macroEnabled.12 mime type. */
   ApplicationVndMsWordTemplateMacroenabled_12 = 'APPLICATION_VND_MS_WORD_TEMPLATE_MACROENABLED_12',
-  /** MimeType application/vnd.ms-write */
+  /** application/vnd.ms-write mime type. */
   ApplicationVndMsWrite = 'APPLICATION_VND_MS_WRITE',
-  /** MimeType application/vnd.ms-xpsdocument */
+  /** application/vnd.ms-xpsdocument mime type. */
   ApplicationVndMsXpsdocument = 'APPLICATION_VND_MS_XPSDOCUMENT',
-  /** MimeType application/vnd.oasis.opendocument.chart */
+  /** application/vnd.oasis.opendocument.chart mime type. */
   ApplicationVndOasisOpendocumentChart = 'APPLICATION_VND_OASIS_OPENDOCUMENT_CHART',
-  /** MimeType application/vnd.oasis.opendocument.database */
+  /** application/vnd.oasis.opendocument.database mime type. */
   ApplicationVndOasisOpendocumentDatabase = 'APPLICATION_VND_OASIS_OPENDOCUMENT_DATABASE',
-  /** MimeType application/vnd.oasis.opendocument.formula */
+  /** application/vnd.oasis.opendocument.formula mime type. */
   ApplicationVndOasisOpendocumentFormula = 'APPLICATION_VND_OASIS_OPENDOCUMENT_FORMULA',
-  /** MimeType application/vnd.oasis.opendocument.graphics */
+  /** application/vnd.oasis.opendocument.graphics mime type. */
   ApplicationVndOasisOpendocumentGraphics = 'APPLICATION_VND_OASIS_OPENDOCUMENT_GRAPHICS',
-  /** MimeType application/vnd.oasis.opendocument.presentation */
+  /** application/vnd.oasis.opendocument.presentation mime type. */
   ApplicationVndOasisOpendocumentPresentation = 'APPLICATION_VND_OASIS_OPENDOCUMENT_PRESENTATION',
-  /** MimeType application/vnd.oasis.opendocument.spreadsheet */
+  /** application/vnd.oasis.opendocument.spreadsheet mime type. */
   ApplicationVndOasisOpendocumentSpreadsheet = 'APPLICATION_VND_OASIS_OPENDOCUMENT_SPREADSHEET',
-  /** MimeType application/vnd.oasis.opendocument.text */
+  /** application/vnd.oasis.opendocument.text mime type. */
   ApplicationVndOasisOpendocumentText = 'APPLICATION_VND_OASIS_OPENDOCUMENT_TEXT',
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.presentation */
+  /** application/vnd.openxmlformats-officedocument.presentationml.presentation mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentPresentationmlPresentation = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_PRESENTATION',
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.slide */
+  /** application/vnd.openxmlformats-officedocument.presentationml.slide mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentPresentationmlSlide = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDE',
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.slideshow */
+  /** application/vnd.openxmlformats-officedocument.presentationml.slideshow mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentPresentationmlSlideshow = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_SLIDESHOW',
-  /** MimeType application/vnd.openxmlformats-officedocument.presentationml.template */
+  /** application/vnd.openxmlformats-officedocument.presentationml.template mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentPresentationmlTemplate = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_PRESENTATIONML_TEMPLATE',
-  /** MimeType application/vnd.openxmlformats-officedocument.spreadsheetml.sheet */
+  /** application/vnd.openxmlformats-officedocument.spreadsheetml.sheet mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentSpreadsheetmlSheet = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_SHEET',
-  /** MimeType application/vnd.openxmlformats-officedocument.spreadsheetml.template */
+  /** application/vnd.openxmlformats-officedocument.spreadsheetml.template mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentSpreadsheetmlTemplate = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_SPREADSHEETML_TEMPLATE',
-  /** MimeType application/vnd.openxmlformats-officedocument.wordprocessingml.document */
+  /** application/vnd.openxmlformats-officedocument.wordprocessingml.document mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentWordprocessingmlDocument = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_DOCUMENT',
-  /** MimeType application/vnd.openxmlformats-officedocument.wordprocessingml.template */
+  /** application/vnd.openxmlformats-officedocument.wordprocessingml.template mime type. */
   ApplicationVndOpenxmlformatsOfficedocumentWordprocessingmlTemplate = 'APPLICATION_VND_OPENXMLFORMATS_OFFICEDOCUMENT_WORDPROCESSINGML_TEMPLATE',
-  /** MimeType application/wordperfect */
+  /** application/wordperfect mime type. */
   ApplicationWordperfect = 'APPLICATION_WORDPERFECT',
-  /** MimeType application/x-7z-compressed */
+  /** application/x-7z-compressed mime type. */
   ApplicationX_7ZCompressed = 'APPLICATION_X_7Z_COMPRESSED',
-  /** MimeType application/x-gzip */
+  /** application/x-gzip mime type. */
   ApplicationXGzip = 'APPLICATION_X_GZIP',
-  /** MimeType application/x-tar */
+  /** application/x-tar mime type. */
   ApplicationXTar = 'APPLICATION_X_TAR',
-  /** MimeType application/zip */
+  /** application/zip mime type. */
   ApplicationZip = 'APPLICATION_ZIP',
-  /** MimeType audio/aac */
+  /** audio/aac mime type. */
   AudioAac = 'AUDIO_AAC',
-  /** MimeType audio/flac */
+  /** audio/flac mime type. */
   AudioFlac = 'AUDIO_FLAC',
-  /** MimeType audio/midi */
+  /** audio/midi mime type. */
   AudioMidi = 'AUDIO_MIDI',
-  /** MimeType audio/mpeg */
+  /** audio/mpeg mime type. */
   AudioMpeg = 'AUDIO_MPEG',
-  /** MimeType audio/ogg */
+  /** audio/ogg mime type. */
   AudioOgg = 'AUDIO_OGG',
-  /** MimeType audio/wav */
+  /** audio/wav mime type. */
   AudioWav = 'AUDIO_WAV',
-  /** MimeType audio/x-matroska */
+  /** audio/x-matroska mime type. */
   AudioXMatroska = 'AUDIO_X_MATROSKA',
-  /** MimeType audio/x-ms-wax */
+  /** audio/x-ms-wax mime type. */
   AudioXMsWax = 'AUDIO_X_MS_WAX',
-  /** MimeType audio/x-ms-wma */
+  /** audio/x-ms-wma mime type. */
   AudioXMsWma = 'AUDIO_X_MS_WMA',
-  /** MimeType audio/x-realaudio */
+  /** audio/x-realaudio mime type. */
   AudioXRealaudio = 'AUDIO_X_REALAUDIO',
-  /** MimeType image/bmp */
+  /** image/bmp mime type. */
   ImageBmp = 'IMAGE_BMP',
-  /** MimeType image/gif */
+  /** image/gif mime type. */
   ImageGif = 'IMAGE_GIF',
-  /** MimeType image/heic */
+  /** image/heic mime type. */
   ImageHeic = 'IMAGE_HEIC',
-  /** MimeType image/jpeg */
+  /** image/jpeg mime type. */
   ImageJpeg = 'IMAGE_JPEG',
-  /** MimeType image/png */
+  /** image/png mime type. */
   ImagePng = 'IMAGE_PNG',
-  /** MimeType image/tiff */
+  /** image/tiff mime type. */
   ImageTiff = 'IMAGE_TIFF',
-  /** MimeType image/webp */
+  /** image/webp mime type. */
   ImageWebp = 'IMAGE_WEBP',
-  /** MimeType image/x-icon */
+  /** image/x-icon mime type. */
   ImageXIcon = 'IMAGE_X_ICON',
-  /** MimeType text/calendar */
+  /** text/calendar mime type. */
   TextCalendar = 'TEXT_CALENDAR',
-  /** MimeType text/css */
+  /** text/css mime type. */
   TextCss = 'TEXT_CSS',
-  /** MimeType text/csv */
+  /** text/csv mime type. */
   TextCsv = 'TEXT_CSV',
-  /** MimeType text/html */
+  /** text/html mime type. */
   TextHtml = 'TEXT_HTML',
-  /** MimeType text/plain */
+  /** text/plain mime type. */
   TextPlain = 'TEXT_PLAIN',
-  /** MimeType text/richtext */
+  /** text/richtext mime type. */
   TextRichtext = 'TEXT_RICHTEXT',
-  /** MimeType text/tab-separated-values */
+  /** text/tab-separated-values mime type. */
   TextTabSeparatedValues = 'TEXT_TAB_SEPARATED_VALUES',
-  /** MimeType text/vtt */
+  /** text/vtt mime type. */
   TextVtt = 'TEXT_VTT',
-  /** MimeType video/3gpp */
+  /** video/3gpp mime type. */
   Video_3Gpp = 'VIDEO_3GPP',
-  /** MimeType video/3gpp2 */
+  /** video/3gpp2 mime type. */
   Video_3Gpp2 = 'VIDEO_3GPP2',
-  /** MimeType video/avi */
+  /** video/avi mime type. */
   VideoAvi = 'VIDEO_AVI',
-  /** MimeType video/divx */
+  /** video/divx mime type. */
   VideoDivx = 'VIDEO_DIVX',
-  /** MimeType video/mp4 */
+  /** video/mp4 mime type. */
   VideoMp4 = 'VIDEO_MP4',
-  /** MimeType video/mpeg */
+  /** video/mpeg mime type. */
   VideoMpeg = 'VIDEO_MPEG',
-  /** MimeType video/ogg */
+  /** video/ogg mime type. */
   VideoOgg = 'VIDEO_OGG',
-  /** MimeType video/quicktime */
+  /** video/quicktime mime type. */
   VideoQuicktime = 'VIDEO_QUICKTIME',
-  /** MimeType video/webm */
+  /** video/webm mime type. */
   VideoWebm = 'VIDEO_WEBM',
-  /** MimeType video/x-flv */
+  /** video/x-flv mime type. */
   VideoXFlv = 'VIDEO_X_FLV',
-  /** MimeType video/x-matroska */
+  /** video/x-matroska mime type. */
   VideoXMatroska = 'VIDEO_X_MATROSKA',
-  /** MimeType video/x-ms-asf */
+  /** video/x-ms-asf mime type. */
   VideoXMsAsf = 'VIDEO_X_MS_ASF',
-  /** MimeType video/x-ms-wm */
+  /** video/x-ms-wm mime type. */
   VideoXMsWm = 'VIDEO_X_MS_WM',
-  /** MimeType video/x-ms-wmv */
+  /** video/x-ms-wmv mime type. */
   VideoXMsWmv = 'VIDEO_X_MS_WMV',
-  /** MimeType video/x-ms-wmx */
+  /** video/x-ms-wmx mime type. */
   VideoXMsWmx = 'VIDEO_X_MS_WMX'
 }
 
@@ -4796,7 +4848,7 @@ export type PageToRevisionConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -5175,7 +5227,7 @@ export type PostFormat = DatabaseIdentifier & Node & TermNode & UniformResourceI
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean'];
@@ -5347,7 +5399,7 @@ export type PostFormatToContentNodeConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -5436,7 +5488,7 @@ export type PostFormatToPostConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -5946,7 +5998,7 @@ export type PostToRevisionConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -7368,7 +7420,7 @@ export type RootQueryToContentNodeConnectionWhereArgs = {
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   /** Paginate content nodes with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -7548,7 +7600,7 @@ export type RootQueryToGalleryConnectionWhereArgs = {
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   /** Paginate Gallerys with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -7631,7 +7683,7 @@ export type RootQueryToMediaItemConnectionWhereArgs = {
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   /** Paginate MediaItems with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -7887,7 +7939,7 @@ export type RootQueryToPageConnectionWhereArgs = {
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   /** Paginate Pages with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -8023,7 +8075,7 @@ export type RootQueryToPostConnectionWhereArgs = {
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
   /** Paginate Posts with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -8191,7 +8243,7 @@ export type RootQueryToRevisionsConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -8502,7 +8554,7 @@ export type RootQueryToUserConnectionWhereArgs = {
   nicenameNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Paginate users with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<UsersConnectionOrderbyInput>>>;
   /** An array of role names that users must match to be included in results. Note that this is an inclusive list: users must match *each* role. */
   role?: InputMaybe<UserRoleEnum>;
@@ -8550,6 +8602,14 @@ export type RootQueryToUserRoleConnectionPageInfo = PageInfo & UserRoleConnectio
   /** When paginating backwards, the cursor to continue. */
   startCursor?: Maybe<Scalars['String']>;
 };
+
+/** The strategy to use when loading the script */
+export enum ScriptLoadingStrategyEnum {
+  /** Use the script `async` attribute */
+  Async = 'ASYNC',
+  /** Use the script `defer` attribute */
+  Defer = 'DEFER'
+}
 
 /** Input for the sendPasswordResetEmail mutation. */
 export type SendPasswordResetEmailInput = {
@@ -8629,7 +8689,7 @@ export type Tag = DatabaseIdentifier & MenuItemLinkable & Node & TermNode & Unif
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean'];
@@ -8801,7 +8861,7 @@ export type TagToContentNodeConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -8890,7 +8950,7 @@ export type TagToPostConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -8936,6 +8996,8 @@ export type Taxonomy = Node & {
   __typename?: 'Taxonomy';
   /** List of Content Types associated with the Taxonomy */
   connectedContentTypes?: Maybe<TaxonomyToContentTypeConnection>;
+  /** List of Term Nodes associated with the Taxonomy */
+  connectedTerms?: Maybe<TaxonomyToTermNodeConnection>;
   /** Description of the taxonomy. This field is equivalent to WP_Taxonomy-&gt;description */
   description?: Maybe<Scalars['String']>;
   /** The plural name of the post type within the GraphQL Schema. */
@@ -8954,7 +9016,7 @@ export type Taxonomy = Node & {
   name?: Maybe<Scalars['String']>;
   /** Whether the taxonomy is publicly queryable */
   public?: Maybe<Scalars['Boolean']>;
-  /** Name of content type to diplay in REST API &quot;wp/v2&quot; namespace. */
+  /** Name of content type to display in REST API &quot;wp/v2&quot; namespace. */
   restBase?: Maybe<Scalars['String']>;
   /** The REST Controller class assigned to handling this content type. */
   restControllerClass?: Maybe<Scalars['String']>;
@@ -8979,6 +9041,15 @@ export type Taxonomy = Node & {
 
 /** A taxonomy object */
 export type TaxonomyConnectedContentTypesArgs = {
+  after?: InputMaybe<Scalars['String']>;
+  before?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+};
+
+
+/** A taxonomy object */
+export type TaxonomyConnectedTermsArgs = {
   after?: InputMaybe<Scalars['String']>;
   before?: InputMaybe<Scalars['String']>;
   first?: InputMaybe<Scalars['Int']>;
@@ -9072,6 +9143,41 @@ export type TaxonomyToContentTypeConnectionPageInfo = ContentTypeConnectionPageI
   startCursor?: Maybe<Scalars['String']>;
 };
 
+/** Connection between the Taxonomy type and the TermNode type */
+export type TaxonomyToTermNodeConnection = Connection & TermNodeConnection & {
+  __typename?: 'TaxonomyToTermNodeConnection';
+  /** Edges for the TaxonomyToTermNodeConnection connection */
+  edges: Array<TaxonomyToTermNodeConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<TermNode>;
+  /** Information about pagination in a connection. */
+  pageInfo: TaxonomyToTermNodeConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type TaxonomyToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & {
+  __typename?: 'TaxonomyToTermNodeConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']>;
+  /** The item at the end of the edge */
+  node: TermNode;
+};
+
+/** Page Info on the &quot;TaxonomyToTermNodeConnection&quot; */
+export type TaxonomyToTermNodeConnectionPageInfo = PageInfo & TermNodeConnectionPageInfo & WpPageInfo & {
+  __typename?: 'TaxonomyToTermNodeConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean'];
+  /** Get information about the offset pagination state in the current connection */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']>;
+};
+
 /** The template assigned to the node */
 export type Template_ContactMe = ContentTemplate & {
   __typename?: 'Template_ContactMe';
@@ -9098,7 +9204,7 @@ export type TermNode = {
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean'];
@@ -9335,7 +9441,7 @@ export type ThemeConnectionPageInfo = {
 
 /** Any node that has a URI */
 export type UniformResourceIdentifiable = {
-  /** The unique resource identifier path */
+  /** The globally unique ID for the object */
   id: Scalars['ID'];
   /** Whether the node is a Content Node */
   isContentNode: Scalars['Boolean'];
@@ -9803,7 +9909,7 @@ export type User = Commenter & DatabaseIdentifier & Node & UniformResourceIdenti
   locale?: Maybe<Scalars['String']>;
   /** Connection between the User type and the mediaItem type */
   mediaItems?: Maybe<UserToMediaItemConnection>;
-  /** Display name of the user. This is equivalent to the WP_User-&gt;dispaly_name property. */
+  /** Display name of the user. This is equivalent to the WP_User-&gt;display_name property. */
   name?: Maybe<Scalars['String']>;
   /** The nicename for the user. This field is equivalent to WP_User-&gt;user_nicename */
   nicename?: Maybe<Scalars['String']>;
@@ -10262,7 +10368,7 @@ export type UserToMediaItemConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -10343,7 +10449,7 @@ export type UserToPageConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -10432,7 +10538,7 @@ export type UserToPostConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;
@@ -10519,7 +10625,7 @@ export type UserToRevisionsConnectionWhereArgs = {
   nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
   notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
-  /** What paramater to use to order the objects by. */
+  /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
   parent?: InputMaybe<Scalars['ID']>;

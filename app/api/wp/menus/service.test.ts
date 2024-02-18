@@ -1,5 +1,5 @@
 import { getApolloClient } from '@app/utils/apollo-client';
-import { QUERY_ALL_MENUS } from '@graphql/menus';
+import { QUERY_ALL_MENUS } from '@app/graphql/menus';
 import {
   ApolloClient,
   ApolloQueryResult,

@@ -1,6 +1,6 @@
 import { ApiWpReturn } from '@app/api/api.types';
 import { getApolloClient } from '@app/utils/apollo-client';
-import { QUERY_SITE_OPTIONS } from '@graphql/site';
+import { QUERY_SITE_OPTIONS } from '@app/graphql/site';
 import { removeDeepProperty } from '@utils/general';
 import { cloneDeep } from '@apollo/client/utilities';
 import { DisableContextMenu, SocialMedia } from './utils';

@@ -2,9 +2,9 @@
 import queryCommentsByPostId from '@app/api/wp/comments/[postId]/service';
 import { isBrowser } from '@app/utils/general';
 import { Comment } from '@api/wp/comments/utils';
-import { CommentStatusEnum } from '@app/graphql/__generated__/graphql';
 import fetchData from '@app/utils/fetchData';
 import mutatePostComment from '@app/api/wp/comments/service';
+import { CommentStatusEnum } from '@app/graphql/__generated__/graphql';
 import CommentsService from './commentsService';
 
 jest.mock('@app/api/wp/comments/[postId]/service', () => ({

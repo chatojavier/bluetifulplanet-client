@@ -1,5 +1,5 @@
 import { DeepOmit } from '@apollo/client/utilities/types/DeepOmit';
-import { MenuFieldsFragment } from '@graphql/__generated__/graphql';
+import { MenuFieldsFragment } from '@app/graphql/__generated__/graphql';
 import { removeDeepProperty } from '@utils/general';
 
 type QueryMenuItem = NonNullable<

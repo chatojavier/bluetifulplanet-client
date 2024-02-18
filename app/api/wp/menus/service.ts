@@ -1,6 +1,6 @@
 import { ApiWpReturn } from '@app/api/api.types';
 import { getApolloClient } from '@app/utils/apollo-client';
-import { QUERY_ALL_MENUS } from '@graphql/menus';
+import { QUERY_ALL_MENUS } from '@app/graphql/menus';
 import { Menu, mapMenu } from './utils';
 
 const queryAllMenus = async (): Promise<ApiWpReturn<{ menus: Menu[] }>> => {

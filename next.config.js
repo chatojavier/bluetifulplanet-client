@@ -13,7 +13,8 @@ const nextConfig = {
       '1.gravatar.com',
       '2.gravatar.com',
       '3.gravatar.com',
-      'admin.bluetifulplanet.local',
+      'secure.gravatar.com',
+      process.env.HOSTNAME,
     ],
   },
 };

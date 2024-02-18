@@ -3,7 +3,7 @@ import { MenuItem } from '@app/api/wp/menus/utils';
 import {
   MenuLocationEnum,
   QueryAllMenusQuery,
-} from '@graphql/__generated__/graphql';
+} from '@app/graphql/__generated__/graphql';
 
 export const mockMenuNodes = [
   {

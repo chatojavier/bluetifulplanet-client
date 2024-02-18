@@ -1,5 +1,5 @@
 import { getApolloClient } from '@app/utils/apollo-client';
-import { QUERY_SITE_DATA } from '@graphql/site';
+import { QUERY_SITE_DATA } from '@app/graphql/site';
 import { uniqBy } from 'lodash';
 import { SiteData } from './utils';
 

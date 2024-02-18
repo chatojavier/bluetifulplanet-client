@@ -1,4 +1,4 @@
-import { QUERY_MENU_BY_LOCATION } from '@graphql/menus';
+import { QUERY_MENU_BY_LOCATION } from '@app/graphql/menus';
 import { MenuLocationEnum } from '@app/graphql/__generated__/graphql';
 import { getApolloClient } from '@app/utils/apollo-client';
 import { ApiWpReturn } from '@api/api.types';

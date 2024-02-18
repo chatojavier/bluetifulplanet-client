@@ -1,8 +1,8 @@
 import { FunctionComponent } from 'react';
 import Image from 'next/image';
-import { MediaItemFieldsFragment } from '@app/graphql/__generated__/graphql';
 import Link from 'next/link';
 import { PostResume } from '@api/wp/posts/utils';
+import { MediaItemFieldsFragment } from '@app/graphql/__generated__/graphql';
 import HeaderInfo from '../HeaderInfo';
 import HeaderTitle from '../HeaderTitle';
 import { plainText } from '../SafeHTML';
