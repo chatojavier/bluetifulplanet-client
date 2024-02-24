@@ -1,10 +1,11 @@
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_PAGE_BY_URI } from '@app/graphql/pages';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { GraphQLError } from 'graphql';
 import queryPageByUri from './service';
 
-jest.mock('@app/utils/apollo-client', () => ({
+jest.mock('@app/utils/fetchGraphql', () => ({
   __esModule: true,
-  getApolloClient: jest.fn(),
+  default: jest.fn(),
 }));
 
 describe('queryPageByUri', () => {
@@ -24,44 +25,38 @@ describe('queryPageByUri', () => {
   };
   const MOCK_ERROR = 'MOCK_ERROR';
   const MOCK_ERROR_RESPONSE = {
-    errors: [MOCK_ERROR],
+    data: { page: null },
+    errors: [MOCK_ERROR] as unknown as GraphQLError[],
   };
 
-  const mockGetApolloClient = getApolloClient as jest.Mock;
-
-  const mockQuery = jest.fn();
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
+  >;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetApolloClient.mockReturnValue({
-      query: mockQuery,
-    });
   });
 
   it('should call getApolloClient', async () => {
-    mockQuery.mockResolvedValue(MOCK_PAGE_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_PAGE_RESPONSE);
 
     await queryPageByUri(MOCK_URI);
 
-    expect(mockGetApolloClient).toHaveBeenCalledTimes(1);
+    expect(mockFetchGraphql).toHaveBeenCalledTimes(1);
   });
 
   it('should call apolloClient.query with the correct parameters', async () => {
-    mockQuery.mockResolvedValue(MOCK_PAGE_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_PAGE_RESPONSE);
 
     await queryPageByUri(MOCK_URI);
 
-    expect(mockQuery).toHaveBeenCalledWith({
-      query: QUERY_PAGE_BY_URI,
-      variables: {
-        uri: MOCK_URI,
-      },
-      fetchPolicy: 'no-cache',
+    expect(mockFetchGraphql).toHaveBeenCalledWith(QUERY_PAGE_BY_URI, {
+      uri: MOCK_URI,
     });
   });
 
   it('should return the page if the query is successful', async () => {
-    mockQuery.mockResolvedValue(MOCK_PAGE_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_PAGE_RESPONSE);
 
     const result = await queryPageByUri(MOCK_URI);
 
@@ -74,7 +69,7 @@ describe('queryPageByUri', () => {
   });
 
   it('should return the errors if the query is unsuccessful', async () => {
-    mockQuery.mockResolvedValue(MOCK_ERROR_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_ERROR_RESPONSE);
 
     const result = await queryPageByUri(MOCK_URI);
 

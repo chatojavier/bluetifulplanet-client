@@ -1,6 +1,6 @@
-import { getApolloClient } from '@app/utils/apollo-client';
 import { CREATE_COMMENT } from '@app/graphql/comments';
 import { ApiWpReturn } from '@app/api/api.types';
+import fetchGraphql from '@app/utils/fetchGraphql';
 import { Comment, mapCommentData } from './utils';
 
 type CommentFields = {
@@ -25,23 +25,17 @@ const mutatePostComment = async ({
 > => {
   const { author, authorEmail, authorUrl, content } = commentFields;
 
-  const apolloClient = getApolloClient();
-
   let response;
 
   try {
-    response = await apolloClient.query({
-      query: CREATE_COMMENT,
-      variables: {
-        commentOn: Number(postId),
-        author,
-        authorEmail,
-        authorUrl,
-        content,
-        parent,
-        clientMutationId: `createCommentOn${postId}`,
-      },
-      fetchPolicy: 'no-cache',
+    response = await fetchGraphql(CREATE_COMMENT, {
+      commentOn: Number(postId),
+      author,
+      authorEmail,
+      authorUrl,
+      content,
+      parent,
+      clientMutationId: `createCommentOn${postId}`,
     });
   } catch (e) {
     // eslint-disable-next-line no-console

@@ -1,24 +1,19 @@
 /* eslint-disable no-console */
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_PAGES_BASIC } from '@app/graphql/pages';
 import { ApiWpReturn } from '@app/api/api.types';
+import fetchGraphql from '@app/utils/fetchGraphql';
 import { PageBasic, mapPageBasicData } from '../utils';
 
 const queryAllPagesBasic = async (): Promise<
   ApiWpReturn<{ pages: PageBasic[] }>
 > => {
-  const apolloClient = getApolloClient();
-
   let pagesData;
 
   try {
-    pagesData = await apolloClient.query({
-      query: QUERY_PAGES_BASIC,
-      fetchPolicy: 'no-cache',
-    });
+    pagesData = await fetchGraphql(QUERY_PAGES_BASIC);
   } catch (e) {
     console.log(
-      `[pages][queryAllPages] Failed to query page data: ${
+      `[pages][queryAllPagesBasic] Failed to query page data: ${
         (e as Error).message
       }`
     );

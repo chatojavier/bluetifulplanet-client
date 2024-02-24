@@ -1,6 +1,6 @@
 import { ApiWpReturn } from '@app/api/api.types';
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_GALLERY_BY_SLUG } from '@app/graphql/galleries';
+import fetchGraphql from '@app/utils/fetchGraphql';
 import { Gallery, mapGallery } from '../utils';
 
 /**
@@ -12,17 +12,11 @@ import { Gallery, mapGallery } from '../utils';
 const queryGalleryBySlug = async (
   gallerySlug: string
 ): Promise<ApiWpReturn<{ gallery: Gallery | null }>> => {
-  const apolloClient = getApolloClient();
-
   let galleryData;
 
   try {
-    galleryData = await apolloClient.query({
-      query: QUERY_GALLERY_BY_SLUG,
-      variables: {
-        slug: gallerySlug,
-      },
-      fetchPolicy: 'no-cache',
+    galleryData = await fetchGraphql(QUERY_GALLERY_BY_SLUG, {
+      slug: gallerySlug,
     });
   } catch (e) {
     // eslint-disable-next-line no-console

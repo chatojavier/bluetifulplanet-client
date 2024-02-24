@@ -1,50 +1,52 @@
 /* eslint-disable */
-import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/core';
+import { DocumentTypeDecoration } from '@graphql-typed-document-node/core';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string;
-  String: string;
-  Boolean: boolean;
-  Int: number;
-  Float: number;
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
 };
 
 /** A Field Group registered by ACF */
 export type AcfFieldGroup = {
   /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
 };
 
 /** Avatars are profile images for users. WordPress by default uses the Gravatar service to host and fetch avatars from. */
 export type Avatar = {
   __typename?: 'Avatar';
   /** URL for the default image or a default type. Accepts &#039;404&#039; (return a 404 instead of a default image), &#039;retro&#039; (8bit), &#039;monsterid&#039; (monster), &#039;wavatar&#039; (cartoon face), &#039;indenticon&#039; (the &#039;quilt&#039;), &#039;mystery&#039;, &#039;mm&#039;, or &#039;mysteryman&#039; (The Oyster Man), &#039;blank&#039; (transparent GIF), or &#039;gravatar_default&#039; (the Gravatar logo). */
-  default?: Maybe<Scalars['String']>;
+  default?: Maybe<Scalars['String']['output']>;
   /** HTML attributes to insert in the IMG element. Is not sanitized. */
-  extraAttr?: Maybe<Scalars['String']>;
+  extraAttr?: Maybe<Scalars['String']['output']>;
   /** Whether to always show the default image, never the Gravatar. */
-  forceDefault?: Maybe<Scalars['Boolean']>;
+  forceDefault?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the avatar was successfully found. */
-  foundAvatar?: Maybe<Scalars['Boolean']>;
+  foundAvatar?: Maybe<Scalars['Boolean']['output']>;
   /** Height of the avatar image. */
-  height?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** What rating to display avatars up to. Accepts &#039;G&#039;, &#039;PG&#039;, &#039;R&#039;, &#039;X&#039;, and are judged in that order. */
-  rating?: Maybe<Scalars['String']>;
+  rating?: Maybe<Scalars['String']['output']>;
   /** Type of url scheme to use. Typically HTTP vs. HTTPS. */
-  scheme?: Maybe<Scalars['String']>;
+  scheme?: Maybe<Scalars['String']['output']>;
   /** The size of the avatar in pixels. A value of 96 will match a 96px x 96px gravatar image. */
-  size?: Maybe<Scalars['Int']>;
+  size?: Maybe<Scalars['Int']['output']>;
   /** URL for the gravatar image source. */
-  url?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']['output']>;
   /** Width of the avatar image. */
-  width?: Maybe<Scalars['Int']>;
+  width?: Maybe<Scalars['Int']['output']>;
 };
 
 /** What rating to display avatars up to. Accepts 'G', 'PG', 'R', 'X', and are judged in that order. Default is the value of the 'avatar_rating' option */
@@ -68,109 +70,109 @@ export type Category = DatabaseIdentifier & HierarchicalNode & HierarchicalTermN
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of databaseId
    */
-  categoryId?: Maybe<Scalars['Int']>;
+  categoryId?: Maybe<Scalars['Int']['output']>;
   /** Connection between the category type and its children categories. */
   children?: Maybe<CategoryToCategoryConnection>;
   /** Connection between the Category type and the ContentNode type */
   contentNodes?: Maybe<CategoryToContentNodeConnection>;
   /** The number of objects connected to the object */
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** The description of the object */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** Connection between the TermNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The link to the term */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** The human friendly name of the object. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** Connection between the category type and its parent category. */
   parent?: Maybe<CategoryToParentCategoryConnectionEdge>;
   /** Database id of the parent node */
-  parentDatabaseId?: Maybe<Scalars['Int']>;
+  parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
-  parentId?: Maybe<Scalars['ID']>;
+  parentId?: Maybe<Scalars['ID']['output']>;
   /** Connection between the Category type and the post type */
   posts?: Maybe<CategoryToPostConnection>;
   /** An alphanumeric identifier for the object unique to its type. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** Connection between the Category type and the Taxonomy type */
   taxonomy?: Maybe<CategoryToTaxonomyConnectionEdge>;
   /** The name of the taxonomy that the object is associated with */
-  taxonomyName?: Maybe<Scalars['String']>;
+  taxonomyName?: Maybe<Scalars['String']['output']>;
   /** The ID of the term group that this term object belongs to */
-  termGroupId?: Maybe<Scalars['Int']>;
+  termGroupId?: Maybe<Scalars['Int']['output']>;
   /** The taxonomy ID that the object is associated with */
-  termTaxonomyId?: Maybe<Scalars['Int']>;
+  termTaxonomyId?: Maybe<Scalars['Int']['output']>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** The category type */
 export type CategoryAncestorsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The category type */
 export type CategoryChildrenArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CategoryToCategoryConnectionWhereArgs>;
 };
 
 
 /** The category type */
 export type CategoryContentNodesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CategoryToContentNodeConnectionWhereArgs>;
 };
 
 
 /** The category type */
 export type CategoryEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The category type */
 export type CategoryEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The category type */
 export type CategoryPostsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CategoryToPostConnectionWhereArgs>;
 };
 
@@ -187,7 +189,7 @@ export type CategoryConnection = {
 /** Edge between a Node and a connected category */
 export type CategoryConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected category Node */
   node: Category;
 };
@@ -195,15 +197,15 @@ export type CategoryConnectionEdge = {
 /** Page Info on the connected CategoryConnectionEdge */
 export type CategoryConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -235,7 +237,7 @@ export type CategoryToAncestorsCategoryConnection = CategoryConnection & Connect
 export type CategoryToAncestorsCategoryConnectionEdge = CategoryConnectionEdge & Edge & {
   __typename?: 'CategoryToAncestorsCategoryConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Category;
 };
@@ -244,15 +246,15 @@ export type CategoryToAncestorsCategoryConnectionEdge = CategoryConnectionEdge &
 export type CategoryToAncestorsCategoryConnectionPageInfo = CategoryConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'CategoryToAncestorsCategoryConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the Category type and the category type */
@@ -270,7 +272,7 @@ export type CategoryToCategoryConnection = CategoryConnection & Connection & {
 export type CategoryToCategoryConnectionEdge = CategoryConnectionEdge & Edge & {
   __typename?: 'CategoryToCategoryConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Category;
 };
@@ -279,61 +281,61 @@ export type CategoryToCategoryConnectionEdge = CategoryConnectionEdge & Edge & {
 export type CategoryToCategoryConnectionPageInfo = CategoryConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'CategoryToCategoryConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the CategoryToCategoryConnection connection */
 export type CategoryToCategoryConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the Category type and the ContentNode type */
@@ -351,7 +353,7 @@ export type CategoryToContentNodeConnection = Connection & ContentNodeConnection
 export type CategoryToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & {
   __typename?: 'CategoryToContentNodeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentNode;
 };
@@ -360,15 +362,15 @@ export type CategoryToContentNodeConnectionEdge = ContentNodeConnectionEdge & Ed
 export type CategoryToContentNodeConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'CategoryToContentNodeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the CategoryToContentNodeConnection connection */
@@ -378,44 +380,44 @@ export type CategoryToContentNodeConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the Category type and the category type */
 export type CategoryToParentCategoryConnectionEdge = CategoryConnectionEdge & Edge & OneToOneConnection & {
   __typename?: 'CategoryToParentCategoryConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Category;
 };
@@ -435,7 +437,7 @@ export type CategoryToPostConnection = Connection & PostConnection & {
 export type CategoryToPostConnectionEdge = Edge & PostConnectionEdge & {
   __typename?: 'CategoryToPostConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Post;
 };
@@ -444,88 +446,88 @@ export type CategoryToPostConnectionEdge = Edge & PostConnectionEdge & {
 export type CategoryToPostConnectionPageInfo = PageInfo & PostConnectionPageInfo & WpPageInfo & {
   __typename?: 'CategoryToPostConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the CategoryToPostConnection connection */
 export type CategoryToPostConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Category ID */
-  categoryId?: InputMaybe<Scalars['Int']>;
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Use Category Slug */
-  categoryName?: InputMaybe<Scalars['String']>;
+  categoryName?: InputMaybe<Scalars['String']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Tag Slug */
-  tag?: InputMaybe<Scalars['String']>;
+  tag?: InputMaybe<Scalars['String']['input']>;
   /** Use Tag ID */
-  tagId?: InputMaybe<Scalars['String']>;
+  tagId?: InputMaybe<Scalars['String']['input']>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag slugs, used to display objects from one tag AND another */
-  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of tag slugs, used to include objects in ANY specified tags */
-  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the Category type and the Taxonomy type */
 export type CategoryToTaxonomyConnectionEdge = Edge & OneToOneConnection & TaxonomyConnectionEdge & {
   __typename?: 'CategoryToTaxonomyConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Taxonomy;
 };
@@ -534,49 +536,49 @@ export type CategoryToTaxonomyConnectionEdge = Edge & OneToOneConnection & Taxon
 export type Comment = DatabaseIdentifier & Node & {
   __typename?: 'Comment';
   /** User agent used to post the comment. This field is equivalent to WP_Comment-&gt;comment_agent and the value matching the &quot;comment_agent&quot; column in SQL. */
-  agent?: Maybe<Scalars['String']>;
+  agent?: Maybe<Scalars['String']['output']>;
   /**
    * The approval status of the comment. This field is equivalent to WP_Comment-&gt;comment_approved and the value matching the &quot;comment_approved&quot; column in SQL.
    * @deprecated Deprecated in favor of the `status` field
    */
-  approved?: Maybe<Scalars['Boolean']>;
+  approved?: Maybe<Scalars['Boolean']['output']>;
   /** The author of the comment */
   author?: Maybe<CommentToCommenterConnectionEdge>;
   /** IP address for the author. This field is equivalent to WP_Comment-&gt;comment_author_IP and the value matching the &quot;comment_author_IP&quot; column in SQL. */
-  authorIp?: Maybe<Scalars['String']>;
+  authorIp?: Maybe<Scalars['String']['output']>;
   /**
    * ID for the comment, unique among comments.
    * @deprecated Deprecated in favor of databaseId
    */
-  commentId?: Maybe<Scalars['Int']>;
+  commentId?: Maybe<Scalars['Int']['output']>;
   /** Connection between the Comment type and the ContentNode type */
   commentedOn?: Maybe<CommentToContentNodeConnectionEdge>;
   /** Content of the comment. This field is equivalent to WP_Comment-&gt;comment_content and the value matching the &quot;comment_content&quot; column in SQL. */
-  content?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']['output']>;
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** Date the comment was posted in local time. This field is equivalent to WP_Comment-&gt;date and the value matching the &quot;date&quot; column in SQL. */
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']['output']>;
   /** Date the comment was posted in GMT. This field is equivalent to WP_Comment-&gt;date_gmt and the value matching the &quot;date_gmt&quot; column in SQL. */
-  dateGmt?: Maybe<Scalars['String']>;
+  dateGmt?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier for the comment object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Karma value for the comment. This field is equivalent to WP_Comment-&gt;comment_karma and the value matching the &quot;comment_karma&quot; column in SQL. */
-  karma?: Maybe<Scalars['Int']>;
+  karma?: Maybe<Scalars['Int']['output']>;
   /** Connection between the Comment type and the Comment type */
   parent?: Maybe<CommentToParentCommentConnectionEdge>;
   /** The database id of the parent comment node or null if it is the root comment */
-  parentDatabaseId?: Maybe<Scalars['Int']>;
+  parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent comment node. */
-  parentId?: Maybe<Scalars['ID']>;
+  parentId?: Maybe<Scalars['ID']['output']>;
   /** Connection between the Comment type and the Comment type */
   replies?: Maybe<CommentToCommentConnection>;
   /** The approval status of the comment. This field is equivalent to WP_Comment-&gt;comment_approved and the value matching the &quot;comment_approved&quot; column in SQL. */
   status?: Maybe<CommentStatusEnum>;
   /** Type of comment. This field is equivalent to WP_Comment-&gt;comment_type and the value matching the &quot;comment_type&quot; column in SQL. */
-  type?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -594,10 +596,10 @@ export type CommentParentArgs = {
 
 /** A Comment object */
 export type CommentRepliesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<CommentToCommentConnectionWhereArgs>;
 };
 
@@ -607,25 +609,25 @@ export type CommentAuthor = Commenter & DatabaseIdentifier & Node & {
   /** Avatar object for user. The avatar object can be retrieved in different sizes by specifying the size argument. */
   avatar?: Maybe<Avatar>;
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** The email for the comment author */
-  email?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier for the comment author object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** The name for the comment author. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** The url the comment author. */
-  url?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** A Comment Author object */
 export type CommentAuthorAvatarArgs = {
-  forceDefault?: InputMaybe<Scalars['Boolean']>;
+  forceDefault?: InputMaybe<Scalars['Boolean']['input']>;
   rating?: InputMaybe<AvatarRatingEnum>;
-  size?: InputMaybe<Scalars['Int']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** Connection to Comment Nodes */
@@ -641,7 +643,7 @@ export type CommentConnection = {
 /** Edge between a Node and a connected Comment */
 export type CommentConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected Comment Node */
   node: Comment;
 };
@@ -649,15 +651,15 @@ export type CommentConnectionEdge = {
 /** Page Info on the connected CommentConnectionEdge */
 export type CommentConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The Type of Identifier used to fetch a single comment node. Default is "ID". To be used along with the "id" field. */
@@ -695,7 +697,7 @@ export type CommentToCommentConnection = CommentConnection & Connection & {
 export type CommentToCommentConnectionEdge = CommentConnectionEdge & Edge & {
   __typename?: 'CommentToCommentConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Comment;
 };
@@ -704,84 +706,84 @@ export type CommentToCommentConnectionEdge = CommentConnectionEdge & Edge & {
 export type CommentToCommentConnectionPageInfo = CommentConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'CommentToCommentConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the CommentToCommentConnection connection */
 export type CommentToCommentConnectionWhereArgs = {
   /** Comment author email address. */
-  authorEmail?: InputMaybe<Scalars['String']>;
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to exclude comments for. */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Comment author URL. */
-  authorUrl?: InputMaybe<Scalars['String']>;
+  authorUrl?: InputMaybe<Scalars['String']['input']>;
   /** Array of comment IDs to include. */
-  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
-  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Include comments of a given type. */
-  commentType?: InputMaybe<Scalars['String']>;
+  commentType?: InputMaybe<Scalars['String']['input']>;
   /** Include comments from a given array of comment types. */
-  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
-  commentTypeNotIn?: InputMaybe<Scalars['String']>;
+  commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
   /** Content object author ID to limit results by. */
-  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to retrieve comments for. */
-  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
-  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Limit results to those affiliated with a given content object ID. */
-  contentId?: InputMaybe<Scalars['ID']>;
+  contentId?: InputMaybe<Scalars['ID']['input']>;
   /** Array of content object IDs to include affiliated comments for. */
-  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
-  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Content object name (i.e. slug ) to retrieve affiliated comments for. */
-  contentName?: InputMaybe<Scalars['String']>;
+  contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
-  contentParent?: InputMaybe<Scalars['Int']>;
+  contentParent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
   /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
-  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Karma score to retrieve matching comments for. */
-  karma?: InputMaybe<Scalars['Int']>;
+  karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
   /** Field to order the comments by. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of parent IDs of comments to retrieve children for. */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['String']['input']>;
   /** Include comments for a specific user ID. */
-  userId?: InputMaybe<Scalars['ID']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Connection between the Comment type and the Commenter type */
 export type CommentToCommenterConnectionEdge = CommenterConnectionEdge & Edge & OneToOneConnection & {
   __typename?: 'CommentToCommenterConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Commenter;
 };
@@ -790,7 +792,7 @@ export type CommentToCommenterConnectionEdge = CommenterConnectionEdge & Edge & 
 export type CommentToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & OneToOneConnection & {
   __typename?: 'CommentToContentNodeConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: ContentNode;
 };
@@ -799,7 +801,7 @@ export type CommentToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edg
 export type CommentToParentCommentConnectionEdge = CommentConnectionEdge & Edge & OneToOneConnection & {
   __typename?: 'CommentToParentCommentConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Comment;
 };
@@ -807,63 +809,63 @@ export type CommentToParentCommentConnectionEdge = CommentConnectionEdge & Edge 
 /** Arguments for filtering the CommentToParentCommentConnection connection */
 export type CommentToParentCommentConnectionWhereArgs = {
   /** Comment author email address. */
-  authorEmail?: InputMaybe<Scalars['String']>;
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to exclude comments for. */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Comment author URL. */
-  authorUrl?: InputMaybe<Scalars['String']>;
+  authorUrl?: InputMaybe<Scalars['String']['input']>;
   /** Array of comment IDs to include. */
-  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
-  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Include comments of a given type. */
-  commentType?: InputMaybe<Scalars['String']>;
+  commentType?: InputMaybe<Scalars['String']['input']>;
   /** Include comments from a given array of comment types. */
-  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
-  commentTypeNotIn?: InputMaybe<Scalars['String']>;
+  commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
   /** Content object author ID to limit results by. */
-  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to retrieve comments for. */
-  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
-  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Limit results to those affiliated with a given content object ID. */
-  contentId?: InputMaybe<Scalars['ID']>;
+  contentId?: InputMaybe<Scalars['ID']['input']>;
   /** Array of content object IDs to include affiliated comments for. */
-  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
-  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Content object name (i.e. slug ) to retrieve affiliated comments for. */
-  contentName?: InputMaybe<Scalars['String']>;
+  contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
-  contentParent?: InputMaybe<Scalars['Int']>;
+  contentParent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
   /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
-  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Karma score to retrieve matching comments for. */
-  karma?: InputMaybe<Scalars['Int']>;
+  karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
   /** Field to order the comments by. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of parent IDs of comments to retrieve children for. */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['String']['input']>;
   /** Include comments for a specific user ID. */
-  userId?: InputMaybe<Scalars['ID']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** The author of a comment */
@@ -871,23 +873,23 @@ export type Commenter = {
   /** Avatar object for user. The avatar object can be retrieved in different sizes by specifying the size argument. */
   avatar?: Maybe<Avatar>;
   /** Identifies the primary key from the database. */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** The email address of the author of a comment. */
-  email?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier for the comment author. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the author information is considered restricted. (not fully public) */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** The name of the author of a comment. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** The url of the author of a comment. */
-  url?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 /** Edge between a Node and a connected Commenter */
 export type CommenterConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected Commenter Node */
   node: Commenter;
 };
@@ -943,73 +945,73 @@ export type ContentNode = {
   /** Connection between the ContentNode type and the ContentType type */
   contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
   /** The name of the Content Type the node belongs to */
-  contentTypeName: Scalars['String'];
+  contentTypeName: Scalars['String']['output'];
   /** The ID of the node in the database. */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** Post publishing date. */
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']['output']>;
   /** The publishing date set in GMT. */
-  dateGmt?: Maybe<Scalars['String']>;
+  dateGmt?: Maybe<Scalars['String']['output']>;
   /** The desired slug of the post */
-  desiredSlug?: Maybe<Scalars['String']>;
+  desiredSlug?: Maybe<Scalars['String']['output']>;
   /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
   editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
   /** The RSS enclosure for the object */
-  enclosure?: Maybe<Scalars['String']>;
+  enclosure?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
   /** Connection between the ContentNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
-  guid?: Maybe<Scalars['String']>;
+  guid?: Maybe<Scalars['String']['output']>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
-  isPreview?: Maybe<Scalars['Boolean']>;
+  isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The user that most recently edited the node */
   lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
   /** The permalink of the post */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
-  modified?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
-  modifiedGmt?: Maybe<Scalars['String']>;
+  modifiedGmt?: Maybe<Scalars['String']['output']>;
   /** The database id of the preview node */
-  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
-  previewRevisionId?: Maybe<Scalars['ID']>;
+  previewRevisionId?: Maybe<Scalars['ID']['output']>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
-  status?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']['output']>;
   /** The template assigned to a node of content */
   template?: Maybe<ContentTemplate>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** Nodes used to manage content */
 export type ContentNodeEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** Nodes used to manage content */
 export type ContentNodeEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** Connection to ContentNode Nodes */
@@ -1025,7 +1027,7 @@ export type ContentNodeConnection = {
 /** Edge between a Node and a connected ContentNode */
 export type ContentNodeConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected ContentNode Node */
   node: ContentNode;
 };
@@ -1033,15 +1035,15 @@ export type ContentNodeConnectionEdge = {
 /** Page Info on the connected ContentNodeConnectionEdge */
 export type ContentNodeConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -1058,7 +1060,7 @@ export enum ContentNodeIdTypeEnum {
 export type ContentNodeToContentTypeConnectionEdge = ContentTypeConnectionEdge & Edge & OneToOneConnection & {
   __typename?: 'ContentNodeToContentTypeConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: ContentType;
 };
@@ -1067,7 +1069,7 @@ export type ContentNodeToContentTypeConnectionEdge = ContentTypeConnectionEdge &
 export type ContentNodeToEditLastConnectionEdge = Edge & OneToOneConnection & UserConnectionEdge & {
   __typename?: 'ContentNodeToEditLastConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: User;
 };
@@ -1076,9 +1078,9 @@ export type ContentNodeToEditLastConnectionEdge = Edge & OneToOneConnection & Us
 export type ContentNodeToEditLockConnectionEdge = Edge & OneToOneConnection & UserConnectionEdge & {
   __typename?: 'ContentNodeToEditLockConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The timestamp for when the node was last edited */
-  lockTimestamp?: Maybe<Scalars['String']>;
+  lockTimestamp?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: User;
 };
@@ -1098,7 +1100,7 @@ export type ContentNodeToEnqueuedScriptConnection = Connection & EnqueuedScriptC
 export type ContentNodeToEnqueuedScriptConnectionEdge = Edge & EnqueuedScriptConnectionEdge & {
   __typename?: 'ContentNodeToEnqueuedScriptConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: EnqueuedScript;
 };
@@ -1107,15 +1109,15 @@ export type ContentNodeToEnqueuedScriptConnectionEdge = Edge & EnqueuedScriptCon
 export type ContentNodeToEnqueuedScriptConnectionPageInfo = EnqueuedScriptConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'ContentNodeToEnqueuedScriptConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the ContentNode type and the EnqueuedStylesheet type */
@@ -1133,7 +1135,7 @@ export type ContentNodeToEnqueuedStylesheetConnection = Connection & EnqueuedSty
 export type ContentNodeToEnqueuedStylesheetConnectionEdge = Edge & EnqueuedStylesheetConnectionEdge & {
   __typename?: 'ContentNodeToEnqueuedStylesheetConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: EnqueuedStylesheet;
 };
@@ -1142,108 +1144,108 @@ export type ContentNodeToEnqueuedStylesheetConnectionEdge = Edge & EnqueuedStyle
 export type ContentNodeToEnqueuedStylesheetConnectionPageInfo = EnqueuedStylesheetConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'ContentNodeToEnqueuedStylesheetConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The template assigned to a node of content */
 export type ContentTemplate = {
   /** The name of the template */
-  templateName?: Maybe<Scalars['String']>;
+  templateName?: Maybe<Scalars['String']['output']>;
 };
 
 /** An Post Type object */
 export type ContentType = Node & UniformResourceIdentifiable & {
   __typename?: 'ContentType';
   /** Whether this content type should can be exported. */
-  canExport?: Maybe<Scalars['Boolean']>;
+  canExport?: Maybe<Scalars['Boolean']['output']>;
   /** Connection between the ContentType type and the Taxonomy type */
   connectedTaxonomies?: Maybe<ContentTypeToTaxonomyConnection>;
   /** Connection between the ContentType type and the ContentNode type */
   contentNodes?: Maybe<ContentTypeToContentNodeConnection>;
   /** Whether content of this type should be deleted when the author of it is deleted from the system. */
-  deleteWithUser?: Maybe<Scalars['Boolean']>;
+  deleteWithUser?: Maybe<Scalars['Boolean']['output']>;
   /** Description of the content type. */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** Whether to exclude nodes of this content type from front end search results. */
-  excludeFromSearch?: Maybe<Scalars['Boolean']>;
+  excludeFromSearch?: Maybe<Scalars['Boolean']['output']>;
   /** The plural name of the content type within the GraphQL Schema. */
-  graphqlPluralName?: Maybe<Scalars['String']>;
+  graphqlPluralName?: Maybe<Scalars['String']['output']>;
   /** The singular name of the content type within the GraphQL Schema. */
-  graphqlSingleName?: Maybe<Scalars['String']>;
+  graphqlSingleName?: Maybe<Scalars['String']['output']>;
   /** Whether this content type should have archives. Content archives are generated by type and by date. */
-  hasArchive?: Maybe<Scalars['Boolean']>;
+  hasArchive?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the content type is hierarchical, for example pages. */
-  hierarchical?: Maybe<Scalars['Boolean']>;
+  hierarchical?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the post-type object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether this page is set to the static front page. */
-  isFrontPage: Scalars['Boolean'];
+  isFrontPage: Scalars['Boolean']['output'];
   /** Whether this page is set to the blog posts page. */
-  isPostsPage: Scalars['Boolean'];
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** Display name of the content type. */
-  label?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']['output']>;
   /** Details about the content type labels. */
   labels?: Maybe<PostTypeLabelDetails>;
   /** The name of the icon file to display as a menu icon. */
-  menuIcon?: Maybe<Scalars['String']>;
+  menuIcon?: Maybe<Scalars['String']['output']>;
   /** The position of this post type in the menu. Only applies if show_in_menu is true. */
-  menuPosition?: Maybe<Scalars['Int']>;
+  menuPosition?: Maybe<Scalars['Int']['output']>;
   /** The internal name of the post type. This should not be used for display purposes. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** Whether a content type is intended for use publicly either via the admin interface or by front-end users. While the default settings of exclude_from_search, publicly_queryable, show_ui, and show_in_nav_menus are inherited from public, each does not rely on this relationship and controls a very specific intention. */
-  public?: Maybe<Scalars['Boolean']>;
+  public?: Maybe<Scalars['Boolean']['output']>;
   /** Whether queries can be performed on the front end for the content type as part of parse_request(). */
-  publiclyQueryable?: Maybe<Scalars['Boolean']>;
+  publiclyQueryable?: Maybe<Scalars['Boolean']['output']>;
   /** Name of content type to display in REST API &quot;wp/v2&quot; namespace. */
-  restBase?: Maybe<Scalars['String']>;
+  restBase?: Maybe<Scalars['String']['output']>;
   /** The REST Controller class assigned to handling this content type. */
-  restControllerClass?: Maybe<Scalars['String']>;
+  restControllerClass?: Maybe<Scalars['String']['output']>;
   /** Makes this content type available via the admin bar. */
-  showInAdminBar?: Maybe<Scalars['Boolean']>;
+  showInAdminBar?: Maybe<Scalars['Boolean']['output']>;
   /** Whether to add the content type to the GraphQL Schema. */
-  showInGraphql?: Maybe<Scalars['Boolean']>;
+  showInGraphql?: Maybe<Scalars['Boolean']['output']>;
   /** Where to show the content type in the admin menu. To work, $show_ui must be true. If true, the post type is shown in its own top level menu. If false, no menu is shown. If a string of an existing top level menu (eg. &quot;tools.php&quot; or &quot;edit.php?post_type=page&quot;), the post type will be placed as a sub-menu of that. */
-  showInMenu?: Maybe<Scalars['Boolean']>;
+  showInMenu?: Maybe<Scalars['Boolean']['output']>;
   /** Makes this content type available for selection in navigation menus. */
-  showInNavMenus?: Maybe<Scalars['Boolean']>;
+  showInNavMenus?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the content type is associated with a route under the the REST API &quot;wp/v2&quot; namespace. */
-  showInRest?: Maybe<Scalars['Boolean']>;
+  showInRest?: Maybe<Scalars['Boolean']['output']>;
   /** Whether to generate and allow a UI for managing this content type in the admin. */
-  showUi?: Maybe<Scalars['Boolean']>;
+  showUi?: Maybe<Scalars['Boolean']['output']>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** An Post Type object */
 export type ContentTypeConnectedTaxonomiesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** An Post Type object */
 export type ContentTypeContentNodesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<ContentTypeToContentNodeConnectionWhereArgs>;
 };
 
@@ -1260,7 +1262,7 @@ export type ContentTypeConnection = {
 /** Edge between a Node and a connected ContentType */
 export type ContentTypeConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected ContentType Node */
   node: ContentType;
 };
@@ -1268,15 +1270,15 @@ export type ContentTypeConnectionEdge = {
 /** Page Info on the connected ContentTypeConnectionEdge */
 export type ContentTypeConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Allowed Content Types */
@@ -1314,7 +1316,7 @@ export type ContentTypeToContentNodeConnection = Connection & ContentNodeConnect
 export type ContentTypeToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & {
   __typename?: 'ContentTypeToContentNodeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentNode;
 };
@@ -1323,15 +1325,15 @@ export type ContentTypeToContentNodeConnectionEdge = ContentNodeConnectionEdge &
 export type ContentTypeToContentNodeConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'ContentTypeToContentNodeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the ContentTypeToContentNodeConnection connection */
@@ -1341,37 +1343,37 @@ export type ContentTypeToContentNodeConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the ContentType type and the Taxonomy type */
@@ -1389,7 +1391,7 @@ export type ContentTypeToTaxonomyConnection = Connection & TaxonomyConnection & 
 export type ContentTypeToTaxonomyConnectionEdge = Edge & TaxonomyConnectionEdge & {
   __typename?: 'ContentTypeToTaxonomyConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Taxonomy;
 };
@@ -1398,15 +1400,15 @@ export type ContentTypeToTaxonomyConnectionEdge = Edge & TaxonomyConnectionEdge 
 export type ContentTypeToTaxonomyConnectionPageInfo = PageInfo & TaxonomyConnectionPageInfo & WpPageInfo & {
   __typename?: 'ContentTypeToTaxonomyConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Allowed Content Types of the Category taxonomy. */
@@ -1436,17 +1438,17 @@ export enum ContentTypesOfTagEnum {
 /** Input for the createCategory mutation. */
 export type CreateCategoryInput = {
   /** The slug that the category will be an alias of */
-  aliasOf?: InputMaybe<Scalars['String']>;
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The description of the category object */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The name of the category object to mutate */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /** The ID of the category that should be set as the parent */
-  parentId?: InputMaybe<Scalars['ID']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
   /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the createCategory mutation. */
@@ -1455,73 +1457,73 @@ export type CreateCategoryPayload = {
   /** The created category */
   category?: Maybe<Category>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
 };
 
 /** Input for the createComment mutation. */
 export type CreateCommentInput = {
   /** The approval status of the comment. */
-  approved?: InputMaybe<Scalars['String']>;
+  approved?: InputMaybe<Scalars['String']['input']>;
   /** The name of the comment's author. */
-  author?: InputMaybe<Scalars['String']>;
+  author?: InputMaybe<Scalars['String']['input']>;
   /** The email of the comment's author. */
-  authorEmail?: InputMaybe<Scalars['String']>;
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** The url of the comment's author. */
-  authorUrl?: InputMaybe<Scalars['String']>;
+  authorUrl?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The database ID of the post object the comment belongs to. */
-  commentOn?: InputMaybe<Scalars['Int']>;
+  commentOn?: InputMaybe<Scalars['Int']['input']>;
   /** Content of the comment. */
-  content?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   /** The date of the object. Preferable to enter as year/month/day ( e.g. 01/31/2017 ) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']['input']>;
   /** Parent comment ID of current comment. */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** The approval status of the comment */
   status?: InputMaybe<CommentStatusEnum>;
   /** Type of comment. */
-  type?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the createComment mutation. */
 export type CreateCommentPayload = {
   __typename?: 'CreateCommentPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The comment that was created */
   comment?: Maybe<Comment>;
   /** Whether the mutation succeeded. If the comment is not approved, the server will not return the comment to a non authenticated user, but a success message can be returned if the create succeeded, and the client can optimistically add the comment to the client cache */
-  success?: Maybe<Scalars['Boolean']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 /** Input for the createGallery mutation. */
 export type CreateGalleryInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The content of the object */
-  content?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']['input']>;
   /** The excerpt of the object */
-  excerpt?: InputMaybe<Scalars['String']>;
+  excerpt?: InputMaybe<Scalars['String']['input']>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: InputMaybe<Scalars['Int']>;
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
   /** The password used to protect the content of the object */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** The slug of the object */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** The status of the object */
   status?: InputMaybe<PostStatusEnum>;
   /** The title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the createGallery mutation. */
 export type CreateGalleryPayload = {
   __typename?: 'CreateGalleryPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The Post object mutation type. */
   gallery?: Maybe<Gallery>;
 };
@@ -1529,42 +1531,42 @@ export type CreateGalleryPayload = {
 /** Input for the createMediaItem mutation. */
 export type CreateMediaItemInput = {
   /** Alternative text to display when mediaItem is not displayed */
-  altText?: InputMaybe<Scalars['String']>;
+  altText?: InputMaybe<Scalars['String']['input']>;
   /** The userId to assign as the author of the mediaItem */
-  authorId?: InputMaybe<Scalars['ID']>;
+  authorId?: InputMaybe<Scalars['ID']['input']>;
   /** The caption for the mediaItem */
-  caption?: InputMaybe<Scalars['String']>;
+  caption?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The comment status for the mediaItem */
-  commentStatus?: InputMaybe<Scalars['String']>;
+  commentStatus?: InputMaybe<Scalars['String']['input']>;
   /** The date of the mediaItem */
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']['input']>;
   /** The date (in GMT zone) of the mediaItem */
-  dateGmt?: InputMaybe<Scalars['String']>;
+  dateGmt?: InputMaybe<Scalars['String']['input']>;
   /** Description of the mediaItem */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The file name of the mediaItem */
-  filePath?: InputMaybe<Scalars['String']>;
+  filePath?: InputMaybe<Scalars['String']['input']>;
   /** The file type of the mediaItem */
   fileType?: InputMaybe<MimeTypeEnum>;
   /** The ID of the parent object */
-  parentId?: InputMaybe<Scalars['ID']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
   /** The ping status for the mediaItem */
-  pingStatus?: InputMaybe<Scalars['String']>;
+  pingStatus?: InputMaybe<Scalars['String']['input']>;
   /** The slug of the mediaItem */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** The status of the mediaItem */
   status?: InputMaybe<MediaItemStatusEnum>;
   /** The title of the mediaItem */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the createMediaItem mutation. */
 export type CreateMediaItemPayload = {
   __typename?: 'CreateMediaItemPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The MediaItem object mutation type. */
   mediaItem?: Maybe<MediaItem>;
 };
@@ -1572,22 +1574,22 @@ export type CreateMediaItemPayload = {
 /** Input for the createMediaTag mutation. */
 export type CreateMediaTagInput = {
   /** The slug that the attachment_tag will be an alias of */
-  aliasOf?: InputMaybe<Scalars['String']>;
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The description of the attachment_tag object */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The name of the attachment_tag object to mutate */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the createMediaTag mutation. */
 export type CreateMediaTagPayload = {
   __typename?: 'CreateMediaTagPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The created attachment_tag */
   mediaTag?: Maybe<MediaTag>;
 };
@@ -1595,34 +1597,34 @@ export type CreateMediaTagPayload = {
 /** Input for the createPage mutation. */
 export type CreatePageInput = {
   /** The userId to assign as the author of the object */
-  authorId?: InputMaybe<Scalars['ID']>;
+  authorId?: InputMaybe<Scalars['ID']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The comment status for the object */
-  commentStatus?: InputMaybe<Scalars['String']>;
+  commentStatus?: InputMaybe<Scalars['String']['input']>;
   /** The content of the object */
-  content?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']['input']>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: InputMaybe<Scalars['Int']>;
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
   /** The ID of the parent object */
-  parentId?: InputMaybe<Scalars['ID']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
   /** The password used to protect the content of the object */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** The slug of the object */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** The status of the object */
   status?: InputMaybe<PostStatusEnum>;
   /** The title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the createPage mutation. */
 export type CreatePagePayload = {
   __typename?: 'CreatePagePayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The Post object mutation type. */
   page?: Maybe<Page>;
 };
@@ -1630,22 +1632,22 @@ export type CreatePagePayload = {
 /** Input for the createPostFormat mutation. */
 export type CreatePostFormatInput = {
   /** The slug that the post_format will be an alias of */
-  aliasOf?: InputMaybe<Scalars['String']>;
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The description of the post_format object */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The name of the post_format object to mutate */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the createPostFormat mutation. */
 export type CreatePostFormatPayload = {
   __typename?: 'CreatePostFormatPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The created post_format */
   postFormat?: Maybe<PostFormat>;
 };
@@ -1653,46 +1655,46 @@ export type CreatePostFormatPayload = {
 /** Input for the createPost mutation. */
 export type CreatePostInput = {
   /** The userId to assign as the author of the object */
-  authorId?: InputMaybe<Scalars['ID']>;
+  authorId?: InputMaybe<Scalars['ID']['input']>;
   /** Set connections between the post and categories */
   categories?: InputMaybe<PostCategoriesInput>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The comment status for the object */
-  commentStatus?: InputMaybe<Scalars['String']>;
+  commentStatus?: InputMaybe<Scalars['String']['input']>;
   /** The content of the object */
-  content?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']['input']>;
   /** The excerpt of the object */
-  excerpt?: InputMaybe<Scalars['String']>;
+  excerpt?: InputMaybe<Scalars['String']['input']>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: InputMaybe<Scalars['Int']>;
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
   /** The password used to protect the content of the object */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** The ping status for the object */
-  pingStatus?: InputMaybe<Scalars['String']>;
+  pingStatus?: InputMaybe<Scalars['String']['input']>;
   /** URLs that have been pinged. */
-  pinged?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  pinged?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Set connections between the post and postFormats */
   postFormats?: InputMaybe<PostPostFormatsInput>;
   /** The slug of the object */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** The status of the object */
   status?: InputMaybe<PostStatusEnum>;
   /** Set connections between the post and tags */
   tags?: InputMaybe<PostTagsInput>;
   /** The title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
   /** URLs queued to be pinged. */
-  toPing?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  toPing?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 /** The payload for the createPost mutation. */
 export type CreatePostPayload = {
   __typename?: 'CreatePostPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The Post object mutation type. */
   post?: Maybe<Post>;
 };
@@ -1700,22 +1702,22 @@ export type CreatePostPayload = {
 /** Input for the createTag mutation. */
 export type CreateTagInput = {
   /** The slug that the post_tag will be an alias of */
-  aliasOf?: InputMaybe<Scalars['String']>;
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The description of the post_tag object */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The name of the post_tag object to mutate */
-  name: Scalars['String'];
+  name: Scalars['String']['input'];
   /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the createTag mutation. */
 export type CreateTagPayload = {
   __typename?: 'CreateTagPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The created post_tag */
   tag?: Maybe<Tag>;
 };
@@ -1723,48 +1725,48 @@ export type CreateTagPayload = {
 /** Input for the createUser mutation. */
 export type CreateUserInput = {
   /** User's AOL IM account. */
-  aim?: InputMaybe<Scalars['String']>;
+  aim?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** A string containing content about the user. */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** A string that will be shown on the site. Defaults to user's username. It is likely that you will want to change this, for both appearance and security through obscurity (that is if you dont use and delete the default admin user). */
-  displayName?: InputMaybe<Scalars['String']>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
   /** A string containing the user's email address. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** 	The user's first name. */
-  firstName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** User's Jabber account. */
-  jabber?: InputMaybe<Scalars['String']>;
+  jabber?: InputMaybe<Scalars['String']['input']>;
   /** The user's last name. */
-  lastName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /** User's locale. */
-  locale?: InputMaybe<Scalars['String']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
   /** A string that contains a URL-friendly name for the user. The default is the user's username. */
-  nicename?: InputMaybe<Scalars['String']>;
+  nicename?: InputMaybe<Scalars['String']['input']>;
   /** The user's nickname, defaults to the user's username. */
-  nickname?: InputMaybe<Scalars['String']>;
+  nickname?: InputMaybe<Scalars['String']['input']>;
   /** A string that contains the plain text password for the user. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** The date the user registered. Format is Y-m-d H:i:s. */
-  registered?: InputMaybe<Scalars['String']>;
+  registered?: InputMaybe<Scalars['String']['input']>;
   /** A string for whether to enable the rich editor or not. False if not empty. */
-  richEditing?: InputMaybe<Scalars['String']>;
+  richEditing?: InputMaybe<Scalars['String']['input']>;
   /** An array of roles to be assigned to the user. */
-  roles?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  roles?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** A string that contains the user's username for logging in. */
-  username: Scalars['String'];
+  username: Scalars['String']['input'];
   /** A string containing the user's URL for the user's web site. */
-  websiteUrl?: InputMaybe<Scalars['String']>;
+  websiteUrl?: InputMaybe<Scalars['String']['input']>;
   /** User's Yahoo IM account. */
-  yim?: InputMaybe<Scalars['String']>;
+  yim?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the createUser mutation. */
 export type CreateUserPayload = {
   __typename?: 'CreateUserPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The User object mutation type. */
   user?: Maybe<User>;
 };
@@ -1772,17 +1774,17 @@ export type CreateUserPayload = {
 /** Object that can be identified with a Database ID */
 export type DatabaseIdentifier = {
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
 };
 
 /** Date values */
 export type DateInput = {
   /** Day of the month (from 1 to 31) */
-  day?: InputMaybe<Scalars['Int']>;
+  day?: InputMaybe<Scalars['Int']['input']>;
   /** Month number (from 1 to 12) */
-  month?: InputMaybe<Scalars['Int']>;
+  month?: InputMaybe<Scalars['Int']['input']>;
   /** 4 digit year (e.g. 2017) */
-  year?: InputMaybe<Scalars['Int']>;
+  year?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** Filter the connection based on input */
@@ -1794,40 +1796,40 @@ export type DateQueryInput = {
   /** Column to query against */
   column?: InputMaybe<PostObjectsConnectionDateColumnEnum>;
   /** For after/before, whether exact value should be matched or not */
-  compare?: InputMaybe<Scalars['String']>;
+  compare?: InputMaybe<Scalars['String']['input']>;
   /** Day of the month (from 1 to 31) */
-  day?: InputMaybe<Scalars['Int']>;
+  day?: InputMaybe<Scalars['Int']['input']>;
   /** Hour (from 0 to 23) */
-  hour?: InputMaybe<Scalars['Int']>;
+  hour?: InputMaybe<Scalars['Int']['input']>;
   /** For after/before, whether exact value should be matched or not */
-  inclusive?: InputMaybe<Scalars['Boolean']>;
+  inclusive?: InputMaybe<Scalars['Boolean']['input']>;
   /** Minute (from 0 to 59) */
-  minute?: InputMaybe<Scalars['Int']>;
+  minute?: InputMaybe<Scalars['Int']['input']>;
   /** Month number (from 1 to 12) */
-  month?: InputMaybe<Scalars['Int']>;
+  month?: InputMaybe<Scalars['Int']['input']>;
   /** OR or AND, how the sub-arrays should be compared */
   relation?: InputMaybe<RelationEnum>;
   /** Second (0 to 59) */
-  second?: InputMaybe<Scalars['Int']>;
+  second?: InputMaybe<Scalars['Int']['input']>;
   /** Week of the year (from 0 to 53) */
-  week?: InputMaybe<Scalars['Int']>;
+  week?: InputMaybe<Scalars['Int']['input']>;
   /** 4 digit year (e.g. 2017) */
-  year?: InputMaybe<Scalars['Int']>;
+  year?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** The template assigned to the node */
 export type DefaultTemplate = ContentTemplate & {
   __typename?: 'DefaultTemplate';
   /** The name of the template */
-  templateName?: Maybe<Scalars['String']>;
+  templateName?: Maybe<Scalars['String']['output']>;
 };
 
 /** Input for the deleteCategory mutation. */
 export type DeleteCategoryInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the category to delete */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 /** The payload for the deleteCategory mutation. */
@@ -1836,51 +1838,51 @@ export type DeleteCategoryPayload = {
   /** The deleted term object */
   category?: Maybe<Category>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the deleted object */
-  deletedId?: Maybe<Scalars['ID']>;
+  deletedId?: Maybe<Scalars['ID']['output']>;
 };
 
 /** Input for the deleteComment mutation. */
 export type DeleteCommentInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** Whether the comment should be force deleted instead of being moved to the trash */
-  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  forceDelete?: InputMaybe<Scalars['Boolean']['input']>;
   /** The deleted comment ID */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 /** The payload for the deleteComment mutation. */
 export type DeleteCommentPayload = {
   __typename?: 'DeleteCommentPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The deleted comment object */
   comment?: Maybe<Comment>;
   /** The deleted comment ID */
-  deletedId?: Maybe<Scalars['ID']>;
+  deletedId?: Maybe<Scalars['ID']['output']>;
 };
 
 /** Input for the deleteGallery mutation. */
 export type DeleteGalleryInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** Whether the object should be force deleted instead of being moved to the trash */
-  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  forceDelete?: InputMaybe<Scalars['Boolean']['input']>;
   /** The ID of the gallery to delete */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** Override the edit lock when another user is editing the post */
-  ignoreEditLock?: InputMaybe<Scalars['Boolean']>;
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** The payload for the deleteGallery mutation. */
 export type DeleteGalleryPayload = {
   __typename?: 'DeleteGalleryPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the deleted object */
-  deletedId?: Maybe<Scalars['ID']>;
+  deletedId?: Maybe<Scalars['ID']['output']>;
   /** The object before it was deleted */
   gallery?: Maybe<Gallery>;
 };
@@ -1888,20 +1890,20 @@ export type DeleteGalleryPayload = {
 /** Input for the deleteMediaItem mutation. */
 export type DeleteMediaItemInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** Whether the mediaItem should be force deleted instead of being moved to the trash */
-  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  forceDelete?: InputMaybe<Scalars['Boolean']['input']>;
   /** The ID of the mediaItem to delete */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 /** The payload for the deleteMediaItem mutation. */
 export type DeleteMediaItemPayload = {
   __typename?: 'DeleteMediaItemPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the deleted mediaItem */
-  deletedId?: Maybe<Scalars['ID']>;
+  deletedId?: Maybe<Scalars['ID']['output']>;
   /** The mediaItem before it was deleted */
   mediaItem?: Maybe<MediaItem>;
 };
@@ -1909,18 +1911,18 @@ export type DeleteMediaItemPayload = {
 /** Input for the deleteMediaTag mutation. */
 export type DeleteMediaTagInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the MediaTag to delete */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 /** The payload for the deleteMediaTag mutation. */
 export type DeleteMediaTagPayload = {
   __typename?: 'DeleteMediaTagPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the deleted object */
-  deletedId?: Maybe<Scalars['ID']>;
+  deletedId?: Maybe<Scalars['ID']['output']>;
   /** The deleted term object */
   mediaTag?: Maybe<MediaTag>;
 };
@@ -1928,22 +1930,22 @@ export type DeleteMediaTagPayload = {
 /** Input for the deletePage mutation. */
 export type DeletePageInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** Whether the object should be force deleted instead of being moved to the trash */
-  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  forceDelete?: InputMaybe<Scalars['Boolean']['input']>;
   /** The ID of the page to delete */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** Override the edit lock when another user is editing the post */
-  ignoreEditLock?: InputMaybe<Scalars['Boolean']>;
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** The payload for the deletePage mutation. */
 export type DeletePagePayload = {
   __typename?: 'DeletePagePayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the deleted object */
-  deletedId?: Maybe<Scalars['ID']>;
+  deletedId?: Maybe<Scalars['ID']['output']>;
   /** The object before it was deleted */
   page?: Maybe<Page>;
 };
@@ -1951,18 +1953,18 @@ export type DeletePagePayload = {
 /** Input for the deletePostFormat mutation. */
 export type DeletePostFormatInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the postFormat to delete */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 /** The payload for the deletePostFormat mutation. */
 export type DeletePostFormatPayload = {
   __typename?: 'DeletePostFormatPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the deleted object */
-  deletedId?: Maybe<Scalars['ID']>;
+  deletedId?: Maybe<Scalars['ID']['output']>;
   /** The deleted term object */
   postFormat?: Maybe<PostFormat>;
 };
@@ -1970,22 +1972,22 @@ export type DeletePostFormatPayload = {
 /** Input for the deletePost mutation. */
 export type DeletePostInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** Whether the object should be force deleted instead of being moved to the trash */
-  forceDelete?: InputMaybe<Scalars['Boolean']>;
+  forceDelete?: InputMaybe<Scalars['Boolean']['input']>;
   /** The ID of the post to delete */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** Override the edit lock when another user is editing the post */
-  ignoreEditLock?: InputMaybe<Scalars['Boolean']>;
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** The payload for the deletePost mutation. */
 export type DeletePostPayload = {
   __typename?: 'DeletePostPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the deleted object */
-  deletedId?: Maybe<Scalars['ID']>;
+  deletedId?: Maybe<Scalars['ID']['output']>;
   /** The object before it was deleted */
   post?: Maybe<Post>;
 };
@@ -1993,18 +1995,18 @@ export type DeletePostPayload = {
 /** Input for the deleteTag mutation. */
 export type DeleteTagInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the tag to delete */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 /** The payload for the deleteTag mutation. */
 export type DeleteTagPayload = {
   __typename?: 'DeleteTagPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the deleted object */
-  deletedId?: Maybe<Scalars['ID']>;
+  deletedId?: Maybe<Scalars['ID']['output']>;
   /** The deleted term object */
   tag?: Maybe<Tag>;
 };
@@ -2012,20 +2014,20 @@ export type DeleteTagPayload = {
 /** Input for the deleteUser mutation. */
 export type DeleteUserInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the user you want to delete */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** Reassign posts and links to new User ID. */
-  reassignId?: InputMaybe<Scalars['ID']>;
+  reassignId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** The payload for the deleteUser mutation. */
 export type DeleteUserPayload = {
   __typename?: 'DeleteUserPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The ID of the user that you just deleted */
-  deletedId?: Maybe<Scalars['ID']>;
+  deletedId?: Maybe<Scalars['ID']['output']>;
   /** The deleted user object */
   user?: Maybe<User>;
 };
@@ -2034,15 +2036,15 @@ export type DeleteUserPayload = {
 export type DiscussionSettings = {
   __typename?: 'DiscussionSettings';
   /** Allow people to submit comments on new posts. */
-  defaultCommentStatus?: Maybe<Scalars['String']>;
+  defaultCommentStatus?: Maybe<Scalars['String']['output']>;
   /** Allow link notifications from other blogs (pingbacks and trackbacks) on new articles. */
-  defaultPingStatus?: Maybe<Scalars['String']>;
+  defaultPingStatus?: Maybe<Scalars['String']['output']>;
 };
 
 /** Relational context between connected nodes */
 export type Edge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected node */
   node: Node;
 };
@@ -2050,66 +2052,66 @@ export type Edge = {
 /** Asset enqueued by the CMS */
 export type EnqueuedAsset = {
   /** The inline code to be run after the asset is loaded. */
-  after?: Maybe<Array<Maybe<Scalars['String']>>>;
+  after?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /**
    * Deprecated
    * @deprecated Use `EnqueuedAsset.media` instead.
    */
-  args?: Maybe<Scalars['Boolean']>;
+  args?: Maybe<Scalars['Boolean']['output']>;
   /** The inline code to be run before the asset is loaded. */
-  before?: Maybe<Array<Maybe<Scalars['String']>>>;
+  before?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc */
-  conditional?: Maybe<Scalars['String']>;
+  conditional?: Maybe<Scalars['String']['output']>;
   /** Dependencies needed to use this asset */
   dependencies?: Maybe<Array<Maybe<EnqueuedAsset>>>;
   /**
    * Extra information needed for the script
    * @deprecated Use `EnqueuedScript.extraData` instead.
    */
-  extra?: Maybe<Scalars['String']>;
+  extra?: Maybe<Scalars['String']['output']>;
   /** The handle of the enqueued asset */
-  handle?: Maybe<Scalars['String']>;
+  handle?: Maybe<Scalars['String']['output']>;
   /** The ID of the enqueued asset */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** The source of the asset */
-  src?: Maybe<Scalars['String']>;
+  src?: Maybe<Scalars['String']['output']>;
   /** The version of the enqueued asset */
-  version?: Maybe<Scalars['String']>;
+  version?: Maybe<Scalars['String']['output']>;
 };
 
 /** Script enqueued by the CMS */
 export type EnqueuedScript = EnqueuedAsset & Node & {
   __typename?: 'EnqueuedScript';
   /** The inline code to be run after the asset is loaded. */
-  after?: Maybe<Array<Maybe<Scalars['String']>>>;
+  after?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /**
    * Deprecated
    * @deprecated Use `EnqueuedAsset.media` instead.
    */
-  args?: Maybe<Scalars['Boolean']>;
+  args?: Maybe<Scalars['Boolean']['output']>;
   /** The inline code to be run before the asset is loaded. */
-  before?: Maybe<Array<Maybe<Scalars['String']>>>;
+  before?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc */
-  conditional?: Maybe<Scalars['String']>;
+  conditional?: Maybe<Scalars['String']['output']>;
   /** Dependencies needed to use this asset */
   dependencies?: Maybe<Array<Maybe<EnqueuedScript>>>;
   /**
    * Extra information needed for the script
    * @deprecated Use `EnqueuedScript.extraData` instead.
    */
-  extra?: Maybe<Scalars['String']>;
+  extra?: Maybe<Scalars['String']['output']>;
   /** Extra data supplied to the enqueued script */
-  extraData?: Maybe<Scalars['String']>;
+  extraData?: Maybe<Scalars['String']['output']>;
   /** The handle of the enqueued asset */
-  handle?: Maybe<Scalars['String']>;
+  handle?: Maybe<Scalars['String']['output']>;
   /** The global ID of the enqueued script */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** The source of the asset */
-  src?: Maybe<Scalars['String']>;
+  src?: Maybe<Scalars['String']['output']>;
   /** The loading strategy to use on the script tag */
   strategy?: Maybe<ScriptLoadingStrategyEnum>;
   /** The version of the enqueued script */
-  version?: Maybe<Scalars['String']>;
+  version?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection to EnqueuedScript Nodes */
@@ -2125,7 +2127,7 @@ export type EnqueuedScriptConnection = {
 /** Edge between a Node and a connected EnqueuedScript */
 export type EnqueuedScriptConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected EnqueuedScript Node */
   node: EnqueuedScript;
 };
@@ -2133,58 +2135,58 @@ export type EnqueuedScriptConnectionEdge = {
 /** Page Info on the connected EnqueuedScriptConnectionEdge */
 export type EnqueuedScriptConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Stylesheet enqueued by the CMS */
 export type EnqueuedStylesheet = EnqueuedAsset & Node & {
   __typename?: 'EnqueuedStylesheet';
   /** The inline code to be run after the asset is loaded. */
-  after?: Maybe<Array<Maybe<Scalars['String']>>>;
+  after?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /**
    * Deprecated
    * @deprecated Use `EnqueuedAsset.media` instead.
    */
-  args?: Maybe<Scalars['Boolean']>;
+  args?: Maybe<Scalars['Boolean']['output']>;
   /** The inline code to be run before the asset is loaded. */
-  before?: Maybe<Array<Maybe<Scalars['String']>>>;
+  before?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The HTML conditional comment for the enqueued asset. E.g. IE 6, lte IE 7, etc */
-  conditional?: Maybe<Scalars['String']>;
+  conditional?: Maybe<Scalars['String']['output']>;
   /** Dependencies needed to use this asset */
   dependencies?: Maybe<Array<Maybe<EnqueuedStylesheet>>>;
   /**
    * Extra information needed for the script
    * @deprecated Use `EnqueuedScript.extraData` instead.
    */
-  extra?: Maybe<Scalars['String']>;
+  extra?: Maybe<Scalars['String']['output']>;
   /** The handle of the enqueued asset */
-  handle?: Maybe<Scalars['String']>;
+  handle?: Maybe<Scalars['String']['output']>;
   /** The global ID of the enqueued stylesheet */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the enqueued style is RTL or not */
-  isRtl?: Maybe<Scalars['Boolean']>;
+  isRtl?: Maybe<Scalars['Boolean']['output']>;
   /** The media attribute to use for the link */
-  media?: Maybe<Scalars['String']>;
+  media?: Maybe<Scalars['String']['output']>;
   /** The absolute path to the enqueued style. Set when the stylesheet is meant to load inline. */
-  path?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['String']['output']>;
   /** The `rel` attribute to use for the link */
-  rel?: Maybe<Scalars['String']>;
+  rel?: Maybe<Scalars['String']['output']>;
   /** The source of the asset */
-  src?: Maybe<Scalars['String']>;
+  src?: Maybe<Scalars['String']['output']>;
   /** Optional suffix, used in combination with RTL */
-  suffix?: Maybe<Scalars['String']>;
+  suffix?: Maybe<Scalars['String']['output']>;
   /** The title of the enqueued style. Used for preferred/alternate stylesheets. */
-  title?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']['output']>;
   /** The version of the enqueued style */
-  version?: Maybe<Scalars['String']>;
+  version?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection to EnqueuedStylesheet Nodes */
@@ -2200,7 +2202,7 @@ export type EnqueuedStylesheetConnection = {
 /** Edge between a Node and a connected EnqueuedStylesheet */
 export type EnqueuedStylesheetConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected EnqueuedStylesheet Node */
   node: EnqueuedStylesheet;
 };
@@ -2208,93 +2210,93 @@ export type EnqueuedStylesheetConnectionEdge = {
 /** Page Info on the connected EnqueuedStylesheetConnectionEdge */
 export type EnqueuedStylesheetConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The gallery type */
 export type Gallery = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithExcerpt & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & {
   __typename?: 'Gallery';
   /** The content of the post. */
-  content?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the ContentType type */
   contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
   /** The name of the Content Type the node belongs to */
-  contentTypeName: Scalars['String'];
+  contentTypeName: Scalars['String']['output'];
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** Post publishing date. */
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']['output']>;
   /** The publishing date set in GMT. */
-  dateGmt?: Maybe<Scalars['String']>;
+  dateGmt?: Maybe<Scalars['String']['output']>;
   /** The desired slug of the post */
-  desiredSlug?: Maybe<Scalars['String']>;
+  desiredSlug?: Maybe<Scalars['String']['output']>;
   /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
   editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
   /** The RSS enclosure for the object */
-  enclosure?: Maybe<Scalars['String']>;
+  enclosure?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
   /** Connection between the ContentNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The excerpt of the post. */
-  excerpt?: Maybe<Scalars['String']>;
+  excerpt?: Maybe<Scalars['String']['output']>;
   /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
   featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
   /** The database identifier for the featured image node assigned to the content node */
-  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
+  featuredImageDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Globally unique ID of the featured image assigned to the node */
-  featuredImageId?: Maybe<Scalars['ID']>;
+  featuredImageId?: Maybe<Scalars['ID']['output']>;
   /**
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of the databaseId field
    */
-  galleryId: Scalars['Int'];
+  galleryId: Scalars['Int']['output'];
   /** Added to the GraphQL Schema because the ACF Field Group &quot;Gallery Settings&quot; was set to Show in GraphQL. */
   gallerySettings?: Maybe<Gallery_Gallerysettings>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
-  guid?: Maybe<Scalars['String']>;
+  guid?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier of the galleries object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
-  isPreview?: Maybe<Scalars['Boolean']>;
+  isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The user that most recently edited the node */
   lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
   /** The permalink of the post */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
-  modified?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
-  modifiedGmt?: Maybe<Scalars['String']>;
+  modifiedGmt?: Maybe<Scalars['String']['output']>;
   /** Connection between the Gallery type and the gallery type */
   preview?: Maybe<GalleryToPreviewConnectionEdge>;
   /** The database id of the preview node */
-  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
-  previewRevisionId?: Maybe<Scalars['ID']>;
+  previewRevisionId?: Maybe<Scalars['ID']['output']>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
-  status?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']['output']>;
   /** The template assigned to the node */
   template?: Maybe<ContentTemplate>;
   /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
-  title?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']['output']>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -2306,19 +2308,19 @@ export type GalleryContentArgs = {
 
 /** The gallery type */
 export type GalleryEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The gallery type */
 export type GalleryEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2346,7 +2348,7 @@ export type GalleryConnection = {
 /** Edge between a Node and a connected gallery */
 export type GalleryConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected gallery Node */
   node: Gallery;
 };
@@ -2354,15 +2356,15 @@ export type GalleryConnectionEdge = {
 /** Page Info on the connected GalleryConnectionEdge */
 export type GalleryConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -2381,7 +2383,7 @@ export enum GalleryIdType {
 export type GalleryToPreviewConnectionEdge = Edge & GalleryConnectionEdge & OneToOneConnection & {
   __typename?: 'GalleryToPreviewConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Gallery;
 };
@@ -2390,7 +2392,7 @@ export type GalleryToPreviewConnectionEdge = Edge & GalleryConnectionEdge & OneT
 export type Gallery_Gallerysettings = AcfFieldGroup & {
   __typename?: 'Gallery_Gallerysettings';
   /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
   galleryPhotos?: Maybe<Array<Maybe<MediaItem>>>;
 };
 
@@ -2398,23 +2400,23 @@ export type Gallery_Gallerysettings = AcfFieldGroup & {
 export type GeneralSettings = {
   __typename?: 'GeneralSettings';
   /** A date format for all date strings. */
-  dateFormat?: Maybe<Scalars['String']>;
+  dateFormat?: Maybe<Scalars['String']['output']>;
   /** Site tagline. */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** This address is used for admin purposes, like new user notification. */
-  email?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']['output']>;
   /** WordPress locale code. */
-  language?: Maybe<Scalars['String']>;
+  language?: Maybe<Scalars['String']['output']>;
   /** A day number of the week that the week should start on. */
-  startOfWeek?: Maybe<Scalars['Int']>;
+  startOfWeek?: Maybe<Scalars['Int']['output']>;
   /** A time format for all time strings. */
-  timeFormat?: Maybe<Scalars['String']>;
+  timeFormat?: Maybe<Scalars['String']['output']>;
   /** A city in the same timezone as you. */
-  timezone?: Maybe<Scalars['String']>;
+  timezone?: Maybe<Scalars['String']['output']>;
   /** Site title. */
-  title?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']['output']>;
   /** Site URL. */
-  url?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 /** Content node with hierarchical (parent/child) relationships */
@@ -2426,99 +2428,99 @@ export type HierarchicalContentNode = {
   /** Connection between the ContentNode type and the ContentType type */
   contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
   /** The name of the Content Type the node belongs to */
-  contentTypeName: Scalars['String'];
+  contentTypeName: Scalars['String']['output'];
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** Post publishing date. */
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']['output']>;
   /** The publishing date set in GMT. */
-  dateGmt?: Maybe<Scalars['String']>;
+  dateGmt?: Maybe<Scalars['String']['output']>;
   /** The desired slug of the post */
-  desiredSlug?: Maybe<Scalars['String']>;
+  desiredSlug?: Maybe<Scalars['String']['output']>;
   /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
   editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
   /** The RSS enclosure for the object */
-  enclosure?: Maybe<Scalars['String']>;
+  enclosure?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
   /** Connection between the ContentNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
-  guid?: Maybe<Scalars['String']>;
+  guid?: Maybe<Scalars['String']['output']>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
-  isPreview?: Maybe<Scalars['Boolean']>;
+  isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The user that most recently edited the node */
   lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
   /** The permalink of the post */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
-  modified?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
-  modifiedGmt?: Maybe<Scalars['String']>;
+  modifiedGmt?: Maybe<Scalars['String']['output']>;
   /** The parent of the node. The parent object can be of various types */
   parent?: Maybe<HierarchicalContentNodeToParentContentNodeConnectionEdge>;
   /** Database id of the parent node */
-  parentDatabaseId?: Maybe<Scalars['Int']>;
+  parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
-  parentId?: Maybe<Scalars['ID']>;
+  parentId?: Maybe<Scalars['ID']['output']>;
   /** The database id of the preview node */
-  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
-  previewRevisionId?: Maybe<Scalars['ID']>;
+  previewRevisionId?: Maybe<Scalars['ID']['output']>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
-  status?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']['output']>;
   /** The template assigned to a node of content */
   template?: Maybe<ContentTemplate>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** Content node with hierarchical (parent/child) relationships */
 export type HierarchicalContentNodeAncestorsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs>;
 };
 
 
 /** Content node with hierarchical (parent/child) relationships */
 export type HierarchicalContentNodeChildrenArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs>;
 };
 
 
 /** Content node with hierarchical (parent/child) relationships */
 export type HierarchicalContentNodeEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** Content node with hierarchical (parent/child) relationships */
 export type HierarchicalContentNodeEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** Connection between the HierarchicalContentNode type and the ContentNode type */
@@ -2536,7 +2538,7 @@ export type HierarchicalContentNodeToContentNodeAncestorsConnection = Connection
 export type HierarchicalContentNodeToContentNodeAncestorsConnectionEdge = ContentNodeConnectionEdge & Edge & {
   __typename?: 'HierarchicalContentNodeToContentNodeAncestorsConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentNode;
 };
@@ -2545,15 +2547,15 @@ export type HierarchicalContentNodeToContentNodeAncestorsConnectionEdge = Conten
 export type HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'HierarchicalContentNodeToContentNodeAncestorsConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the HierarchicalContentNodeToContentNodeAncestorsConnection connection */
@@ -2563,37 +2565,37 @@ export type HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the HierarchicalContentNode type and the ContentNode type */
@@ -2611,7 +2613,7 @@ export type HierarchicalContentNodeToContentNodeChildrenConnection = Connection 
 export type HierarchicalContentNodeToContentNodeChildrenConnectionEdge = ContentNodeConnectionEdge & Edge & {
   __typename?: 'HierarchicalContentNodeToContentNodeChildrenConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentNode;
 };
@@ -2620,15 +2622,15 @@ export type HierarchicalContentNodeToContentNodeChildrenConnectionEdge = Content
 export type HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'HierarchicalContentNodeToContentNodeChildrenConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the HierarchicalContentNodeToContentNodeChildrenConnection connection */
@@ -2638,44 +2640,44 @@ export type HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the HierarchicalContentNode type and the ContentNode type */
 export type HierarchicalContentNodeToParentContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & OneToOneConnection & {
   __typename?: 'HierarchicalContentNodeToParentContentNodeConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: ContentNode;
 };
@@ -2683,86 +2685,86 @@ export type HierarchicalContentNodeToParentContentNodeConnectionEdge = ContentNo
 /** Node with hierarchical (parent/child) relationships */
 export type HierarchicalNode = {
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Database id of the parent node */
-  parentDatabaseId?: Maybe<Scalars['Int']>;
+  parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
-  parentId?: Maybe<Scalars['ID']>;
+  parentId?: Maybe<Scalars['ID']['output']>;
 };
 
 /** Term node with hierarchical (parent/child) relationships */
 export type HierarchicalTermNode = {
   /** The number of objects connected to the object */
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** The description of the object */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** Connection between the TermNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The link to the term */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** The human friendly name of the object. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** Database id of the parent node */
-  parentDatabaseId?: Maybe<Scalars['Int']>;
+  parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
-  parentId?: Maybe<Scalars['ID']>;
+  parentId?: Maybe<Scalars['ID']['output']>;
   /** An alphanumeric identifier for the object unique to its type. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** The name of the taxonomy that the object is associated with */
-  taxonomyName?: Maybe<Scalars['String']>;
+  taxonomyName?: Maybe<Scalars['String']['output']>;
   /** The ID of the term group that this term object belongs to */
-  termGroupId?: Maybe<Scalars['Int']>;
+  termGroupId?: Maybe<Scalars['Int']['output']>;
   /** The taxonomy ID that the object is associated with */
-  termTaxonomyId?: Maybe<Scalars['Int']>;
+  termTaxonomyId?: Maybe<Scalars['Int']['output']>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** Term node with hierarchical (parent/child) relationships */
 export type HierarchicalTermNodeEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** Term node with hierarchical (parent/child) relationships */
 export type HierarchicalTermNodeEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** File details for a Media Item */
 export type MediaDetails = {
   __typename?: 'MediaDetails';
   /** The filename of the mediaItem */
-  file?: Maybe<Scalars['String']>;
+  file?: Maybe<Scalars['String']['output']>;
   /** The height of the mediaItem */
-  height?: Maybe<Scalars['Int']>;
+  height?: Maybe<Scalars['Int']['output']>;
   /** Meta information associated with the mediaItem */
   meta?: Maybe<MediaItemMeta>;
   /** The available sizes of the mediaItem */
   sizes?: Maybe<Array<Maybe<MediaSize>>>;
   /** The width of the mediaItem */
-  width?: Maybe<Scalars['Int']>;
+  width?: Maybe<Scalars['Int']['output']>;
 };
 
 
@@ -2776,121 +2778,121 @@ export type MediaDetailsSizesArgs = {
 export type MediaItem = ContentNode & DatabaseIdentifier & HierarchicalContentNode & HierarchicalNode & Node & NodeWithAuthor & NodeWithComments & NodeWithTemplate & NodeWithTitle & UniformResourceIdentifiable & {
   __typename?: 'MediaItem';
   /** Alternative text to display when resource is not displayed */
-  altText?: Maybe<Scalars['String']>;
+  altText?: Maybe<Scalars['String']['output']>;
   /** Returns ancestors of the node. Default ordered as lowest (closest to the child) to highest (closest to the root). */
   ancestors?: Maybe<HierarchicalContentNodeToContentNodeAncestorsConnection>;
   /** Connection between the NodeWithAuthor type and the User type */
   author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
   /** The database identifier of the author of the node */
-  authorDatabaseId?: Maybe<Scalars['Int']>;
+  authorDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the author of the node */
-  authorId?: Maybe<Scalars['ID']>;
+  authorId?: Maybe<Scalars['ID']['output']>;
   /** The caption for the resource */
-  caption?: Maybe<Scalars['String']>;
+  caption?: Maybe<Scalars['String']['output']>;
   /** Connection between the HierarchicalContentNode type and the ContentNode type */
   children?: Maybe<HierarchicalContentNodeToContentNodeChildrenConnection>;
   /** The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility. */
-  commentCount?: Maybe<Scalars['Int']>;
+  commentCount?: Maybe<Scalars['Int']['output']>;
   /** Whether the comments are open or closed for this particular post. */
-  commentStatus?: Maybe<Scalars['String']>;
+  commentStatus?: Maybe<Scalars['String']['output']>;
   /** Connection between the MediaItem type and the Comment type */
   comments?: Maybe<MediaItemToCommentConnection>;
   /** Connection between the ContentNode type and the ContentType type */
   contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
   /** The name of the Content Type the node belongs to */
-  contentTypeName: Scalars['String'];
+  contentTypeName: Scalars['String']['output'];
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** Post publishing date. */
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']['output']>;
   /** The publishing date set in GMT. */
-  dateGmt?: Maybe<Scalars['String']>;
+  dateGmt?: Maybe<Scalars['String']['output']>;
   /** Description of the image (stored as post_content) */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** The desired slug of the post */
-  desiredSlug?: Maybe<Scalars['String']>;
+  desiredSlug?: Maybe<Scalars['String']['output']>;
   /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
   editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
   /** The RSS enclosure for the object */
-  enclosure?: Maybe<Scalars['String']>;
+  enclosure?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
   /** Connection between the ContentNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The filesize in bytes of the resource */
-  fileSize?: Maybe<Scalars['Int']>;
+  fileSize?: Maybe<Scalars['Int']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
-  guid?: Maybe<Scalars['String']>;
+  guid?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier of the attachment object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
-  isPreview?: Maybe<Scalars['Boolean']>;
+  isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The user that most recently edited the node */
   lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
   /** The permalink of the post */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** Details about the mediaItem */
   mediaDetails?: Maybe<MediaDetails>;
   /**
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of the databaseId field
    */
-  mediaItemId: Scalars['Int'];
+  mediaItemId: Scalars['Int']['output'];
   /** Url of the mediaItem */
-  mediaItemUrl?: Maybe<Scalars['String']>;
+  mediaItemUrl?: Maybe<Scalars['String']['output']>;
   /** Connection between the MediaItem type and the MediaTag type */
   mediaTags?: Maybe<MediaItemToMediaTagConnection>;
   /** Type of resource */
-  mediaType?: Maybe<Scalars['String']>;
+  mediaType?: Maybe<Scalars['String']['output']>;
   /** The mime type of the mediaItem */
-  mimeType?: Maybe<Scalars['String']>;
+  mimeType?: Maybe<Scalars['String']['output']>;
   /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
-  modified?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
-  modifiedGmt?: Maybe<Scalars['String']>;
+  modifiedGmt?: Maybe<Scalars['String']['output']>;
   /** The parent of the node. The parent object can be of various types */
   parent?: Maybe<HierarchicalContentNodeToParentContentNodeConnectionEdge>;
   /** Database id of the parent node */
-  parentDatabaseId?: Maybe<Scalars['Int']>;
+  parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
-  parentId?: Maybe<Scalars['ID']>;
+  parentId?: Maybe<Scalars['ID']['output']>;
   /** The database id of the preview node */
-  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
-  previewRevisionId?: Maybe<Scalars['ID']>;
+  previewRevisionId?: Maybe<Scalars['ID']['output']>;
   /** The sizes attribute value for an image. */
-  sizes?: Maybe<Scalars['String']>;
+  sizes?: Maybe<Scalars['String']['output']>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** Url of the mediaItem */
-  sourceUrl?: Maybe<Scalars['String']>;
+  sourceUrl?: Maybe<Scalars['String']['output']>;
   /** The srcset attribute specifies the URL of the image to use in different situations. It is a comma separated string of urls and their widths. */
-  srcSet?: Maybe<Scalars['String']>;
+  srcSet?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
-  status?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']['output']>;
   /** The template assigned to a node of content */
   template?: Maybe<ContentTemplate>;
   /** Connection between the MediaItem type and the TermNode type */
   terms?: Maybe<MediaItemToTermNodeConnection>;
   /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
-  title?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']['output']>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** The mediaItem type */
 export type MediaItemAncestorsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs>;
 };
 
@@ -2903,20 +2905,20 @@ export type MediaItemCaptionArgs = {
 
 /** The mediaItem type */
 export type MediaItemChildrenArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs>;
 };
 
 
 /** The mediaItem type */
 export type MediaItemCommentsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<MediaItemToCommentConnectionWhereArgs>;
 };
 
@@ -2929,19 +2931,19 @@ export type MediaItemDescriptionArgs = {
 
 /** The mediaItem type */
 export type MediaItemEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The mediaItem type */
 export type MediaItemEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -2953,10 +2955,10 @@ export type MediaItemFileSizeArgs = {
 
 /** The mediaItem type */
 export type MediaItemMediaTagsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<MediaItemToMediaTagConnectionWhereArgs>;
 };
 
@@ -2981,10 +2983,10 @@ export type MediaItemSrcSetArgs = {
 
 /** The mediaItem type */
 export type MediaItemTermsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<MediaItemToTermNodeConnectionWhereArgs>;
 };
 
@@ -3007,7 +3009,7 @@ export type MediaItemConnection = {
 /** Edge between a Node and a connected mediaItem */
 export type MediaItemConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected mediaItem Node */
   node: MediaItem;
 };
@@ -3015,15 +3017,15 @@ export type MediaItemConnectionEdge = {
 /** Page Info on the connected MediaItemConnectionEdge */
 export type MediaItemConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -3044,29 +3046,29 @@ export enum MediaItemIdType {
 export type MediaItemMeta = {
   __typename?: 'MediaItemMeta';
   /** Aperture measurement of the media item. */
-  aperture?: Maybe<Scalars['Float']>;
+  aperture?: Maybe<Scalars['Float']['output']>;
   /** Information about the camera used to create the media item. */
-  camera?: Maybe<Scalars['String']>;
+  camera?: Maybe<Scalars['String']['output']>;
   /** The text string description associated with the media item. */
-  caption?: Maybe<Scalars['String']>;
+  caption?: Maybe<Scalars['String']['output']>;
   /** Copyright information associated with the media item. */
-  copyright?: Maybe<Scalars['String']>;
+  copyright?: Maybe<Scalars['String']['output']>;
   /** The date/time when the media was created. */
-  createdTimestamp?: Maybe<Scalars['Int']>;
+  createdTimestamp?: Maybe<Scalars['Int']['output']>;
   /** The original creator of the media item. */
-  credit?: Maybe<Scalars['String']>;
+  credit?: Maybe<Scalars['String']['output']>;
   /** The focal length value of the media item. */
-  focalLength?: Maybe<Scalars['Float']>;
+  focalLength?: Maybe<Scalars['Float']['output']>;
   /** The ISO (International Organization for Standardization) value of the media item. */
-  iso?: Maybe<Scalars['Int']>;
+  iso?: Maybe<Scalars['Int']['output']>;
   /** List of keywords used to describe or identfy the media item. */
-  keywords?: Maybe<Array<Maybe<Scalars['String']>>>;
+  keywords?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The vertical or horizontal aspect of the media item. */
-  orientation?: Maybe<Scalars['String']>;
+  orientation?: Maybe<Scalars['String']['output']>;
   /** The shutter speed information of the media item. */
-  shutterSpeed?: Maybe<Scalars['Float']>;
+  shutterSpeed?: Maybe<Scalars['Float']['output']>;
   /** A useful title for the media item. */
-  title?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 /** The size of the media item object. */
@@ -3112,7 +3114,7 @@ export type MediaItemToCommentConnection = CommentConnection & Connection & {
 export type MediaItemToCommentConnectionEdge = CommentConnectionEdge & Edge & {
   __typename?: 'MediaItemToCommentConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Comment;
 };
@@ -3121,77 +3123,77 @@ export type MediaItemToCommentConnectionEdge = CommentConnectionEdge & Edge & {
 export type MediaItemToCommentConnectionPageInfo = CommentConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'MediaItemToCommentConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the MediaItemToCommentConnection connection */
 export type MediaItemToCommentConnectionWhereArgs = {
   /** Comment author email address. */
-  authorEmail?: InputMaybe<Scalars['String']>;
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to exclude comments for. */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Comment author URL. */
-  authorUrl?: InputMaybe<Scalars['String']>;
+  authorUrl?: InputMaybe<Scalars['String']['input']>;
   /** Array of comment IDs to include. */
-  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
-  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Include comments of a given type. */
-  commentType?: InputMaybe<Scalars['String']>;
+  commentType?: InputMaybe<Scalars['String']['input']>;
   /** Include comments from a given array of comment types. */
-  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
-  commentTypeNotIn?: InputMaybe<Scalars['String']>;
+  commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
   /** Content object author ID to limit results by. */
-  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to retrieve comments for. */
-  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
-  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Limit results to those affiliated with a given content object ID. */
-  contentId?: InputMaybe<Scalars['ID']>;
+  contentId?: InputMaybe<Scalars['ID']['input']>;
   /** Array of content object IDs to include affiliated comments for. */
-  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
-  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Content object name (i.e. slug ) to retrieve affiliated comments for. */
-  contentName?: InputMaybe<Scalars['String']>;
+  contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
-  contentParent?: InputMaybe<Scalars['Int']>;
+  contentParent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
   /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
-  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Karma score to retrieve matching comments for. */
-  karma?: InputMaybe<Scalars['Int']>;
+  karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
   /** Field to order the comments by. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of parent IDs of comments to retrieve children for. */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['String']['input']>;
   /** Include comments for a specific user ID. */
-  userId?: InputMaybe<Scalars['ID']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Connection between the MediaItem type and the MediaTag type */
@@ -3209,7 +3211,7 @@ export type MediaItemToMediaTagConnection = Connection & MediaTagConnection & {
 export type MediaItemToMediaTagConnectionEdge = Edge & MediaTagConnectionEdge & {
   __typename?: 'MediaItemToMediaTagConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: MediaTag;
 };
@@ -3218,61 +3220,61 @@ export type MediaItemToMediaTagConnectionEdge = Edge & MediaTagConnectionEdge & 
 export type MediaItemToMediaTagConnectionPageInfo = MediaTagConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'MediaItemToMediaTagConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the MediaItemToMediaTagConnection connection */
 export type MediaItemToMediaTagConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the MediaItem type and the TermNode type */
@@ -3290,7 +3292,7 @@ export type MediaItemToTermNodeConnection = Connection & TermNodeConnection & {
 export type MediaItemToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & {
   __typename?: 'MediaItemToTermNodeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: TermNode;
 };
@@ -3299,82 +3301,82 @@ export type MediaItemToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & 
 export type MediaItemToTermNodeConnectionPageInfo = PageInfo & TermNodeConnectionPageInfo & WpPageInfo & {
   __typename?: 'MediaItemToTermNodeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the MediaItemToTermNodeConnection connection */
 export type MediaItemToTermNodeConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** The Taxonomy to filter terms by */
   taxonomies?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Details of an available size for a media item */
 export type MediaSize = {
   __typename?: 'MediaSize';
   /** The filename of the referenced size */
-  file?: Maybe<Scalars['String']>;
+  file?: Maybe<Scalars['String']['output']>;
   /** The filesize of the resource */
-  fileSize?: Maybe<Scalars['Int']>;
+  fileSize?: Maybe<Scalars['Int']['output']>;
   /** The height of the referenced size */
-  height?: Maybe<Scalars['String']>;
+  height?: Maybe<Scalars['String']['output']>;
   /** The mime type of the referenced size */
-  mimeType?: Maybe<Scalars['String']>;
+  mimeType?: Maybe<Scalars['String']['output']>;
   /** The referenced size name */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** The url of the referenced size */
-  sourceUrl?: Maybe<Scalars['String']>;
+  sourceUrl?: Maybe<Scalars['String']['output']>;
   /** The width of the referenced size */
-  width?: Maybe<Scalars['String']>;
+  width?: Maybe<Scalars['String']['output']>;
 };
 
 /** The MediaTag type */
@@ -3383,83 +3385,83 @@ export type MediaTag = DatabaseIdentifier & MenuItemLinkable & Node & TermNode &
   /** Connection between the MediaTag type and the ContentNode type */
   contentNodes?: Maybe<MediaTagToContentNodeConnection>;
   /** The number of objects connected to the object */
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** The description of the object */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** Connection between the TermNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The link to the term */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** Connection between the MediaTag type and the mediaItem type */
   mediaItems?: Maybe<MediaTagToMediaItemConnection>;
   /**
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of databaseId
    */
-  mediaTagId?: Maybe<Scalars['Int']>;
+  mediaTagId?: Maybe<Scalars['Int']['output']>;
   /** The human friendly name of the object. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** An alphanumeric identifier for the object unique to its type. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** Connection between the MediaTag type and the Taxonomy type */
   taxonomy?: Maybe<MediaTagToTaxonomyConnectionEdge>;
   /** The name of the taxonomy that the object is associated with */
-  taxonomyName?: Maybe<Scalars['String']>;
+  taxonomyName?: Maybe<Scalars['String']['output']>;
   /** The ID of the term group that this term object belongs to */
-  termGroupId?: Maybe<Scalars['Int']>;
+  termGroupId?: Maybe<Scalars['Int']['output']>;
   /** The taxonomy ID that the object is associated with */
-  termTaxonomyId?: Maybe<Scalars['Int']>;
+  termTaxonomyId?: Maybe<Scalars['Int']['output']>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** The MediaTag type */
 export type MediaTagContentNodesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<MediaTagToContentNodeConnectionWhereArgs>;
 };
 
 
 /** The MediaTag type */
 export type MediaTagEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The MediaTag type */
 export type MediaTagEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The MediaTag type */
 export type MediaTagMediaItemsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<MediaTagToMediaItemConnectionWhereArgs>;
 };
 
@@ -3476,7 +3478,7 @@ export type MediaTagConnection = {
 /** Edge between a Node and a connected MediaTag */
 export type MediaTagConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected MediaTag Node */
   node: MediaTag;
 };
@@ -3484,15 +3486,15 @@ export type MediaTagConnectionEdge = {
 /** Page Info on the connected MediaTagConnectionEdge */
 export type MediaTagConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -3524,7 +3526,7 @@ export type MediaTagToContentNodeConnection = Connection & ContentNodeConnection
 export type MediaTagToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & {
   __typename?: 'MediaTagToContentNodeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentNode;
 };
@@ -3533,15 +3535,15 @@ export type MediaTagToContentNodeConnectionEdge = ContentNodeConnectionEdge & Ed
 export type MediaTagToContentNodeConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'MediaTagToContentNodeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the MediaTagToContentNodeConnection connection */
@@ -3551,37 +3553,37 @@ export type MediaTagToContentNodeConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the MediaTag type and the mediaItem type */
@@ -3599,7 +3601,7 @@ export type MediaTagToMediaItemConnection = Connection & MediaItemConnection & {
 export type MediaTagToMediaItemConnectionEdge = Edge & MediaItemConnectionEdge & {
   __typename?: 'MediaTagToMediaItemConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: MediaItem;
 };
@@ -3608,68 +3610,68 @@ export type MediaTagToMediaItemConnectionEdge = Edge & MediaItemConnectionEdge &
 export type MediaTagToMediaItemConnectionPageInfo = MediaItemConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'MediaTagToMediaItemConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the MediaTagToMediaItemConnection connection */
 export type MediaTagToMediaItemConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the MediaTag type and the Taxonomy type */
 export type MediaTagToTaxonomyConnectionEdge = Edge & OneToOneConnection & TaxonomyConnectionEdge & {
   __typename?: 'MediaTagToTaxonomyConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Taxonomy;
 };
@@ -3678,35 +3680,35 @@ export type MediaTagToTaxonomyConnectionEdge = Edge & OneToOneConnection & Taxon
 export type Menu = DatabaseIdentifier & Node & {
   __typename?: 'Menu';
   /** The number of items in the menu */
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** The globally unique identifier of the nav menu object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** The locations a menu is assigned to */
   locations?: Maybe<Array<Maybe<MenuLocationEnum>>>;
   /**
    * WP ID of the nav menu.
    * @deprecated Deprecated in favor of the databaseId field
    */
-  menuId?: Maybe<Scalars['Int']>;
+  menuId?: Maybe<Scalars['Int']['output']>;
   /** Connection between the Menu type and the MenuItem type */
   menuItems?: Maybe<MenuToMenuItemConnection>;
   /** Display name of the menu. Equivalent to WP_Term-&gt;name. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** The url friendly name of the menu. Equivalent to WP_Term-&gt;slug */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** Menus are the containers for navigation items. Menus can be assigned to menu locations, which are typically registered by the active theme. */
 export type MenuMenuItemsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<MenuToMenuItemConnectionWhereArgs>;
 };
 
@@ -3723,7 +3725,7 @@ export type MenuConnection = {
 /** Edge between a Node and a connected Menu */
 export type MenuConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected Menu Node */
   node: Menu;
 };
@@ -3731,15 +3733,15 @@ export type MenuConnectionEdge = {
 /** Page Info on the connected MenuConnectionEdge */
 export type MenuConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Navigation menu items are the individual items assigned to a menu. These are rendered as the links in a navigation menu. */
@@ -3755,19 +3757,19 @@ export type MenuItem = DatabaseIdentifier & Node & {
    */
   connectedObject?: Maybe<MenuItemObjectUnion>;
   /** Class attribute for the menu item link */
-  cssClasses?: Maybe<Array<Maybe<Scalars['String']>>>;
+  cssClasses?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** Description of the menu item. */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier of the nav menu item object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Label or title of the menu item. */
-  label?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']['output']>;
   /** Link relationship (XFN) of the menu item. */
-  linkRelationship?: Maybe<Scalars['String']>;
+  linkRelationship?: Maybe<Scalars['String']['output']>;
   /** The locations the menu item&#039;s Menu is assigned to */
   locations?: Maybe<Array<Maybe<MenuLocationEnum>>>;
   /** The Menu a MenuItem is part of */
@@ -3776,32 +3778,32 @@ export type MenuItem = DatabaseIdentifier & Node & {
    * WP ID of the menu item.
    * @deprecated Deprecated in favor of the databaseId field
    */
-  menuItemId?: Maybe<Scalars['Int']>;
+  menuItemId?: Maybe<Scalars['Int']['output']>;
   /** Menu item order */
-  order?: Maybe<Scalars['Int']>;
+  order?: Maybe<Scalars['Int']['output']>;
   /** The database id of the parent menu item or null if it is the root */
-  parentDatabaseId?: Maybe<Scalars['Int']>;
+  parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent nav menu item object. */
-  parentId?: Maybe<Scalars['ID']>;
+  parentId?: Maybe<Scalars['ID']['output']>;
   /** Path for the resource. Relative path for internal resources. Absolute path for external resources. */
-  path?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['String']['output']>;
   /** Target attribute for the menu item link. */
-  target?: Maybe<Scalars['String']>;
+  target?: Maybe<Scalars['String']['output']>;
   /** Title attribute for the menu item link */
-  title?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']['output']>;
   /** The uri of the resource the menu item links to */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
   /** URL or destination of the menu item. */
-  url?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** Navigation menu items are the individual items assigned to a menu. These are rendered as the links in a navigation menu. */
 export type MenuItemChildItemsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<MenuItemToMenuItemConnectionWhereArgs>;
 };
 
@@ -3818,7 +3820,7 @@ export type MenuItemConnection = {
 /** Edge between a Node and a connected MenuItem */
 export type MenuItemConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected MenuItem Node */
   node: MenuItem;
 };
@@ -3826,35 +3828,35 @@ export type MenuItemConnectionEdge = {
 /** Page Info on the connected MenuItemConnectionEdge */
 export type MenuItemConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Nodes that can be linked to as Menu Items */
 export type MenuItemLinkable = {
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 /** Edge between a Node and a connected MenuItemLinkable */
 export type MenuItemLinkableConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected MenuItemLinkable Node */
   node: MenuItemLinkable;
 };
@@ -3874,7 +3876,7 @@ export type MenuItemObjectUnion = Category | Gallery | MediaTag | Page | Post | 
 export type MenuItemToMenuConnectionEdge = Edge & MenuConnectionEdge & OneToOneConnection & {
   __typename?: 'MenuItemToMenuConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Menu;
 };
@@ -3894,7 +3896,7 @@ export type MenuItemToMenuItemConnection = Connection & MenuItemConnection & {
 export type MenuItemToMenuItemConnectionEdge = Edge & MenuItemConnectionEdge & {
   __typename?: 'MenuItemToMenuItemConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: MenuItem;
 };
@@ -3903,34 +3905,34 @@ export type MenuItemToMenuItemConnectionEdge = Edge & MenuItemConnectionEdge & {
 export type MenuItemToMenuItemConnectionPageInfo = MenuItemConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'MenuItemToMenuItemConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the MenuItemToMenuItemConnection connection */
 export type MenuItemToMenuItemConnectionWhereArgs = {
   /** The database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** The menu location for the menu being queried */
   location?: InputMaybe<MenuLocationEnum>;
   /** The database ID of the parent menu object */
-  parentDatabaseId?: InputMaybe<Scalars['Int']>;
+  parentDatabaseId?: InputMaybe<Scalars['Int']['input']>;
   /** The ID of the parent menu object */
-  parentId?: InputMaybe<Scalars['ID']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Connection between the MenuItem type and the MenuItemLinkable type */
 export type MenuItemToMenuItemLinkableConnectionEdge = Edge & MenuItemLinkableConnectionEdge & OneToOneConnection & {
   __typename?: 'MenuItemToMenuItemLinkableConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: MenuItemLinkable;
 };
@@ -3970,7 +3972,7 @@ export type MenuToMenuItemConnection = Connection & MenuItemConnection & {
 export type MenuToMenuItemConnectionEdge = Edge & MenuItemConnectionEdge & {
   __typename?: 'MenuToMenuItemConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: MenuItem;
 };
@@ -3979,27 +3981,27 @@ export type MenuToMenuItemConnectionEdge = Edge & MenuItemConnectionEdge & {
 export type MenuToMenuItemConnectionPageInfo = MenuItemConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'MenuToMenuItemConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the MenuToMenuItemConnection connection */
 export type MenuToMenuItemConnectionWhereArgs = {
   /** The database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** The menu location for the menu being queried */
   location?: InputMaybe<MenuLocationEnum>;
   /** The database ID of the parent menu object */
-  parentDatabaseId?: InputMaybe<Scalars['Int']>;
+  parentDatabaseId?: InputMaybe<Scalars['Int']['input']>;
   /** The ID of the parent menu object */
-  parentId?: InputMaybe<Scalars['ID']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** The MimeType of the object */
@@ -4191,7 +4193,7 @@ export enum MimeTypeEnum {
 /** An object with an ID */
 export type Node = {
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
 };
 
 /** A node that can have an author assigned to it */
@@ -4199,18 +4201,18 @@ export type NodeWithAuthor = {
   /** Connection between the NodeWithAuthor type and the User type */
   author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
   /** The database identifier of the author of the node */
-  authorDatabaseId?: Maybe<Scalars['Int']>;
+  authorDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the author of the node */
-  authorId?: Maybe<Scalars['ID']>;
+  authorId?: Maybe<Scalars['ID']['output']>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
 };
 
 /** Connection between the NodeWithAuthor type and the User type */
 export type NodeWithAuthorToUserConnectionEdge = Edge & OneToOneConnection & UserConnectionEdge & {
   __typename?: 'NodeWithAuthorToUserConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: User;
 };
@@ -4218,19 +4220,19 @@ export type NodeWithAuthorToUserConnectionEdge = Edge & OneToOneConnection & Use
 /** A node that can have comments associated with it */
 export type NodeWithComments = {
   /** The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility. */
-  commentCount?: Maybe<Scalars['Int']>;
+  commentCount?: Maybe<Scalars['Int']['output']>;
   /** Whether the comments are open or closed for this particular post. */
-  commentStatus?: Maybe<Scalars['String']>;
+  commentStatus?: Maybe<Scalars['String']['output']>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
 };
 
 /** A node that supports the content editor */
 export type NodeWithContentEditor = {
   /** The content of the post. */
-  content?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']['output']>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
 };
 
 
@@ -4242,9 +4244,9 @@ export type NodeWithContentEditorContentArgs = {
 /** A node that can have an excerpt */
 export type NodeWithExcerpt = {
   /** The excerpt of the post. */
-  excerpt?: Maybe<Scalars['String']>;
+  excerpt?: Maybe<Scalars['String']['output']>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
 };
 
 
@@ -4258,18 +4260,18 @@ export type NodeWithFeaturedImage = {
   /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
   featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
   /** The database identifier for the featured image node assigned to the content node */
-  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
+  featuredImageDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Globally unique ID of the featured image assigned to the node */
-  featuredImageId?: Maybe<Scalars['ID']>;
+  featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
 };
 
 /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
 export type NodeWithFeaturedImageToMediaItemConnectionEdge = Edge & MediaItemConnectionEdge & OneToOneConnection & {
   __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: MediaItem;
 };
@@ -4277,17 +4279,17 @@ export type NodeWithFeaturedImageToMediaItemConnectionEdge = Edge & MediaItemCon
 /** A node that can have page attributes */
 export type NodeWithPageAttributes = {
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: Maybe<Scalars['Int']>;
+  menuOrder?: Maybe<Scalars['Int']['output']>;
 };
 
 /** A node that can have revisions */
 export type NodeWithRevisions = {
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** True if the node is a revision of another node */
-  isRevision?: Maybe<Scalars['Boolean']>;
+  isRevision?: Maybe<Scalars['Boolean']['output']>;
   /** If the current node is a revision, this field exposes the node this is a revision of. Returns null if the node is not a revision of another node. */
   revisionOf?: Maybe<NodeWithRevisionsToContentNodeConnectionEdge>;
 };
@@ -4296,7 +4298,7 @@ export type NodeWithRevisions = {
 export type NodeWithRevisionsToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & OneToOneConnection & {
   __typename?: 'NodeWithRevisionsToContentNodeConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: ContentNode;
 };
@@ -4304,7 +4306,7 @@ export type NodeWithRevisionsToContentNodeConnectionEdge = ContentNodeConnection
 /** A node that can have a template associated with it */
 export type NodeWithTemplate = {
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** The template assigned to the node */
   template?: Maybe<ContentTemplate>;
 };
@@ -4312,9 +4314,9 @@ export type NodeWithTemplate = {
 /** A node that NodeWith a title */
 export type NodeWithTitle = {
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
-  title?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']['output']>;
 };
 
 
@@ -4326,38 +4328,38 @@ export type NodeWithTitleTitleArgs = {
 /** A node that can have trackbacks and pingbacks */
 export type NodeWithTrackbacks = {
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the pings are open or closed for this particular post. */
-  pingStatus?: Maybe<Scalars['String']>;
+  pingStatus?: Maybe<Scalars['String']['output']>;
   /** URLs that have been pinged. */
-  pinged?: Maybe<Array<Maybe<Scalars['String']>>>;
+  pinged?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** URLs queued to be pinged. */
-  toPing?: Maybe<Array<Maybe<Scalars['String']>>>;
+  toPing?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
 };
 
 /** Offset pagination input type */
 export type OffsetPagination = {
   /** Number of post to show per page. Passed to posts_per_page of WP_Query. */
-  offset?: InputMaybe<Scalars['Int']>;
+  offset?: InputMaybe<Scalars['Int']['input']>;
   /** Number of post to show per page. Passed to posts_per_page of WP_Query. */
-  size?: InputMaybe<Scalars['Int']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** Get information about the offset pagination state */
 export type OffsetPaginationPageInfo = {
   __typename?: 'OffsetPaginationPageInfo';
   /** True if there is one or more nodes available in this connection. Eg. you can increase the offset at least by one. */
-  hasMore?: Maybe<Scalars['Boolean']>;
+  hasMore?: Maybe<Scalars['Boolean']['output']>;
   /** True when offset can be decresed eg. offset is 0&lt; */
-  hasPrevious?: Maybe<Scalars['Boolean']>;
+  hasPrevious?: Maybe<Scalars['Boolean']['output']>;
   /** Total amount of nodes in this connection */
-  total?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']['output']>;
 };
 
 /** A singular connection from one Node to another, with support for relational data on the &quot;edge&quot; of the connection. */
 export type OneToOneConnection = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected node */
   node: Node;
 };
@@ -4365,8 +4367,8 @@ export type OneToOneConnection = {
 /** Options options. */
 export type OptionsPage = {
   __typename?: 'OptionsPage';
-  pageSlug?: Maybe<Scalars['String']>;
-  pageTitle?: Maybe<Scalars['String']>;
+  pageSlug?: Maybe<Scalars['String']['output']>;
+  pageTitle?: Maybe<Scalars['String']['output']>;
   /** Added to the GraphQL Schema because the ACF Field Group &quot;Social Media&quot; was set to Show in GraphQL. */
   socialMedia?: Maybe<OptionsPage_Socialmedia>;
   /** Added to the GraphQL Schema because the ACF Field Group &quot;Website Settings&quot; was set to Show in GraphQL. */
@@ -4377,7 +4379,7 @@ export type OptionsPage = {
 export type OptionsPage_Socialmedia = AcfFieldGroup & {
   __typename?: 'OptionsPage_Socialmedia';
   /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
   socialMediaBehance?: Maybe<OptionsPage_Socialmedia_SocialMediaBehance>;
   socialMediaFacebook?: Maybe<OptionsPage_Socialmedia_SocialMediaFacebook>;
   socialMediaFlickr?: Maybe<OptionsPage_Socialmedia_SocialMediaFlickr>;
@@ -4388,36 +4390,36 @@ export type OptionsPage_Socialmedia = AcfFieldGroup & {
 export type OptionsPage_Socialmedia_SocialMediaBehance = AcfFieldGroup & {
   __typename?: 'OptionsPage_Socialmedia_SocialMediaBehance';
   /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
-  show?: Maybe<Scalars['Boolean']>;
-  url?: Maybe<Scalars['String']>;
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  show?: Maybe<Scalars['Boolean']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
 export type OptionsPage_Socialmedia_SocialMediaFacebook = AcfFieldGroup & {
   __typename?: 'OptionsPage_Socialmedia_SocialMediaFacebook';
   /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
-  show?: Maybe<Scalars['Boolean']>;
-  url?: Maybe<Scalars['String']>;
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  show?: Maybe<Scalars['Boolean']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
 export type OptionsPage_Socialmedia_SocialMediaFlickr = AcfFieldGroup & {
   __typename?: 'OptionsPage_Socialmedia_SocialMediaFlickr';
   /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
-  show?: Maybe<Scalars['Boolean']>;
-  url?: Maybe<Scalars['String']>;
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  show?: Maybe<Scalars['Boolean']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
 export type OptionsPage_Socialmedia_SocialMediaInstagram = AcfFieldGroup & {
   __typename?: 'OptionsPage_Socialmedia_SocialMediaInstagram';
   /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
-  show?: Maybe<Scalars['Boolean']>;
-  url?: Maybe<Scalars['String']>;
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  show?: Maybe<Scalars['Boolean']['output']>;
+  url?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
@@ -4425,16 +4427,16 @@ export type OptionsPage_Websitesettings = AcfFieldGroup & {
   __typename?: 'OptionsPage_Websitesettings';
   disableContextMenu?: Maybe<OptionsPage_Websitesettings_DisableContextMenu>;
   /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field Group */
 export type OptionsPage_Websitesettings_DisableContextMenu = AcfFieldGroup & {
   __typename?: 'OptionsPage_Websitesettings_DisableContextMenu';
-  disabled?: Maybe<Scalars['Boolean']>;
+  disabled?: Maybe<Scalars['Boolean']['output']>;
   /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
-  messageToAlert?: Maybe<Scalars['String']>;
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
+  messageToAlert?: Maybe<Scalars['String']['output']>;
 };
 
 /** The cardinality of the connection order */
@@ -4453,35 +4455,35 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   /** Connection between the NodeWithAuthor type and the User type */
   author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
   /** The database identifier of the author of the node */
-  authorDatabaseId?: Maybe<Scalars['Int']>;
+  authorDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the author of the node */
-  authorId?: Maybe<Scalars['ID']>;
+  authorId?: Maybe<Scalars['ID']['output']>;
   /** Connection between the HierarchicalContentNode type and the ContentNode type */
   children?: Maybe<HierarchicalContentNodeToContentNodeChildrenConnection>;
   /** The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility. */
-  commentCount?: Maybe<Scalars['Int']>;
+  commentCount?: Maybe<Scalars['Int']['output']>;
   /** Whether the comments are open or closed for this particular post. */
-  commentStatus?: Maybe<Scalars['String']>;
+  commentStatus?: Maybe<Scalars['String']['output']>;
   /** Connection between the Page type and the Comment type */
   comments?: Maybe<PageToCommentConnection>;
   /** The content of the post. */
-  content?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the ContentType type */
   contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
   /** The name of the Content Type the node belongs to */
-  contentTypeName: Scalars['String'];
+  contentTypeName: Scalars['String']['output'];
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** Post publishing date. */
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']['output']>;
   /** The publishing date set in GMT. */
-  dateGmt?: Maybe<Scalars['String']>;
+  dateGmt?: Maybe<Scalars['String']['output']>;
   /** The desired slug of the post */
-  desiredSlug?: Maybe<Scalars['String']>;
+  desiredSlug?: Maybe<Scalars['String']['output']>;
   /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
   editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
   /** The RSS enclosure for the object */
-  enclosure?: Maybe<Scalars['String']>;
+  enclosure?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
   /** Connection between the ContentNode type and the EnqueuedStylesheet type */
@@ -4489,56 +4491,56 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
   featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
   /** The database identifier for the featured image node assigned to the content node */
-  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
+  featuredImageDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Globally unique ID of the featured image assigned to the node */
-  featuredImageId?: Maybe<Scalars['ID']>;
+  featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
-  guid?: Maybe<Scalars['String']>;
+  guid?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier of the page object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether this page is set to the static front page. */
-  isFrontPage: Scalars['Boolean'];
+  isFrontPage: Scalars['Boolean']['output'];
   /** Whether this page is set to the blog posts page. */
-  isPostsPage: Scalars['Boolean'];
+  isPostsPage: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
-  isPreview?: Maybe<Scalars['Boolean']>;
+  isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether this page is set to the privacy page. */
-  isPrivacyPage: Scalars['Boolean'];
+  isPrivacyPage: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** True if the node is a revision of another node */
-  isRevision?: Maybe<Scalars['Boolean']>;
+  isRevision?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The user that most recently edited the node */
   lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
   /** The permalink of the post */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: Maybe<Scalars['Int']>;
+  menuOrder?: Maybe<Scalars['Int']['output']>;
   /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
-  modified?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
-  modifiedGmt?: Maybe<Scalars['String']>;
+  modifiedGmt?: Maybe<Scalars['String']['output']>;
   /**
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of the databaseId field
    */
-  pageId: Scalars['Int'];
+  pageId: Scalars['Int']['output'];
   /** The parent of the node. The parent object can be of various types */
   parent?: Maybe<HierarchicalContentNodeToParentContentNodeConnectionEdge>;
   /** Database id of the parent node */
-  parentDatabaseId?: Maybe<Scalars['Int']>;
+  parentDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the parent node. */
-  parentId?: Maybe<Scalars['ID']>;
+  parentId?: Maybe<Scalars['ID']['output']>;
   /** Connection between the Page type and the page type */
   preview?: Maybe<PageToPreviewConnectionEdge>;
   /** The database id of the preview node */
-  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
-  previewRevisionId?: Maybe<Scalars['ID']>;
+  previewRevisionId?: Maybe<Scalars['ID']['output']>;
   /** If the current node is a revision, this field exposes the node this is a revision of. Returns null if the node is not a revision of another node. */
   revisionOf?: Maybe<NodeWithRevisionsToContentNodeConnectionEdge>;
   /** Connection between the Page type and the page type */
@@ -4546,44 +4548,44 @@ export type Page = ContentNode & DatabaseIdentifier & HierarchicalContentNode & 
   /** Added to the GraphQL Schema because the ACF Field Group &quot;Main Slider&quot; was set to Show in GraphQL. */
   slider?: Maybe<Page_Slider>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
-  status?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']['output']>;
   /** The template assigned to a node of content */
   template?: Maybe<ContentTemplate>;
   /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
-  title?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']['output']>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** The page type */
 export type PageAncestorsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<HierarchicalContentNodeToContentNodeAncestorsConnectionWhereArgs>;
 };
 
 
 /** The page type */
 export type PageChildrenArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<HierarchicalContentNodeToContentNodeChildrenConnectionWhereArgs>;
 };
 
 
 /** The page type */
 export type PageCommentsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PageToCommentConnectionWhereArgs>;
 };
 
@@ -4596,28 +4598,28 @@ export type PageContentArgs = {
 
 /** The page type */
 export type PageEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The page type */
 export type PageEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The page type */
 export type PageRevisionsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PageToRevisionConnectionWhereArgs>;
 };
 
@@ -4640,7 +4642,7 @@ export type PageConnection = {
 /** Edge between a Node and a connected page */
 export type PageConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected page Node */
   node: Page;
 };
@@ -4648,15 +4650,15 @@ export type PageConnectionEdge = {
 /** Page Info on the connected PageConnectionEdge */
 export type PageConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -4672,13 +4674,13 @@ export enum PageIdType {
 /** Information about pagination in a connection. */
 export type PageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the Page type and the Comment type */
@@ -4696,7 +4698,7 @@ export type PageToCommentConnection = CommentConnection & Connection & {
 export type PageToCommentConnectionEdge = CommentConnectionEdge & Edge & {
   __typename?: 'PageToCommentConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Comment;
 };
@@ -4705,84 +4707,84 @@ export type PageToCommentConnectionEdge = CommentConnectionEdge & Edge & {
 export type PageToCommentConnectionPageInfo = CommentConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'PageToCommentConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the PageToCommentConnection connection */
 export type PageToCommentConnectionWhereArgs = {
   /** Comment author email address. */
-  authorEmail?: InputMaybe<Scalars['String']>;
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to exclude comments for. */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Comment author URL. */
-  authorUrl?: InputMaybe<Scalars['String']>;
+  authorUrl?: InputMaybe<Scalars['String']['input']>;
   /** Array of comment IDs to include. */
-  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
-  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Include comments of a given type. */
-  commentType?: InputMaybe<Scalars['String']>;
+  commentType?: InputMaybe<Scalars['String']['input']>;
   /** Include comments from a given array of comment types. */
-  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
-  commentTypeNotIn?: InputMaybe<Scalars['String']>;
+  commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
   /** Content object author ID to limit results by. */
-  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to retrieve comments for. */
-  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
-  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Limit results to those affiliated with a given content object ID. */
-  contentId?: InputMaybe<Scalars['ID']>;
+  contentId?: InputMaybe<Scalars['ID']['input']>;
   /** Array of content object IDs to include affiliated comments for. */
-  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
-  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Content object name (i.e. slug ) to retrieve affiliated comments for. */
-  contentName?: InputMaybe<Scalars['String']>;
+  contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
-  contentParent?: InputMaybe<Scalars['Int']>;
+  contentParent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
   /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
-  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Karma score to retrieve matching comments for. */
-  karma?: InputMaybe<Scalars['Int']>;
+  karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
   /** Field to order the comments by. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of parent IDs of comments to retrieve children for. */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['String']['input']>;
   /** Include comments for a specific user ID. */
-  userId?: InputMaybe<Scalars['ID']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Connection between the Page type and the page type */
 export type PageToPreviewConnectionEdge = Edge & OneToOneConnection & PageConnectionEdge & {
   __typename?: 'PageToPreviewConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Page;
 };
@@ -4802,7 +4804,7 @@ export type PageToRevisionConnection = Connection & PageConnection & {
 export type PageToRevisionConnectionEdge = Edge & PageConnectionEdge & {
   __typename?: 'PageToRevisionConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Page;
 };
@@ -4811,68 +4813,68 @@ export type PageToRevisionConnectionEdge = Edge & PageConnectionEdge & {
 export type PageToRevisionConnectionPageInfo = PageConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'PageToRevisionConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the PageToRevisionConnection connection */
 export type PageToRevisionConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Field Group */
 export type Page_Slider = AcfFieldGroup & {
   __typename?: 'Page_Slider';
   /** The name of the ACF Field Group */
-  fieldGroupName?: Maybe<Scalars['String']>;
+  fieldGroupName?: Maybe<Scalars['String']['output']>;
   sliderDesktop?: Maybe<Array<Maybe<MediaItem>>>;
   sliderMobile?: Maybe<Array<Maybe<MediaItem>>>;
 };
@@ -4881,23 +4883,23 @@ export type Page_Slider = AcfFieldGroup & {
 export type Plugin = Node & {
   __typename?: 'Plugin';
   /** Name of the plugin author(s), may also be a company name. */
-  author?: Maybe<Scalars['String']>;
+  author?: Maybe<Scalars['String']['output']>;
   /** URI for the related author(s)/company website. */
-  authorUri?: Maybe<Scalars['String']>;
+  authorUri?: Maybe<Scalars['String']['output']>;
   /** Description of the plugin. */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier of the plugin object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Display name of the plugin. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** Plugin path. */
-  path?: Maybe<Scalars['String']>;
+  path?: Maybe<Scalars['String']['output']>;
   /** URI for the plugin website. This is useful for directing users for support requests etc. */
-  pluginUri?: Maybe<Scalars['String']>;
+  pluginUri?: Maybe<Scalars['String']['output']>;
   /** Current version of the plugin. */
-  version?: Maybe<Scalars['String']>;
+  version?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection to Plugin Nodes */
@@ -4913,7 +4915,7 @@ export type PluginConnection = {
 /** Edge between a Node and a connected Plugin */
 export type PluginConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected Plugin Node */
   node: Plugin;
 };
@@ -4921,15 +4923,15 @@ export type PluginConnectionEdge = {
 /** Page Info on the connected PluginConnectionEdge */
 export type PluginConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The status of the WordPress plugin. */
@@ -4956,90 +4958,90 @@ export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & 
   /** Connection between the NodeWithAuthor type and the User type */
   author?: Maybe<NodeWithAuthorToUserConnectionEdge>;
   /** The database identifier of the author of the node */
-  authorDatabaseId?: Maybe<Scalars['Int']>;
+  authorDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** The globally unique identifier of the author of the node */
-  authorId?: Maybe<Scalars['ID']>;
+  authorId?: Maybe<Scalars['ID']['output']>;
   /** Connection between the Post type and the category type */
   categories?: Maybe<PostToCategoryConnection>;
   /** The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility. */
-  commentCount?: Maybe<Scalars['Int']>;
+  commentCount?: Maybe<Scalars['Int']['output']>;
   /** Whether the comments are open or closed for this particular post. */
-  commentStatus?: Maybe<Scalars['String']>;
+  commentStatus?: Maybe<Scalars['String']['output']>;
   /** Connection between the Post type and the Comment type */
   comments?: Maybe<PostToCommentConnection>;
   /** The content of the post. */
-  content?: Maybe<Scalars['String']>;
+  content?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the ContentType type */
   contentType?: Maybe<ContentNodeToContentTypeConnectionEdge>;
   /** The name of the Content Type the node belongs to */
-  contentTypeName: Scalars['String'];
+  contentTypeName: Scalars['String']['output'];
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** Post publishing date. */
-  date?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']['output']>;
   /** The publishing date set in GMT. */
-  dateGmt?: Maybe<Scalars['String']>;
+  dateGmt?: Maybe<Scalars['String']['output']>;
   /** The desired slug of the post */
-  desiredSlug?: Maybe<Scalars['String']>;
+  desiredSlug?: Maybe<Scalars['String']['output']>;
   /** If a user has edited the node within the past 15 seconds, this will return the user that last edited. Null if the edit lock doesn&#039;t exist or is greater than 15 seconds */
   editingLockedBy?: Maybe<ContentNodeToEditLockConnectionEdge>;
   /** The RSS enclosure for the object */
-  enclosure?: Maybe<Scalars['String']>;
+  enclosure?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<ContentNodeToEnqueuedScriptConnection>;
   /** Connection between the ContentNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<ContentNodeToEnqueuedStylesheetConnection>;
   /** The excerpt of the post. */
-  excerpt?: Maybe<Scalars['String']>;
+  excerpt?: Maybe<Scalars['String']['output']>;
   /** Connection between the NodeWithFeaturedImage type and the MediaItem type */
   featuredImage?: Maybe<NodeWithFeaturedImageToMediaItemConnectionEdge>;
   /** The database identifier for the featured image node assigned to the content node */
-  featuredImageDatabaseId?: Maybe<Scalars['Int']>;
+  featuredImageDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Globally unique ID of the featured image assigned to the node */
-  featuredImageId?: Maybe<Scalars['ID']>;
+  featuredImageId?: Maybe<Scalars['ID']['output']>;
   /** The global unique identifier for this post. This currently matches the value stored in WP_Post-&gt;guid and the guid column in the &quot;post_objects&quot; database table. */
-  guid?: Maybe<Scalars['String']>;
+  guid?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier of the post object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is a node in the preview state */
-  isPreview?: Maybe<Scalars['Boolean']>;
+  isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** True if the node is a revision of another node */
-  isRevision?: Maybe<Scalars['Boolean']>;
+  isRevision?: Maybe<Scalars['Boolean']['output']>;
   /** Whether this page is sticky */
-  isSticky: Scalars['Boolean'];
+  isSticky: Scalars['Boolean']['output'];
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The user that most recently edited the node */
   lastEditedBy?: Maybe<ContentNodeToEditLastConnectionEdge>;
   /** The permalink of the post */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** The local modified time for a post. If a post was recently updated the modified field will change to match the corresponding time. */
-  modified?: Maybe<Scalars['String']>;
+  modified?: Maybe<Scalars['String']['output']>;
   /** The GMT modified time for a post. If a post was recently updated the modified field will change to match the corresponding time in GMT. */
-  modifiedGmt?: Maybe<Scalars['String']>;
+  modifiedGmt?: Maybe<Scalars['String']['output']>;
   /** Next post */
   next?: Maybe<Post>;
   /** Whether the pings are open or closed for this particular post. */
-  pingStatus?: Maybe<Scalars['String']>;
+  pingStatus?: Maybe<Scalars['String']['output']>;
   /** URLs that have been pinged. */
-  pinged?: Maybe<Array<Maybe<Scalars['String']>>>;
+  pinged?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** Connection between the Post type and the postFormat type */
   postFormats?: Maybe<PostToPostFormatConnection>;
   /**
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of the databaseId field
    */
-  postId: Scalars['Int'];
+  postId: Scalars['Int']['output'];
   /** Connection between the Post type and the post type */
   preview?: Maybe<PostToPreviewConnectionEdge>;
   /** The database id of the preview node */
-  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
-  previewRevisionId?: Maybe<Scalars['ID']>;
+  previewRevisionId?: Maybe<Scalars['ID']['output']>;
   /** Previous post */
   previous?: Maybe<Post>;
   /** If the current node is a revision, this field exposes the node this is a revision of. Returns null if the node is not a revision of another node. */
@@ -5047,9 +5049,9 @@ export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & 
   /** Connection between the Post type and the post type */
   revisions?: Maybe<PostToRevisionConnection>;
   /** The uri slug for the post. This is equivalent to the WP_Post-&gt;post_name field and the post_name column in the database for the &quot;post_objects&quot; table. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** The current status of the object */
-  status?: Maybe<Scalars['String']>;
+  status?: Maybe<Scalars['String']['output']>;
   /** Connection between the Post type and the tag type */
   tags?: Maybe<PostToTagConnection>;
   /** The template assigned to the node */
@@ -5057,30 +5059,30 @@ export type Post = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & 
   /** Connection between the Post type and the TermNode type */
   terms?: Maybe<PostToTermNodeConnection>;
   /** The title of the post. This is currently just the raw title. An amendment to support rendered title needs to be made. */
-  title?: Maybe<Scalars['String']>;
+  title?: Maybe<Scalars['String']['output']>;
   /** URLs queued to be pinged. */
-  toPing?: Maybe<Array<Maybe<Scalars['String']>>>;
+  toPing?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** The post type */
 export type PostCategoriesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PostToCategoryConnectionWhereArgs>;
 };
 
 
 /** The post type */
 export type PostCommentsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PostToCommentConnectionWhereArgs>;
 };
 
@@ -5093,19 +5095,19 @@ export type PostContentArgs = {
 
 /** The post type */
 export type PostEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The post type */
 export type PostEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -5117,40 +5119,40 @@ export type PostExcerptArgs = {
 
 /** The post type */
 export type PostPostFormatsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PostToPostFormatConnectionWhereArgs>;
 };
 
 
 /** The post type */
 export type PostRevisionsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PostToRevisionConnectionWhereArgs>;
 };
 
 
 /** The post type */
 export type PostTagsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PostToTagConnectionWhereArgs>;
 };
 
 
 /** The post type */
 export type PostTermsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PostToTermNodeConnectionWhereArgs>;
 };
 
@@ -5163,7 +5165,7 @@ export type PostTitleArgs = {
 /** Set relationships between the post to categories */
 export type PostCategoriesInput = {
   /** If true, this will append the category to existing related categories. If false, this will replace existing relationships. Default true. */
-  append?: InputMaybe<Scalars['Boolean']>;
+  append?: InputMaybe<Scalars['Boolean']['input']>;
   /** The input list of items to set. */
   nodes?: InputMaybe<Array<InputMaybe<PostCategoriesNodeInput>>>;
 };
@@ -5171,13 +5173,13 @@ export type PostCategoriesInput = {
 /** List of categories to connect the post to. If an ID is set, it will be used to create the connection. If not, it will look for a slug. If neither are valid existing terms, and the site is configured to allow terms to be created during post mutations, a term will be created using the Name if it exists in the input, then fallback to the slug if it exists. */
 export type PostCategoriesNodeInput = {
   /** The description of the category. This field is used to set a description of the category if a new one is created during the mutation. */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the category. If present, this will be used to connect to the post. If no existing category exists with this ID, no connection will be made. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** The name of the category. This field is used to create a new term, if term creation is enabled in nested mutations, and if one does not already exist with the provided slug or ID or if a slug or ID is not provided. If no name is included and a term is created, the creation will fallback to the slug field. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** The slug of the category. If no ID is present, this field will be used to make a connection. If no existing term exists with this slug, this field will be used as a fallback to the Name field when creating a new term to connect to, if term creation is enabled as a nested mutation. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection to post Nodes */
@@ -5193,7 +5195,7 @@ export type PostConnection = {
 /** Edge between a Node and a connected post */
 export type PostConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected post Node */
   node: Post;
 };
@@ -5201,15 +5203,15 @@ export type PostConnectionEdge = {
 /** Page Info on the connected PostConnectionEdge */
 export type PostConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The postFormat type */
@@ -5218,83 +5220,83 @@ export type PostFormat = DatabaseIdentifier & Node & TermNode & UniformResourceI
   /** Connection between the PostFormat type and the ContentNode type */
   contentNodes?: Maybe<PostFormatToContentNodeConnection>;
   /** The number of objects connected to the object */
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** The description of the object */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** Connection between the TermNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The link to the term */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** The human friendly name of the object. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /**
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of databaseId
    */
-  postFormatId?: Maybe<Scalars['Int']>;
+  postFormatId?: Maybe<Scalars['Int']['output']>;
   /** Connection between the PostFormat type and the post type */
   posts?: Maybe<PostFormatToPostConnection>;
   /** An alphanumeric identifier for the object unique to its type. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** Connection between the PostFormat type and the Taxonomy type */
   taxonomy?: Maybe<PostFormatToTaxonomyConnectionEdge>;
   /** The name of the taxonomy that the object is associated with */
-  taxonomyName?: Maybe<Scalars['String']>;
+  taxonomyName?: Maybe<Scalars['String']['output']>;
   /** The ID of the term group that this term object belongs to */
-  termGroupId?: Maybe<Scalars['Int']>;
+  termGroupId?: Maybe<Scalars['Int']['output']>;
   /** The taxonomy ID that the object is associated with */
-  termTaxonomyId?: Maybe<Scalars['Int']>;
+  termTaxonomyId?: Maybe<Scalars['Int']['output']>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** The postFormat type */
 export type PostFormatContentNodesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PostFormatToContentNodeConnectionWhereArgs>;
 };
 
 
 /** The postFormat type */
 export type PostFormatEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The postFormat type */
 export type PostFormatEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The postFormat type */
 export type PostFormatPostsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PostFormatToPostConnectionWhereArgs>;
 };
 
@@ -5311,7 +5313,7 @@ export type PostFormatConnection = {
 /** Edge between a Node and a connected postFormat */
 export type PostFormatConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected postFormat Node */
   node: PostFormat;
 };
@@ -5319,15 +5321,15 @@ export type PostFormatConnectionEdge = {
 /** Page Info on the connected PostFormatConnectionEdge */
 export type PostFormatConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -5359,7 +5361,7 @@ export type PostFormatToContentNodeConnection = Connection & ContentNodeConnecti
 export type PostFormatToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & {
   __typename?: 'PostFormatToContentNodeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentNode;
 };
@@ -5368,15 +5370,15 @@ export type PostFormatToContentNodeConnectionEdge = ContentNodeConnectionEdge & 
 export type PostFormatToContentNodeConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'PostFormatToContentNodeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the PostFormatToContentNodeConnection connection */
@@ -5386,37 +5388,37 @@ export type PostFormatToContentNodeConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the PostFormat type and the post type */
@@ -5434,7 +5436,7 @@ export type PostFormatToPostConnection = Connection & PostConnection & {
 export type PostFormatToPostConnectionEdge = Edge & PostConnectionEdge & {
   __typename?: 'PostFormatToPostConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Post;
 };
@@ -5443,88 +5445,88 @@ export type PostFormatToPostConnectionEdge = Edge & PostConnectionEdge & {
 export type PostFormatToPostConnectionPageInfo = PageInfo & PostConnectionPageInfo & WpPageInfo & {
   __typename?: 'PostFormatToPostConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the PostFormatToPostConnection connection */
 export type PostFormatToPostConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Category ID */
-  categoryId?: InputMaybe<Scalars['Int']>;
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Use Category Slug */
-  categoryName?: InputMaybe<Scalars['String']>;
+  categoryName?: InputMaybe<Scalars['String']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Tag Slug */
-  tag?: InputMaybe<Scalars['String']>;
+  tag?: InputMaybe<Scalars['String']['input']>;
   /** Use Tag ID */
-  tagId?: InputMaybe<Scalars['String']>;
+  tagId?: InputMaybe<Scalars['String']['input']>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag slugs, used to display objects from one tag AND another */
-  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of tag slugs, used to include objects in ANY specified tags */
-  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the PostFormat type and the Taxonomy type */
 export type PostFormatToTaxonomyConnectionEdge = Edge & OneToOneConnection & TaxonomyConnectionEdge & {
   __typename?: 'PostFormatToTaxonomyConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Taxonomy;
 };
@@ -5592,7 +5594,7 @@ export type PostObjectsConnectionOrderbyInput = {
 /** Set relationships between the post to postFormats */
 export type PostPostFormatsInput = {
   /** If true, this will append the postFormat to existing related postFormats. If false, this will replace existing relationships. Default true. */
-  append?: InputMaybe<Scalars['Boolean']>;
+  append?: InputMaybe<Scalars['Boolean']['input']>;
   /** The input list of items to set. */
   nodes?: InputMaybe<Array<InputMaybe<PostPostFormatsNodeInput>>>;
 };
@@ -5600,13 +5602,13 @@ export type PostPostFormatsInput = {
 /** List of postFormats to connect the post to. If an ID is set, it will be used to create the connection. If not, it will look for a slug. If neither are valid existing terms, and the site is configured to allow terms to be created during post mutations, a term will be created using the Name if it exists in the input, then fallback to the slug if it exists. */
 export type PostPostFormatsNodeInput = {
   /** The description of the postFormat. This field is used to set a description of the postFormat if a new one is created during the mutation. */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the postFormat. If present, this will be used to connect to the post. If no existing postFormat exists with this ID, no connection will be made. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** The name of the postFormat. This field is used to create a new term, if term creation is enabled in nested mutations, and if one does not already exist with the provided slug or ID or if a slug or ID is not provided. If no name is included and a term is created, the creation will fallback to the slug field. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** The slug of the postFormat. If no ID is present, this field will be used to make a connection. If no existing term exists with this slug, this field will be used as a fallback to the Name field when creating a new term to connect to, if term creation is enabled as a nested mutation. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The status of the object. */
@@ -5644,7 +5646,7 @@ export enum PostStatusEnum {
 /** Set relationships between the post to tags */
 export type PostTagsInput = {
   /** If true, this will append the tag to existing related tags. If false, this will replace existing relationships. Default true. */
-  append?: InputMaybe<Scalars['Boolean']>;
+  append?: InputMaybe<Scalars['Boolean']['input']>;
   /** The input list of items to set. */
   nodes?: InputMaybe<Array<InputMaybe<PostTagsNodeInput>>>;
 };
@@ -5652,13 +5654,13 @@ export type PostTagsInput = {
 /** List of tags to connect the post to. If an ID is set, it will be used to create the connection. If not, it will look for a slug. If neither are valid existing terms, and the site is configured to allow terms to be created during post mutations, a term will be created using the Name if it exists in the input, then fallback to the slug if it exists. */
 export type PostTagsNodeInput = {
   /** The description of the tag. This field is used to set a description of the tag if a new one is created during the mutation. */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the tag. If present, this will be used to connect to the post. If no existing tag exists with this ID, no connection will be made. */
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
   /** The name of the tag. This field is used to create a new term, if term creation is enabled in nested mutations, and if one does not already exist with the provided slug or ID or if a slug or ID is not provided. If no name is included and a term is created, the creation will fallback to the slug field. */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** The slug of the tag. If no ID is present, this field will be used to make a connection. If no existing term exists with this slug, this field will be used as a fallback to the Name field when creating a new term to connect to, if term creation is enabled as a nested mutation. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the Post type and the category type */
@@ -5676,7 +5678,7 @@ export type PostToCategoryConnection = CategoryConnection & Connection & {
 export type PostToCategoryConnectionEdge = CategoryConnectionEdge & Edge & {
   __typename?: 'PostToCategoryConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Category;
 };
@@ -5685,61 +5687,61 @@ export type PostToCategoryConnectionEdge = CategoryConnectionEdge & Edge & {
 export type PostToCategoryConnectionPageInfo = CategoryConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'PostToCategoryConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the PostToCategoryConnection connection */
 export type PostToCategoryConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the Post type and the Comment type */
@@ -5757,7 +5759,7 @@ export type PostToCommentConnection = CommentConnection & Connection & {
 export type PostToCommentConnectionEdge = CommentConnectionEdge & Edge & {
   __typename?: 'PostToCommentConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Comment;
 };
@@ -5766,77 +5768,77 @@ export type PostToCommentConnectionEdge = CommentConnectionEdge & Edge & {
 export type PostToCommentConnectionPageInfo = CommentConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'PostToCommentConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the PostToCommentConnection connection */
 export type PostToCommentConnectionWhereArgs = {
   /** Comment author email address. */
-  authorEmail?: InputMaybe<Scalars['String']>;
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to exclude comments for. */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Comment author URL. */
-  authorUrl?: InputMaybe<Scalars['String']>;
+  authorUrl?: InputMaybe<Scalars['String']['input']>;
   /** Array of comment IDs to include. */
-  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
-  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Include comments of a given type. */
-  commentType?: InputMaybe<Scalars['String']>;
+  commentType?: InputMaybe<Scalars['String']['input']>;
   /** Include comments from a given array of comment types. */
-  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
-  commentTypeNotIn?: InputMaybe<Scalars['String']>;
+  commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
   /** Content object author ID to limit results by. */
-  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to retrieve comments for. */
-  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
-  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Limit results to those affiliated with a given content object ID. */
-  contentId?: InputMaybe<Scalars['ID']>;
+  contentId?: InputMaybe<Scalars['ID']['input']>;
   /** Array of content object IDs to include affiliated comments for. */
-  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
-  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Content object name (i.e. slug ) to retrieve affiliated comments for. */
-  contentName?: InputMaybe<Scalars['String']>;
+  contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
-  contentParent?: InputMaybe<Scalars['Int']>;
+  contentParent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
   /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
-  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Karma score to retrieve matching comments for. */
-  karma?: InputMaybe<Scalars['Int']>;
+  karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
   /** Field to order the comments by. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of parent IDs of comments to retrieve children for. */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['String']['input']>;
   /** Include comments for a specific user ID. */
-  userId?: InputMaybe<Scalars['ID']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Connection between the Post type and the postFormat type */
@@ -5854,7 +5856,7 @@ export type PostToPostFormatConnection = Connection & PostFormatConnection & {
 export type PostToPostFormatConnectionEdge = Edge & PostFormatConnectionEdge & {
   __typename?: 'PostToPostFormatConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: PostFormat;
 };
@@ -5863,68 +5865,68 @@ export type PostToPostFormatConnectionEdge = Edge & PostFormatConnectionEdge & {
 export type PostToPostFormatConnectionPageInfo = PageInfo & PostFormatConnectionPageInfo & WpPageInfo & {
   __typename?: 'PostToPostFormatConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the PostToPostFormatConnection connection */
 export type PostToPostFormatConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the Post type and the post type */
 export type PostToPreviewConnectionEdge = Edge & OneToOneConnection & PostConnectionEdge & {
   __typename?: 'PostToPreviewConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Post;
 };
@@ -5944,7 +5946,7 @@ export type PostToRevisionConnection = Connection & PostConnection & {
 export type PostToRevisionConnectionEdge = Edge & PostConnectionEdge & {
   __typename?: 'PostToRevisionConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Post;
 };
@@ -5953,81 +5955,81 @@ export type PostToRevisionConnectionEdge = Edge & PostConnectionEdge & {
 export type PostToRevisionConnectionPageInfo = PageInfo & PostConnectionPageInfo & WpPageInfo & {
   __typename?: 'PostToRevisionConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the PostToRevisionConnection connection */
 export type PostToRevisionConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Category ID */
-  categoryId?: InputMaybe<Scalars['Int']>;
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Use Category Slug */
-  categoryName?: InputMaybe<Scalars['String']>;
+  categoryName?: InputMaybe<Scalars['String']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Tag Slug */
-  tag?: InputMaybe<Scalars['String']>;
+  tag?: InputMaybe<Scalars['String']['input']>;
   /** Use Tag ID */
-  tagId?: InputMaybe<Scalars['String']>;
+  tagId?: InputMaybe<Scalars['String']['input']>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag slugs, used to display objects from one tag AND another */
-  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of tag slugs, used to include objects in ANY specified tags */
-  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the Post type and the tag type */
@@ -6045,7 +6047,7 @@ export type PostToTagConnection = Connection & TagConnection & {
 export type PostToTagConnectionEdge = Edge & TagConnectionEdge & {
   __typename?: 'PostToTagConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Tag;
 };
@@ -6054,61 +6056,61 @@ export type PostToTagConnectionEdge = Edge & TagConnectionEdge & {
 export type PostToTagConnectionPageInfo = PageInfo & TagConnectionPageInfo & WpPageInfo & {
   __typename?: 'PostToTagConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the PostToTagConnection connection */
 export type PostToTagConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the Post type and the TermNode type */
@@ -6126,7 +6128,7 @@ export type PostToTermNodeConnection = Connection & TermNodeConnection & {
 export type PostToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & {
   __typename?: 'PostToTermNodeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: TermNode;
 };
@@ -6135,186 +6137,186 @@ export type PostToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & {
 export type PostToTermNodeConnectionPageInfo = PageInfo & TermNodeConnectionPageInfo & WpPageInfo & {
   __typename?: 'PostToTermNodeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the PostToTermNodeConnection connection */
 export type PostToTermNodeConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** The Taxonomy to filter terms by */
   taxonomies?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Details for labels of the PostType */
 export type PostTypeLabelDetails = {
   __typename?: 'PostTypeLabelDetails';
   /** Default is ‘Add New’ for both hierarchical and non-hierarchical types. */
-  addNew?: Maybe<Scalars['String']>;
+  addNew?: Maybe<Scalars['String']['output']>;
   /** Label for adding a new singular item. */
-  addNewItem?: Maybe<Scalars['String']>;
+  addNewItem?: Maybe<Scalars['String']['output']>;
   /** Label to signify all items in a submenu link. */
-  allItems?: Maybe<Scalars['String']>;
+  allItems?: Maybe<Scalars['String']['output']>;
   /** Label for archives in nav menus */
-  archives?: Maybe<Scalars['String']>;
+  archives?: Maybe<Scalars['String']['output']>;
   /** Label for the attributes meta box. */
-  attributes?: Maybe<Scalars['String']>;
+  attributes?: Maybe<Scalars['String']['output']>;
   /** Label for editing a singular item. */
-  editItem?: Maybe<Scalars['String']>;
+  editItem?: Maybe<Scalars['String']['output']>;
   /** Label for the Featured Image meta box title. */
-  featuredImage?: Maybe<Scalars['String']>;
+  featuredImage?: Maybe<Scalars['String']['output']>;
   /** Label for the table views hidden heading. */
-  filterItemsList?: Maybe<Scalars['String']>;
+  filterItemsList?: Maybe<Scalars['String']['output']>;
   /** Label for the media frame button. */
-  insertIntoItem?: Maybe<Scalars['String']>;
+  insertIntoItem?: Maybe<Scalars['String']['output']>;
   /** Label for the table hidden heading. */
-  itemsList?: Maybe<Scalars['String']>;
+  itemsList?: Maybe<Scalars['String']['output']>;
   /** Label for the table pagination hidden heading. */
-  itemsListNavigation?: Maybe<Scalars['String']>;
+  itemsListNavigation?: Maybe<Scalars['String']['output']>;
   /** Label for the menu name. */
-  menuName?: Maybe<Scalars['String']>;
+  menuName?: Maybe<Scalars['String']['output']>;
   /** General name for the post type, usually plural. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** Label for the new item page title. */
-  newItem?: Maybe<Scalars['String']>;
+  newItem?: Maybe<Scalars['String']['output']>;
   /** Label used when no items are found. */
-  notFound?: Maybe<Scalars['String']>;
+  notFound?: Maybe<Scalars['String']['output']>;
   /** Label used when no items are in the trash. */
-  notFoundInTrash?: Maybe<Scalars['String']>;
+  notFoundInTrash?: Maybe<Scalars['String']['output']>;
   /** Label used to prefix parents of hierarchical items. */
-  parentItemColon?: Maybe<Scalars['String']>;
+  parentItemColon?: Maybe<Scalars['String']['output']>;
   /** Label for removing the featured image. */
-  removeFeaturedImage?: Maybe<Scalars['String']>;
+  removeFeaturedImage?: Maybe<Scalars['String']['output']>;
   /** Label for searching plural items. */
-  searchItems?: Maybe<Scalars['String']>;
+  searchItems?: Maybe<Scalars['String']['output']>;
   /** Label for setting the featured image. */
-  setFeaturedImage?: Maybe<Scalars['String']>;
+  setFeaturedImage?: Maybe<Scalars['String']['output']>;
   /** Name for one object of this post type. */
-  singularName?: Maybe<Scalars['String']>;
+  singularName?: Maybe<Scalars['String']['output']>;
   /** Label for the media frame filter. */
-  uploadedToThisItem?: Maybe<Scalars['String']>;
+  uploadedToThisItem?: Maybe<Scalars['String']['output']>;
   /** Label in the media frame for using a featured image. */
-  useFeaturedImage?: Maybe<Scalars['String']>;
+  useFeaturedImage?: Maybe<Scalars['String']['output']>;
   /** Label for viewing a singular item. */
-  viewItem?: Maybe<Scalars['String']>;
+  viewItem?: Maybe<Scalars['String']['output']>;
   /** Label for viewing post type archives. */
-  viewItems?: Maybe<Scalars['String']>;
+  viewItems?: Maybe<Scalars['String']['output']>;
 };
 
 /** Nodes that can be seen in a preview (unpublished) state. */
 export type Previewable = {
   /** Whether the object is a node in the preview state */
-  isPreview?: Maybe<Scalars['Boolean']>;
+  isPreview?: Maybe<Scalars['Boolean']['output']>;
   /** The database id of the preview node */
-  previewRevisionDatabaseId?: Maybe<Scalars['Int']>;
+  previewRevisionDatabaseId?: Maybe<Scalars['Int']['output']>;
   /** Whether the object is a node in the preview state */
-  previewRevisionId?: Maybe<Scalars['ID']>;
+  previewRevisionId?: Maybe<Scalars['ID']['output']>;
 };
 
 /** The reading setting type */
 export type ReadingSettings = {
   __typename?: 'ReadingSettings';
   /** The ID of the page that should display the latest posts */
-  pageForPosts?: Maybe<Scalars['Int']>;
+  pageForPosts?: Maybe<Scalars['Int']['output']>;
   /** The ID of the page that should be displayed on the front page */
-  pageOnFront?: Maybe<Scalars['Int']>;
+  pageOnFront?: Maybe<Scalars['Int']['output']>;
   /** Blog pages show at most. */
-  postsPerPage?: Maybe<Scalars['Int']>;
+  postsPerPage?: Maybe<Scalars['Int']['output']>;
   /** What to show on the front page */
-  showOnFront?: Maybe<Scalars['String']>;
+  showOnFront?: Maybe<Scalars['String']['output']>;
 };
 
 /** Input for the registerUser mutation. */
 export type RegisterUserInput = {
   /** User's AOL IM account. */
-  aim?: InputMaybe<Scalars['String']>;
+  aim?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** A string containing content about the user. */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** A string that will be shown on the site. Defaults to user's username. It is likely that you will want to change this, for both appearance and security through obscurity (that is if you dont use and delete the default admin user). */
-  displayName?: InputMaybe<Scalars['String']>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
   /** A string containing the user's email address. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** 	The user's first name. */
-  firstName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** User's Jabber account. */
-  jabber?: InputMaybe<Scalars['String']>;
+  jabber?: InputMaybe<Scalars['String']['input']>;
   /** The user's last name. */
-  lastName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /** User's locale. */
-  locale?: InputMaybe<Scalars['String']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
   /** A string that contains a URL-friendly name for the user. The default is the user's username. */
-  nicename?: InputMaybe<Scalars['String']>;
+  nicename?: InputMaybe<Scalars['String']['input']>;
   /** The user's nickname, defaults to the user's username. */
-  nickname?: InputMaybe<Scalars['String']>;
+  nickname?: InputMaybe<Scalars['String']['input']>;
   /** A string that contains the plain text password for the user. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** The date the user registered. Format is Y-m-d H:i:s. */
-  registered?: InputMaybe<Scalars['String']>;
+  registered?: InputMaybe<Scalars['String']['input']>;
   /** A string for whether to enable the rich editor or not. False if not empty. */
-  richEditing?: InputMaybe<Scalars['String']>;
+  richEditing?: InputMaybe<Scalars['String']['input']>;
   /** A string that contains the user's username. */
-  username: Scalars['String'];
+  username: Scalars['String']['input'];
   /** A string containing the user's URL for the user's web site. */
-  websiteUrl?: InputMaybe<Scalars['String']>;
+  websiteUrl?: InputMaybe<Scalars['String']['input']>;
   /** User's Yahoo IM account. */
-  yim?: InputMaybe<Scalars['String']>;
+  yim?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the registerUser mutation. */
 export type RegisterUserPayload = {
   __typename?: 'RegisterUserPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The User object mutation type. */
   user?: Maybe<User>;
 };
@@ -6330,20 +6332,20 @@ export enum RelationEnum {
 /** Input for the resetUserPassword mutation. */
 export type ResetUserPasswordInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** Password reset key */
-  key?: InputMaybe<Scalars['String']>;
+  key?: InputMaybe<Scalars['String']['input']>;
   /** The user's login (username). */
-  login?: InputMaybe<Scalars['String']>;
+  login?: InputMaybe<Scalars['String']['input']>;
   /** The new password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the resetUserPassword mutation. */
 export type ResetUserPasswordPayload = {
   __typename?: 'ResetUserPasswordPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The User object mutation type. */
   user?: Maybe<User>;
 };
@@ -6351,20 +6353,20 @@ export type ResetUserPasswordPayload = {
 /** Input for the restoreComment mutation. */
 export type RestoreCommentInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the comment to be restored */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 /** The payload for the restoreComment mutation. */
 export type RestoreCommentPayload = {
   __typename?: 'RestoreCommentPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The restored comment object */
   comment?: Maybe<Comment>;
   /** The ID of the restored comment */
-  restoredId?: Maybe<Scalars['ID']>;
+  restoredId?: Maybe<Scalars['ID']['output']>;
 };
 
 /** The root mutation */
@@ -6411,7 +6413,7 @@ export type RootMutation = {
   /** The deleteUser mutation */
   deleteUser?: Maybe<DeleteUserPayload>;
   /** Increase the count. */
-  increaseCount?: Maybe<Scalars['Int']>;
+  increaseCount?: Maybe<Scalars['Int']['output']>;
   /** The registerUser mutation */
   registerUser?: Maybe<RegisterUserPayload>;
   /** The resetUserPassword mutation */
@@ -6567,7 +6569,7 @@ export type RootMutationDeleteUserArgs = {
 
 /** The root mutation */
 export type RootMutationIncreaseCountArgs = {
-  count?: InputMaybe<Scalars['Int']>;
+  count?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -6790,340 +6792,340 @@ export type RootQuery = {
 
 /** The root entry point into the Graph */
 export type RootQueryCategoriesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToCategoryConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryCategoryArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<CategoryIdType>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryCommentArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<CommentNodeIdTypeEnum>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryCommentsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToCommentConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryContentNodeArgs = {
-  asPreview?: InputMaybe<Scalars['Boolean']>;
+  asPreview?: InputMaybe<Scalars['Boolean']['input']>;
   contentType?: InputMaybe<ContentTypeEnum>;
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<ContentNodeIdTypeEnum>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryContentNodesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToContentNodeConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryContentTypeArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<ContentTypeIdTypeEnum>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryContentTypesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryGalleriesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToGalleryConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryGalleryArgs = {
-  asPreview?: InputMaybe<Scalars['Boolean']>;
-  id: Scalars['ID'];
+  asPreview?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<GalleryIdType>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryGalleryByArgs = {
-  galleryId?: InputMaybe<Scalars['Int']>;
-  id?: InputMaybe<Scalars['ID']>;
-  slug?: InputMaybe<Scalars['String']>;
-  uri?: InputMaybe<Scalars['String']>;
+  galleryId?: InputMaybe<Scalars['Int']['input']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  uri?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryMediaItemArgs = {
-  asPreview?: InputMaybe<Scalars['Boolean']>;
-  id: Scalars['ID'];
+  asPreview?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<MediaItemIdType>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryMediaItemByArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-  mediaItemId?: InputMaybe<Scalars['Int']>;
-  slug?: InputMaybe<Scalars['String']>;
-  uri?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  mediaItemId?: InputMaybe<Scalars['Int']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  uri?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryMediaItemsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToMediaItemConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryMediaTagArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<MediaTagIdType>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryMediaTagsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToMediaTagConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryMenuArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<MenuNodeIdTypeEnum>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryMenuItemArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<MenuItemNodeIdTypeEnum>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryMenuItemsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToMenuItemConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryMenusArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToMenuConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryNodeArgs = {
-  id?: InputMaybe<Scalars['ID']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryNodeByUriArgs = {
-  uri: Scalars['String'];
+  uri: Scalars['String']['input'];
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryPageArgs = {
-  asPreview?: InputMaybe<Scalars['Boolean']>;
-  id: Scalars['ID'];
+  asPreview?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<PageIdType>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryPageByArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-  pageId?: InputMaybe<Scalars['Int']>;
-  uri?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  pageId?: InputMaybe<Scalars['Int']['input']>;
+  uri?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryPagesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToPageConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryPluginArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryPluginsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToPluginConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryPostArgs = {
-  asPreview?: InputMaybe<Scalars['Boolean']>;
-  id: Scalars['ID'];
+  asPreview?: InputMaybe<Scalars['Boolean']['input']>;
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<PostIdType>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryPostByArgs = {
-  id?: InputMaybe<Scalars['ID']>;
-  postId?: InputMaybe<Scalars['Int']>;
-  slug?: InputMaybe<Scalars['String']>;
-  uri?: InputMaybe<Scalars['String']>;
+  id?: InputMaybe<Scalars['ID']['input']>;
+  postId?: InputMaybe<Scalars['Int']['input']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
+  uri?: InputMaybe<Scalars['String']['input']>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryPostFormatArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<PostFormatIdType>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryPostFormatsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToPostFormatConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryPostsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToPostConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryRegisteredScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryRegisteredStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryRevisionsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToRevisionsConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryTagArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<TagIdType>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryTagsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToTagConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryTaxonomiesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryTaxonomyArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<TaxonomyIdTypeEnum>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryTermNodeArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<TermNodeIdTypeEnum>;
   taxonomy?: InputMaybe<TaxonomyEnum>;
 };
@@ -7131,57 +7133,57 @@ export type RootQueryTermNodeArgs = {
 
 /** The root entry point into the Graph */
 export type RootQueryTermsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToTermNodeConnectionWhereArgs>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryThemeArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryThemesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryUserArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   idType?: InputMaybe<UserNodeIdTypeEnum>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryUserRoleArgs = {
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryUserRolesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The root entry point into the Graph */
 export type RootQueryUsersArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<RootQueryToUserConnectionWhereArgs>;
 };
 
@@ -7200,7 +7202,7 @@ export type RootQueryToCategoryConnection = CategoryConnection & Connection & {
 export type RootQueryToCategoryConnectionEdge = CategoryConnectionEdge & Edge & {
   __typename?: 'RootQueryToCategoryConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Category;
 };
@@ -7209,61 +7211,61 @@ export type RootQueryToCategoryConnectionEdge = CategoryConnectionEdge & Edge & 
 export type RootQueryToCategoryConnectionPageInfo = CategoryConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToCategoryConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToCategoryConnection connection */
 export type RootQueryToCategoryConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the RootQuery type and the Comment type */
@@ -7281,7 +7283,7 @@ export type RootQueryToCommentConnection = CommentConnection & Connection & {
 export type RootQueryToCommentConnectionEdge = CommentConnectionEdge & Edge & {
   __typename?: 'RootQueryToCommentConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Comment;
 };
@@ -7290,77 +7292,77 @@ export type RootQueryToCommentConnectionEdge = CommentConnectionEdge & Edge & {
 export type RootQueryToCommentConnectionPageInfo = CommentConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToCommentConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToCommentConnection connection */
 export type RootQueryToCommentConnectionWhereArgs = {
   /** Comment author email address. */
-  authorEmail?: InputMaybe<Scalars['String']>;
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to exclude comments for. */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Comment author URL. */
-  authorUrl?: InputMaybe<Scalars['String']>;
+  authorUrl?: InputMaybe<Scalars['String']['input']>;
   /** Array of comment IDs to include. */
-  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
-  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Include comments of a given type. */
-  commentType?: InputMaybe<Scalars['String']>;
+  commentType?: InputMaybe<Scalars['String']['input']>;
   /** Include comments from a given array of comment types. */
-  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
-  commentTypeNotIn?: InputMaybe<Scalars['String']>;
+  commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
   /** Content object author ID to limit results by. */
-  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to retrieve comments for. */
-  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
-  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Limit results to those affiliated with a given content object ID. */
-  contentId?: InputMaybe<Scalars['ID']>;
+  contentId?: InputMaybe<Scalars['ID']['input']>;
   /** Array of content object IDs to include affiliated comments for. */
-  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
-  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Content object name (i.e. slug ) to retrieve affiliated comments for. */
-  contentName?: InputMaybe<Scalars['String']>;
+  contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
-  contentParent?: InputMaybe<Scalars['Int']>;
+  contentParent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
   /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
-  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Karma score to retrieve matching comments for. */
-  karma?: InputMaybe<Scalars['Int']>;
+  karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
   /** Field to order the comments by. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of parent IDs of comments to retrieve children for. */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['String']['input']>;
   /** Include comments for a specific user ID. */
-  userId?: InputMaybe<Scalars['ID']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Connection between the RootQuery type and the ContentNode type */
@@ -7378,7 +7380,7 @@ export type RootQueryToContentNodeConnection = Connection & ContentNodeConnectio
 export type RootQueryToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & {
   __typename?: 'RootQueryToContentNodeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentNode;
 };
@@ -7387,15 +7389,15 @@ export type RootQueryToContentNodeConnectionEdge = ContentNodeConnectionEdge & E
 export type RootQueryToContentNodeConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToContentNodeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToContentNodeConnection connection */
@@ -7405,39 +7407,39 @@ export type RootQueryToContentNodeConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Paginate content nodes with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the RootQuery type and the ContentType type */
@@ -7455,7 +7457,7 @@ export type RootQueryToContentTypeConnection = Connection & ContentTypeConnectio
 export type RootQueryToContentTypeConnectionEdge = ContentTypeConnectionEdge & Edge & {
   __typename?: 'RootQueryToContentTypeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentType;
 };
@@ -7464,15 +7466,15 @@ export type RootQueryToContentTypeConnectionEdge = ContentTypeConnectionEdge & E
 export type RootQueryToContentTypeConnectionPageInfo = ContentTypeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToContentTypeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the RootQuery type and the EnqueuedScript type */
@@ -7490,7 +7492,7 @@ export type RootQueryToEnqueuedScriptConnection = Connection & EnqueuedScriptCon
 export type RootQueryToEnqueuedScriptConnectionEdge = Edge & EnqueuedScriptConnectionEdge & {
   __typename?: 'RootQueryToEnqueuedScriptConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: EnqueuedScript;
 };
@@ -7499,15 +7501,15 @@ export type RootQueryToEnqueuedScriptConnectionEdge = Edge & EnqueuedScriptConne
 export type RootQueryToEnqueuedScriptConnectionPageInfo = EnqueuedScriptConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToEnqueuedScriptConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the RootQuery type and the EnqueuedStylesheet type */
@@ -7525,7 +7527,7 @@ export type RootQueryToEnqueuedStylesheetConnection = Connection & EnqueuedStyle
 export type RootQueryToEnqueuedStylesheetConnectionEdge = Edge & EnqueuedStylesheetConnectionEdge & {
   __typename?: 'RootQueryToEnqueuedStylesheetConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: EnqueuedStylesheet;
 };
@@ -7534,15 +7536,15 @@ export type RootQueryToEnqueuedStylesheetConnectionEdge = Edge & EnqueuedStylesh
 export type RootQueryToEnqueuedStylesheetConnectionPageInfo = EnqueuedStylesheetConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToEnqueuedStylesheetConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the RootQuery type and the gallery type */
@@ -7560,7 +7562,7 @@ export type RootQueryToGalleryConnection = Connection & GalleryConnection & {
 export type RootQueryToGalleryConnectionEdge = Edge & GalleryConnectionEdge & {
   __typename?: 'RootQueryToGalleryConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Gallery;
 };
@@ -7569,15 +7571,15 @@ export type RootQueryToGalleryConnectionEdge = Edge & GalleryConnectionEdge & {
 export type RootQueryToGalleryConnectionPageInfo = GalleryConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToGalleryConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToGalleryConnection connection */
@@ -7585,39 +7587,39 @@ export type RootQueryToGalleryConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Paginate Gallerys with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the RootQuery type and the mediaItem type */
@@ -7635,7 +7637,7 @@ export type RootQueryToMediaItemConnection = Connection & MediaItemConnection & 
 export type RootQueryToMediaItemConnectionEdge = Edge & MediaItemConnectionEdge & {
   __typename?: 'RootQueryToMediaItemConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: MediaItem;
 };
@@ -7644,63 +7646,63 @@ export type RootQueryToMediaItemConnectionEdge = Edge & MediaItemConnectionEdge 
 export type RootQueryToMediaItemConnectionPageInfo = MediaItemConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToMediaItemConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToMediaItemConnection connection */
 export type RootQueryToMediaItemConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Paginate MediaItems with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the RootQuery type and the MediaTag type */
@@ -7718,7 +7720,7 @@ export type RootQueryToMediaTagConnection = Connection & MediaTagConnection & {
 export type RootQueryToMediaTagConnectionEdge = Edge & MediaTagConnectionEdge & {
   __typename?: 'RootQueryToMediaTagConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: MediaTag;
 };
@@ -7727,61 +7729,61 @@ export type RootQueryToMediaTagConnectionEdge = Edge & MediaTagConnectionEdge & 
 export type RootQueryToMediaTagConnectionPageInfo = MediaTagConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToMediaTagConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToMediaTagConnection connection */
 export type RootQueryToMediaTagConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the RootQuery type and the Menu type */
@@ -7799,7 +7801,7 @@ export type RootQueryToMenuConnection = Connection & MenuConnection & {
 export type RootQueryToMenuConnectionEdge = Edge & MenuConnectionEdge & {
   __typename?: 'RootQueryToMenuConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Menu;
 };
@@ -7808,25 +7810,25 @@ export type RootQueryToMenuConnectionEdge = Edge & MenuConnectionEdge & {
 export type RootQueryToMenuConnectionPageInfo = MenuConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToMenuConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToMenuConnection connection */
 export type RootQueryToMenuConnectionWhereArgs = {
   /** The database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** The menu location for the menu being queried */
   location?: InputMaybe<MenuLocationEnum>;
   /** The slug of the menu to query items for */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the RootQuery type and the MenuItem type */
@@ -7844,7 +7846,7 @@ export type RootQueryToMenuItemConnection = Connection & MenuItemConnection & {
 export type RootQueryToMenuItemConnectionEdge = Edge & MenuItemConnectionEdge & {
   __typename?: 'RootQueryToMenuItemConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: MenuItem;
 };
@@ -7853,27 +7855,27 @@ export type RootQueryToMenuItemConnectionEdge = Edge & MenuItemConnectionEdge & 
 export type RootQueryToMenuItemConnectionPageInfo = MenuItemConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToMenuItemConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToMenuItemConnection connection */
 export type RootQueryToMenuItemConnectionWhereArgs = {
   /** The database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** The menu location for the menu being queried */
   location?: InputMaybe<MenuLocationEnum>;
   /** The database ID of the parent menu object */
-  parentDatabaseId?: InputMaybe<Scalars['Int']>;
+  parentDatabaseId?: InputMaybe<Scalars['Int']['input']>;
   /** The ID of the parent menu object */
-  parentId?: InputMaybe<Scalars['ID']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Connection between the RootQuery type and the page type */
@@ -7891,7 +7893,7 @@ export type RootQueryToPageConnection = Connection & PageConnection & {
 export type RootQueryToPageConnectionEdge = Edge & PageConnectionEdge & {
   __typename?: 'RootQueryToPageConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Page;
 };
@@ -7900,63 +7902,63 @@ export type RootQueryToPageConnectionEdge = Edge & PageConnectionEdge & {
 export type RootQueryToPageConnectionPageInfo = PageConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToPageConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToPageConnection connection */
 export type RootQueryToPageConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Paginate Pages with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the RootQuery type and the Plugin type */
@@ -7974,7 +7976,7 @@ export type RootQueryToPluginConnection = Connection & PluginConnection & {
 export type RootQueryToPluginConnectionEdge = Edge & PluginConnectionEdge & {
   __typename?: 'RootQueryToPluginConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Plugin;
 };
@@ -7983,21 +7985,21 @@ export type RootQueryToPluginConnectionEdge = Edge & PluginConnectionEdge & {
 export type RootQueryToPluginConnectionPageInfo = PageInfo & PluginConnectionPageInfo & WpPageInfo & {
   __typename?: 'RootQueryToPluginConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToPluginConnection connection */
 export type RootQueryToPluginConnectionWhereArgs = {
   /** Show plugin based on a keyword search. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve plugins where plugin status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PluginStatusEnum>>>;
   /** Show plugins with a specific status. */
@@ -8019,7 +8021,7 @@ export type RootQueryToPostConnection = Connection & PostConnection & {
 export type RootQueryToPostConnectionEdge = Edge & PostConnectionEdge & {
   __typename?: 'RootQueryToPostConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Post;
 };
@@ -8028,83 +8030,83 @@ export type RootQueryToPostConnectionEdge = Edge & PostConnectionEdge & {
 export type RootQueryToPostConnectionPageInfo = PageInfo & PostConnectionPageInfo & WpPageInfo & {
   __typename?: 'RootQueryToPostConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToPostConnection connection */
 export type RootQueryToPostConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Category ID */
-  categoryId?: InputMaybe<Scalars['Int']>;
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Use Category Slug */
-  categoryName?: InputMaybe<Scalars['String']>;
+  categoryName?: InputMaybe<Scalars['String']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Paginate Posts with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Tag Slug */
-  tag?: InputMaybe<Scalars['String']>;
+  tag?: InputMaybe<Scalars['String']['input']>;
   /** Use Tag ID */
-  tagId?: InputMaybe<Scalars['String']>;
+  tagId?: InputMaybe<Scalars['String']['input']>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag slugs, used to display objects from one tag AND another */
-  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of tag slugs, used to include objects in ANY specified tags */
-  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the RootQuery type and the postFormat type */
@@ -8122,7 +8124,7 @@ export type RootQueryToPostFormatConnection = Connection & PostFormatConnection 
 export type RootQueryToPostFormatConnectionEdge = Edge & PostFormatConnectionEdge & {
   __typename?: 'RootQueryToPostFormatConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: PostFormat;
 };
@@ -8131,61 +8133,61 @@ export type RootQueryToPostFormatConnectionEdge = Edge & PostFormatConnectionEdg
 export type RootQueryToPostFormatConnectionPageInfo = PageInfo & PostFormatConnectionPageInfo & WpPageInfo & {
   __typename?: 'RootQueryToPostFormatConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToPostFormatConnection connection */
 export type RootQueryToPostFormatConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the RootQuery type and the ContentNode type */
@@ -8203,7 +8205,7 @@ export type RootQueryToRevisionsConnection = Connection & ContentNodeConnection 
 export type RootQueryToRevisionsConnectionEdge = ContentNodeConnectionEdge & Edge & {
   __typename?: 'RootQueryToRevisionsConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentNode;
 };
@@ -8212,15 +8214,15 @@ export type RootQueryToRevisionsConnectionEdge = ContentNodeConnectionEdge & Edg
 export type RootQueryToRevisionsConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'RootQueryToRevisionsConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToRevisionsConnection connection */
@@ -8230,37 +8232,37 @@ export type RootQueryToRevisionsConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the RootQuery type and the tag type */
@@ -8278,7 +8280,7 @@ export type RootQueryToTagConnection = Connection & TagConnection & {
 export type RootQueryToTagConnectionEdge = Edge & TagConnectionEdge & {
   __typename?: 'RootQueryToTagConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Tag;
 };
@@ -8287,61 +8289,61 @@ export type RootQueryToTagConnectionEdge = Edge & TagConnectionEdge & {
 export type RootQueryToTagConnectionPageInfo = PageInfo & TagConnectionPageInfo & WpPageInfo & {
   __typename?: 'RootQueryToTagConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToTagConnection connection */
 export type RootQueryToTagConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the RootQuery type and the Taxonomy type */
@@ -8359,7 +8361,7 @@ export type RootQueryToTaxonomyConnection = Connection & TaxonomyConnection & {
 export type RootQueryToTaxonomyConnectionEdge = Edge & TaxonomyConnectionEdge & {
   __typename?: 'RootQueryToTaxonomyConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Taxonomy;
 };
@@ -8368,15 +8370,15 @@ export type RootQueryToTaxonomyConnectionEdge = Edge & TaxonomyConnectionEdge & 
 export type RootQueryToTaxonomyConnectionPageInfo = PageInfo & TaxonomyConnectionPageInfo & WpPageInfo & {
   __typename?: 'RootQueryToTaxonomyConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the RootQuery type and the TermNode type */
@@ -8394,7 +8396,7 @@ export type RootQueryToTermNodeConnection = Connection & TermNodeConnection & {
 export type RootQueryToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & {
   __typename?: 'RootQueryToTermNodeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: TermNode;
 };
@@ -8403,63 +8405,63 @@ export type RootQueryToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & 
 export type RootQueryToTermNodeConnectionPageInfo = PageInfo & TermNodeConnectionPageInfo & WpPageInfo & {
   __typename?: 'RootQueryToTermNodeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToTermNodeConnection connection */
 export type RootQueryToTermNodeConnectionWhereArgs = {
   /** Unique cache key to be produced when this query is stored in an object cache. Default is 'core'. */
-  cacheDomain?: InputMaybe<Scalars['String']>;
+  cacheDomain?: InputMaybe<Scalars['String']['input']>;
   /** Term ID to retrieve child terms of. If multiple taxonomies are passed, $child_of is ignored. Default 0. */
-  childOf?: InputMaybe<Scalars['Int']>;
+  childOf?: InputMaybe<Scalars['Int']['input']>;
   /** True to limit results to terms that have no children. This parameter has no effect on non-hierarchical taxonomies. Default false. */
-  childless?: InputMaybe<Scalars['Boolean']>;
+  childless?: InputMaybe<Scalars['Boolean']['input']>;
   /** Retrieve terms where the description is LIKE the input value. Default empty. */
-  descriptionLike?: InputMaybe<Scalars['String']>;
+  descriptionLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of term ids to exclude. If $include is non-empty, $exclude is ignored. Default empty array. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term ids to exclude along with all of their descendant terms. If $include is non-empty, $exclude_tree is ignored. Default empty array. */
-  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  excludeTree?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to hide terms not assigned to any posts. Accepts true or false. Default false */
-  hideEmpty?: InputMaybe<Scalars['Boolean']>;
+  hideEmpty?: InputMaybe<Scalars['Boolean']['input']>;
   /** Whether to include terms that have non-empty descendants (even if $hide_empty is set to true). Default true. */
-  hierarchical?: InputMaybe<Scalars['Boolean']>;
+  hierarchical?: InputMaybe<Scalars['Boolean']['input']>;
   /** Array of term ids to include. Default empty array. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of names to return term(s) for. Default empty. */
-  name?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  name?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Retrieve terms where the name is LIKE the input value. Default empty. */
-  nameLike?: InputMaybe<Scalars['String']>;
+  nameLike?: InputMaybe<Scalars['String']['input']>;
   /** Array of object IDs. Results will be limited to terms associated with these objects. */
-  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  objectIds?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Direction the connection should be ordered in */
   order?: InputMaybe<OrderEnum>;
   /** Field(s) to order terms by. Defaults to 'name'. */
   orderby?: InputMaybe<TermObjectsConnectionOrderbyEnum>;
   /** Whether to pad the quantity of a term's children in the quantity of each term's "count" object variable. Default false. */
-  padCounts?: InputMaybe<Scalars['Boolean']>;
+  padCounts?: InputMaybe<Scalars['Boolean']['input']>;
   /** Parent term ID to retrieve direct-child terms of. Default empty. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Search criteria to match terms. Will be SQL-formatted with wildcards before and after. Default empty. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of slugs to return term(s) for. Default empty. */
-  slug?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  slug?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** The Taxonomy to filter terms by */
   taxonomies?: InputMaybe<Array<InputMaybe<TaxonomyEnum>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of term taxonomy IDs, to match when querying terms. */
-  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  termTaxonomyId?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Whether to prime meta caches for matched terms. Default true. */
-  updateTermMetaCache?: InputMaybe<Scalars['Boolean']>;
+  updateTermMetaCache?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** Connection between the RootQuery type and the Theme type */
@@ -8477,7 +8479,7 @@ export type RootQueryToThemeConnection = Connection & ThemeConnection & {
 export type RootQueryToThemeConnectionEdge = Edge & ThemeConnectionEdge & {
   __typename?: 'RootQueryToThemeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Theme;
 };
@@ -8486,15 +8488,15 @@ export type RootQueryToThemeConnectionEdge = Edge & ThemeConnectionEdge & {
 export type RootQueryToThemeConnectionPageInfo = PageInfo & ThemeConnectionPageInfo & WpPageInfo & {
   __typename?: 'RootQueryToThemeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the RootQuery type and the User type */
@@ -8512,7 +8514,7 @@ export type RootQueryToUserConnection = Connection & UserConnection & {
 export type RootQueryToUserConnectionEdge = Edge & UserConnectionEdge & {
   __typename?: 'RootQueryToUserConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: User;
 };
@@ -8521,37 +8523,37 @@ export type RootQueryToUserConnectionEdge = Edge & UserConnectionEdge & {
 export type RootQueryToUserConnectionPageInfo = PageInfo & UserConnectionPageInfo & WpPageInfo & {
   __typename?: 'RootQueryToUserConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the RootQueryToUserConnection connection */
 export type RootQueryToUserConnectionWhereArgs = {
   /** Array of userIds to exclude. */
-  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  exclude?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   /** Pass an array of post types to filter results to users who have published posts in those post types. */
   hasPublishedPosts?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
   /** Array of userIds to include. */
-  include?: InputMaybe<Array<InputMaybe<Scalars['Int']>>>;
+  include?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
   /** The user login. */
-  login?: InputMaybe<Scalars['String']>;
+  login?: InputMaybe<Scalars['String']['input']>;
   /** An array of logins to include. Users matching one of these logins will be included in results. */
-  loginIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  loginIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** An array of logins to exclude. Users matching one of these logins will not be included in results. */
-  loginNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  loginNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** The user nicename. */
-  nicename?: InputMaybe<Scalars['String']>;
+  nicename?: InputMaybe<Scalars['String']['input']>;
   /** An array of nicenames to include. Users matching one of these nicenames will be included in results. */
-  nicenameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nicenameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** An array of nicenames to exclude. Users matching one of these nicenames will not be included in results. */
-  nicenameNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nicenameNotIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Paginate users with offsets */
   offsetPagination?: InputMaybe<OffsetPagination>;
   /** What parameter to use to order the objects by. */
@@ -8563,7 +8565,7 @@ export type RootQueryToUserConnectionWhereArgs = {
   /** An array of role names to exclude. Users matching one or more of these roles will not be included in results. */
   roleNotIn?: InputMaybe<Array<InputMaybe<UserRoleEnum>>>;
   /** Search keyword. Searches for possible string matches on columns. When "searchColumns" is left empty, it tries to determine which column to search in based on search string. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Array of column names to be searched. Accepts 'ID', 'login', 'nicename', 'email', 'url'. */
   searchColumns?: InputMaybe<Array<InputMaybe<UsersConnectionSearchColumnEnum>>>;
 };
@@ -8583,7 +8585,7 @@ export type RootQueryToUserRoleConnection = Connection & UserRoleConnection & {
 export type RootQueryToUserRoleConnectionEdge = Edge & UserRoleConnectionEdge & {
   __typename?: 'RootQueryToUserRoleConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: UserRole;
 };
@@ -8592,15 +8594,15 @@ export type RootQueryToUserRoleConnectionEdge = Edge & UserRoleConnectionEdge & 
 export type RootQueryToUserRoleConnectionPageInfo = PageInfo & UserRoleConnectionPageInfo & WpPageInfo & {
   __typename?: 'RootQueryToUserRoleConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The strategy to use when loading the script */
@@ -8614,18 +8616,18 @@ export enum ScriptLoadingStrategyEnum {
 /** Input for the sendPasswordResetEmail mutation. */
 export type SendPasswordResetEmailInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** A string that contains the user's username or email address. */
-  username: Scalars['String'];
+  username: Scalars['String']['input'];
 };
 
 /** The payload for the sendPasswordResetEmail mutation. */
 export type SendPasswordResetEmailPayload = {
   __typename?: 'SendPasswordResetEmailPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Whether the mutation completed successfully. This does NOT necessarily mean that an email was sent. */
-  success?: Maybe<Scalars['Boolean']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
   /**
    * The user that the password reset email was sent to
    * @deprecated This field will be removed in a future version of WPGraphQL
@@ -8637,41 +8639,41 @@ export type SendPasswordResetEmailPayload = {
 export type Settings = {
   __typename?: 'Settings';
   /** Settings of the the string Settings Group */
-  discussionSettingsDefaultCommentStatus?: Maybe<Scalars['String']>;
+  discussionSettingsDefaultCommentStatus?: Maybe<Scalars['String']['output']>;
   /** Settings of the the string Settings Group */
-  discussionSettingsDefaultPingStatus?: Maybe<Scalars['String']>;
+  discussionSettingsDefaultPingStatus?: Maybe<Scalars['String']['output']>;
   /** Settings of the the string Settings Group */
-  generalSettingsDateFormat?: Maybe<Scalars['String']>;
+  generalSettingsDateFormat?: Maybe<Scalars['String']['output']>;
   /** Settings of the the string Settings Group */
-  generalSettingsDescription?: Maybe<Scalars['String']>;
+  generalSettingsDescription?: Maybe<Scalars['String']['output']>;
   /** Settings of the the string Settings Group */
-  generalSettingsEmail?: Maybe<Scalars['String']>;
+  generalSettingsEmail?: Maybe<Scalars['String']['output']>;
   /** Settings of the the string Settings Group */
-  generalSettingsLanguage?: Maybe<Scalars['String']>;
+  generalSettingsLanguage?: Maybe<Scalars['String']['output']>;
   /** Settings of the the integer Settings Group */
-  generalSettingsStartOfWeek?: Maybe<Scalars['Int']>;
+  generalSettingsStartOfWeek?: Maybe<Scalars['Int']['output']>;
   /** Settings of the the string Settings Group */
-  generalSettingsTimeFormat?: Maybe<Scalars['String']>;
+  generalSettingsTimeFormat?: Maybe<Scalars['String']['output']>;
   /** Settings of the the string Settings Group */
-  generalSettingsTimezone?: Maybe<Scalars['String']>;
+  generalSettingsTimezone?: Maybe<Scalars['String']['output']>;
   /** Settings of the the string Settings Group */
-  generalSettingsTitle?: Maybe<Scalars['String']>;
+  generalSettingsTitle?: Maybe<Scalars['String']['output']>;
   /** Settings of the the string Settings Group */
-  generalSettingsUrl?: Maybe<Scalars['String']>;
+  generalSettingsUrl?: Maybe<Scalars['String']['output']>;
   /** Settings of the the integer Settings Group */
-  readingSettingsPageForPosts?: Maybe<Scalars['Int']>;
+  readingSettingsPageForPosts?: Maybe<Scalars['Int']['output']>;
   /** Settings of the the integer Settings Group */
-  readingSettingsPageOnFront?: Maybe<Scalars['Int']>;
+  readingSettingsPageOnFront?: Maybe<Scalars['Int']['output']>;
   /** Settings of the the integer Settings Group */
-  readingSettingsPostsPerPage?: Maybe<Scalars['Int']>;
+  readingSettingsPostsPerPage?: Maybe<Scalars['Int']['output']>;
   /** Settings of the the string Settings Group */
-  readingSettingsShowOnFront?: Maybe<Scalars['String']>;
+  readingSettingsShowOnFront?: Maybe<Scalars['String']['output']>;
   /** Settings of the the integer Settings Group */
-  writingSettingsDefaultCategory?: Maybe<Scalars['Int']>;
+  writingSettingsDefaultCategory?: Maybe<Scalars['Int']['output']>;
   /** Settings of the the string Settings Group */
-  writingSettingsDefaultPostFormat?: Maybe<Scalars['String']>;
+  writingSettingsDefaultPostFormat?: Maybe<Scalars['String']['output']>;
   /** Settings of the the boolean Settings Group */
-  writingSettingsUseSmilies?: Maybe<Scalars['Boolean']>;
+  writingSettingsUseSmilies?: Maybe<Scalars['Boolean']['output']>;
 };
 
 /** The tag type */
@@ -8680,83 +8682,83 @@ export type Tag = DatabaseIdentifier & MenuItemLinkable & Node & TermNode & Unif
   /** Connection between the Tag type and the ContentNode type */
   contentNodes?: Maybe<TagToContentNodeConnection>;
   /** The number of objects connected to the object */
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
   /** The unique identifier stored in the database */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** The description of the object */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** Connection between the TermNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The link to the term */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** The human friendly name of the object. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** Connection between the Tag type and the post type */
   posts?: Maybe<TagToPostConnection>;
   /** An alphanumeric identifier for the object unique to its type. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /**
    * The id field matches the WP_Post-&gt;ID field.
    * @deprecated Deprecated in favor of databaseId
    */
-  tagId?: Maybe<Scalars['Int']>;
+  tagId?: Maybe<Scalars['Int']['output']>;
   /** Connection between the Tag type and the Taxonomy type */
   taxonomy?: Maybe<TagToTaxonomyConnectionEdge>;
   /** The name of the taxonomy that the object is associated with */
-  taxonomyName?: Maybe<Scalars['String']>;
+  taxonomyName?: Maybe<Scalars['String']['output']>;
   /** The ID of the term group that this term object belongs to */
-  termGroupId?: Maybe<Scalars['Int']>;
+  termGroupId?: Maybe<Scalars['Int']['output']>;
   /** The taxonomy ID that the object is associated with */
-  termTaxonomyId?: Maybe<Scalars['Int']>;
+  termTaxonomyId?: Maybe<Scalars['Int']['output']>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** The tag type */
 export type TagContentNodesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<TagToContentNodeConnectionWhereArgs>;
 };
 
 
 /** The tag type */
 export type TagEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The tag type */
 export type TagEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** The tag type */
 export type TagPostsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<TagToPostConnectionWhereArgs>;
 };
 
@@ -8773,7 +8775,7 @@ export type TagConnection = {
 /** Edge between a Node and a connected tag */
 export type TagConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected tag Node */
   node: Tag;
 };
@@ -8781,15 +8783,15 @@ export type TagConnectionEdge = {
 /** Page Info on the connected TagConnectionEdge */
 export type TagConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The Type of Identifier used to fetch a single resource. Default is ID. */
@@ -8821,7 +8823,7 @@ export type TagToContentNodeConnection = Connection & ContentNodeConnection & {
 export type TagToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & {
   __typename?: 'TagToContentNodeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentNode;
 };
@@ -8830,15 +8832,15 @@ export type TagToContentNodeConnectionEdge = ContentNodeConnectionEdge & Edge & 
 export type TagToContentNodeConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'TagToContentNodeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the TagToContentNodeConnection connection */
@@ -8848,37 +8850,37 @@ export type TagToContentNodeConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the Tag type and the post type */
@@ -8896,7 +8898,7 @@ export type TagToPostConnection = Connection & PostConnection & {
 export type TagToPostConnectionEdge = Edge & PostConnectionEdge & {
   __typename?: 'TagToPostConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Post;
 };
@@ -8905,88 +8907,88 @@ export type TagToPostConnectionEdge = Edge & PostConnectionEdge & {
 export type TagToPostConnectionPageInfo = PageInfo & PostConnectionPageInfo & WpPageInfo & {
   __typename?: 'TagToPostConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the TagToPostConnection connection */
 export type TagToPostConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Category ID */
-  categoryId?: InputMaybe<Scalars['Int']>;
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Use Category Slug */
-  categoryName?: InputMaybe<Scalars['String']>;
+  categoryName?: InputMaybe<Scalars['String']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Tag Slug */
-  tag?: InputMaybe<Scalars['String']>;
+  tag?: InputMaybe<Scalars['String']['input']>;
   /** Use Tag ID */
-  tagId?: InputMaybe<Scalars['String']>;
+  tagId?: InputMaybe<Scalars['String']['input']>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag slugs, used to display objects from one tag AND another */
-  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of tag slugs, used to include objects in ANY specified tags */
-  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the Tag type and the Taxonomy type */
 export type TagToTaxonomyConnectionEdge = Edge & OneToOneConnection & TaxonomyConnectionEdge & {
   __typename?: 'TagToTaxonomyConnectionEdge';
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The node of the connection, without the edges */
   node: Taxonomy;
 };
@@ -8999,61 +9001,61 @@ export type Taxonomy = Node & {
   /** List of Term Nodes associated with the Taxonomy */
   connectedTerms?: Maybe<TaxonomyToTermNodeConnection>;
   /** Description of the taxonomy. This field is equivalent to WP_Taxonomy-&gt;description */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** The plural name of the post type within the GraphQL Schema. */
-  graphqlPluralName?: Maybe<Scalars['String']>;
+  graphqlPluralName?: Maybe<Scalars['String']['output']>;
   /** The singular name of the post type within the GraphQL Schema. */
-  graphqlSingleName?: Maybe<Scalars['String']>;
+  graphqlSingleName?: Maybe<Scalars['String']['output']>;
   /** Whether the taxonomy is hierarchical */
-  hierarchical?: Maybe<Scalars['Boolean']>;
+  hierarchical?: Maybe<Scalars['Boolean']['output']>;
   /** The globally unique identifier of the taxonomy object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Name of the taxonomy shown in the menu. Usually plural. */
-  label?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']['output']>;
   /** The display name of the taxonomy. This field is equivalent to WP_Taxonomy-&gt;label */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** Whether the taxonomy is publicly queryable */
-  public?: Maybe<Scalars['Boolean']>;
+  public?: Maybe<Scalars['Boolean']['output']>;
   /** Name of content type to display in REST API &quot;wp/v2&quot; namespace. */
-  restBase?: Maybe<Scalars['String']>;
+  restBase?: Maybe<Scalars['String']['output']>;
   /** The REST Controller class assigned to handling this content type. */
-  restControllerClass?: Maybe<Scalars['String']>;
+  restControllerClass?: Maybe<Scalars['String']['output']>;
   /** Whether to show the taxonomy as part of a tag cloud widget. This field is equivalent to WP_Taxonomy-&gt;show_tagcloud */
-  showCloud?: Maybe<Scalars['Boolean']>;
+  showCloud?: Maybe<Scalars['Boolean']['output']>;
   /** Whether to display a column for the taxonomy on its post type listing screens. */
-  showInAdminColumn?: Maybe<Scalars['Boolean']>;
+  showInAdminColumn?: Maybe<Scalars['Boolean']['output']>;
   /** Whether to add the post type to the GraphQL Schema. */
-  showInGraphql?: Maybe<Scalars['Boolean']>;
+  showInGraphql?: Maybe<Scalars['Boolean']['output']>;
   /** Whether to show the taxonomy in the admin menu */
-  showInMenu?: Maybe<Scalars['Boolean']>;
+  showInMenu?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the taxonomy is available for selection in navigation menus. */
-  showInNavMenus?: Maybe<Scalars['Boolean']>;
+  showInNavMenus?: Maybe<Scalars['Boolean']['output']>;
   /** Whether to show the taxonomy in the quick/bulk edit panel. */
-  showInQuickEdit?: Maybe<Scalars['Boolean']>;
+  showInQuickEdit?: Maybe<Scalars['Boolean']['output']>;
   /** Whether to add the post type route in the REST API &quot;wp/v2&quot; namespace. */
-  showInRest?: Maybe<Scalars['Boolean']>;
+  showInRest?: Maybe<Scalars['Boolean']['output']>;
   /** Whether to generate and allow a UI for managing terms in this taxonomy in the admin */
-  showUi?: Maybe<Scalars['Boolean']>;
+  showUi?: Maybe<Scalars['Boolean']['output']>;
 };
 
 
 /** A taxonomy object */
 export type TaxonomyConnectedContentTypesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** A taxonomy object */
 export type TaxonomyConnectedTermsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** Connection to Taxonomy Nodes */
@@ -9069,7 +9071,7 @@ export type TaxonomyConnection = {
 /** Edge between a Node and a connected Taxonomy */
 export type TaxonomyConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected Taxonomy Node */
   node: Taxonomy;
 };
@@ -9077,15 +9079,15 @@ export type TaxonomyConnectionEdge = {
 /** Page Info on the connected TaxonomyConnectionEdge */
 export type TaxonomyConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Allowed taxonomies */
@@ -9123,7 +9125,7 @@ export type TaxonomyToContentTypeConnection = Connection & ContentTypeConnection
 export type TaxonomyToContentTypeConnectionEdge = ContentTypeConnectionEdge & Edge & {
   __typename?: 'TaxonomyToContentTypeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentType;
 };
@@ -9132,15 +9134,15 @@ export type TaxonomyToContentTypeConnectionEdge = ContentTypeConnectionEdge & Ed
 export type TaxonomyToContentTypeConnectionPageInfo = ContentTypeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'TaxonomyToContentTypeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the Taxonomy type and the TermNode type */
@@ -9158,7 +9160,7 @@ export type TaxonomyToTermNodeConnection = Connection & TermNodeConnection & {
 export type TaxonomyToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & {
   __typename?: 'TaxonomyToTermNodeConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: TermNode;
 };
@@ -9167,83 +9169,83 @@ export type TaxonomyToTermNodeConnectionEdge = Edge & TermNodeConnectionEdge & {
 export type TaxonomyToTermNodeConnectionPageInfo = PageInfo & TermNodeConnectionPageInfo & WpPageInfo & {
   __typename?: 'TaxonomyToTermNodeConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The template assigned to the node */
 export type Template_ContactMe = ContentTemplate & {
   __typename?: 'Template_ContactMe';
   /** The name of the template */
-  templateName?: Maybe<Scalars['String']>;
+  templateName?: Maybe<Scalars['String']['output']>;
 };
 
 /** The template assigned to the node */
 export type Template_PlainContent = ContentTemplate & {
   __typename?: 'Template_PlainContent';
   /** The name of the template */
-  templateName?: Maybe<Scalars['String']>;
+  templateName?: Maybe<Scalars['String']['output']>;
 };
 
 /** Terms are nodes within a Taxonomy, used to group and relate other nodes. */
 export type TermNode = {
   /** The number of objects connected to the object */
-  count?: Maybe<Scalars['Int']>;
+  count?: Maybe<Scalars['Int']['output']>;
   /** Identifies the primary key from the database. */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** The description of the object */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** Connection between the TermNode type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<TermNodeToEnqueuedScriptConnection>;
   /** Connection between the TermNode type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<TermNodeToEnqueuedStylesheetConnection>;
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The link to the term */
-  link?: Maybe<Scalars['String']>;
+  link?: Maybe<Scalars['String']['output']>;
   /** The human friendly name of the object. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** An alphanumeric identifier for the object unique to its type. */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** The name of the taxonomy that the object is associated with */
-  taxonomyName?: Maybe<Scalars['String']>;
+  taxonomyName?: Maybe<Scalars['String']['output']>;
   /** The ID of the term group that this term object belongs to */
-  termGroupId?: Maybe<Scalars['Int']>;
+  termGroupId?: Maybe<Scalars['Int']['output']>;
   /** The taxonomy ID that the object is associated with */
-  termTaxonomyId?: Maybe<Scalars['Int']>;
+  termTaxonomyId?: Maybe<Scalars['Int']['output']>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** Terms are nodes within a Taxonomy, used to group and relate other nodes. */
 export type TermNodeEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** Terms are nodes within a Taxonomy, used to group and relate other nodes. */
 export type TermNodeEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** Connection to TermNode Nodes */
@@ -9259,7 +9261,7 @@ export type TermNodeConnection = {
 /** Edge between a Node and a connected TermNode */
 export type TermNodeConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected TermNode Node */
   node: TermNode;
 };
@@ -9267,15 +9269,15 @@ export type TermNodeConnectionEdge = {
 /** Page Info on the connected TermNodeConnectionEdge */
 export type TermNodeConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The Type of Identifier used to fetch a single resource. Default is "ID". To be used along with the "id" field. */
@@ -9307,7 +9309,7 @@ export type TermNodeToEnqueuedScriptConnection = Connection & EnqueuedScriptConn
 export type TermNodeToEnqueuedScriptConnectionEdge = Edge & EnqueuedScriptConnectionEdge & {
   __typename?: 'TermNodeToEnqueuedScriptConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: EnqueuedScript;
 };
@@ -9316,15 +9318,15 @@ export type TermNodeToEnqueuedScriptConnectionEdge = Edge & EnqueuedScriptConnec
 export type TermNodeToEnqueuedScriptConnectionPageInfo = EnqueuedScriptConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'TermNodeToEnqueuedScriptConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the TermNode type and the EnqueuedStylesheet type */
@@ -9342,7 +9344,7 @@ export type TermNodeToEnqueuedStylesheetConnection = Connection & EnqueuedStyles
 export type TermNodeToEnqueuedStylesheetConnectionEdge = Edge & EnqueuedStylesheetConnectionEdge & {
   __typename?: 'TermNodeToEnqueuedStylesheetConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: EnqueuedStylesheet;
 };
@@ -9351,15 +9353,15 @@ export type TermNodeToEnqueuedStylesheetConnectionEdge = Edge & EnqueuedStyleshe
 export type TermNodeToEnqueuedStylesheetConnectionPageInfo = EnqueuedStylesheetConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'TermNodeToEnqueuedStylesheetConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Options for ordering the connection by */
@@ -9384,27 +9386,27 @@ export enum TermObjectsConnectionOrderbyEnum {
 export type Theme = Node & {
   __typename?: 'Theme';
   /** Name of the theme author(s), could also be a company name. This field is equivalent to WP_Theme-&gt;get( &quot;Author&quot; ). */
-  author?: Maybe<Scalars['String']>;
+  author?: Maybe<Scalars['String']['output']>;
   /** URI for the author/company website. This field is equivalent to WP_Theme-&gt;get( &quot;AuthorURI&quot; ). */
-  authorUri?: Maybe<Scalars['String']>;
+  authorUri?: Maybe<Scalars['String']['output']>;
   /** The description of the theme. This field is equivalent to WP_Theme-&gt;get( &quot;Description&quot; ). */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier of the theme object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Display name of the theme. This field is equivalent to WP_Theme-&gt;get( &quot;Name&quot; ). */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** The URL of the screenshot for the theme. The screenshot is intended to give an overview of what the theme looks like. This field is equivalent to WP_Theme-&gt;get_screenshot(). */
-  screenshot?: Maybe<Scalars['String']>;
+  screenshot?: Maybe<Scalars['String']['output']>;
   /** The theme slug is used to internally match themes. Theme slugs can have subdirectories like: my-theme/sub-theme. This field is equivalent to WP_Theme-&gt;get_stylesheet(). */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** URI for the author/company website. This field is equivalent to WP_Theme-&gt;get( &quot;Tags&quot; ). */
-  tags?: Maybe<Array<Maybe<Scalars['String']>>>;
+  tags?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** A URI if the theme has a website associated with it. The Theme URI is handy for directing users to a theme site for support etc. This field is equivalent to WP_Theme-&gt;get( &quot;ThemeURI&quot; ). */
-  themeUri?: Maybe<Scalars['String']>;
+  themeUri?: Maybe<Scalars['String']['output']>;
   /** The current version of the theme. This field is equivalent to WP_Theme-&gt;get( &quot;Version&quot; ). */
-  version?: Maybe<Scalars['String']>;
+  version?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection to Theme Nodes */
@@ -9420,7 +9422,7 @@ export type ThemeConnection = {
 /** Edge between a Node and a connected Theme */
 export type ThemeConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected Theme Node */
   node: Theme;
 };
@@ -9428,45 +9430,45 @@ export type ThemeConnectionEdge = {
 /** Page Info on the connected ThemeConnectionEdge */
 export type ThemeConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Any node that has a URI */
 export type UniformResourceIdentifiable = {
   /** The globally unique ID for the object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
 };
 
 /** Input for the updateCategory mutation. */
 export type UpdateCategoryInput = {
   /** The slug that the category will be an alias of */
-  aliasOf?: InputMaybe<Scalars['String']>;
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The description of the category object */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the category object to update */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** The name of the category object to mutate */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the category that should be set as the parent */
-  parentId?: InputMaybe<Scalars['ID']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
   /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the updateCategory mutation. */
@@ -9475,79 +9477,79 @@ export type UpdateCategoryPayload = {
   /** The created category */
   category?: Maybe<Category>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
 };
 
 /** Input for the updateComment mutation. */
 export type UpdateCommentInput = {
   /** The approval status of the comment. */
-  approved?: InputMaybe<Scalars['String']>;
+  approved?: InputMaybe<Scalars['String']['input']>;
   /** The name of the comment's author. */
-  author?: InputMaybe<Scalars['String']>;
+  author?: InputMaybe<Scalars['String']['input']>;
   /** The email of the comment's author. */
-  authorEmail?: InputMaybe<Scalars['String']>;
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** The url of the comment's author. */
-  authorUrl?: InputMaybe<Scalars['String']>;
+  authorUrl?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The database ID of the post object the comment belongs to. */
-  commentOn?: InputMaybe<Scalars['Int']>;
+  commentOn?: InputMaybe<Scalars['Int']['input']>;
   /** Content of the comment. */
-  content?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   /** The date of the object. Preferable to enter as year/month/day ( e.g. 01/31/2017 ) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the comment being updated. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** Parent comment ID of current comment. */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** The approval status of the comment */
   status?: InputMaybe<CommentStatusEnum>;
   /** Type of comment. */
-  type?: InputMaybe<Scalars['String']>;
+  type?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the updateComment mutation. */
 export type UpdateCommentPayload = {
   __typename?: 'UpdateCommentPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The comment that was created */
   comment?: Maybe<Comment>;
   /** Whether the mutation succeeded. If the comment is not approved, the server will not return the comment to a non authenticated user, but a success message can be returned if the create succeeded, and the client can optimistically add the comment to the client cache */
-  success?: Maybe<Scalars['Boolean']>;
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 /** Input for the updateGallery mutation. */
 export type UpdateGalleryInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The content of the object */
-  content?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']['input']>;
   /** The excerpt of the object */
-  excerpt?: InputMaybe<Scalars['String']>;
+  excerpt?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the gallery object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** Override the edit lock when another user is editing the post */
-  ignoreEditLock?: InputMaybe<Scalars['Boolean']>;
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: InputMaybe<Scalars['Int']>;
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
   /** The password used to protect the content of the object */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** The slug of the object */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** The status of the object */
   status?: InputMaybe<PostStatusEnum>;
   /** The title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the updateGallery mutation. */
 export type UpdateGalleryPayload = {
   __typename?: 'UpdateGalleryPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The Post object mutation type. */
   gallery?: Maybe<Gallery>;
 };
@@ -9555,44 +9557,44 @@ export type UpdateGalleryPayload = {
 /** Input for the updateMediaItem mutation. */
 export type UpdateMediaItemInput = {
   /** Alternative text to display when mediaItem is not displayed */
-  altText?: InputMaybe<Scalars['String']>;
+  altText?: InputMaybe<Scalars['String']['input']>;
   /** The userId to assign as the author of the mediaItem */
-  authorId?: InputMaybe<Scalars['ID']>;
+  authorId?: InputMaybe<Scalars['ID']['input']>;
   /** The caption for the mediaItem */
-  caption?: InputMaybe<Scalars['String']>;
+  caption?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The comment status for the mediaItem */
-  commentStatus?: InputMaybe<Scalars['String']>;
+  commentStatus?: InputMaybe<Scalars['String']['input']>;
   /** The date of the mediaItem */
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']['input']>;
   /** The date (in GMT zone) of the mediaItem */
-  dateGmt?: InputMaybe<Scalars['String']>;
+  dateGmt?: InputMaybe<Scalars['String']['input']>;
   /** Description of the mediaItem */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The file name of the mediaItem */
-  filePath?: InputMaybe<Scalars['String']>;
+  filePath?: InputMaybe<Scalars['String']['input']>;
   /** The file type of the mediaItem */
   fileType?: InputMaybe<MimeTypeEnum>;
   /** The ID of the mediaItem object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** The ID of the parent object */
-  parentId?: InputMaybe<Scalars['ID']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
   /** The ping status for the mediaItem */
-  pingStatus?: InputMaybe<Scalars['String']>;
+  pingStatus?: InputMaybe<Scalars['String']['input']>;
   /** The slug of the mediaItem */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** The status of the mediaItem */
   status?: InputMaybe<MediaItemStatusEnum>;
   /** The title of the mediaItem */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the updateMediaItem mutation. */
 export type UpdateMediaItemPayload = {
   __typename?: 'UpdateMediaItemPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The MediaItem object mutation type. */
   mediaItem?: Maybe<MediaItem>;
 };
@@ -9600,24 +9602,24 @@ export type UpdateMediaItemPayload = {
 /** Input for the updateMediaTag mutation. */
 export type UpdateMediaTagInput = {
   /** The slug that the attachment_tag will be an alias of */
-  aliasOf?: InputMaybe<Scalars['String']>;
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The description of the attachment_tag object */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the MediaTag object to update */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** The name of the attachment_tag object to mutate */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the updateMediaTag mutation. */
 export type UpdateMediaTagPayload = {
   __typename?: 'UpdateMediaTagPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The created attachment_tag */
   mediaTag?: Maybe<MediaTag>;
 };
@@ -9625,38 +9627,38 @@ export type UpdateMediaTagPayload = {
 /** Input for the updatePage mutation. */
 export type UpdatePageInput = {
   /** The userId to assign as the author of the object */
-  authorId?: InputMaybe<Scalars['ID']>;
+  authorId?: InputMaybe<Scalars['ID']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The comment status for the object */
-  commentStatus?: InputMaybe<Scalars['String']>;
+  commentStatus?: InputMaybe<Scalars['String']['input']>;
   /** The content of the object */
-  content?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the page object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** Override the edit lock when another user is editing the post */
-  ignoreEditLock?: InputMaybe<Scalars['Boolean']>;
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: InputMaybe<Scalars['Int']>;
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
   /** The ID of the parent object */
-  parentId?: InputMaybe<Scalars['ID']>;
+  parentId?: InputMaybe<Scalars['ID']['input']>;
   /** The password used to protect the content of the object */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** The slug of the object */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** The status of the object */
   status?: InputMaybe<PostStatusEnum>;
   /** The title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the updatePage mutation. */
 export type UpdatePagePayload = {
   __typename?: 'UpdatePagePayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The Post object mutation type. */
   page?: Maybe<Page>;
 };
@@ -9664,24 +9666,24 @@ export type UpdatePagePayload = {
 /** Input for the updatePostFormat mutation. */
 export type UpdatePostFormatInput = {
   /** The slug that the post_format will be an alias of */
-  aliasOf?: InputMaybe<Scalars['String']>;
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The description of the post_format object */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the postFormat object to update */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** The name of the post_format object to mutate */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the updatePostFormat mutation. */
 export type UpdatePostFormatPayload = {
   __typename?: 'UpdatePostFormatPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The created post_format */
   postFormat?: Maybe<PostFormat>;
 };
@@ -9689,50 +9691,50 @@ export type UpdatePostFormatPayload = {
 /** Input for the updatePost mutation. */
 export type UpdatePostInput = {
   /** The userId to assign as the author of the object */
-  authorId?: InputMaybe<Scalars['ID']>;
+  authorId?: InputMaybe<Scalars['ID']['input']>;
   /** Set connections between the post and categories */
   categories?: InputMaybe<PostCategoriesInput>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The comment status for the object */
-  commentStatus?: InputMaybe<Scalars['String']>;
+  commentStatus?: InputMaybe<Scalars['String']['input']>;
   /** The content of the object */
-  content?: InputMaybe<Scalars['String']>;
+  content?: InputMaybe<Scalars['String']['input']>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
-  date?: InputMaybe<Scalars['String']>;
+  date?: InputMaybe<Scalars['String']['input']>;
   /** The excerpt of the object */
-  excerpt?: InputMaybe<Scalars['String']>;
+  excerpt?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the post object */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** Override the edit lock when another user is editing the post */
-  ignoreEditLock?: InputMaybe<Scalars['Boolean']>;
+  ignoreEditLock?: InputMaybe<Scalars['Boolean']['input']>;
   /** A field used for ordering posts. This is typically used with nav menu items or for special ordering of hierarchical content types. */
-  menuOrder?: InputMaybe<Scalars['Int']>;
+  menuOrder?: InputMaybe<Scalars['Int']['input']>;
   /** The password used to protect the content of the object */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** The ping status for the object */
-  pingStatus?: InputMaybe<Scalars['String']>;
+  pingStatus?: InputMaybe<Scalars['String']['input']>;
   /** URLs that have been pinged. */
-  pinged?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  pinged?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Set connections between the post and postFormats */
   postFormats?: InputMaybe<PostPostFormatsInput>;
   /** The slug of the object */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
   /** The status of the object */
   status?: InputMaybe<PostStatusEnum>;
   /** Set connections between the post and tags */
   tags?: InputMaybe<PostTagsInput>;
   /** The title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
   /** URLs queued to be pinged. */
-  toPing?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  toPing?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
 };
 
 /** The payload for the updatePost mutation. */
 export type UpdatePostPayload = {
   __typename?: 'UpdatePostPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The Post object mutation type. */
   post?: Maybe<Post>;
 };
@@ -9740,43 +9742,43 @@ export type UpdatePostPayload = {
 /** Input for the updateSettings mutation. */
 export type UpdateSettingsInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** Allow people to submit comments on new posts. */
-  discussionSettingsDefaultCommentStatus?: InputMaybe<Scalars['String']>;
+  discussionSettingsDefaultCommentStatus?: InputMaybe<Scalars['String']['input']>;
   /** Allow link notifications from other blogs (pingbacks and trackbacks) on new articles. */
-  discussionSettingsDefaultPingStatus?: InputMaybe<Scalars['String']>;
+  discussionSettingsDefaultPingStatus?: InputMaybe<Scalars['String']['input']>;
   /** A date format for all date strings. */
-  generalSettingsDateFormat?: InputMaybe<Scalars['String']>;
+  generalSettingsDateFormat?: InputMaybe<Scalars['String']['input']>;
   /** Site tagline. */
-  generalSettingsDescription?: InputMaybe<Scalars['String']>;
+  generalSettingsDescription?: InputMaybe<Scalars['String']['input']>;
   /** This address is used for admin purposes, like new user notification. */
-  generalSettingsEmail?: InputMaybe<Scalars['String']>;
+  generalSettingsEmail?: InputMaybe<Scalars['String']['input']>;
   /** WordPress locale code. */
-  generalSettingsLanguage?: InputMaybe<Scalars['String']>;
+  generalSettingsLanguage?: InputMaybe<Scalars['String']['input']>;
   /** A day number of the week that the week should start on. */
-  generalSettingsStartOfWeek?: InputMaybe<Scalars['Int']>;
+  generalSettingsStartOfWeek?: InputMaybe<Scalars['Int']['input']>;
   /** A time format for all time strings. */
-  generalSettingsTimeFormat?: InputMaybe<Scalars['String']>;
+  generalSettingsTimeFormat?: InputMaybe<Scalars['String']['input']>;
   /** A city in the same timezone as you. */
-  generalSettingsTimezone?: InputMaybe<Scalars['String']>;
+  generalSettingsTimezone?: InputMaybe<Scalars['String']['input']>;
   /** Site title. */
-  generalSettingsTitle?: InputMaybe<Scalars['String']>;
+  generalSettingsTitle?: InputMaybe<Scalars['String']['input']>;
   /** Site URL. */
-  generalSettingsUrl?: InputMaybe<Scalars['String']>;
+  generalSettingsUrl?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the page that should display the latest posts */
-  readingSettingsPageForPosts?: InputMaybe<Scalars['Int']>;
+  readingSettingsPageForPosts?: InputMaybe<Scalars['Int']['input']>;
   /** The ID of the page that should be displayed on the front page */
-  readingSettingsPageOnFront?: InputMaybe<Scalars['Int']>;
+  readingSettingsPageOnFront?: InputMaybe<Scalars['Int']['input']>;
   /** Blog pages show at most. */
-  readingSettingsPostsPerPage?: InputMaybe<Scalars['Int']>;
+  readingSettingsPostsPerPage?: InputMaybe<Scalars['Int']['input']>;
   /** What to show on the front page */
-  readingSettingsShowOnFront?: InputMaybe<Scalars['String']>;
+  readingSettingsShowOnFront?: InputMaybe<Scalars['String']['input']>;
   /** Default post category. */
-  writingSettingsDefaultCategory?: InputMaybe<Scalars['Int']>;
+  writingSettingsDefaultCategory?: InputMaybe<Scalars['Int']['input']>;
   /** Default post format. */
-  writingSettingsDefaultPostFormat?: InputMaybe<Scalars['String']>;
+  writingSettingsDefaultPostFormat?: InputMaybe<Scalars['String']['input']>;
   /** Convert emoticons like :-) and :-P to graphics on display. */
-  writingSettingsUseSmilies?: InputMaybe<Scalars['Boolean']>;
+  writingSettingsUseSmilies?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
 /** The payload for the updateSettings mutation. */
@@ -9785,7 +9787,7 @@ export type UpdateSettingsPayload = {
   /** Update all settings. */
   allSettings?: Maybe<Settings>;
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** Update the DiscussionSettings setting. */
   discussionSettings?: Maybe<DiscussionSettings>;
   /** Update the GeneralSettings setting. */
@@ -9799,24 +9801,24 @@ export type UpdateSettingsPayload = {
 /** Input for the updateTag mutation. */
 export type UpdateTagInput = {
   /** The slug that the post_tag will be an alias of */
-  aliasOf?: InputMaybe<Scalars['String']>;
+  aliasOf?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** The description of the post_tag object */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the tag object to update */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** The name of the post_tag object to mutate */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** If this argument exists then the slug will be checked to see if it is not an existing valid term. If that check succeeds (it is not a valid term), then it is added and the term id is given. If it fails, then a check is made to whether the taxonomy is hierarchical and the parent argument is not empty. If the second check succeeds, the term will be inserted and the term id will be given. If the slug argument is empty, then it will be calculated from the term name. */
-  slug?: InputMaybe<Scalars['String']>;
+  slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the updateTag mutation. */
 export type UpdateTagPayload = {
   __typename?: 'UpdateTagPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The created post_tag */
   tag?: Maybe<Tag>;
 };
@@ -9824,48 +9826,48 @@ export type UpdateTagPayload = {
 /** Input for the updateUser mutation. */
 export type UpdateUserInput = {
   /** User's AOL IM account. */
-  aim?: InputMaybe<Scalars['String']>;
+  aim?: InputMaybe<Scalars['String']['input']>;
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: InputMaybe<Scalars['String']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
   /** A string containing content about the user. */
-  description?: InputMaybe<Scalars['String']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   /** A string that will be shown on the site. Defaults to user's username. It is likely that you will want to change this, for both appearance and security through obscurity (that is if you dont use and delete the default admin user). */
-  displayName?: InputMaybe<Scalars['String']>;
+  displayName?: InputMaybe<Scalars['String']['input']>;
   /** A string containing the user's email address. */
-  email?: InputMaybe<Scalars['String']>;
+  email?: InputMaybe<Scalars['String']['input']>;
   /** 	The user's first name. */
-  firstName?: InputMaybe<Scalars['String']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
   /** The ID of the user */
-  id: Scalars['ID'];
+  id: Scalars['ID']['input'];
   /** User's Jabber account. */
-  jabber?: InputMaybe<Scalars['String']>;
+  jabber?: InputMaybe<Scalars['String']['input']>;
   /** The user's last name. */
-  lastName?: InputMaybe<Scalars['String']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
   /** User's locale. */
-  locale?: InputMaybe<Scalars['String']>;
+  locale?: InputMaybe<Scalars['String']['input']>;
   /** A string that contains a URL-friendly name for the user. The default is the user's username. */
-  nicename?: InputMaybe<Scalars['String']>;
+  nicename?: InputMaybe<Scalars['String']['input']>;
   /** The user's nickname, defaults to the user's username. */
-  nickname?: InputMaybe<Scalars['String']>;
+  nickname?: InputMaybe<Scalars['String']['input']>;
   /** A string that contains the plain text password for the user. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** The date the user registered. Format is Y-m-d H:i:s. */
-  registered?: InputMaybe<Scalars['String']>;
+  registered?: InputMaybe<Scalars['String']['input']>;
   /** A string for whether to enable the rich editor or not. False if not empty. */
-  richEditing?: InputMaybe<Scalars['String']>;
+  richEditing?: InputMaybe<Scalars['String']['input']>;
   /** An array of roles to be assigned to the user. */
-  roles?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  roles?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** A string containing the user's URL for the user's web site. */
-  websiteUrl?: InputMaybe<Scalars['String']>;
+  websiteUrl?: InputMaybe<Scalars['String']['input']>;
   /** User's Yahoo IM account. */
-  yim?: InputMaybe<Scalars['String']>;
+  yim?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** The payload for the updateUser mutation. */
 export type UpdateUserPayload = {
   __typename?: 'UpdateUserPayload';
   /** If a &#039;clientMutationId&#039; input is provided to the mutation, it will be returned as output on the mutation. This ID can be used by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
-  clientMutationId?: Maybe<Scalars['String']>;
+  clientMutationId?: Maybe<Scalars['String']['output']>;
   /** The User object mutation type. */
   user?: Maybe<User>;
 };
@@ -9876,155 +9878,155 @@ export type User = Commenter & DatabaseIdentifier & Node & UniformResourceIdenti
   /** Avatar object for user. The avatar object can be retrieved in different sizes by specifying the size argument. */
   avatar?: Maybe<Avatar>;
   /** User metadata option name. Usually it will be &quot;wp_capabilities&quot;. */
-  capKey?: Maybe<Scalars['String']>;
+  capKey?: Maybe<Scalars['String']['output']>;
   /** A list of capabilities (permissions) granted to the user */
-  capabilities?: Maybe<Array<Maybe<Scalars['String']>>>;
+  capabilities?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** Connection between the User type and the Comment type */
   comments?: Maybe<UserToCommentConnection>;
   /** Identifies the primary key from the database. */
-  databaseId: Scalars['Int'];
+  databaseId: Scalars['Int']['output'];
   /** Description of the user. */
-  description?: Maybe<Scalars['String']>;
+  description?: Maybe<Scalars['String']['output']>;
   /** Email address of the user. This is equivalent to the WP_User-&gt;user_email property. */
-  email?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']['output']>;
   /** Connection between the User type and the EnqueuedScript type */
   enqueuedScripts?: Maybe<UserToEnqueuedScriptConnection>;
   /** Connection between the User type and the EnqueuedStylesheet type */
   enqueuedStylesheets?: Maybe<UserToEnqueuedStylesheetConnection>;
   /** A complete list of capabilities including capabilities inherited from a role. This is equivalent to the array keys of WP_User-&gt;allcaps. */
-  extraCapabilities?: Maybe<Array<Maybe<Scalars['String']>>>;
+  extraCapabilities?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** First name of the user. This is equivalent to the WP_User-&gt;user_first_name property. */
-  firstName?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier for the user object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the node is a Content Node */
-  isContentNode: Scalars['Boolean'];
+  isContentNode: Scalars['Boolean']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** Whether the node is a Term */
-  isTermNode: Scalars['Boolean'];
+  isTermNode: Scalars['Boolean']['output'];
   /** Last name of the user. This is equivalent to the WP_User-&gt;user_last_name property. */
-  lastName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']['output']>;
   /** The preferred language locale set for the user. Value derived from get_user_locale(). */
-  locale?: Maybe<Scalars['String']>;
+  locale?: Maybe<Scalars['String']['output']>;
   /** Connection between the User type and the mediaItem type */
   mediaItems?: Maybe<UserToMediaItemConnection>;
   /** Display name of the user. This is equivalent to the WP_User-&gt;display_name property. */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
   /** The nicename for the user. This field is equivalent to WP_User-&gt;user_nicename */
-  nicename?: Maybe<Scalars['String']>;
+  nicename?: Maybe<Scalars['String']['output']>;
   /** Nickname of the user. */
-  nickname?: Maybe<Scalars['String']>;
+  nickname?: Maybe<Scalars['String']['output']>;
   /** Connection between the User type and the page type */
   pages?: Maybe<UserToPageConnection>;
   /** Connection between the User type and the post type */
   posts?: Maybe<UserToPostConnection>;
   /** The date the user registered or was created. The field follows a full ISO8601 date string format. */
-  registeredDate?: Maybe<Scalars['String']>;
+  registeredDate?: Maybe<Scalars['String']['output']>;
   /** Connection between the User and Revisions authored by the user */
   revisions?: Maybe<UserToRevisionsConnection>;
   /** Connection between the User type and the UserRole type */
   roles?: Maybe<UserToUserRoleConnection>;
   /** Whether the Toolbar should be displayed when the user is viewing the site. */
-  shouldShowAdminToolbar?: Maybe<Scalars['Boolean']>;
+  shouldShowAdminToolbar?: Maybe<Scalars['Boolean']['output']>;
   /** The slug for the user. This field is equivalent to WP_User-&gt;user_nicename */
-  slug?: Maybe<Scalars['String']>;
+  slug?: Maybe<Scalars['String']['output']>;
   /** The unique resource identifier path */
-  uri?: Maybe<Scalars['String']>;
+  uri?: Maybe<Scalars['String']['output']>;
   /** A website url that is associated with the user. */
-  url?: Maybe<Scalars['String']>;
+  url?: Maybe<Scalars['String']['output']>;
   /**
    * The Id of the user. Equivalent to WP_User-&gt;ID
    * @deprecated Deprecated in favor of the databaseId field
    */
-  userId?: Maybe<Scalars['Int']>;
+  userId?: Maybe<Scalars['Int']['output']>;
   /** Username for the user. This field is equivalent to WP_User-&gt;user_login. */
-  username?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']['output']>;
 };
 
 
 /** A User object */
 export type UserAvatarArgs = {
-  forceDefault?: InputMaybe<Scalars['Boolean']>;
+  forceDefault?: InputMaybe<Scalars['Boolean']['input']>;
   rating?: InputMaybe<AvatarRatingEnum>;
-  size?: InputMaybe<Scalars['Int']>;
+  size?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** A User object */
 export type UserCommentsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<UserToCommentConnectionWhereArgs>;
 };
 
 
 /** A User object */
 export type UserEnqueuedScriptsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** A User object */
 export type UserEnqueuedStylesheetsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
 /** A User object */
 export type UserMediaItemsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<UserToMediaItemConnectionWhereArgs>;
 };
 
 
 /** A User object */
 export type UserPagesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<UserToPageConnectionWhereArgs>;
 };
 
 
 /** A User object */
 export type UserPostsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<UserToPostConnectionWhereArgs>;
 };
 
 
 /** A User object */
 export type UserRevisionsArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<UserToRevisionsConnectionWhereArgs>;
 };
 
 
 /** A User object */
 export type UserRolesArgs = {
-  after?: InputMaybe<Scalars['String']>;
-  before?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
 };
 
 /** Connection to User Nodes */
@@ -10040,7 +10042,7 @@ export type UserConnection = {
 /** Edge between a Node and a connected User */
 export type UserConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected User Node */
   node: User;
 };
@@ -10048,15 +10050,15 @@ export type UserConnectionEdge = {
 /** Page Info on the connected UserConnectionEdge */
 export type UserConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The Type of Identifier used to fetch a single User node. To be used along with the "id" field. Default is "ID". */
@@ -10079,15 +10081,15 @@ export enum UserNodeIdTypeEnum {
 export type UserRole = Node & {
   __typename?: 'UserRole';
   /** The capabilities that belong to this role */
-  capabilities?: Maybe<Array<Maybe<Scalars['String']>>>;
+  capabilities?: Maybe<Array<Maybe<Scalars['String']['output']>>>;
   /** The display name of the role */
-  displayName?: Maybe<Scalars['String']>;
+  displayName?: Maybe<Scalars['String']['output']>;
   /** The globally unique identifier for the user role object. */
-  id: Scalars['ID'];
+  id: Scalars['ID']['output'];
   /** Whether the object is restricted from the current viewer */
-  isRestricted?: Maybe<Scalars['Boolean']>;
+  isRestricted?: Maybe<Scalars['Boolean']['output']>;
   /** The registered name of the role */
-  name?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection to UserRole Nodes */
@@ -10103,7 +10105,7 @@ export type UserRoleConnection = {
 /** Edge between a Node and a connected UserRole */
 export type UserRoleConnectionEdge = {
   /** Opaque reference to the nodes position in the connection. Value can be used with pagination args. */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The connected UserRole Node */
   node: UserRole;
 };
@@ -10111,15 +10113,15 @@ export type UserRoleConnectionEdge = {
 /** Page Info on the connected UserRoleConnectionEdge */
 export type UserRoleConnectionPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Names of available user roles */
@@ -10155,7 +10157,7 @@ export type UserToCommentConnection = CommentConnection & Connection & {
 export type UserToCommentConnectionEdge = CommentConnectionEdge & Edge & {
   __typename?: 'UserToCommentConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Comment;
 };
@@ -10164,77 +10166,77 @@ export type UserToCommentConnectionEdge = CommentConnectionEdge & Edge & {
 export type UserToCommentConnectionPageInfo = CommentConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'UserToCommentConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the UserToCommentConnection connection */
 export type UserToCommentConnectionWhereArgs = {
   /** Comment author email address. */
-  authorEmail?: InputMaybe<Scalars['String']>;
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
   /** Array of author IDs to include comments for. */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to exclude comments for. */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Comment author URL. */
-  authorUrl?: InputMaybe<Scalars['String']>;
+  authorUrl?: InputMaybe<Scalars['String']['input']>;
   /** Array of comment IDs to include. */
-  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
-  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Include comments of a given type. */
-  commentType?: InputMaybe<Scalars['String']>;
+  commentType?: InputMaybe<Scalars['String']['input']>;
   /** Include comments from a given array of comment types. */
-  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Exclude comments from a given array of comment types. */
-  commentTypeNotIn?: InputMaybe<Scalars['String']>;
+  commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
   /** Content object author ID to limit results by. */
-  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs to retrieve comments for. */
-  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of author IDs *not* to retrieve comments for. */
-  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Limit results to those affiliated with a given content object ID. */
-  contentId?: InputMaybe<Scalars['ID']>;
+  contentId?: InputMaybe<Scalars['ID']['input']>;
   /** Array of content object IDs to include affiliated comments for. */
-  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of content object IDs to exclude affiliated comments for. */
-  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Content object name (i.e. slug ) to retrieve affiliated comments for. */
-  contentName?: InputMaybe<Scalars['String']>;
+  contentName?: InputMaybe<Scalars['String']['input']>;
   /** Content Object parent ID to retrieve affiliated comments for. */
-  contentParent?: InputMaybe<Scalars['Int']>;
+  contentParent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
   contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
   /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
-  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Karma score to retrieve matching comments for. */
-  karma?: InputMaybe<Scalars['Int']>;
+  karma?: InputMaybe<Scalars['Int']['input']>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
   /** Field to order the comments by. */
   orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
   /** Parent ID of comment to retrieve children of. */
-  parent?: InputMaybe<Scalars['Int']>;
+  parent?: InputMaybe<Scalars['Int']['input']>;
   /** Array of parent IDs of comments to retrieve children for. */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of parent IDs of comments *not* to retrieve children for. */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Search term(s) to retrieve matching comments for. */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Comment status to limit results by. */
-  status?: InputMaybe<Scalars['String']>;
+  status?: InputMaybe<Scalars['String']['input']>;
   /** Include comments for a specific user ID. */
-  userId?: InputMaybe<Scalars['ID']>;
+  userId?: InputMaybe<Scalars['ID']['input']>;
 };
 
 /** Connection between the User type and the EnqueuedScript type */
@@ -10252,7 +10254,7 @@ export type UserToEnqueuedScriptConnection = Connection & EnqueuedScriptConnecti
 export type UserToEnqueuedScriptConnectionEdge = Edge & EnqueuedScriptConnectionEdge & {
   __typename?: 'UserToEnqueuedScriptConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: EnqueuedScript;
 };
@@ -10261,15 +10263,15 @@ export type UserToEnqueuedScriptConnectionEdge = Edge & EnqueuedScriptConnection
 export type UserToEnqueuedScriptConnectionPageInfo = EnqueuedScriptConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'UserToEnqueuedScriptConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the User type and the EnqueuedStylesheet type */
@@ -10287,7 +10289,7 @@ export type UserToEnqueuedStylesheetConnection = Connection & EnqueuedStylesheet
 export type UserToEnqueuedStylesheetConnectionEdge = Edge & EnqueuedStylesheetConnectionEdge & {
   __typename?: 'UserToEnqueuedStylesheetConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: EnqueuedStylesheet;
 };
@@ -10296,15 +10298,15 @@ export type UserToEnqueuedStylesheetConnectionEdge = Edge & EnqueuedStylesheetCo
 export type UserToEnqueuedStylesheetConnectionPageInfo = EnqueuedStylesheetConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'UserToEnqueuedStylesheetConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Connection between the User type and the mediaItem type */
@@ -10322,7 +10324,7 @@ export type UserToMediaItemConnection = Connection & MediaItemConnection & {
 export type UserToMediaItemConnectionEdge = Edge & MediaItemConnectionEdge & {
   __typename?: 'UserToMediaItemConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: MediaItem;
 };
@@ -10331,61 +10333,61 @@ export type UserToMediaItemConnectionEdge = Edge & MediaItemConnectionEdge & {
 export type UserToMediaItemConnectionPageInfo = MediaItemConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'UserToMediaItemConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the UserToMediaItemConnection connection */
 export type UserToMediaItemConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the User type and the page type */
@@ -10403,7 +10405,7 @@ export type UserToPageConnection = Connection & PageConnection & {
 export type UserToPageConnectionEdge = Edge & PageConnectionEdge & {
   __typename?: 'UserToPageConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Page;
 };
@@ -10412,61 +10414,61 @@ export type UserToPageConnectionEdge = Edge & PageConnectionEdge & {
 export type UserToPageConnectionPageInfo = PageConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'UserToPageConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the UserToPageConnection connection */
 export type UserToPageConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the User type and the post type */
@@ -10484,7 +10486,7 @@ export type UserToPostConnection = Connection & PostConnection & {
 export type UserToPostConnectionEdge = Edge & PostConnectionEdge & {
   __typename?: 'UserToPostConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: Post;
 };
@@ -10493,81 +10495,81 @@ export type UserToPostConnectionEdge = Edge & PostConnectionEdge & {
 export type UserToPostConnectionPageInfo = PageInfo & PostConnectionPageInfo & WpPageInfo & {
   __typename?: 'UserToPostConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the UserToPostConnection connection */
 export type UserToPostConnectionWhereArgs = {
   /** The user that's connected as the author of the object. Use the userId for the author object. */
-  author?: InputMaybe<Scalars['Int']>;
+  author?: InputMaybe<Scalars['Int']['input']>;
   /** Find objects connected to author(s) in the array of author's userIds */
-  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Find objects connected to the author by the author's nicename */
-  authorName?: InputMaybe<Scalars['String']>;
+  authorName?: InputMaybe<Scalars['String']['input']>;
   /** Find objects NOT connected to author(s) in the array of author's userIds */
-  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Category ID */
-  categoryId?: InputMaybe<Scalars['Int']>;
+  categoryId?: InputMaybe<Scalars['Int']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Use Category Slug */
-  categoryName?: InputMaybe<Scalars['String']>;
+  categoryName?: InputMaybe<Scalars['String']['input']>;
   /** Array of category IDs, used to display objects from one category OR another */
-  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  categoryNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Tag Slug */
-  tag?: InputMaybe<Scalars['String']>;
+  tag?: InputMaybe<Scalars['String']['input']>;
   /** Use Tag ID */
-  tagId?: InputMaybe<Scalars['String']>;
+  tagId?: InputMaybe<Scalars['String']['input']>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag IDs, used to display objects from one tag OR another */
-  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  tagNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Array of tag slugs, used to display objects from one tag AND another */
-  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugAnd?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Array of tag slugs, used to include objects in ANY specified tags */
-  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  tagSlugIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the User type and the ContentNode type */
@@ -10585,7 +10587,7 @@ export type UserToRevisionsConnection = Connection & ContentNodeConnection & {
 export type UserToRevisionsConnectionEdge = ContentNodeConnectionEdge & Edge & {
   __typename?: 'UserToRevisionsConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: ContentNode;
 };
@@ -10594,15 +10596,15 @@ export type UserToRevisionsConnectionEdge = ContentNodeConnectionEdge & Edge & {
 export type UserToRevisionsConnectionPageInfo = ContentNodeConnectionPageInfo & PageInfo & WpPageInfo & {
   __typename?: 'UserToRevisionsConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Arguments for filtering the UserToRevisionsConnection connection */
@@ -10612,37 +10614,37 @@ export type UserToRevisionsConnectionWhereArgs = {
   /** Filter the connection based on dates */
   dateQuery?: InputMaybe<DateQueryInput>;
   /** True for objects with passwords; False for objects without passwords; null for all objects with or without passwords */
-  hasPassword?: InputMaybe<Scalars['Boolean']>;
+  hasPassword?: InputMaybe<Scalars['Boolean']['input']>;
   /** Specific database ID of the object */
-  id?: InputMaybe<Scalars['Int']>;
+  id?: InputMaybe<Scalars['Int']['input']>;
   /** Array of IDs for the objects to retrieve */
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Get objects with a specific mimeType property */
   mimeType?: InputMaybe<MimeTypeEnum>;
   /** Slug / post_name of the object */
-  name?: InputMaybe<Scalars['String']>;
+  name?: InputMaybe<Scalars['String']['input']>;
   /** Specify objects to retrieve. Use slugs */
-  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']>>>;
+  nameIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
   /** Specify IDs NOT to retrieve. If this is used in the same query as "in", it will be ignored */
-  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  notIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** What parameter to use to order the objects by. */
   orderby?: InputMaybe<Array<InputMaybe<PostObjectsConnectionOrderbyInput>>>;
   /** Use ID to return only children. Use 0 to return only top-level items */
-  parent?: InputMaybe<Scalars['ID']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
   /** Specify objects whose parent is in an array */
-  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Specify posts whose parent is not in an array */
-  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']>>>;
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Show posts with a specific password. */
-  password?: InputMaybe<Scalars['String']>;
+  password?: InputMaybe<Scalars['String']['input']>;
   /** Show Posts based on a keyword search */
-  search?: InputMaybe<Scalars['String']>;
+  search?: InputMaybe<Scalars['String']['input']>;
   /** Retrieve posts where post status is in an array. */
   stati?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
   /** Show posts with a specific status. */
   status?: InputMaybe<PostStatusEnum>;
   /** Title of the object */
-  title?: InputMaybe<Scalars['String']>;
+  title?: InputMaybe<Scalars['String']['input']>;
 };
 
 /** Connection between the User type and the UserRole type */
@@ -10660,7 +10662,7 @@ export type UserToUserRoleConnection = Connection & UserRoleConnection & {
 export type UserToUserRoleConnectionEdge = Edge & UserRoleConnectionEdge & {
   __typename?: 'UserToUserRoleConnectionEdge';
   /** A cursor for use in pagination */
-  cursor?: Maybe<Scalars['String']>;
+  cursor?: Maybe<Scalars['String']['output']>;
   /** The item at the end of the edge */
   node: UserRole;
 };
@@ -10669,15 +10671,15 @@ export type UserToUserRoleConnectionEdge = Edge & UserRoleConnectionEdge & {
 export type UserToUserRoleConnectionPageInfo = PageInfo & UserRoleConnectionPageInfo & WpPageInfo & {
   __typename?: 'UserToUserRoleConnectionPageInfo';
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** Field to order the connection by */
@@ -10725,47 +10727,47 @@ export enum UsersConnectionSearchColumnEnum {
 /** Information about pagination in a connection. */
 export type WpPageInfo = {
   /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']>;
+  endCursor?: Maybe<Scalars['String']['output']>;
   /** When paginating forwards, are there more items? */
-  hasNextPage: Scalars['Boolean'];
+  hasNextPage: Scalars['Boolean']['output'];
   /** When paginating backwards, are there more items? */
-  hasPreviousPage: Scalars['Boolean'];
+  hasPreviousPage: Scalars['Boolean']['output'];
   /** Get information about the offset pagination state in the current connection */
   offsetPagination?: Maybe<OffsetPaginationPageInfo>;
   /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']>;
+  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 /** The writing setting type */
 export type WritingSettings = {
   __typename?: 'WritingSettings';
   /** Default post category. */
-  defaultCategory?: Maybe<Scalars['Int']>;
+  defaultCategory?: Maybe<Scalars['Int']['output']>;
   /** Default post format. */
-  defaultPostFormat?: Maybe<Scalars['String']>;
+  defaultPostFormat?: Maybe<Scalars['String']['output']>;
   /** Convert emoticons like :-) and :-P to graphics on display. */
-  useSmilies?: Maybe<Scalars['Boolean']>;
+  useSmilies?: Maybe<Scalars['Boolean']['output']>;
 };
 
 export type CommentFieldsFragment = { __typename?: 'Comment', id: string, databaseId: number, content?: string | null, date?: string | null, parentId?: string | null, status?: CommentStatusEnum | null, author?: { __typename?: 'CommentToCommenterConnectionEdge', node: { __typename?: 'CommentAuthor', name?: string | null, avatar?: { __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null } | null } | { __typename?: 'User', name?: string | null, avatar?: { __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null } | null } } | null };
 
 export type CommentsByPostIdQueryVariables = Exact<{
-  contentId?: InputMaybe<Scalars['ID']>;
-  first?: InputMaybe<Scalars['Int']>;
-  after?: InputMaybe<Scalars['String']>;
+  contentId?: InputMaybe<Scalars['ID']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  after?: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
 export type CommentsByPostIdQuery = { __typename?: 'RootQuery', comments?: { __typename?: 'RootQueryToCommentConnection', nodes: Array<{ __typename?: 'Comment', id: string, databaseId: number, content?: string | null, date?: string | null, parentId?: string | null, status?: CommentStatusEnum | null, author?: { __typename?: 'CommentToCommenterConnectionEdge', node: { __typename?: 'CommentAuthor', name?: string | null, avatar?: { __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null } | null } | { __typename?: 'User', name?: string | null, avatar?: { __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null } | null } } | null }> } | null };
 
 export type CreateCommentMutationVariables = Exact<{
-  author?: InputMaybe<Scalars['String']>;
-  authorEmail?: InputMaybe<Scalars['String']>;
-  clientMutationId?: InputMaybe<Scalars['String']>;
-  commentOn?: InputMaybe<Scalars['Int']>;
-  content?: InputMaybe<Scalars['String']>;
-  authorUrl?: InputMaybe<Scalars['String']>;
-  parent?: InputMaybe<Scalars['ID']>;
+  author?: InputMaybe<Scalars['String']['input']>;
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
+  clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  commentOn?: InputMaybe<Scalars['Int']['input']>;
+  content?: InputMaybe<Scalars['String']['input']>;
+  authorUrl?: InputMaybe<Scalars['String']['input']>;
+  parent?: InputMaybe<Scalars['ID']['input']>;
 }>;
 
 
@@ -10777,7 +10779,7 @@ export type QueryGalleriesBasicQueryVariables = Exact<{ [key: string]: never; }>
 export type QueryGalleriesBasicQuery = { __typename?: 'RootQuery', galleries?: { __typename?: 'RootQueryToGalleryConnection', nodes: Array<{ __typename?: 'Gallery', id: string, slug?: string | null, status?: string | null }> } | null };
 
 export type QueryGalleryBySlugQueryVariables = Exact<{
-  slug: Scalars['ID'];
+  slug: Scalars['ID']['input'];
 }>;
 
 
@@ -10786,7 +10788,7 @@ export type QueryGalleryBySlugQuery = { __typename?: 'RootQuery', gallery?: { __
 export type MediaItemFieldsFragment = { __typename?: 'MediaItem', altText?: string | null, id: string, sourceUrl?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null };
 
 export type MediaItemsByIdQueryVariables = Exact<{
-  in?: InputMaybe<Array<InputMaybe<Scalars['ID']>> | InputMaybe<Scalars['ID']>>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>> | InputMaybe<Scalars['ID']['input']>>;
 }>;
 
 
@@ -10824,7 +10826,7 @@ export type QueryPagesBasicQueryVariables = Exact<{ [key: string]: never; }>;
 export type QueryPagesBasicQuery = { __typename?: 'RootQuery', pages?: { __typename?: 'RootQueryToPageConnection', nodes: Array<{ __typename?: 'Page', id: string, slug?: string | null, status?: string | null, template?: { __typename?: 'DefaultTemplate', templateName?: string | null } | { __typename?: 'Template_ContactMe', templateName?: string | null } | { __typename?: 'Template_PlainContent', templateName?: string | null } | null }> } | null };
 
 export type QueryPageByUriQueryVariables = Exact<{
-  uri: Scalars['ID'];
+  uri: Scalars['ID']['input'];
 }>;
 
 
@@ -10854,7 +10856,7 @@ export type QueryPostsResumesQueryVariables = Exact<{
 export type QueryPostsResumesQuery = { __typename?: 'RootQuery', posts?: { __typename?: 'RootQueryToPostConnection', nodes: Array<{ __typename?: 'Post', excerpt?: string | null, id: string, databaseId: number, title?: string | null, slug?: string | null, date?: string | null, status?: string | null, featuredImage?: { __typename?: 'NodeWithFeaturedImageToMediaItemConnectionEdge', node: { __typename?: 'MediaItem', altText?: string | null, id: string, sourceUrl?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null } } | null, author?: { __typename?: 'NodeWithAuthorToUserConnectionEdge', node: { __typename?: 'User', name?: string | null, url?: string | null } } | null }>, pageInfo: { __typename?: 'RootQueryToPostConnectionPageInfo', offsetPagination?: { __typename?: 'OffsetPaginationPageInfo', hasMore?: boolean | null, hasPrevious?: boolean | null, total?: number | null } | null } } | null };
 
 export type QueryPostByUriQueryVariables = Exact<{
-  uri: Scalars['ID'];
+  uri: Scalars['ID']['input'];
 }>;
 
 
@@ -10878,7 +10880,7 @@ export type QueryAllMediaTagsQueryVariables = Exact<{ [key: string]: never; }>;
 export type QueryAllMediaTagsQuery = { __typename?: 'RootQuery', mediaTags?: { __typename?: 'RootQueryToMediaTagConnection', nodes: Array<{ __typename?: 'MediaTag', id: string, name?: string | null, slug?: string | null }> } | null };
 
 export type QueryMediaTagBySlugQueryVariables = Exact<{
-  slug: Scalars['ID'];
+  slug: Scalars['ID']['input'];
 }>;
 
 
@@ -10886,31 +10888,762 @@ export type QueryMediaTagBySlugQuery = { __typename?: 'RootQuery', mediaTag?: { 
 
 export type UserBasicFragment = { __typename?: 'User', name?: string | null, url?: string | null };
 
-export const MenuFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MenuFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Menu"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"menuItems"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"label"}},{"kind":"Field","name":{"kind":"Name","value":"path"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"locations"}}]}}]} as unknown as DocumentNode<MenuFieldsFragment, unknown>;
-export const MediaItemFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MediaItemFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MediaItem"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"altText"}},{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"mediaDetails"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"height"}},{"kind":"Field","name":{"kind":"Name","value":"width"}}]}}]}}]} as unknown as DocumentNode<MediaItemFieldsFragment, unknown>;
-export const PageFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PageFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Page"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"template"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"templateName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MediaItemFields"}}]}}]}}]}},...MediaItemFieldsFragmentDoc.definitions]} as unknown as DocumentNode<PageFieldsFragment, unknown>;
-export const PostBasicFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PostBasic"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]} as unknown as DocumentNode<PostBasicFragment, unknown>;
-export const UserBasicFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"UserBasic"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"User"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]} as unknown as DocumentNode<UserBasicFragment, unknown>;
-export const CommentFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"CommentFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Comment"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"databaseId"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"date"}},{"kind":"Field","name":{"kind":"Name","value":"parentId"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"avatar"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"url"}},{"kind":"Field","name":{"kind":"Name","value":"width"}},{"kind":"Field","name":{"kind":"Name","value":"height"}}]}}]}}]}}]}}]} as unknown as DocumentNode<CommentFieldsFragment, unknown>;
-export const PrevNextPostFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PrevNextPost"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]} as unknown as DocumentNode<PrevNextPostFragment, unknown>;
-export const PostFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"PostFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"Post"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostBasic"}},{"kind":"Field","name":{"kind":"Name","value":"content"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MediaItemFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserBasic"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"tags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"uri"}},{"kind":"Field","name":{"kind":"Name","value":"name"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"comments"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"commentCount"}},{"kind":"Field","name":{"kind":"Name","value":"next"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PrevNextPost"}}]}},{"kind":"Field","name":{"kind":"Name","value":"previous"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PrevNextPost"}}]}}]}},...PostBasicFragmentDoc.definitions,...MediaItemFieldsFragmentDoc.definitions,...UserBasicFragmentDoc.definitions,...CommentFieldsFragmentDoc.definitions,...PrevNextPostFragmentDoc.definitions]} as unknown as DocumentNode<PostFieldsFragment, unknown>;
-export const MediaTagFieldsFragmentDoc = {"kind":"Document","definitions":[{"kind":"FragmentDefinition","name":{"kind":"Name","value":"MediaTagFields"},"typeCondition":{"kind":"NamedType","name":{"kind":"Name","value":"MediaTag"}},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}}]}}]} as unknown as DocumentNode<MediaTagFieldsFragment, unknown>;
-export const CommentsByPostIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"commentsByPostId"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"contentId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"first"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}},"defaultValue":{"kind":"IntValue","value":"10"}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"after"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"comments"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"contentId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"contentId"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"Variable","name":{"kind":"Name","value":"first"}}},{"kind":"Argument","name":{"kind":"Name","value":"after"},"value":{"kind":"Variable","name":{"kind":"Name","value":"after"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentFields"}}]}}]}}]}},...CommentFieldsFragmentDoc.definitions]} as unknown as DocumentNode<CommentsByPostIdQuery, CommentsByPostIdQueryVariables>;
-export const CreateCommentDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"CreateComment"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"author"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authorEmail"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"clientMutationId"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"commentOn"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"content"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"authorUrl"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"String"}},"defaultValue":{"kind":"StringValue","value":"","block":false}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"parent"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}},"defaultValue":{"kind":"StringValue","value":"","block":false}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"createComment"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"input"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"author"},"value":{"kind":"Variable","name":{"kind":"Name","value":"author"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"authorEmail"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authorEmail"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"clientMutationId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"clientMutationId"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"commentOn"},"value":{"kind":"Variable","name":{"kind":"Name","value":"commentOn"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"content"},"value":{"kind":"Variable","name":{"kind":"Name","value":"content"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"authorUrl"},"value":{"kind":"Variable","name":{"kind":"Name","value":"authorUrl"}}},{"kind":"ObjectField","name":{"kind":"Name","value":"parent"},"value":{"kind":"Variable","name":{"kind":"Name","value":"parent"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"success"}},{"kind":"Field","name":{"kind":"Name","value":"comment"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"CommentFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"clientMutationId"}}]}}]}},...CommentFieldsFragmentDoc.definitions]} as unknown as DocumentNode<CreateCommentMutation, CreateCommentMutationVariables>;
-export const QueryGalleriesBasicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryGalleriesBasic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"galleries"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<QueryGalleriesBasicQuery, QueryGalleriesBasicQueryVariables>;
-export const QueryGalleryBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryGalleryBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"gallery"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}},{"kind":"Argument","name":{"kind":"Name","value":"idType"},"value":{"kind":"EnumValue","value":"SLUG"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"status"}},{"kind":"Field","name":{"kind":"Name","value":"gallerySettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"galleryPhotos"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}}]}}]}}]}}]}}]} as unknown as DocumentNode<QueryGalleryBySlugQuery, QueryGalleryBySlugQueryVariables>;
-export const MediaItemsByIdDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"mediaItemsById"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"in"}},"type":{"kind":"ListType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mediaItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"in"},"value":{"kind":"Variable","name":{"kind":"Name","value":"in"}}}]}},{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"100"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MediaItemFields"}},{"kind":"Field","name":{"kind":"Name","value":"mediaDetails"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"meta"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"aperture"}},{"kind":"Field","name":{"kind":"Name","value":"focalLength"}},{"kind":"Field","name":{"kind":"Name","value":"iso"}},{"kind":"Field","name":{"kind":"Name","value":"shutterSpeed"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"mediaTags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MediaTagFields"}}]}}]}}]}}]}}]}},...MediaItemFieldsFragmentDoc.definitions,...MediaTagFieldsFragmentDoc.definitions]} as unknown as DocumentNode<MediaItemsByIdQuery, MediaItemsByIdQueryVariables>;
-export const QueryAllMenusDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryAllMenus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"menus"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MenuFields"}}]}}]}}]}},...MenuFieldsFragmentDoc.definitions]} as unknown as DocumentNode<QueryAllMenusQuery, QueryAllMenusQueryVariables>;
-export const QueryMenuByLocationDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryMenuByLocation"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"location"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"MenuLocationEnum"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"menus"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"location"},"value":{"kind":"Variable","name":{"kind":"Name","value":"location"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MenuFields"}}]}}]}}]}},...MenuFieldsFragmentDoc.definitions]} as unknown as DocumentNode<QueryMenuByLocationQuery, QueryMenuByLocationQueryVariables>;
-export const QueryHomePageDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryHomePage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"page"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"StringValue","value":"/","block":false}},{"kind":"Argument","name":{"kind":"Name","value":"idType"},"value":{"kind":"EnumValue","value":"URI"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"title"}},{"kind":"Field","name":{"kind":"Name","value":"slider"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sliderDesktop"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MediaItemFields"}}]}},{"kind":"Field","name":{"kind":"Name","value":"sliderMobile"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MediaItemFields"}}]}}]}}]}}]}},...MediaItemFieldsFragmentDoc.definitions]} as unknown as DocumentNode<QueryHomePageQuery, QueryHomePageQueryVariables>;
-export const QueryPagesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryPages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PageFields"}}]}}]}}]}},...PageFieldsFragmentDoc.definitions]} as unknown as DocumentNode<QueryPagesQuery, QueryPagesQueryVariables>;
-export const QueryPagesBasicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryPagesBasic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"pages"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"template"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"templateName"}}]}},{"kind":"Field","name":{"kind":"Name","value":"status"}}]}}]}}]}}]} as unknown as DocumentNode<QueryPagesBasicQuery, QueryPagesBasicQueryVariables>;
-export const QueryPageByUriDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryPageByUri"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"page"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uri"}}},{"kind":"Argument","name":{"kind":"Name","value":"idType"},"value":{"kind":"EnumValue","value":"URI"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PageFields"}}]}}]}},...PageFieldsFragmentDoc.definitions]} as unknown as DocumentNode<QueryPageByUriQuery, QueryPageByUriQueryVariables>;
-export const QueryPostsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryPosts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostFields"}}]}}]}}]}},...PostFieldsFragmentDoc.definitions]} as unknown as DocumentNode<QueryPostsQuery, QueryPostsQueryVariables>;
-export const QueryPostsBasicDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryPostsBasic"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"100"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostBasic"}}]}}]}}]}},...PostBasicFragmentDoc.definitions]} as unknown as DocumentNode<QueryPostsBasicQuery, QueryPostsBasicQueryVariables>;
-export const QueryPostsResumesDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryPostsResumes"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"offsetPagination"}},"type":{"kind":"NamedType","name":{"kind":"Name","value":"OffsetPagination"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"posts"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"where"},"value":{"kind":"ObjectValue","fields":[{"kind":"ObjectField","name":{"kind":"Name","value":"offsetPagination"},"value":{"kind":"Variable","name":{"kind":"Name","value":"offsetPagination"}}}]}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostBasic"}},{"kind":"Field","name":{"kind":"Name","value":"excerpt"}},{"kind":"Field","name":{"kind":"Name","value":"featuredImage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MediaItemFields"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"author"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"node"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"UserBasic"}}]}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"pageInfo"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"offsetPagination"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"hasMore"}},{"kind":"Field","name":{"kind":"Name","value":"hasPrevious"}},{"kind":"Field","name":{"kind":"Name","value":"total"}}]}}]}}]}}]}},...PostBasicFragmentDoc.definitions,...MediaItemFieldsFragmentDoc.definitions,...UserBasicFragmentDoc.definitions]} as unknown as DocumentNode<QueryPostsResumesQuery, QueryPostsResumesQueryVariables>;
-export const QueryPostByUriDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryPostByUri"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"uri"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"post"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"uri"}}},{"kind":"Argument","name":{"kind":"Name","value":"idType"},"value":{"kind":"EnumValue","value":"URI"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"PostFields"}}]}}]}},...PostFieldsFragmentDoc.definitions]} as unknown as DocumentNode<QueryPostByUriQuery, QueryPostByUriQueryVariables>;
-export const QuerySiteOptionsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"querySiteOptions"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"optionsPage"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"socialMedia"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"socialMediaFacebook"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"show"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"socialMediaInstagram"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"show"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"socialMediaFlickr"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"show"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}},{"kind":"Field","name":{"kind":"Name","value":"socialMediaBehance"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"show"}},{"kind":"Field","name":{"kind":"Name","value":"url"}}]}}]}},{"kind":"Field","name":{"kind":"Name","value":"websiteSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"disableContextMenu"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"disabled"}},{"kind":"Field","name":{"kind":"Name","value":"messageToAlert"}}]}}]}}]}}]}}]} as unknown as DocumentNode<QuerySiteOptionsQuery, QuerySiteOptionsQueryVariables>;
-export const QuerySiteDataDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"querySiteData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"generalSettings"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"description"}},{"kind":"Field","name":{"kind":"Name","value":"language"}},{"kind":"Field","name":{"kind":"Name","value":"title"}}]}},{"kind":"Field","name":{"kind":"Name","value":"favicon"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mediaDetails"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sizes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"sourceUrl"}},{"kind":"Field","name":{"kind":"Name","value":"width"}}]}}]}}]}}]}}]} as unknown as DocumentNode<QuerySiteDataQuery, QuerySiteDataQueryVariables>;
-export const QueryAllMediaTagsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"queryAllMediaTags"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mediaTags"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"1000"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"FragmentSpread","name":{"kind":"Name","value":"MediaTagFields"}}]}}]}}]}},...MediaTagFieldsFragmentDoc.definitions]} as unknown as DocumentNode<QueryAllMediaTagsQuery, QueryAllMediaTagsQueryVariables>;
-export const QueryMediaTagBySlugDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"QueryMediaTagBySlug"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"slug"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"ID"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"mediaTag"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"id"},"value":{"kind":"Variable","name":{"kind":"Name","value":"slug"}}},{"kind":"Argument","name":{"kind":"Name","value":"idType"},"value":{"kind":"EnumValue","value":"SLUG"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"name"}},{"kind":"Field","name":{"kind":"Name","value":"slug"}},{"kind":"Field","name":{"kind":"Name","value":"mediaItems"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"first"},"value":{"kind":"IntValue","value":"1000"}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"nodes"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"databaseId"}}]}}]}}]}}]}}]} as unknown as DocumentNode<QueryMediaTagBySlugQuery, QueryMediaTagBySlugQueryVariables>;
+export class TypedDocumentString<TResult, TVariables>
+  extends String
+  implements DocumentTypeDecoration<TResult, TVariables>
+{
+  __apiType?: DocumentTypeDecoration<TResult, TVariables>['__apiType'];
+
+  constructor(private value: string, public __meta__?: Record<string, any>) {
+    super(value);
+  }
+
+  toString(): string & DocumentTypeDecoration<TResult, TVariables> {
+    return this.value;
+  }
+}
+export const MenuFieldsFragmentDoc = new TypedDocumentString(`
+    fragment MenuFields on Menu {
+  id
+  menuItems {
+    nodes {
+      id
+      parentId
+      label
+      path
+    }
+  }
+  name
+  slug
+  locations
+}
+    `, {"fragmentName":"MenuFields"}) as unknown as TypedDocumentString<MenuFieldsFragment, unknown>;
+export const MediaItemFieldsFragmentDoc = new TypedDocumentString(`
+    fragment MediaItemFields on MediaItem {
+  altText
+  id
+  sourceUrl
+  mediaDetails {
+    height
+    width
+  }
+}
+    `, {"fragmentName":"MediaItemFields"}) as unknown as TypedDocumentString<MediaItemFieldsFragment, unknown>;
+export const PageFieldsFragmentDoc = new TypedDocumentString(`
+    fragment PageFields on Page {
+  id
+  title
+  uri
+  template {
+    templateName
+  }
+  status
+  content
+  featuredImage {
+    node {
+      ...MediaItemFields
+    }
+  }
+}
+    fragment MediaItemFields on MediaItem {
+  altText
+  id
+  sourceUrl
+  mediaDetails {
+    height
+    width
+  }
+}`, {"fragmentName":"PageFields"}) as unknown as TypedDocumentString<PageFieldsFragment, unknown>;
+export const PostBasicFragmentDoc = new TypedDocumentString(`
+    fragment PostBasic on Post {
+  id
+  databaseId
+  title
+  slug
+  date
+  status
+}
+    `, {"fragmentName":"PostBasic"}) as unknown as TypedDocumentString<PostBasicFragment, unknown>;
+export const UserBasicFragmentDoc = new TypedDocumentString(`
+    fragment UserBasic on User {
+  name
+  url
+}
+    `, {"fragmentName":"UserBasic"}) as unknown as TypedDocumentString<UserBasicFragment, unknown>;
+export const CommentFieldsFragmentDoc = new TypedDocumentString(`
+    fragment CommentFields on Comment {
+  id
+  databaseId
+  content
+  date
+  parentId
+  status
+  author {
+    node {
+      name
+      avatar {
+        url
+        width
+        height
+      }
+    }
+  }
+}
+    `, {"fragmentName":"CommentFields"}) as unknown as TypedDocumentString<CommentFieldsFragment, unknown>;
+export const PrevNextPostFragmentDoc = new TypedDocumentString(`
+    fragment PrevNextPost on Post {
+  id
+  title
+  slug
+}
+    `, {"fragmentName":"PrevNextPost"}) as unknown as TypedDocumentString<PrevNextPostFragment, unknown>;
+export const PostFieldsFragmentDoc = new TypedDocumentString(`
+    fragment PostFields on Post {
+  ...PostBasic
+  content
+  featuredImage {
+    node {
+      ...MediaItemFields
+    }
+  }
+  author {
+    node {
+      ...UserBasic
+    }
+  }
+  tags {
+    nodes {
+      uri
+      name
+    }
+  }
+  comments {
+    nodes {
+      ...CommentFields
+    }
+  }
+  commentCount
+  next {
+    ...PrevNextPost
+  }
+  previous {
+    ...PrevNextPost
+  }
+}
+    fragment CommentFields on Comment {
+  id
+  databaseId
+  content
+  date
+  parentId
+  status
+  author {
+    node {
+      name
+      avatar {
+        url
+        width
+        height
+      }
+    }
+  }
+}
+fragment MediaItemFields on MediaItem {
+  altText
+  id
+  sourceUrl
+  mediaDetails {
+    height
+    width
+  }
+}
+fragment PrevNextPost on Post {
+  id
+  title
+  slug
+}
+fragment PostBasic on Post {
+  id
+  databaseId
+  title
+  slug
+  date
+  status
+}
+fragment UserBasic on User {
+  name
+  url
+}`, {"fragmentName":"PostFields"}) as unknown as TypedDocumentString<PostFieldsFragment, unknown>;
+export const MediaTagFieldsFragmentDoc = new TypedDocumentString(`
+    fragment MediaTagFields on MediaTag {
+  id
+  name
+  slug
+}
+    `, {"fragmentName":"MediaTagFields"}) as unknown as TypedDocumentString<MediaTagFieldsFragment, unknown>;
+export const CommentsByPostIdDocument = new TypedDocumentString(`
+    query commentsByPostId($contentId: ID, $first: Int = 10, $after: String = "") {
+  comments(where: {contentId: $contentId}, first: $first, after: $after) {
+    nodes {
+      ...CommentFields
+    }
+  }
+}
+    fragment CommentFields on Comment {
+  id
+  databaseId
+  content
+  date
+  parentId
+  status
+  author {
+    node {
+      name
+      avatar {
+        url
+        width
+        height
+      }
+    }
+  }
+}`) as unknown as TypedDocumentString<CommentsByPostIdQuery, CommentsByPostIdQueryVariables>;
+export const CreateCommentDocument = new TypedDocumentString(`
+    mutation CreateComment($author: String, $authorEmail: String, $clientMutationId: String, $commentOn: Int, $content: String, $authorUrl: String = "", $parent: ID = "") {
+  createComment(
+    input: {author: $author, authorEmail: $authorEmail, clientMutationId: $clientMutationId, commentOn: $commentOn, content: $content, authorUrl: $authorUrl, parent: $parent}
+  ) {
+    success
+    comment {
+      ...CommentFields
+    }
+    clientMutationId
+  }
+}
+    fragment CommentFields on Comment {
+  id
+  databaseId
+  content
+  date
+  parentId
+  status
+  author {
+    node {
+      name
+      avatar {
+        url
+        width
+        height
+      }
+    }
+  }
+}`) as unknown as TypedDocumentString<CreateCommentMutation, CreateCommentMutationVariables>;
+export const QueryGalleriesBasicDocument = new TypedDocumentString(`
+    query queryGalleriesBasic {
+  galleries {
+    nodes {
+      id
+      slug
+      status
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<QueryGalleriesBasicQuery, QueryGalleriesBasicQueryVariables>;
+export const QueryGalleryBySlugDocument = new TypedDocumentString(`
+    query queryGalleryBySlug($slug: ID!) {
+  gallery(id: $slug, idType: SLUG) {
+    id
+    title
+    slug
+    status
+    gallerySettings {
+      galleryPhotos {
+        databaseId
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<QueryGalleryBySlugQuery, QueryGalleryBySlugQueryVariables>;
+export const MediaItemsByIdDocument = new TypedDocumentString(`
+    query mediaItemsById($in: [ID]) {
+  mediaItems(where: {in: $in}, first: 100) {
+    nodes {
+      ...MediaItemFields
+      mediaDetails {
+        meta {
+          aperture
+          focalLength
+          iso
+          shutterSpeed
+        }
+      }
+      title
+      description
+      mediaTags {
+        nodes {
+          ...MediaTagFields
+        }
+      }
+    }
+  }
+}
+    fragment MediaItemFields on MediaItem {
+  altText
+  id
+  sourceUrl
+  mediaDetails {
+    height
+    width
+  }
+}
+fragment MediaTagFields on MediaTag {
+  id
+  name
+  slug
+}`) as unknown as TypedDocumentString<MediaItemsByIdQuery, MediaItemsByIdQueryVariables>;
+export const QueryAllMenusDocument = new TypedDocumentString(`
+    query queryAllMenus {
+  menus {
+    nodes {
+      ...MenuFields
+    }
+  }
+}
+    fragment MenuFields on Menu {
+  id
+  menuItems {
+    nodes {
+      id
+      parentId
+      label
+      path
+    }
+  }
+  name
+  slug
+  locations
+}`) as unknown as TypedDocumentString<QueryAllMenusQuery, QueryAllMenusQueryVariables>;
+export const QueryMenuByLocationDocument = new TypedDocumentString(`
+    query queryMenuByLocation($location: MenuLocationEnum) {
+  menus(where: {location: $location}) {
+    nodes {
+      ...MenuFields
+    }
+  }
+}
+    fragment MenuFields on Menu {
+  id
+  menuItems {
+    nodes {
+      id
+      parentId
+      label
+      path
+    }
+  }
+  name
+  slug
+  locations
+}`) as unknown as TypedDocumentString<QueryMenuByLocationQuery, QueryMenuByLocationQueryVariables>;
+export const QueryHomePageDocument = new TypedDocumentString(`
+    query queryHomePage {
+  page(id: "/", idType: URI) {
+    id
+    title
+    slider {
+      sliderDesktop {
+        ...MediaItemFields
+      }
+      sliderMobile {
+        ...MediaItemFields
+      }
+    }
+  }
+}
+    fragment MediaItemFields on MediaItem {
+  altText
+  id
+  sourceUrl
+  mediaDetails {
+    height
+    width
+  }
+}`) as unknown as TypedDocumentString<QueryHomePageQuery, QueryHomePageQueryVariables>;
+export const QueryPagesDocument = new TypedDocumentString(`
+    query queryPages {
+  pages {
+    nodes {
+      ...PageFields
+    }
+  }
+}
+    fragment MediaItemFields on MediaItem {
+  altText
+  id
+  sourceUrl
+  mediaDetails {
+    height
+    width
+  }
+}
+fragment PageFields on Page {
+  id
+  title
+  uri
+  template {
+    templateName
+  }
+  status
+  content
+  featuredImage {
+    node {
+      ...MediaItemFields
+    }
+  }
+}`) as unknown as TypedDocumentString<QueryPagesQuery, QueryPagesQueryVariables>;
+export const QueryPagesBasicDocument = new TypedDocumentString(`
+    query queryPagesBasic {
+  pages {
+    nodes {
+      id
+      slug
+      template {
+        templateName
+      }
+      status
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<QueryPagesBasicQuery, QueryPagesBasicQueryVariables>;
+export const QueryPageByUriDocument = new TypedDocumentString(`
+    query queryPageByUri($uri: ID!) {
+  page(id: $uri, idType: URI) {
+    ...PageFields
+  }
+}
+    fragment MediaItemFields on MediaItem {
+  altText
+  id
+  sourceUrl
+  mediaDetails {
+    height
+    width
+  }
+}
+fragment PageFields on Page {
+  id
+  title
+  uri
+  template {
+    templateName
+  }
+  status
+  content
+  featuredImage {
+    node {
+      ...MediaItemFields
+    }
+  }
+}`) as unknown as TypedDocumentString<QueryPageByUriQuery, QueryPageByUriQueryVariables>;
+export const QueryPostsDocument = new TypedDocumentString(`
+    query queryPosts {
+  posts {
+    nodes {
+      ...PostFields
+    }
+  }
+}
+    fragment CommentFields on Comment {
+  id
+  databaseId
+  content
+  date
+  parentId
+  status
+  author {
+    node {
+      name
+      avatar {
+        url
+        width
+        height
+      }
+    }
+  }
+}
+fragment MediaItemFields on MediaItem {
+  altText
+  id
+  sourceUrl
+  mediaDetails {
+    height
+    width
+  }
+}
+fragment PrevNextPost on Post {
+  id
+  title
+  slug
+}
+fragment PostBasic on Post {
+  id
+  databaseId
+  title
+  slug
+  date
+  status
+}
+fragment PostFields on Post {
+  ...PostBasic
+  content
+  featuredImage {
+    node {
+      ...MediaItemFields
+    }
+  }
+  author {
+    node {
+      ...UserBasic
+    }
+  }
+  tags {
+    nodes {
+      uri
+      name
+    }
+  }
+  comments {
+    nodes {
+      ...CommentFields
+    }
+  }
+  commentCount
+  next {
+    ...PrevNextPost
+  }
+  previous {
+    ...PrevNextPost
+  }
+}
+fragment UserBasic on User {
+  name
+  url
+}`) as unknown as TypedDocumentString<QueryPostsQuery, QueryPostsQueryVariables>;
+export const QueryPostsBasicDocument = new TypedDocumentString(`
+    query queryPostsBasic {
+  posts(first: 100) {
+    nodes {
+      ...PostBasic
+    }
+  }
+}
+    fragment PostBasic on Post {
+  id
+  databaseId
+  title
+  slug
+  date
+  status
+}`) as unknown as TypedDocumentString<QueryPostsBasicQuery, QueryPostsBasicQueryVariables>;
+export const QueryPostsResumesDocument = new TypedDocumentString(`
+    query queryPostsResumes($offsetPagination: OffsetPagination) {
+  posts(where: {offsetPagination: $offsetPagination}) {
+    nodes {
+      ...PostBasic
+      excerpt
+      featuredImage {
+        node {
+          ...MediaItemFields
+        }
+      }
+      author {
+        node {
+          ...UserBasic
+        }
+      }
+    }
+    pageInfo {
+      offsetPagination {
+        hasMore
+        hasPrevious
+        total
+      }
+    }
+  }
+}
+    fragment MediaItemFields on MediaItem {
+  altText
+  id
+  sourceUrl
+  mediaDetails {
+    height
+    width
+  }
+}
+fragment PostBasic on Post {
+  id
+  databaseId
+  title
+  slug
+  date
+  status
+}
+fragment UserBasic on User {
+  name
+  url
+}`) as unknown as TypedDocumentString<QueryPostsResumesQuery, QueryPostsResumesQueryVariables>;
+export const QueryPostByUriDocument = new TypedDocumentString(`
+    query queryPostByUri($uri: ID!) {
+  post(id: $uri, idType: URI) {
+    ...PostFields
+  }
+}
+    fragment CommentFields on Comment {
+  id
+  databaseId
+  content
+  date
+  parentId
+  status
+  author {
+    node {
+      name
+      avatar {
+        url
+        width
+        height
+      }
+    }
+  }
+}
+fragment MediaItemFields on MediaItem {
+  altText
+  id
+  sourceUrl
+  mediaDetails {
+    height
+    width
+  }
+}
+fragment PrevNextPost on Post {
+  id
+  title
+  slug
+}
+fragment PostBasic on Post {
+  id
+  databaseId
+  title
+  slug
+  date
+  status
+}
+fragment PostFields on Post {
+  ...PostBasic
+  content
+  featuredImage {
+    node {
+      ...MediaItemFields
+    }
+  }
+  author {
+    node {
+      ...UserBasic
+    }
+  }
+  tags {
+    nodes {
+      uri
+      name
+    }
+  }
+  comments {
+    nodes {
+      ...CommentFields
+    }
+  }
+  commentCount
+  next {
+    ...PrevNextPost
+  }
+  previous {
+    ...PrevNextPost
+  }
+}
+fragment UserBasic on User {
+  name
+  url
+}`) as unknown as TypedDocumentString<QueryPostByUriQuery, QueryPostByUriQueryVariables>;
+export const QuerySiteOptionsDocument = new TypedDocumentString(`
+    query querySiteOptions {
+  optionsPage {
+    socialMedia {
+      socialMediaFacebook {
+        show
+        url
+      }
+      socialMediaInstagram {
+        show
+        url
+      }
+      socialMediaFlickr {
+        show
+        url
+      }
+      socialMediaBehance {
+        show
+        url
+      }
+    }
+    websiteSettings {
+      disableContextMenu {
+        disabled
+        messageToAlert
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<QuerySiteOptionsQuery, QuerySiteOptionsQueryVariables>;
+export const QuerySiteDataDocument = new TypedDocumentString(`
+    query querySiteData {
+  generalSettings {
+    description
+    language
+    title
+  }
+  favicon {
+    mediaDetails {
+      sizes {
+        sourceUrl
+        width
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<QuerySiteDataQuery, QuerySiteDataQueryVariables>;
+export const QueryAllMediaTagsDocument = new TypedDocumentString(`
+    query queryAllMediaTags {
+  mediaTags(first: 1000) {
+    nodes {
+      ...MediaTagFields
+    }
+  }
+}
+    fragment MediaTagFields on MediaTag {
+  id
+  name
+  slug
+}`) as unknown as TypedDocumentString<QueryAllMediaTagsQuery, QueryAllMediaTagsQueryVariables>;
+export const QueryMediaTagBySlugDocument = new TypedDocumentString(`
+    query QueryMediaTagBySlug($slug: ID!) {
+  mediaTag(id: $slug, idType: SLUG) {
+    id
+    name
+    slug
+    mediaItems(first: 1000) {
+      nodes {
+        databaseId
+      }
+    }
+  }
+}
+    `) as unknown as TypedDocumentString<QueryMediaTagBySlugQuery, QueryMediaTagBySlugQueryVariables>;

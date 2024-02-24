@@ -1,13 +1,13 @@
-import { ApolloQueryResult } from '@apollo/client';
 import { ApiWpReturn } from '@app/api/api.types';
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_POSTS_BASIC } from '@app/graphql/posts';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { GraphQLError } from 'graphql';
 import { PostBasic } from '../utils';
 import queryAllPostsBasic from './service';
 
-jest.mock('@app/utils/apollo-client', () => ({
+jest.mock('@app/utils/fetchGraphql', () => ({
   __esModule: true,
-  getApolloClient: jest.fn(),
+  default: jest.fn(),
 }));
 
 describe('queryAllPostsBasic', () => {
@@ -34,11 +34,11 @@ describe('queryAllPostsBasic', () => {
   const MOCK_POSTS_RESULT = {
     data: MOCK_POSTS_DATA,
     errors: null,
-  } as unknown as ApolloQueryResult<typeof MOCK_POSTS_DATA>;
+  } as unknown as ApiWpReturn<typeof MOCK_POSTS_DATA>;
   const MOCK_ERROR = 'MOCK_ERROR';
   const MOCK_ERROR_RESPONSE = {
     data: { posts: [] },
-    errors: [MOCK_ERROR],
+    errors: [MOCK_ERROR] as unknown as GraphQLError[],
   };
 
   const postsResult = {
@@ -63,38 +63,31 @@ describe('queryAllPostsBasic', () => {
     errors: null,
   } as unknown as ApiWpReturn<{ posts: PostBasic[] }>;
 
-  const mockGetApolloClient = getApolloClient as jest.Mock;
-
-  const mockQuery = jest.fn();
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
+  >;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetApolloClient.mockReturnValue({ query: mockQuery });
   });
 
   it('should return posts data', async () => {
-    mockQuery.mockResolvedValueOnce(MOCK_POSTS_RESULT);
+    mockFetchGraphql.mockResolvedValueOnce(MOCK_POSTS_RESULT);
 
     const result = await queryAllPostsBasic();
 
     expect(result).toEqual(postsResult);
-    expect(mockQuery).toHaveBeenCalledTimes(1);
-    expect(mockQuery).toHaveBeenCalledWith({
-      query: QUERY_POSTS_BASIC,
-      fetchPolicy: 'no-cache',
-    });
+    expect(mockFetchGraphql).toHaveBeenCalledTimes(1);
+    expect(mockFetchGraphql).toHaveBeenCalledWith(QUERY_POSTS_BASIC);
   });
 
   it('should return error if query fails', async () => {
-    mockQuery.mockResolvedValueOnce(MOCK_ERROR_RESPONSE);
+    mockFetchGraphql.mockResolvedValueOnce(MOCK_ERROR_RESPONSE);
 
     const result = await queryAllPostsBasic();
 
     expect(result).toEqual(MOCK_ERROR_RESPONSE);
-    expect(mockQuery).toHaveBeenCalledTimes(1);
-    expect(mockQuery).toHaveBeenCalledWith({
-      query: QUERY_POSTS_BASIC,
-      fetchPolicy: 'no-cache',
-    });
+    expect(mockFetchGraphql).toHaveBeenCalledTimes(1);
+    expect(mockFetchGraphql).toHaveBeenCalledWith(QUERY_POSTS_BASIC);
   });
 });

@@ -1,11 +1,12 @@
-import { ApolloQueryResult } from '@apollo/client';
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_SITE_OPTIONS } from '@app/graphql/site';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { ApiWpReturn } from '@app/api/api.types';
+import { GraphQLError } from 'graphql';
 import querySiteOptions from './service';
 
-jest.mock('@app/utils/apollo-client', () => ({
+jest.mock('@app/utils/fetchGraphql', () => ({
   __esModule: true,
-  getApolloClient: jest.fn(),
+  default: jest.fn(),
 }));
 
 describe('querySiteOptions', () => {
@@ -22,43 +23,39 @@ describe('querySiteOptions', () => {
   const MOCK_SITE_OPTIONS_RESULT = {
     data: MOCK_SITE_OPTIONS_DATA,
     errors: null,
-  } as unknown as ApolloQueryResult<typeof MOCK_SITE_OPTIONS_DATA>;
+  } as unknown as ApiWpReturn<typeof MOCK_SITE_OPTIONS_DATA>;
   const MOCK_ERROR = 'MOCK_ERROR';
   const MOCK_ERROR_RESPONSE = {
-    errors: [MOCK_ERROR],
+    data: { optionsPage: null },
+    errors: [MOCK_ERROR] as unknown as GraphQLError[],
   };
 
-  const mockGetApolloClient = getApolloClient as jest.Mock;
-
-  const mockQuery = jest.fn();
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
+  >;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetApolloClient.mockReturnValue({
-      query: mockQuery,
-    });
   });
 
   it('should call getApolloClient', async () => {
-    mockQuery.mockResolvedValue(MOCK_SITE_OPTIONS_RESULT);
+    mockFetchGraphql.mockResolvedValue(MOCK_SITE_OPTIONS_RESULT);
 
     await querySiteOptions();
 
-    expect(mockGetApolloClient).toHaveBeenCalledTimes(1);
+    expect(mockFetchGraphql).toHaveBeenCalledTimes(1);
   });
 
   it('should call apolloClient.query with the correct parameters', async () => {
-    mockQuery.mockResolvedValue(MOCK_SITE_OPTIONS_RESULT);
+    mockFetchGraphql.mockResolvedValue(MOCK_SITE_OPTIONS_RESULT);
 
     await querySiteOptions();
 
-    expect(mockQuery).toHaveBeenCalledWith({
-      query: QUERY_SITE_OPTIONS,
-    });
+    expect(mockFetchGraphql).toHaveBeenCalledWith(QUERY_SITE_OPTIONS);
   });
 
   it('should return the site options if the query is successful', async () => {
-    mockQuery.mockResolvedValue(MOCK_SITE_OPTIONS_RESULT);
+    mockFetchGraphql.mockResolvedValue(MOCK_SITE_OPTIONS_RESULT);
 
     const result = await querySiteOptions();
 
@@ -71,7 +68,7 @@ describe('querySiteOptions', () => {
   });
 
   it('should return the errors if the query is unsuccessful', async () => {
-    mockQuery.mockResolvedValue(MOCK_ERROR_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_ERROR_RESPONSE);
 
     const result = await querySiteOptions();
 

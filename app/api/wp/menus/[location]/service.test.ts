@@ -1,11 +1,12 @@
-import { getApolloClient } from '@app/utils/apollo-client';
 import { MenuLocationEnum } from '@app/graphql/__generated__/graphql';
 import { QUERY_MENU_BY_LOCATION } from '@app/graphql/menus';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { GraphQLError } from 'graphql';
 import queryMenuByLocation from './service';
 
-jest.mock('@app/utils/apollo-client', () => ({
+jest.mock('@app/utils/fetchGraphql', () => ({
   __esModule: true,
-  getApolloClient: jest.fn(),
+  default: jest.fn(),
 }));
 
 describe('queryMenuByLocation', () => {
@@ -26,43 +27,38 @@ describe('queryMenuByLocation', () => {
   };
   const MOCK_ERROR = 'MOCK_ERROR';
   const MOCK_ERROR_RESPONSE = {
-    errors: [MOCK_ERROR],
+    data: { menus: null },
+    errors: [MOCK_ERROR] as unknown as GraphQLError[],
   };
 
-  const mockGetApolloClient = getApolloClient as jest.Mock;
-
-  const mockQuery = jest.fn();
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
+  >;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetApolloClient.mockReturnValue({
-      query: mockQuery,
-    });
   });
 
   it('should call getApolloClient', async () => {
-    mockQuery.mockResolvedValue(MOCK_MENUS_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_MENUS_RESPONSE);
 
     await queryMenuByLocation(MOCK_LOCATION);
 
-    expect(mockGetApolloClient).toHaveBeenCalledTimes(1);
+    expect(mockFetchGraphql).toHaveBeenCalledTimes(1);
   });
 
   it('should call apolloClient.query with the correct parameters', async () => {
-    mockQuery.mockResolvedValue(MOCK_MENUS_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_MENUS_RESPONSE);
 
     await queryMenuByLocation(MOCK_LOCATION);
 
-    expect(mockQuery).toHaveBeenCalledWith({
-      query: QUERY_MENU_BY_LOCATION,
-      variables: {
-        location: MOCK_LOCATION,
-      },
+    expect(mockFetchGraphql).toHaveBeenCalledWith(QUERY_MENU_BY_LOCATION, {
+      location: MOCK_LOCATION,
     });
   });
 
   it('should return the menu if the query is successful', async () => {
-    mockQuery.mockResolvedValue(MOCK_MENUS_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_MENUS_RESPONSE);
 
     const result = await queryMenuByLocation(MOCK_LOCATION);
 
@@ -75,7 +71,7 @@ describe('queryMenuByLocation', () => {
   });
 
   it('should return the errors if the query is unsuccessful', async () => {
-    mockQuery.mockResolvedValue(MOCK_ERROR_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_ERROR_RESPONSE);
 
     const result = await queryMenuByLocation(MOCK_LOCATION);
 

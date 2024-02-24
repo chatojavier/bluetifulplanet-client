@@ -1,15 +1,11 @@
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_GALLERIES_BASIC } from '@app/graphql/galleries';
-import {
-  ApolloClient,
-  ApolloQueryResult,
-  NormalizedCacheObject,
-} from '@apollo/client';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { ApiWpReturn } from '@app/api/api.types';
 import queryAllGalleriesBasic from './service';
 
-jest.mock('@app/utils/apollo-client', () => ({
+jest.mock('@app/utils/fetchGraphql', () => ({
   __esModule: true,
-  getApolloClient: jest.fn(),
+  default: jest.fn(),
 }));
 
 describe('queryAllGalleriesBasic', () => {
@@ -38,16 +34,10 @@ describe('queryAllGalleriesBasic', () => {
   const MOCK_GALLERIES_RESULT = {
     data: MOCK_GALLERIES_DATA,
     errors: null,
-  } as unknown as ApolloQueryResult<typeof MOCK_GALLERIES_DATA>;
+  } as unknown as ApiWpReturn<typeof MOCK_GALLERIES_DATA>;
 
-  const mockApolloClient = {
-    query: jest.fn() as jest.MockedFn<
-      ApolloClient<NormalizedCacheObject>['query']
-    >,
-  } as unknown as ApolloClient<NormalizedCacheObject>;
-
-  const getApolloClientMock = getApolloClient as jest.MockedFunction<
-    typeof getApolloClient
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
   >;
 
   beforeEach(() => {
@@ -55,24 +45,15 @@ describe('queryAllGalleriesBasic', () => {
   });
 
   it('should call apolloClient.query with the correct parameters', async () => {
-    jest
-      .spyOn(mockApolloClient, 'query')
-      .mockResolvedValue(MOCK_GALLERIES_RESULT);
-    getApolloClientMock.mockReturnValue(mockApolloClient);
+    mockFetchGraphql.mockResolvedValue(MOCK_GALLERIES_RESULT);
 
     await queryAllGalleriesBasic();
 
-    expect(mockApolloClient.query).toHaveBeenCalledWith({
-      query: QUERY_GALLERIES_BASIC,
-      fetchPolicy: 'no-cache',
-    });
+    expect(mockFetchGraphql).toHaveBeenCalledWith(QUERY_GALLERIES_BASIC);
   });
 
   it('should return the galleries mapped data', async () => {
-    jest
-      .spyOn(mockApolloClient, 'query')
-      .mockResolvedValue(MOCK_GALLERIES_RESULT);
-    getApolloClientMock.mockReturnValue(mockApolloClient);
+    mockFetchGraphql.mockResolvedValue(MOCK_GALLERIES_RESULT);
 
     const result = await queryAllGalleriesBasic();
 
@@ -103,11 +84,7 @@ describe('queryAllGalleriesBasic', () => {
 
   it('should throw an error if apolloClient.query fails', async () => {
     const errorMessage = 'Failed to query page data';
-    jest
-      .spyOn(mockApolloClient, 'query')
-      .mockRejectedValue(new Error(errorMessage));
-
-    getApolloClientMock.mockReturnValue(mockApolloClient);
+    mockFetchGraphql.mockRejectedValue(new Error(errorMessage));
 
     await expect(queryAllGalleriesBasic()).rejects.toThrow(errorMessage);
   });

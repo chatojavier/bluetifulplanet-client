@@ -1,22 +1,17 @@
 /* eslint-disable no-console */
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_HOME_PAGE } from '@app/graphql/pages';
 import { removeDeepProperty } from '@app/utils/general';
 import { ApiWpReturn } from '@app/api/api.types';
+import fetchGraphql from '@app/utils/fetchGraphql';
 import { HomePage } from '../utils';
 
 const queryHomePage = async (): Promise<
   ApiWpReturn<{ page: HomePage | null }>
 > => {
-  const apolloClient = getApolloClient();
-
   let pageData;
 
   try {
-    pageData = await apolloClient.query({
-      query: QUERY_HOME_PAGE,
-      fetchPolicy: 'no-cache',
-    });
+    pageData = await fetchGraphql(QUERY_HOME_PAGE);
   } catch (e) {
     console.log(
       `[pages][queryHomePage] Failed to query page data: ${

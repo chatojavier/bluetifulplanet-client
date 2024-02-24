@@ -11,7 +11,6 @@ import GalleryGrid from './GalleryGrid';
 jest.mock('swr/infinite', () => jest.fn());
 jest.mock('@app/hooks/useOnScreen', () => jest.fn());
 jest.mock('@app/hooks/useWindowSize', () => jest.fn());
-jest.mock('@app/utils/apollo-client');
 
 const createPhotosId = (length: number): string[] =>
   Array.from({ length }, (_, i) => `image${i + 1}`);

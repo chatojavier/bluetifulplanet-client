@@ -1,4 +1,4 @@
-import { DeepOmit } from '@apollo/client/utilities';
+import { DeepOmit } from '@app/types/general';
 import { CommentFieldsFragment as QueryComment } from '@app/graphql/__generated__/graphql';
 import { removeDeepProperty } from '@utils/general';
 

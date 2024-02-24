@@ -1,13 +1,13 @@
-import { ApolloQueryResult } from '@apollo/client';
 import { ApiWpReturn } from '@app/api/api.types';
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_HOME_PAGE } from '@app/graphql/pages';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { GraphQLError } from 'graphql';
 import { PageBasic } from '../utils';
 import queryHomePage from './service';
 
-jest.mock('@app/utils/apollo-client', () => ({
+jest.mock('@app/utils/fetchGraphql', () => ({
   __esModule: true,
-  getApolloClient: jest.fn(),
+  default: jest.fn(),
 }));
 
 describe('queryHomePage', () => {
@@ -23,11 +23,11 @@ describe('queryHomePage', () => {
   const MOCK_PAGE_RESULT = {
     data: MOCK_PAGE_DATA,
     errors: null,
-  } as unknown as ApolloQueryResult<typeof MOCK_PAGE_DATA>;
+  } as unknown as ApiWpReturn<typeof MOCK_PAGE_DATA>;
   const MOCK_ERROR = 'MOCK_ERROR';
   const MOCK_ERROR_RESPONSE = {
     data: { page: null },
-    errors: [MOCK_ERROR],
+    errors: [MOCK_ERROR] as unknown as GraphQLError[],
   };
 
   const pageResult = {
@@ -43,38 +43,32 @@ describe('queryHomePage', () => {
     errors: null,
   } as unknown as ApiWpReturn<{ page: PageBasic }>;
 
-  const mockGetApolloClient = getApolloClient as jest.Mock;
-
-  const mockQuery = jest.fn();
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
+  >;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetApolloClient.mockReturnValue({
-      query: mockQuery,
-    });
   });
 
   it('should call getApolloClient', async () => {
-    mockQuery.mockResolvedValue(MOCK_PAGE_RESULT);
+    mockFetchGraphql.mockResolvedValue(MOCK_PAGE_RESULT);
 
     await queryHomePage();
 
-    expect(mockGetApolloClient).toHaveBeenCalledTimes(1);
+    expect(mockFetchGraphql).toHaveBeenCalledTimes(1);
   });
 
   it('should call apolloClient.query with the correct parameters', async () => {
-    mockQuery.mockResolvedValue(MOCK_PAGE_RESULT);
+    mockFetchGraphql.mockResolvedValue(MOCK_PAGE_RESULT);
 
     await queryHomePage();
 
-    expect(mockQuery).toHaveBeenCalledWith({
-      query: QUERY_HOME_PAGE,
-      fetchPolicy: 'no-cache',
-    });
+    expect(mockFetchGraphql).toHaveBeenCalledWith(QUERY_HOME_PAGE);
   });
 
   it('should return the page if the query is successful', async () => {
-    mockQuery.mockResolvedValue(MOCK_PAGE_RESULT);
+    mockFetchGraphql.mockResolvedValue(MOCK_PAGE_RESULT);
 
     const result = await queryHomePage();
 
@@ -82,7 +76,7 @@ describe('queryHomePage', () => {
   });
 
   it('should return the errors if the query is unsuccessful', async () => {
-    mockQuery.mockResolvedValue(MOCK_ERROR_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_ERROR_RESPONSE);
 
     const result = await queryHomePage();
 

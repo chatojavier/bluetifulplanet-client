@@ -1,4 +1,4 @@
-import { DeepOmit } from '@apollo/client/utilities';
+import { DeepOmit } from '@app/types/general';
 import {
   QueryHomePageQuery,
   PageFieldsFragment as QueryPage,

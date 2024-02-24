@@ -1,8 +1,8 @@
 import { ApiWpReturn } from '@app/api/api.types';
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_SITE_OPTIONS } from '@app/graphql/site';
 import { removeDeepProperty } from '@utils/general';
-import { cloneDeep } from '@apollo/client/utilities';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import cloneDeep from 'lodash/cloneDeep';
 import { DisableContextMenu, SocialMedia } from './utils';
 
 const querySiteOptions = async (): Promise<
@@ -11,14 +11,10 @@ const querySiteOptions = async (): Promise<
     disableContextMenu: DisableContextMenu;
   }>
 > => {
-  const apolloClient = getApolloClient();
-
   let siteOptions;
 
   try {
-    siteOptions = await apolloClient.query({
-      query: QUERY_SITE_OPTIONS,
-    });
+    siteOptions = await fetchGraphql(QUERY_SITE_OPTIONS);
   } catch (error) {
     const errorMessage = `[site][querySiteOptions] Failed to query site data: ${
       (error as Error).message

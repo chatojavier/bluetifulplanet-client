@@ -1,9 +1,11 @@
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_MEDIA_ITEMS_BY_ID } from '@app/graphql/mediaItems';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { GraphQLError } from 'graphql';
 import queryMediaItemsById from './service';
 
-jest.mock('@app/utils/apollo-client', () => ({
-  getApolloClient: jest.fn(),
+jest.mock('@app/utils/fetchGraphql', () => ({
+  __esModule: true,
+  default: jest.fn(),
 }));
 
 describe('queryMediaItemsById', () => {
@@ -21,11 +23,7 @@ describe('queryMediaItemsById', () => {
 
   const MOCK_MEDIA_ITEMS_RESULT = {
     data: MOCK_MEDIA_ITEMS_DATA,
-    errors: null,
-  };
-
-  const mockApolloClient = {
-    query: jest.fn().mockResolvedValue(MOCK_MEDIA_ITEMS_RESULT),
+    errors: [null] as unknown as GraphQLError[],
   };
 
   const mediaItemsResult = {
@@ -36,23 +34,23 @@ describe('queryMediaItemsById', () => {
         { id: '3', title: 'Image 3', mediaTags: [] },
       ],
     },
-    errors: null,
+    errors: [null] as unknown as GraphQLError[],
   };
 
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
+  >;
+
   beforeEach(() => {
+    mockFetchGraphql.mockResolvedValue(MOCK_MEDIA_ITEMS_RESULT);
     jest.clearAllMocks();
-    (getApolloClient as jest.Mock).mockReturnValue(mockApolloClient);
   });
 
   it('should call apolloClient.query with the correct parameters', async () => {
     await queryMediaItemsById(MOCK_MEDIA_ITEMS_ID);
 
-    expect(mockApolloClient.query).toHaveBeenCalledWith({
-      query: QUERY_MEDIA_ITEMS_BY_ID,
-      variables: {
-        in: MOCK_MEDIA_ITEMS_ID,
-      },
-      fetchPolicy: 'no-cache',
+    expect(mockFetchGraphql).toHaveBeenCalledWith(QUERY_MEDIA_ITEMS_BY_ID, {
+      in: MOCK_MEDIA_ITEMS_ID,
     });
   });
 
@@ -64,7 +62,7 @@ describe('queryMediaItemsById', () => {
 
   it('should throw an error if apolloClient.query fails', async () => {
     const errorMessage = 'Failed to query media item data';
-    mockApolloClient.query.mockRejectedValue(new Error(errorMessage));
+    mockFetchGraphql.mockRejectedValue(new Error(errorMessage));
 
     await expect(queryMediaItemsById(MOCK_MEDIA_ITEMS_ID)).rejects.toThrow(
       errorMessage

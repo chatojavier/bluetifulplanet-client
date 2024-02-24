@@ -1,10 +1,12 @@
 import { QueryMediaTagBySlugQuery } from '@app/graphql/__generated__/graphql';
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_MEDIA_TAG_BY_SLUG } from '@app/graphql/taxonomies';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { GraphQLError } from 'graphql';
 import queryMediaTagBySlug from './service';
 
-jest.mock('@app/utils/apollo-client', () => ({
-  getApolloClient: jest.fn(),
+jest.mock('@app/utils/fetchGraphql', () => ({
+  __esModule: true,
+  default: jest.fn(),
 }));
 
 describe('queryMediaTagBySlug', () => {
@@ -47,33 +49,26 @@ describe('queryMediaTagBySlug', () => {
     errors: undefined,
   };
 
-  const mockApolloClient = {
-    query: jest.fn(),
-  };
-
-  const mockGetApolloClient = getApolloClient as jest.Mock;
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
+  >;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    mockGetApolloClient.mockReturnValue(mockApolloClient);
   });
 
   it('should call apolloClient.query with the correct parameters', async () => {
-    mockApolloClient.query.mockResolvedValue({ data: MOCK_GALLERY_DATA });
+    mockFetchGraphql.mockResolvedValue({ data: MOCK_GALLERY_DATA });
 
     await queryMediaTagBySlug(MOCK_GALLERY_SLUG);
 
-    expect(mockApolloClient.query).toHaveBeenCalledWith({
-      query: QUERY_MEDIA_TAG_BY_SLUG,
-      variables: {
-        slug: MOCK_GALLERY_SLUG,
-      },
-      fetchPolicy: 'no-cache',
+    expect(mockFetchGraphql).toHaveBeenCalledWith(QUERY_MEDIA_TAG_BY_SLUG, {
+      slug: MOCK_GALLERY_SLUG,
     });
   });
 
   it('should return the mapped gallery data if it exists', async () => {
-    mockApolloClient.query.mockResolvedValue({ data: MOCK_GALLERY_DATA });
+    mockFetchGraphql.mockResolvedValue({ data: MOCK_GALLERY_DATA });
 
     const result = await queryMediaTagBySlug(MOCK_GALLERY_SLUG);
 
@@ -81,9 +76,9 @@ describe('queryMediaTagBySlug', () => {
   });
 
   it('should return null if the gallery data does not exist', async () => {
-    mockApolloClient.query.mockResolvedValue({
+    mockFetchGraphql.mockResolvedValue({
       data: { gallery: null },
-      errors: [{ message: 'Error' }],
+      errors: [{ message: 'Error' } as GraphQLError],
     });
 
     const result = await queryMediaTagBySlug(MOCK_GALLERY_SLUG);
@@ -96,7 +91,7 @@ describe('queryMediaTagBySlug', () => {
 
   it('should throw an error if apolloClient.query fails', async () => {
     const errorMessage = 'Failed to query gallery data';
-    mockApolloClient.query.mockRejectedValue(new Error(errorMessage));
+    mockFetchGraphql.mockRejectedValue(new Error(errorMessage));
 
     await expect(queryMediaTagBySlug(MOCK_GALLERY_SLUG)).rejects.toThrow(
       errorMessage

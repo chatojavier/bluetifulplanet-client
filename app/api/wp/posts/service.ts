@@ -1,19 +1,14 @@
 /* eslint-disable no-console */
 import { QUERY_POSTS } from '@app/graphql/posts';
-import { getApolloClient } from '@app/utils/apollo-client';
 import { ApiWpReturn } from '@app/api/api.types';
+import fetchGraphql from '@app/utils/fetchGraphql';
 import { Post, mapPostData } from './utils';
 
 const queryAllPosts = async (): Promise<ApiWpReturn<{ posts: Post[] }>> => {
-  const apolloClient = getApolloClient();
-
   let postsData;
 
   try {
-    postsData = await apolloClient.query({
-      query: QUERY_POSTS,
-      fetchPolicy: 'no-cache',
-    });
+    postsData = await fetchGraphql(QUERY_POSTS);
   } catch (e) {
     console.log(
       `[posts][queryAllPosts] Failed to query post data: ${

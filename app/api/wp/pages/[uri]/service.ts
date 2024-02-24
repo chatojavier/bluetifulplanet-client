@@ -1,22 +1,16 @@
 import { ApiWpReturn } from '@app/api/api.types';
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_PAGE_BY_URI } from '@app/graphql/pages';
+import fetchGraphql from '@app/utils/fetchGraphql';
 import { Page, mapPageData } from '../utils';
 
 const queryPageByUri = async (
   uri: string
 ): Promise<ApiWpReturn<{ page: Page | null }>> => {
-  const apolloClient = getApolloClient();
-
   let pageData;
 
   try {
-    pageData = await apolloClient.query({
-      query: QUERY_PAGE_BY_URI,
-      variables: {
-        uri,
-      },
-      fetchPolicy: 'no-cache',
+    pageData = await fetchGraphql(QUERY_PAGE_BY_URI, {
+      uri,
     });
   } catch (e) {
     // eslint-disable-next-line no-console

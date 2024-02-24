@@ -1,4 +1,4 @@
-import { DeepOmit } from '@apollo/client/utilities/types/DeepOmit';
+import { DeepOmit } from '@app/types/general';
 import { MenuFieldsFragment } from '@app/graphql/__generated__/graphql';
 import { removeDeepProperty } from '@utils/general';
 

@@ -1,14 +1,12 @@
-import { getApolloClient } from '@app/utils/apollo-client';
 import { CREATE_COMMENT } from '@app/graphql/comments';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { ApiWpReturn } from '@app/api/api.types';
 import mutatePostComment from './service';
 import { mapCommentData } from './utils';
 
-jest.mock('@app/utils/apollo-client', () => ({
-  getApolloClient: jest.fn(),
-}));
-
-jest.mock('@app/graphql/comments', () => ({
-  CREATE_COMMENT: jest.fn(),
+jest.mock('@app/utils/fetchGraphql', () => ({
+  __esModule: true,
+  default: jest.fn(),
 }));
 
 jest.mock('./utils', () => ({
@@ -25,19 +23,23 @@ describe('mutatePostComment', () => {
   };
   const MOCK_PARENT = '456';
 
-  const MOCK_RESPONSE = {
-    data: {
-      createComment: {
-        comment: {
-          id: '789',
-          // ... other comment properties
-        },
+  const MOCK_QUERY_DATA = {
+    createComment: {
+      comment: {
+        id: '789',
+        // ... other comment properties
       },
     },
-    errors: null,
   };
 
-  const mockGetApolloClient = getApolloClient as jest.Mock;
+  const MOCK_RESPONSE = {
+    data: MOCK_QUERY_DATA,
+    errors: null,
+  } as unknown as ApiWpReturn<typeof MOCK_QUERY_DATA>;
+
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
+  >;
   const mockMapCommentData = mapCommentData as jest.Mock;
 
   beforeEach(() => {
@@ -45,10 +47,7 @@ describe('mutatePostComment', () => {
   });
 
   it('should call the Apollo client query with the correct parameters', async () => {
-    const apolloClientMock = {
-      query: jest.fn().mockResolvedValue(MOCK_RESPONSE),
-    };
-    mockGetApolloClient.mockReturnValue(apolloClientMock);
+    mockFetchGraphql.mockResolvedValue(MOCK_RESPONSE);
 
     await mutatePostComment({
       postId: MOCK_POST_ID,
@@ -56,26 +55,19 @@ describe('mutatePostComment', () => {
       parent: MOCK_PARENT,
     });
 
-    expect(apolloClientMock.query).toHaveBeenCalledWith({
-      query: CREATE_COMMENT,
-      variables: {
-        commentOn: Number(MOCK_POST_ID),
-        author: MOCK_COMMENT_FIELDS.author,
-        authorEmail: MOCK_COMMENT_FIELDS.authorEmail,
-        authorUrl: MOCK_COMMENT_FIELDS.authorUrl,
-        content: MOCK_COMMENT_FIELDS.content,
-        parent: MOCK_PARENT,
-        clientMutationId: `createCommentOn${MOCK_POST_ID}`,
-      },
-      fetchPolicy: 'no-cache',
+    expect(mockFetchGraphql).toHaveBeenCalledWith(CREATE_COMMENT, {
+      commentOn: Number(MOCK_POST_ID),
+      author: MOCK_COMMENT_FIELDS.author,
+      authorEmail: MOCK_COMMENT_FIELDS.authorEmail,
+      authorUrl: MOCK_COMMENT_FIELDS.authorUrl,
+      content: MOCK_COMMENT_FIELDS.content,
+      parent: MOCK_PARENT,
+      clientMutationId: `createCommentOn${MOCK_POST_ID}`,
     });
   });
 
   it('should return the created comment if the query is successful', async () => {
-    const apolloClientMock = {
-      query: jest.fn().mockResolvedValue(MOCK_RESPONSE),
-    };
-    mockGetApolloClient.mockReturnValue(apolloClientMock);
+    mockFetchGraphql.mockResolvedValue(MOCK_RESPONSE);
     mockMapCommentData.mockReturnValue({
       id: '789',
       // ... other comment properties
@@ -99,10 +91,7 @@ describe('mutatePostComment', () => {
   });
 
   it('should throw an error if the query fails', async () => {
-    const apolloClientMock = {
-      query: jest.fn().mockRejectedValue(new Error('Query failed')),
-    };
-    mockGetApolloClient.mockReturnValue(apolloClientMock);
+    mockFetchGraphql.mockRejectedValue(new Error('Query failed'));
 
     await expect(
       mutatePostComment({

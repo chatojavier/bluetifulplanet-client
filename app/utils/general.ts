@@ -1,5 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import { DeepOmit } from '@apollo/client/utilities/types/DeepOmit';
+import { DeepOmit } from '@app/types/general';
 import format from 'date-fns/format';
 import parseISO from 'date-fns/parseISO';
 

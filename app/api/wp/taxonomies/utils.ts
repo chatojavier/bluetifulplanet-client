@@ -1,4 +1,4 @@
-import { DeepOmit } from '@apollo/client/utilities';
+import { DeepOmit } from '@app/types/general';
 import { QueryMediaTagBySlugQuery } from '@app/graphql/__generated__/graphql';
 
 type QueryMediaTag = NonNullable<QueryMediaTagBySlugQuery['mediaTag']>;

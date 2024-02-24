@@ -6,13 +6,7 @@ import CommentReply from '@app/components/CommentReply';
 import { CommentFormOutput } from '@app/components/CommentReply/CommentReplyForm';
 import { decodeHTML } from '@app/components/SafeHTML/SafeHTML';
 import commentsService from '@app/services/commentsService';
-import {
-  FunctionComponent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 
 interface PostCommentsProps {
   title: string;
@@ -35,16 +29,15 @@ const PostComments: FunctionComponent<PostCommentsProps> = ({
   const [message, setMessage] = useState<string>('');
   const sectionRef = useRef<HTMLElement>(null);
 
-  const getAndSetComments = useCallback(async () => {
-    if (!initialComments) setLoading(true);
-    const gettedComments = await commentsService.getCommentsByPostId(postId);
-    setLoading(false);
-    if (gettedComments?.comments) setComments(gettedComments?.comments);
-  }, [initialComments, postId]);
-
   useEffect(() => {
+    const getAndSetComments = async () => {
+      if (!initialComments) setLoading(true);
+      const gettedComments = await commentsService.getCommentsByPostId(postId);
+      setLoading(false);
+      if (gettedComments?.comments) setComments(gettedComments?.comments);
+    };
     getAndSetComments();
-  }, [getAndSetComments]);
+  }, [initialComments, postId]);
 
   const handleSubmitValid = async (
     data: CommentFormOutput,

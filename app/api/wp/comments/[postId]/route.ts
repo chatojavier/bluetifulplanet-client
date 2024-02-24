@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import mutatePostComment from './service';
+import queryCommentsByPostId from './service';
 
 type RequestParams = {
   params: {
@@ -10,7 +10,7 @@ type RequestParams = {
 export async function GET(_req: NextRequest, { params }: RequestParams) {
   const { postId } = params;
   try {
-    const { data, errors } = await mutatePostComment(postId);
+    const { data, errors } = await queryCommentsByPostId(postId);
 
     if (errors) {
       throw new Error(errors[0].message);

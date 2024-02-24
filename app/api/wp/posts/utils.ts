@@ -1,4 +1,4 @@
-import { DeepOmit } from '@apollo/client/utilities/types/DeepOmit';
+import { DeepOmit } from '@app/types/general';
 import {
   PostFieldsFragment as QueryPost,
   QueryPostsBasicQuery as QueryPostsBasic,

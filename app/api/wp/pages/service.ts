@@ -1,17 +1,12 @@
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_PAGES } from '@app/graphql/pages';
+import fetchGraphql from '@app/utils/fetchGraphql';
 import { mapPageData } from './utils';
 
 const queryAllPages = async () => {
-  const apolloClient = getApolloClient();
-
   let pagesData;
 
   try {
-    pagesData = await apolloClient.query({
-      query: QUERY_PAGES,
-      fetchPolicy: 'no-cache',
-    });
+    pagesData = await fetchGraphql(QUERY_PAGES);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(

@@ -1,12 +1,12 @@
-import { ApolloQueryResult } from '@apollo/client/core/types';
 import { ApiWpReturn } from '@app/api/api.types';
-import { getApolloClient } from '@app/utils/apollo-client';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { GraphQLError } from 'graphql';
 import { PostBasic } from '../utils';
 import queryAllPostsResume from './service';
 
-jest.mock('@app/utils/apollo-client', () => ({
+jest.mock('@app/utils/fetchGraphql', () => ({
   __esModule: true,
-  getApolloClient: jest.fn(),
+  default: jest.fn(),
 }));
 
 describe('queryAllPostsResume', () => {
@@ -42,11 +42,11 @@ describe('queryAllPostsResume', () => {
   const MOCK_POSTS_RESULT = {
     data: MOCK_POSTS_DATA,
     errors: null,
-  } as unknown as ApolloQueryResult<typeof MOCK_POSTS_DATA>;
+  } as unknown as ApiWpReturn<typeof MOCK_POSTS_DATA>;
   const MOCK_ERROR = 'MOCK_ERROR';
   const MOCK_ERROR_RESPONSE = {
     data: null,
-    errors: [MOCK_ERROR],
+    errors: [MOCK_ERROR] as unknown as GraphQLError[],
   };
 
   const postsResult = {
@@ -78,28 +78,22 @@ describe('queryAllPostsResume', () => {
     errors: null,
   } as unknown as ApiWpReturn<{ posts: PostBasic[] }>;
 
-  const mockGetApolloClient = getApolloClient as jest.Mock;
-
-  const mockQuery = jest.fn();
-
-  beforeEach(() => {
-    mockGetApolloClient.mockReturnValue({
-      query: mockQuery,
-    });
-  });
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
+  >;
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
   it('should return posts', async () => {
-    mockQuery.mockResolvedValue(MOCK_POSTS_RESULT);
+    mockFetchGraphql.mockResolvedValue(MOCK_POSTS_RESULT);
     const result = await queryAllPostsResume();
     expect(result).toEqual(postsResult);
   });
 
   it('should return error', async () => {
-    mockQuery.mockResolvedValue(MOCK_ERROR_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_ERROR_RESPONSE);
     const result = await queryAllPostsResume();
     expect(result).toEqual({
       data: { pageInfo: undefined, posts: [] },

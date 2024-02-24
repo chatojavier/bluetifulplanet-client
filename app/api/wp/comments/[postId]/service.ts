@@ -1,27 +1,27 @@
-import { getApolloClient } from '@app/utils/apollo-client';
 import { COMMENTS_BY_POST_ID } from '@app/graphql/comments';
 import { ApiWpReturn } from '@app/api/api.types';
+import fetchGraphql from '@app/utils/fetchGraphql';
 import { Comment, mapCommentData } from '../utils';
 
 const queryCommentsByPostId = async (
   postId: string
 ): Promise<ApiWpReturn<{ comments: Comment[] }>> => {
-  const apolloClient = getApolloClient();
-
   let commentsData;
 
   try {
-    commentsData = await apolloClient.query({
-      query: COMMENTS_BY_POST_ID,
-      variables: {
+    commentsData = await fetchGraphql(
+      COMMENTS_BY_POST_ID,
+      {
         contentId: postId.toString(),
       },
-      fetchPolicy: 'no-cache',
-    });
+      {
+        cache: 'no-store',
+      }
+    );
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(
-      `[comments][getCommentsByPostId] Failed to query post data: ${
+      `[comments][queryCommentsByPostId] Failed to query post data: ${
         (e as Error).message
       }`
     );
@@ -29,6 +29,9 @@ const queryCommentsByPostId = async (
   }
 
   const { data, errors } = commentsData;
+
+  if ((commentsData as unknown as Error)?.message)
+    throw new Error('Wordpress server error');
 
   const comments = data?.comments?.nodes
     ? data.comments.nodes.map(mapCommentData)

@@ -1,21 +1,16 @@
 import { ApiWpReturn } from '@app/api/api.types';
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_GALLERIES_BASIC } from '@app/graphql/galleries';
 import { removeDeepProperty } from '@app/utils/general';
+import fetchGraphql from '@app/utils/fetchGraphql';
 import { GalleryBasic } from '../utils';
 
 const queryAllGalleriesBasic = async (): Promise<
   ApiWpReturn<{ galleries: GalleryBasic[] }>
 > => {
-  const apolloClient = getApolloClient();
-
   let galleriesData;
 
   try {
-    galleriesData = await apolloClient.query({
-      query: QUERY_GALLERIES_BASIC,
-      fetchPolicy: 'no-cache',
-    });
+    galleriesData = await fetchGraphql(QUERY_GALLERIES_BASIC);
   } catch (e) {
     // eslint-disable-next-line no-console
     console.log(

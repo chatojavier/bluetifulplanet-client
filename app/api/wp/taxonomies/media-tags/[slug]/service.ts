@@ -1,6 +1,6 @@
 import { ApiWpReturn } from '@app/api/api.types';
 import { QUERY_MEDIA_TAG_BY_SLUG } from '@app/graphql/taxonomies';
-import { getApolloClient } from '@app/utils/apollo-client';
+import fetchGraphql from '@app/utils/fetchGraphql';
 import { MediaTag, mapMediaTag } from '../../utils';
 
 /**
@@ -12,17 +12,11 @@ import { MediaTag, mapMediaTag } from '../../utils';
 const queryMediaTagBySlug = async (
   mediaTagSlug: string
 ): Promise<ApiWpReturn<{ mediaTag: MediaTag | null }>> => {
-  const apolloClient = getApolloClient();
-
   let mediaTagData;
 
   try {
-    mediaTagData = await apolloClient.query({
-      query: QUERY_MEDIA_TAG_BY_SLUG,
-      variables: {
-        slug: mediaTagSlug,
-      },
-      fetchPolicy: 'no-cache',
+    mediaTagData = await fetchGraphql(QUERY_MEDIA_TAG_BY_SLUG, {
+      slug: mediaTagSlug,
     });
   } catch (e) {
     // eslint-disable-next-line no-console

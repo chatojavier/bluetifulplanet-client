@@ -1,17 +1,13 @@
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_SITE_DATA } from '@app/graphql/site';
 import { uniqBy } from 'lodash';
+import fetchGraphql from '@app/utils/fetchGraphql';
 import { SiteData } from './utils';
 
 async function querySiteData() {
-  const apolloClient = getApolloClient();
-
   let siteData;
 
   try {
-    siteData = await apolloClient.query({
-      query: QUERY_SITE_DATA,
-    });
+    siteData = await fetchGraphql(QUERY_SITE_DATA);
   } catch (error) {
     const errorMessage = `[site][querySiteData] Failed to query site data: ${
       (error as Error).message

@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "eslint": "eslint",
+    "lint:fix": "yarn lint --fix",
     "dev:turbo": "next dev --turbo",
     "test": "env-cmd -f .env.local jest --watchAll=false",
     "test:coverage": "env-cmd -f .env.local jest --coverage",
@@ -16,13 +18,12 @@
     "export": "next export"
   },
   "dependencies": {
-    "@apollo/client": "^3.8.7",
-    "@apollo/experimental-nextjs-app-support": "^0.5.1",
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
     "@fortawesome/free-brands-svg-icons": "^6.2.1",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@parcel/watcher": "^2.4.0",
     "@types/node": "18.11.18",
     "@types/react-dom": "18.0.10",
     "date-fns": "^2.30.0",
@@ -39,8 +40,8 @@
     "xss": "^1.0.14"
   },
   "devDependencies": {
-    "@graphql-codegen/cli": "^2.16.4",
-    "@graphql-codegen/client-preset": "^1.2.6",
+    "@graphql-codegen/cli": "5.0.2",
+    "@graphql-codegen/client-preset": "4.2.2",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@testing-library/dom": "^8.19.1",
     "@testing-library/jest-dom": "^5.16.5",

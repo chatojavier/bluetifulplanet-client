@@ -1,15 +1,12 @@
-import { getApolloClient } from '@app/utils/apollo-client';
 import { QUERY_ALL_MENUS } from '@app/graphql/menus';
-import {
-  ApolloClient,
-  ApolloQueryResult,
-  NormalizedCacheObject,
-} from '@apollo/client';
+import { ApiWpReturn } from '@app/api/api.types';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { GraphQLError } from 'graphql';
 import queryAllMenus from './service';
 
-jest.mock('@app/utils/apollo-client', () => ({
+jest.mock('@app/utils/fetchGraphql', () => ({
   __esModule: true,
-  getApolloClient: jest.fn(),
+  default: jest.fn(),
 }));
 
 describe('queryAllMenus', () => {
@@ -59,7 +56,7 @@ describe('queryAllMenus', () => {
   const MOCK_MENUS_RESULT = {
     data: MOCK_MENUS_DATA,
     errors: null,
-  } as unknown as ApolloQueryResult<typeof MOCK_MENUS_DATA>;
+  } as unknown as ApiWpReturn<typeof MOCK_MENUS_DATA>;
 
   const menuResult = {
     data: {
@@ -106,8 +103,8 @@ describe('queryAllMenus', () => {
     errors: null,
   };
 
-  const mockApolloClient = getApolloClient as jest.MockedFunction<
-    typeof getApolloClient
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
   >;
 
   beforeEach(() => {
@@ -115,22 +112,15 @@ describe('queryAllMenus', () => {
   });
 
   it('should call apolloClient.query with the correct parameters', async () => {
-    const mockQuery = jest.fn().mockResolvedValue(MOCK_MENUS_RESULT);
-    mockApolloClient.mockReturnValue({
-      query: mockQuery,
-    } as unknown as ApolloClient<NormalizedCacheObject>);
+    mockFetchGraphql.mockResolvedValue(MOCK_MENUS_RESULT);
 
     await queryAllMenus();
 
-    expect(mockApolloClient).toHaveBeenCalled();
-    expect(mockQuery).toHaveBeenCalledWith({ query: QUERY_ALL_MENUS });
+    expect(mockFetchGraphql).toHaveBeenCalledWith(QUERY_ALL_MENUS);
   });
 
   it('should return the menus from the response', async () => {
-    const mockQuery = jest.fn().mockResolvedValue(MOCK_MENUS_RESULT);
-    mockApolloClient.mockReturnValue({
-      query: mockQuery,
-    } as unknown as ApolloClient<NormalizedCacheObject>);
+    mockFetchGraphql.mockResolvedValue(MOCK_MENUS_RESULT);
 
     const result = await queryAllMenus();
 
@@ -138,26 +128,25 @@ describe('queryAllMenus', () => {
   });
 
   it('should return an empty array if the response does not contain menus', async () => {
-    const mockQuery = jest
-      .fn()
-      .mockResolvedValue({ data: { menus: null }, errors: null });
-    mockApolloClient.mockReturnValue({
-      query: mockQuery,
-    } as unknown as ApolloClient<NormalizedCacheObject>);
+    mockFetchGraphql.mockResolvedValue({
+      data: { menus: null },
+      errors: [null] as unknown as GraphQLError[],
+    });
 
     const result = await queryAllMenus();
 
-    expect(result).toEqual({ data: { menus: [] }, errors: null });
+    expect(result).toEqual({ data: { menus: [] }, errors: [null] });
   });
 
   it('should return the errors from the response', async () => {
-    const mockErrors = [{ message: 'Error 1' }, { message: 'Error 2' }];
-    const mockQuery = jest
-      .fn()
-      .mockResolvedValue({ data: { menus: null }, errors: mockErrors });
-    mockApolloClient.mockReturnValue({
-      query: mockQuery,
-    } as unknown as ApolloClient<NormalizedCacheObject>);
+    const mockErrors = [
+      { message: 'Error 1' },
+      { message: 'Error 2' },
+    ] as unknown as GraphQLError[];
+    mockFetchGraphql.mockResolvedValue({
+      data: { menus: null },
+      errors: mockErrors,
+    });
 
     const result = await queryAllMenus();
 
@@ -166,10 +155,7 @@ describe('queryAllMenus', () => {
 
   it('should throw an error if apolloClient.query fails', async () => {
     const errorMessage = 'Failed to query menus';
-    const mockQuery = jest.fn().mockRejectedValue(new Error(errorMessage));
-    mockApolloClient.mockReturnValue({
-      query: mockQuery,
-    } as unknown as ApolloClient<NormalizedCacheObject>);
+    mockFetchGraphql.mockRejectedValue(new Error(errorMessage));
 
     await expect(queryAllMenus()).rejects.toThrow(errorMessage);
   });

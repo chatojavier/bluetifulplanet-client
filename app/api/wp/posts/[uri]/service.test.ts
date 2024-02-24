@@ -1,12 +1,12 @@
-import { ApolloQueryResult } from '@apollo/client';
 import { ApiWpReturn } from '@app/api/api.types';
-import { getApolloClient } from '@app/utils/apollo-client';
+import fetchGraphql from '@app/utils/fetchGraphql';
+import { GraphQLError } from 'graphql';
 import { PostBasic } from '../utils';
 import queryPostByUri from './service';
 
-jest.mock('@app/utils/apollo-client', () => ({
+jest.mock('@app/utils/fetchGraphql', () => ({
   __esModule: true,
-  getApolloClient: jest.fn(),
+  default: jest.fn(),
 }));
 
 describe('queryPostByUri', () => {
@@ -25,11 +25,11 @@ describe('queryPostByUri', () => {
   const MOCK_POST_RESULT = {
     data: MOCK_POST_DATA,
     errors: null,
-  } as unknown as ApolloQueryResult<typeof MOCK_POST_DATA>;
+  } as unknown as ApiWpReturn<typeof MOCK_POST_DATA>;
   const MOCK_ERROR = 'MOCK_ERROR';
   const MOCK_ERROR_RESPONSE = {
     data: { post: null },
-    errors: [MOCK_ERROR],
+    errors: [MOCK_ERROR] as unknown as GraphQLError[],
   };
 
   const postResult = {
@@ -48,20 +48,12 @@ describe('queryPostByUri', () => {
     errors: null,
   } as unknown as ApiWpReturn<{ post: PostBasic }>;
 
-  const mockGetApolloClient = getApolloClient as jest.Mock;
-
-  const mockQuery = jest.fn();
-
-  beforeEach(() => {
-    jest.clearAllMocks();
-
-    mockGetApolloClient.mockReturnValue({
-      query: mockQuery,
-    });
-  });
+  const mockFetchGraphql = fetchGraphql as jest.MockedFunction<
+    typeof fetchGraphql
+  >;
 
   it('should return post data', async () => {
-    mockQuery.mockResolvedValue(MOCK_POST_RESULT);
+    mockFetchGraphql.mockResolvedValue(MOCK_POST_RESULT);
 
     const result = await queryPostByUri('post-1');
 
@@ -69,7 +61,7 @@ describe('queryPostByUri', () => {
   });
 
   it('should return error', async () => {
-    mockQuery.mockResolvedValue(MOCK_ERROR_RESPONSE);
+    mockFetchGraphql.mockResolvedValue(MOCK_ERROR_RESPONSE);
 
     const result = await queryPostByUri('post-1');
 
@@ -80,7 +72,7 @@ describe('queryPostByUri', () => {
   });
 
   it('should throw error', async () => {
-    mockQuery.mockRejectedValue(MOCK_ERROR);
+    mockFetchGraphql.mockRejectedValue(MOCK_ERROR);
 
     await expect(queryPostByUri('post-1')).rejects.toEqual(MOCK_ERROR);
   });
