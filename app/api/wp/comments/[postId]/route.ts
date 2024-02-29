@@ -7,10 +7,13 @@ type RequestParams = {
   };
 };
 
-export async function GET(_req: NextRequest, { params }: RequestParams) {
+export async function GET(req: NextRequest, { params }: RequestParams) {
   const { postId } = params;
+  const { searchParams } = req.nextUrl;
+  const page = Number(searchParams.get('page')) || 1;
+  const size = Number(searchParams.get('size')) || 10;
   try {
-    const { data, errors } = await queryCommentsByPostId(postId);
+    const { data, errors } = await queryCommentsByPostId(postId, size, page);
 
     if (errors) {
       throw new Error(errors[0].message);

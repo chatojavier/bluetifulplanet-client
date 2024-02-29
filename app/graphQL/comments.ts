@@ -22,8 +22,16 @@ export const COMMENT_FIELDS = gql(`
 `);
 
 export const COMMENTS_BY_POST_ID = gql(`
-query commentsByPostId($contentId: ID, $first: Int = 10, $after: String = "") {
-  comments(where: {contentId: $contentId}, first: $first, after: $after) {
+query commentsByPostId($contentId: ID, $offsetPagination: OffsetPagination = {
+  offset: 0,
+  size: 10
+}) {
+  comments(where: {contentId: $contentId, offsetPagination: $offsetPagination}) {
+    pageInfo {
+      offsetPagination {
+        total
+      }
+    }
     nodes {
       ...CommentFields
     }

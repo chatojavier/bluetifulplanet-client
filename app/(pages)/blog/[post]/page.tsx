@@ -7,8 +7,8 @@ import HeaderInfo from '@app/components/HeaderInfo';
 import HeaderTitle from '@app/components/HeaderTitle';
 import TagsContainer from '@app/components/TagsContainer/TagsContainer';
 import { Metadata } from 'next';
+import PostComments from '@app/components/PostComments';
 import styles from './page.module.scss';
-import PostComments from './PostComments';
 
 export type PostProps = {
   params: {
@@ -101,7 +101,7 @@ const Post = async ({ params }: PostProps) => {
           <PostComments
             title={title as string}
             postId={postId.toString()}
-            commentCount={commentCount ?? 0}
+            initialCommentCount={commentCount ?? 0}
             initialComments={comments}
           />
         )}
