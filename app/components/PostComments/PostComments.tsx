@@ -39,12 +39,13 @@ const PostComments: FunctionComponent<PostCommentsProps> = ({
   const [isLoadingCreated, setLoading] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
   const sectionRef = useRef<HTMLElement>(null);
-  const totalPages = useRef<number>(1);
+  const limit = 10;
+  const totalPages = useRef<number>(initialCommentCount / limit);
 
   const getKey: SWRInfiniteKeyLoader = useCallback(
     (index, previousPageData) => {
       totalPages.current = Math.ceil(
-        (previousPageData?.commentCount ?? initialCommentCount) / 10
+        (previousPageData?.commentCount ?? initialCommentCount) / limit
       );
       if (index + 1 > totalPages.current) return null;
       return `${ApiRoutes.COMMENTS}/${postId}?page=${index + 1}`;

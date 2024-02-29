@@ -27,7 +27,7 @@ const CommentBox: FunctionComponent<PropsWithChildren<CommentBoxProps>> = ({
   const { author } = commentData || {};
   const { avatar, name } = author || {};
   return (
-    <div className="comment-box">
+    <div className="comment-box" data-testid="comment-box">
       <div
         className={`comment-box-container flex space-x-3 ${
           !showReplyForm ? 'mb-4' : 'mb-6'
