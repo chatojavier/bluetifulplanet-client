@@ -4,15 +4,22 @@ import fetchGraphql from '@app/utils/fetchGraphql';
 import { Comment, mapCommentData } from '../utils';
 
 const queryCommentsByPostId = async (
-  postId: string
-): Promise<ApiWpReturn<{ comments: Comment[] }>> => {
+  postId: string,
+  perPage = 10,
+  page = 1
+): Promise<ApiWpReturn<{ comments: Comment[]; commentCount: number }>> => {
   let commentsData;
 
   try {
+    const offset = (page - 1) * perPage;
     commentsData = await fetchGraphql(
       COMMENTS_BY_POST_ID,
       {
         contentId: postId.toString(),
+        offsetPagination: {
+          offset,
+          size: perPage,
+        },
       },
       {
         cache: 'no-store',
@@ -37,8 +44,10 @@ const queryCommentsByPostId = async (
     ? data.comments.nodes.map(mapCommentData)
     : [];
 
+  const commentCount = data?.comments?.pageInfo?.offsetPagination?.total ?? 0;
+
   return {
-    data: { comments },
+    data: { comments, commentCount },
     errors,
   };
 };

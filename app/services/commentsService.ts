@@ -10,9 +10,14 @@ export type CommentFields = {
   content: string;
 };
 
+export type GetCommentsByPostIdReturn = {
+  comments: Comment[];
+  commentCount: number;
+};
+
 const getCommentsByPostId = async (
   postId: string
-): Promise<{ comments: Comment[] }> => {
+): Promise<GetCommentsByPostIdReturn> => {
   if (!isBrowser()) {
     const queryCommentsByPostId = (
       await import('@app/api/wp/comments/[postId]/service')

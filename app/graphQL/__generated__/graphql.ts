@@ -1501,6 +1501,8 @@ export type CreateCommentPayload = {
 export type CreateGalleryInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The comment status for the object */
+  commentStatus?: InputMaybe<Scalars['String']['input']>;
   /** The content of the object */
   content?: InputMaybe<Scalars['String']['input']>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
@@ -2222,8 +2224,14 @@ export type EnqueuedStylesheetConnectionPageInfo = {
 };
 
 /** The gallery type */
-export type Gallery = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithContentEditor & NodeWithExcerpt & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & {
+export type Gallery = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node & NodeWithComments & NodeWithContentEditor & NodeWithExcerpt & NodeWithFeaturedImage & NodeWithTemplate & NodeWithTitle & Previewable & UniformResourceIdentifiable & {
   __typename?: 'Gallery';
+  /** The number of comments. Even though WPGraphQL denotes this field as an integer, in WordPress this field should be saved as a numeric string for compatibility. */
+  commentCount?: Maybe<Scalars['Int']['output']>;
+  /** Whether the comments are open or closed for this particular post. */
+  commentStatus?: Maybe<Scalars['String']['output']>;
+  /** Connection between the Gallery type and the Comment type */
+  comments?: Maybe<GalleryToCommentConnection>;
   /** The content of the post. */
   content?: Maybe<Scalars['String']['output']>;
   /** Connection between the ContentNode type and the ContentType type */
@@ -2297,6 +2305,16 @@ export type Gallery = ContentNode & DatabaseIdentifier & MenuItemLinkable & Node
   title?: Maybe<Scalars['String']['output']>;
   /** The unique resource identifier path */
   uri?: Maybe<Scalars['String']['output']>;
+};
+
+
+/** The gallery type */
+export type GalleryCommentsArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<GalleryToCommentConnectionWhereArgs>;
 };
 
 
@@ -2378,6 +2396,103 @@ export enum GalleryIdType {
   /** Identify a resource by the URI. */
   Uri = 'URI'
 }
+
+/** Connection between the Gallery type and the Comment type */
+export type GalleryToCommentConnection = CommentConnection & Connection & {
+  __typename?: 'GalleryToCommentConnection';
+  /** Edges for the GalleryToCommentConnection connection */
+  edges: Array<GalleryToCommentConnectionEdge>;
+  /** The nodes of the connection, without the edges */
+  nodes: Array<Comment>;
+  /** Information about pagination in a connection. */
+  pageInfo: GalleryToCommentConnectionPageInfo;
+};
+
+/** An edge in a connection */
+export type GalleryToCommentConnectionEdge = CommentConnectionEdge & Edge & {
+  __typename?: 'GalleryToCommentConnectionEdge';
+  /** A cursor for use in pagination */
+  cursor?: Maybe<Scalars['String']['output']>;
+  /** The item at the end of the edge */
+  node: Comment;
+};
+
+/** Page Info on the &quot;GalleryToCommentConnection&quot; */
+export type GalleryToCommentConnectionPageInfo = CommentConnectionPageInfo & PageInfo & WpPageInfo & {
+  __typename?: 'GalleryToCommentConnectionPageInfo';
+  /** When paginating forwards, the cursor to continue. */
+  endCursor?: Maybe<Scalars['String']['output']>;
+  /** When paginating forwards, are there more items? */
+  hasNextPage: Scalars['Boolean']['output'];
+  /** When paginating backwards, are there more items? */
+  hasPreviousPage: Scalars['Boolean']['output'];
+  /** Get information about the offset pagination state in the current connection */
+  offsetPagination?: Maybe<OffsetPaginationPageInfo>;
+  /** When paginating backwards, the cursor to continue. */
+  startCursor?: Maybe<Scalars['String']['output']>;
+};
+
+/** Arguments for filtering the GalleryToCommentConnection connection */
+export type GalleryToCommentConnectionWhereArgs = {
+  /** Comment author email address. */
+  authorEmail?: InputMaybe<Scalars['String']['input']>;
+  /** Array of author IDs to include comments for. */
+  authorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of author IDs to exclude comments for. */
+  authorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Comment author URL. */
+  authorUrl?: InputMaybe<Scalars['String']['input']>;
+  /** Array of comment IDs to include. */
+  commentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of IDs of users whose unapproved comments will be returned by the query regardless of status. */
+  commentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Include comments of a given type. */
+  commentType?: InputMaybe<Scalars['String']['input']>;
+  /** Include comments from a given array of comment types. */
+  commentTypeIn?: InputMaybe<Array<InputMaybe<Scalars['String']['input']>>>;
+  /** Exclude comments from a given array of comment types. */
+  commentTypeNotIn?: InputMaybe<Scalars['String']['input']>;
+  /** Content object author ID to limit results by. */
+  contentAuthor?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of author IDs to retrieve comments for. */
+  contentAuthorIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of author IDs *not* to retrieve comments for. */
+  contentAuthorNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Limit results to those affiliated with a given content object ID. */
+  contentId?: InputMaybe<Scalars['ID']['input']>;
+  /** Array of content object IDs to include affiliated comments for. */
+  contentIdIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of content object IDs to exclude affiliated comments for. */
+  contentIdNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Content object name (i.e. slug ) to retrieve affiliated comments for. */
+  contentName?: InputMaybe<Scalars['String']['input']>;
+  /** Content Object parent ID to retrieve affiliated comments for. */
+  contentParent?: InputMaybe<Scalars['Int']['input']>;
+  /** Array of content object statuses to retrieve affiliated comments for. Pass 'any' to match any value. */
+  contentStatus?: InputMaybe<Array<InputMaybe<PostStatusEnum>>>;
+  /** Content object type or array of types to retrieve affiliated comments for. Pass 'any' to match any value. */
+  contentType?: InputMaybe<Array<InputMaybe<ContentTypeEnum>>>;
+  /** Array of IDs or email addresses of users whose unapproved comments will be returned by the query regardless of $status. Default empty */
+  includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Karma score to retrieve matching comments for. */
+  karma?: InputMaybe<Scalars['Int']['input']>;
+  /** The cardinality of the order of the connection */
+  order?: InputMaybe<OrderEnum>;
+  /** Field to order the comments by. */
+  orderby?: InputMaybe<CommentsConnectionOrderbyEnum>;
+  /** Parent ID of comment to retrieve children of. */
+  parent?: InputMaybe<Scalars['Int']['input']>;
+  /** Array of parent IDs of comments to retrieve children for. */
+  parentIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Array of parent IDs of comments *not* to retrieve children for. */
+  parentNotIn?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
+  /** Search term(s) to retrieve matching comments for. */
+  search?: InputMaybe<Scalars['String']['input']>;
+  /** Comment status to limit results by. */
+  status?: InputMaybe<Scalars['String']['input']>;
+  /** Include comments for a specific user ID. */
+  userId?: InputMaybe<Scalars['ID']['input']>;
+};
 
 /** Connection between the Gallery type and the gallery type */
 export type GalleryToPreviewConnectionEdge = Edge & GalleryConnectionEdge & OneToOneConnection & {
@@ -7347,6 +7462,8 @@ export type RootQueryToCommentConnectionWhereArgs = {
   includeUnapproved?: InputMaybe<Array<InputMaybe<Scalars['ID']['input']>>>;
   /** Karma score to retrieve matching comments for. */
   karma?: InputMaybe<Scalars['Int']['input']>;
+  /** Paginate Comments with offsets */
+  offsetPagination?: InputMaybe<OffsetPagination>;
   /** The cardinality of the order of the connection */
   order?: InputMaybe<OrderEnum>;
   /** Field to order the comments by. */
@@ -9523,6 +9640,8 @@ export type UpdateCommentPayload = {
 export type UpdateGalleryInput = {
   /** This is an ID that can be passed to a mutation by the client to track the progress of mutations and catch possible duplicate mutation submissions. */
   clientMutationId?: InputMaybe<Scalars['String']['input']>;
+  /** The comment status for the object */
+  commentStatus?: InputMaybe<Scalars['String']['input']>;
   /** The content of the object */
   content?: InputMaybe<Scalars['String']['input']>;
   /** The date of the object. Preferable to enter as year/month/day (e.g. 01/31/2017) as it will rearrange date as fit if it is not specified. Incomplete dates may have unintended results for example, "2017" as the input will use current date with timestamp 20:17  */
@@ -10753,12 +10872,11 @@ export type CommentFieldsFragment = { __typename?: 'Comment', id: string, databa
 
 export type CommentsByPostIdQueryVariables = Exact<{
   contentId?: InputMaybe<Scalars['ID']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  after?: InputMaybe<Scalars['String']['input']>;
+  offsetPagination?: InputMaybe<OffsetPagination>;
 }>;
 
 
-export type CommentsByPostIdQuery = { __typename?: 'RootQuery', comments?: { __typename?: 'RootQueryToCommentConnection', nodes: Array<{ __typename?: 'Comment', id: string, databaseId: number, content?: string | null, date?: string | null, parentId?: string | null, status?: CommentStatusEnum | null, author?: { __typename?: 'CommentToCommenterConnectionEdge', node: { __typename?: 'CommentAuthor', name?: string | null, avatar?: { __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null } | null } | { __typename?: 'User', name?: string | null, avatar?: { __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null } | null } } | null }> } | null };
+export type CommentsByPostIdQuery = { __typename?: 'RootQuery', comments?: { __typename?: 'RootQueryToCommentConnection', pageInfo: { __typename?: 'RootQueryToCommentConnectionPageInfo', offsetPagination?: { __typename?: 'OffsetPaginationPageInfo', total?: number | null } | null }, nodes: Array<{ __typename?: 'Comment', id: string, databaseId: number, content?: string | null, date?: string | null, parentId?: string | null, status?: CommentStatusEnum | null, author?: { __typename?: 'CommentToCommenterConnectionEdge', node: { __typename?: 'CommentAuthor', name?: string | null, avatar?: { __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null } | null } | { __typename?: 'User', name?: string | null, avatar?: { __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null } | null } } | null }> } | null };
 
 export type CreateCommentMutationVariables = Exact<{
   author?: InputMaybe<Scalars['String']['input']>;
@@ -11082,8 +11200,13 @@ export const MediaTagFieldsFragmentDoc = new TypedDocumentString(`
 }
     `, {"fragmentName":"MediaTagFields"}) as unknown as TypedDocumentString<MediaTagFieldsFragment, unknown>;
 export const CommentsByPostIdDocument = new TypedDocumentString(`
-    query commentsByPostId($contentId: ID, $first: Int = 10, $after: String = "") {
-  comments(where: {contentId: $contentId}, first: $first, after: $after) {
+    query commentsByPostId($contentId: ID, $offsetPagination: OffsetPagination = {offset: 0, size: 10}) {
+  comments(where: {contentId: $contentId, offsetPagination: $offsetPagination}) {
+    pageInfo {
+      offsetPagination {
+        total
+      }
+    }
     nodes {
       ...CommentFields
     }

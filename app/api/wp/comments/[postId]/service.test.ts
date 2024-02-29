@@ -74,6 +74,7 @@ describe('queryCommentsByPostId', () => {
         },
       })),
     },
+    commentCount: 0,
   };
 
   const MOCK_QUERY_RESPONSE = {
@@ -98,6 +99,10 @@ describe('queryCommentsByPostId', () => {
       COMMENTS_BY_POST_ID,
       {
         contentId: MOCK_POST_ID,
+        offsetPagination: {
+          offset: 0,
+          size: 10,
+        },
       },
       { cache: 'no-store' }
     );
@@ -111,6 +116,7 @@ describe('queryCommentsByPostId', () => {
     expect(result).toEqual({
       data: {
         comments: MOCK_COMMENTS,
+        commentCount: 0,
       },
       errors: [],
     });

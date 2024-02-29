@@ -15,7 +15,7 @@ import * as types from './graphql';
  */
 const documents = {
     "\n  fragment CommentFields on Comment {\n    id\n    databaseId\n    content\n    date\n    parentId\n    status\n    author {\n      node {\n        name\n        avatar {\n          url\n          width\n          height\n        }\n      }\n    }\n  }\n": types.CommentFieldsFragmentDoc,
-    "\nquery commentsByPostId($contentId: ID, $first: Int = 10, $after: String = \"\") {\n  comments(where: {contentId: $contentId}, first: $first, after: $after) {\n    nodes {\n      ...CommentFields\n    }\n  }\n}\n": types.CommentsByPostIdDocument,
+    "\nquery commentsByPostId($contentId: ID, $offsetPagination: OffsetPagination = {\n  offset: 0,\n  size: 10\n}) {\n  comments(where: {contentId: $contentId, offsetPagination: $offsetPagination}) {\n    pageInfo {\n      offsetPagination {\n        total\n      }\n    }\n    nodes {\n      ...CommentFields\n    }\n  }\n}\n": types.CommentsByPostIdDocument,
     "\n  mutation CreateComment($author: String, $authorEmail: String, $clientMutationId: String, $commentOn: Int, $content: String, $authorUrl: String = \"\", $parent: ID = \"\") {\n    createComment(\n      input: {author: $author, authorEmail: $authorEmail, clientMutationId: $clientMutationId, commentOn: $commentOn, content: $content, authorUrl: $authorUrl, parent: $parent}\n    ) {\n      success\n      comment {\n        ...CommentFields\n      }\n      clientMutationId\n    }\n  }\n": types.CreateCommentDocument,
     "\n  query queryGalleriesBasic {\n    galleries {\n      nodes {\n        id\n        slug\n        status\n      }\n    }\n  }\n": types.QueryGalleriesBasicDocument,
     "\n  query queryGalleryBySlug($slug: ID!) {\n    gallery(id: $slug, idType: SLUG) {\n      id\n      title\n      slug\n      status\n      gallerySettings {\n        galleryPhotos {\n          databaseId\n        }\n      }\n    }\n  }\n": types.QueryGalleryBySlugDocument,
@@ -51,7 +51,7 @@ export function gql(source: "\n  fragment CommentFields on Comment {\n    id\n  
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\nquery commentsByPostId($contentId: ID, $first: Int = 10, $after: String = \"\") {\n  comments(where: {contentId: $contentId}, first: $first, after: $after) {\n    nodes {\n      ...CommentFields\n    }\n  }\n}\n"): typeof import('./graphql').CommentsByPostIdDocument;
+export function gql(source: "\nquery commentsByPostId($contentId: ID, $offsetPagination: OffsetPagination = {\n  offset: 0,\n  size: 10\n}) {\n  comments(where: {contentId: $contentId, offsetPagination: $offsetPagination}) {\n    pageInfo {\n      offsetPagination {\n        total\n      }\n    }\n    nodes {\n      ...CommentFields\n    }\n  }\n}\n"): typeof import('./graphql').CommentsByPostIdDocument;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
