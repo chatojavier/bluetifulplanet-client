@@ -13,6 +13,8 @@ import useOnScreen from '@app/hooks/useOnScreen';
 import { Breakpoint } from '@app/types/general';
 import { MediaItem } from '@app/api/wp/media-items/utils';
 import MediaItemsService from '@app/services/MediaItemsService';
+import { preload } from 'swr';
+import NextImage from 'next/image';
 import Spinner from '../Spinner/Spinner';
 import { getItemsPerPage, concatColumns, concatNestedArray } from './utils';
 import GalleryImage from '../GalleryImage/GalleryImage';
@@ -35,11 +37,14 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [preloadImages, setPreloadImages] = useState<MediaItem[]>([]);
   const [scrollRef, isVisible] = useOnScreen({
     threshold: 0,
   });
   const { breakpoint } = useWindowSize();
   const totalPages = Math.ceil(photosId.length / photosPerPage);
+  const imageSizes =
+    '(min-width: 1280px) 25vw, (min-width: 1024px) 33.33vw, (min-width: 640px) 50vw, 100vw';
 
   const {
     data,
@@ -59,21 +64,6 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
       revalidateIfStale: false,
     }
   );
-
-  useEffect(() => {
-    const timeout = setTimeout(async () => {
-      if (
-        isVisible &&
-        !isLoading &&
-        pageSize < totalPages &&
-        breakpoint != null &&
-        !(typeof data?.[pageSize - 1] === 'undefined')
-      ) {
-        await setSize(pageSize + 1);
-      }
-    }, 100);
-    return () => clearTimeout(timeout);
-  }, [breakpoint, data, isLoading, isVisible, pageSize, setSize, totalPages]);
 
   const columns = useMemo(() => {
     const numColumns = {
@@ -142,6 +132,39 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
     ]
   );
 
+  useEffect(() => {
+    const timeout = setTimeout(async () => {
+      if (
+        isVisible &&
+        !isLoading &&
+        pageSize < totalPages &&
+        breakpoint != null &&
+        !(typeof data?.[pageSize - 1] === 'undefined')
+      ) {
+        await setSize(pageSize + 1);
+      }
+    }, 100);
+    return () => clearTimeout(timeout);
+  }, [breakpoint, data, isLoading, isVisible, pageSize, setSize, totalPages]);
+
+  useEffect(() => {
+    const runPreloadImages = async () => {
+      const preloadPage = pageSize + 1;
+      if (preloadPage <= totalPages) {
+        const imagesToPreload = getItemsPerPage(
+          photosId,
+          pageSize,
+          photosPerPage
+        );
+        const { mediaItems } = await preload(imagesToPreload, key =>
+          MediaItemsService.getMediaItemsById(key)
+        );
+        setPreloadImages(mediaItems);
+      }
+    };
+    runPreloadImages();
+  }, [pageSize]);
+
   return (
     <div className="gallery-grid" data-testid="gallery-grid">
       <div className="flex mx-3 sm:gap-4 min-h-screen">
@@ -160,7 +183,7 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
                     alt={image.altText || ''}
                     width={image.mediaDetails?.width || 0}
                     height={image.mediaDetails?.height || 0}
-                    sizes="(min-width: 1280px) 25vw, (min-width: 1024px) 33.33vw, (min-width: 640px) 50vw, 100vw"
+                    sizes={imageSizes}
                     placeholder="blur"
                     blurDataURL="/blurImage.jpg"
                     className="cursor-pointer"
@@ -190,6 +213,21 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
         hasPrev={currentImageIndex > 0}
         hasNext={currentImageIndex < (notNestedDataArray?.length || 0) - 1}
       />
+      <div className="preload-images | hidden">
+        {preloadImages.map(image =>
+          image.sourceUrl ? (
+            <NextImage
+              key={image.id}
+              src={image.sourceUrl}
+              alt={image.altText || ''}
+              width={image.mediaDetails?.width || 0}
+              height={image.mediaDetails?.height || 0}
+              sizes={imageSizes}
+              priority
+            />
+          ) : null
+        )}
+      </div>
     </div>
   );
 };

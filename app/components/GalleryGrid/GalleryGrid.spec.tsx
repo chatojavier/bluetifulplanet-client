@@ -6,11 +6,25 @@ import useSWRInfinite from 'swr/infinite';
 import userEvent from '@testing-library/user-event';
 import useOnScreen from '@app/hooks/useOnScreen';
 import useWindowSize from '@app/hooks/useWindowSize';
+import { preload } from 'swr';
+import { DisplayOrientation } from '@app/types/general';
+import MediaItemsService from '@app/services/MediaItemsService';
 import GalleryGrid from './GalleryGrid';
 
 jest.mock('swr/infinite', () => jest.fn());
 jest.mock('@app/hooks/useOnScreen', () => jest.fn());
 jest.mock('@app/hooks/useWindowSize', () => jest.fn());
+jest.mock('@app/services/MediaItemsService', () => ({
+  __esModule: true,
+  default: {
+    getMediaItemsById: jest.fn(),
+  },
+}));
+jest.mock('swr', () => ({
+  __esModule: true,
+  default: jest.fn(),
+  preload: jest.fn(),
+}));
 
 const createPhotosId = (length: number): string[] =>
   Array.from({ length }, (_, i) => `image${i + 1}`);
@@ -53,21 +67,38 @@ const getFetchedData = (ids: string[]) => ({
 });
 
 const swrMockReturnValue = {
-  data: null,
+  data: undefined,
   isLoading: false,
   size: 1,
   setSize: jest.fn(),
+  error: null,
+  mutate: jest.fn(),
+  isValidating: false,
+};
+
+const windowSizeMock = {
+  size: [1920, 1080] as [number, number],
+  breakpoint: 0,
+  windowOrientation: 'landscape' as DisplayOrientation,
+  isMobile: false,
 };
 
 describe('GalleryGrid', () => {
   const photosId = createPhotosId(5);
-  const photosPerPage = 10;
-  const mockUseOnScreen = useOnScreen as jest.Mock;
-  const mockUseWindowSize = useWindowSize as jest.Mock;
+  const mockUseOnScreen = useOnScreen as jest.MockedFunction<
+    typeof useOnScreen
+  >;
+  const mockUseWindowSize = useWindowSize as jest.MockedFunction<
+    typeof useWindowSize
+  >;
+  const mockUseSWRInfinite = useSWRInfinite as jest.MockedFunction<
+    typeof useSWRInfinite
+  >;
+  const mockPreload = preload as jest.MockedFunction<typeof preload>;
 
   beforeEach(() => {
-    mockUseOnScreen.mockReturnValue([null, false]);
-    mockUseWindowSize.mockReturnValue({ breakpoint: 0 });
+    mockUseOnScreen.mockReturnValue([{ current: null }, false]);
+    mockUseWindowSize.mockReturnValue({ ...windowSizeMock, breakpoint: 0 });
   });
 
   afterEach(() => {
@@ -75,7 +106,7 @@ describe('GalleryGrid', () => {
   });
 
   it('should render the component without errors', () => {
-    (useSWRInfinite as jest.Mock).mockReturnValue(swrMockReturnValue);
+    mockUseSWRInfinite.mockReturnValue(swrMockReturnValue);
     render(<GalleryGrid photosId={photosId} />);
     expect(screen.getByTestId('gallery-grid')).toBeInTheDocument();
   });
@@ -98,8 +129,8 @@ describe('GalleryGrid', () => {
 
   it('should pass the correct fetcher function to useSWRInfinite', () => {
     render(<GalleryGrid photosId={photosId} />);
-    const fetcherFn = (useSWRInfinite as jest.Mock).mock.calls[0][0];
-    expect(fetcherFn(0)).toEqual([
+    const fetcherFn = mockUseSWRInfinite.mock.calls[0][0];
+    expect(fetcherFn(0, undefined)).toEqual([
       'image1',
       'image2',
       'image3',
@@ -109,7 +140,7 @@ describe('GalleryGrid', () => {
   });
 
   it('should display the loading spinner while data is being fetched', () => {
-    (useSWRInfinite as jest.Mock).mockReturnValue({
+    mockUseSWRInfinite.mockReturnValue({
       ...swrMockReturnValue,
       isLoading: true,
     });
@@ -118,7 +149,7 @@ describe('GalleryGrid', () => {
   });
 
   it('should display the gallery images when data is fetched', () => {
-    (useSWRInfinite as jest.Mock).mockReturnValue({
+    mockUseSWRInfinite.mockReturnValue({
       ...swrMockReturnValue,
       data: [getFetchedData(photosId)],
     });
@@ -129,7 +160,7 @@ describe('GalleryGrid', () => {
   });
 
   it('should display the gallery modal when a gallery image is clicked', async () => {
-    (useSWRInfinite as jest.Mock).mockReturnValue({
+    mockUseSWRInfinite.mockReturnValue({
       ...swrMockReturnValue,
       data: [getFetchedData(photosId)],
     });
@@ -161,7 +192,7 @@ describe('GalleryGrid', () => {
   });
 
   it('should change the gallery image when the next and prev button is clicked', async () => {
-    (useSWRInfinite as jest.Mock).mockReturnValue({
+    mockUseSWRInfinite.mockReturnValue({
       ...swrMockReturnValue,
       data: [getFetchedData(photosId)],
     });
@@ -238,10 +269,14 @@ describe('GalleryGrid', () => {
       'image20',
     ];
     const useSWRInfiniteMock = useSWRInfinite as jest.Mock;
-    mockUseOnScreen.mockReturnValue([null, true]);
+    mockUseOnScreen.mockReturnValue([{ current: null }, true]);
     useSWRInfiniteMock.mockReturnValue({
       ...swrMockReturnValue,
       data: [getFetchedData(photosIdUpdated.slice(0, 10))],
+    });
+    mockPreload.mockImplementation((key, callback) => {
+      callback(key);
+      return Promise.resolve({ mediaItems: [] });
     });
     render(
       <GalleryGrid
@@ -252,6 +287,13 @@ describe('GalleryGrid', () => {
     );
     await waitFor(() => {
       expect(swrMockReturnValue.setSize).toHaveBeenCalledWith(2);
+      expect(mockPreload).toHaveBeenCalledWith(
+        photosIdUpdated.slice(10),
+        expect.any(Function)
+      );
+      expect(MediaItemsService.getMediaItemsById).toHaveBeenCalledWith(
+        photosIdUpdated.slice(10)
+      );
     });
   });
 });
