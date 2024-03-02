@@ -10901,7 +10901,7 @@ export type QueryGalleryBySlugQueryVariables = Exact<{
 }>;
 
 
-export type QueryGalleryBySlugQuery = { __typename?: 'RootQuery', gallery?: { __typename?: 'Gallery', id: string, title?: string | null, slug?: string | null, status?: string | null, gallerySettings?: { __typename?: 'Gallery_Gallerysettings', galleryPhotos?: Array<{ __typename?: 'MediaItem', databaseId: number } | null> | null } | null } | null };
+export type QueryGalleryBySlugQuery = { __typename?: 'RootQuery', gallery?: { __typename?: 'Gallery', id: string, databaseId: number, title?: string | null, slug?: string | null, status?: string | null, commentStatus?: string | null, commentCount?: number | null, gallerySettings?: { __typename?: 'Gallery_Gallerysettings', galleryPhotos?: Array<{ __typename?: 'MediaItem', databaseId: number } | null> | null } | null, comments?: { __typename?: 'GalleryToCommentConnection', nodes: Array<{ __typename?: 'Comment', id: string, databaseId: number, content?: string | null, date?: string | null, parentId?: string | null, status?: CommentStatusEnum | null, author?: { __typename?: 'CommentToCommenterConnectionEdge', node: { __typename?: 'CommentAuthor', name?: string | null, avatar?: { __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null } | null } | { __typename?: 'User', name?: string | null, avatar?: { __typename?: 'Avatar', url?: string | null, width?: number | null, height?: number | null } | null } } | null }> } | null } | null };
 
 export type MediaItemFieldsFragment = { __typename?: 'MediaItem', altText?: string | null, id: string, sourceUrl?: string | null, mediaDetails?: { __typename?: 'MediaDetails', height?: number | null, width?: number | null } | null };
 
@@ -11275,6 +11275,7 @@ export const QueryGalleryBySlugDocument = new TypedDocumentString(`
     query queryGalleryBySlug($slug: ID!) {
   gallery(id: $slug, idType: SLUG) {
     id
+    databaseId
     title
     slug
     status
@@ -11283,9 +11284,33 @@ export const QueryGalleryBySlugDocument = new TypedDocumentString(`
         databaseId
       }
     }
+    commentStatus
+    commentCount
+    comments {
+      nodes {
+        ...CommentFields
+      }
+    }
   }
 }
-    `) as unknown as TypedDocumentString<QueryGalleryBySlugQuery, QueryGalleryBySlugQueryVariables>;
+    fragment CommentFields on Comment {
+  id
+  databaseId
+  content
+  date
+  parentId
+  status
+  author {
+    node {
+      name
+      avatar {
+        url
+        width
+        height
+      }
+    }
+  }
+}`) as unknown as TypedDocumentString<QueryGalleryBySlugQuery, QueryGalleryBySlugQueryVariables>;
 export const MediaItemsByIdDocument = new TypedDocumentString(`
     query mediaItemsById($in: [ID]) {
   mediaItems(where: {in: $in}, first: 100) {

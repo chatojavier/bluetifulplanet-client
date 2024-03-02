@@ -1,28 +1,37 @@
+/* eslint-disable no-console */
 import { NextRequest, NextResponse } from 'next/server';
 import mutatePostComment, { MutatePostCommentParams } from './service';
 
 export async function POST(req: NextRequest) {
-  const body: MutatePostCommentParams = await req.json();
-
   try {
+    const body: MutatePostCommentParams = await req.json();
+
     const { data, errors } = await mutatePostComment(body);
 
     if (errors) {
-      throw new Error(errors[0].message);
+      console.error(
+        '[comments][POST] Get errors from mutation: %s',
+        errors[0].message
+      );
+      return NextResponse.json({ message: errors[0].message }, { status: 400 });
     }
 
     if (!data) {
-      throw new Error('Failed to load data');
+      console.error('[comments][POST] Failed to get data from mutation');
+      return NextResponse.json(
+        { message: 'Failed to post comment' },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json(data);
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error('[api/wp/coments] error ', error);
-
-    return new Response(JSON.stringify(error), {
-      status: 500,
-      statusText: 'Server Error',
-    });
+  } catch (e) {
+    console.error(
+      `[comments][POST] Failed to post comment: ${(e as Error).message}`
+    );
+    return NextResponse.json(
+      { message: (e as Error).message ?? 'Failed to post comment' },
+      { status: 500 }
+    );
   }
 }

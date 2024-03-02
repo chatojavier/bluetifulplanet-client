@@ -16,6 +16,7 @@ describe('queryGalleryBySlug', () => {
     gallery: {
       __typename: 'Gallery',
       id: '123',
+      databaseId: 123,
       title: 'Example Gallery',
       slug: MOCK_GALLERY_SLUG,
       status: 'publish',
@@ -42,10 +43,12 @@ describe('queryGalleryBySlug', () => {
     data: {
       gallery: {
         id: '123',
+        databaseId: 123,
         title: 'Example Gallery',
         slug: MOCK_GALLERY_SLUG,
         status: 'publish',
         photosId: ['123', '456', '789'],
+        comments: [],
       },
     },
     errors: undefined,

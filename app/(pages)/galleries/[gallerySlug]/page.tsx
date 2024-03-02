@@ -1,4 +1,5 @@
 import GalleryGrid from '@app/components/GalleryGrid/GalleryGrid';
+import PostComments from '@app/components/PostComments/PostComments';
 import GalleriesService from '@app/services/GalleriesService';
 import MediaItemsService from '@app/services/MediaItemsService';
 import { notFound } from 'next/navigation';
@@ -16,7 +17,7 @@ export const generateMetadata = async ({
 }) => {
   const { gallery = null } =
     params.gallerySlug && !Array.isArray(params.gallerySlug)
-      ? await GalleriesService.getGalleryBySlug(params.gallerySlug)
+      ? (await GalleriesService.getGalleryBySlug(params.gallerySlug)) || {}
       : {};
 
   const { title } = gallery || {};
@@ -45,7 +46,15 @@ const getFallbackGalleryData = async (photosId: string[]) => {
 
 const Gallery = async ({ params }: GalleryProps) => {
   const { gallery } = await getGalleryData(params);
-  const { title, id, photosId } = gallery || {};
+  const {
+    title,
+    id,
+    photosId,
+    commentStatus,
+    comments,
+    commentCount,
+    databaseId: galleryId,
+  } = gallery || {};
 
   const photosPerPage = 15;
   const idsPageOne = photosId ? photosId.slice(0, photosPerPage) : [];
@@ -58,6 +67,16 @@ const Gallery = async ({ params }: GalleryProps) => {
     <div id={id} className="gallery | py-4">
       <h1 className="sr-only">{title}</h1>
       {photosId && <GalleryGrid photosId={photosId} fallback={fallback} />}
+      {galleryId && commentStatus === 'open' && (
+        <div className="comments-wrapper | mt-16">
+          <PostComments
+            initialComments={comments}
+            initialCommentCount={commentCount || 0}
+            title={title as string}
+            postId={galleryId.toString()}
+          />
+        </div>
+      )}
     </div>
   );
 };

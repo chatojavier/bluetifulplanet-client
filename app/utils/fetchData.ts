@@ -21,6 +21,10 @@ const post = async <T = unknown>(
 
   const data: T = await res.json();
 
+  if (!res.ok) {
+    throw new Error((data as Error).message ?? res.statusText);
+  }
+
   return data;
 };
 
@@ -34,6 +38,10 @@ const get = async <T = unknown>(url: string, init?: CustomInit): Promise<T> => {
   });
 
   const data: T = await res.json();
+
+  if (!res.ok) {
+    throw new Error((data as Error).message ?? res.statusText);
+  }
 
   return data;
 };

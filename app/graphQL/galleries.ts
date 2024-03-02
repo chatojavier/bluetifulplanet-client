@@ -16,12 +16,20 @@ export const QUERY_GALLERY_BY_SLUG = gql(`
   query queryGalleryBySlug($slug: ID!) {
     gallery(id: $slug, idType: SLUG) {
       id
+      databaseId
       title
       slug
       status
       gallerySettings {
         galleryPhotos {
           databaseId
+        }
+      }
+      commentStatus
+      commentCount
+      comments {
+        nodes {
+          ...CommentFields
         }
       }
     }

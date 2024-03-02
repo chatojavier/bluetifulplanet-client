@@ -117,7 +117,7 @@ const PostComments: FunctionComponent<PostCommentsProps> = ({
           { revalidate: false }
         );
       } else {
-        throw new Error('Comment was not published, try again');
+        throw new Error('Sorry, an error occurred.');
       }
     } catch (error) {
       setLoading(false);
@@ -132,6 +132,7 @@ const PostComments: FunctionComponent<PostCommentsProps> = ({
     <section
       id="post-comments"
       className="post-comments | max-w-5xl m-auto px-4 md:px-12 pb-18"
+      data-testid="post-comments"
       ref={sectionRef}
     >
       <div className="comments-container | pt-11 pb-11 border-t border-gray-400">
