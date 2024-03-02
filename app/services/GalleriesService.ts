@@ -3,7 +3,6 @@ import { ApiRoutes } from '@app/api/api.types';
 import { Gallery, GalleryBasic } from '@api/wp/galleries/utils';
 import { isBrowser } from '@app/utils/general';
 import queryAllGalleriesBasic from '@app/api/wp/galleries/basic/service';
-import queryGalleryBySlug from '@app/api/wp/galleries/[slug]/service';
 
 const getAllGalleriesBasic = async () => {
   if (!isBrowser()) {
@@ -21,7 +20,9 @@ const getAllGalleriesBasic = async () => {
 
 const getGalleryBySlug = async (gallerySlug: string) => {
   if (!isBrowser()) {
-    const { data, errors } = await queryGalleryBySlug(gallerySlug);
+    const { data, errors } = await import(
+      '@app/api/wp/galleries/[slug]/service'
+    ).then(module => module.default(gallerySlug));
     if (errors) {
       throw new Error(errors[0].message);
     }

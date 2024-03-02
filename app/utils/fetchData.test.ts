@@ -9,6 +9,7 @@ describe('post', () => {
       Promise.resolve({
         json: () => Promise.resolve({ message: 'Success' }),
         status: 200,
+        ok: true,
       })
     );
   });

@@ -72,23 +72,11 @@ export type PartialDeepOmit<T, K> = T extends Primitive
         : never;
     }>;
 
-type Input = {
-  __typename: string;
-  a: string;
-  nested: {
-    __typename: string;
-    b: string;
-  };
-  nestedArray: Array<{
-    __typename: string;
-    b: string;
-  }>;
-  nestedTuple: [
-    {
-      __typename: string;
-      b: string;
-    }
-  ];
-};
+export type WithOptional<T, K extends keyof T> = Omit<T, K> &
+  Partial<Pick<T, K>>;
 
-export type InputWithoutKey = DeepOmit<Input, '__typename'>;
+export type WithRequired<T, K extends keyof T> = Omit<T, K> &
+  Required<Pick<T, K>>;
+
+export type PartialExcept<T, K extends keyof T> = Partial<Omit<T, K>> &
+  Pick<T, K>;

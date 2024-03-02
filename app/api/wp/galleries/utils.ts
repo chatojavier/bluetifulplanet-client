@@ -1,8 +1,9 @@
-import { DeepOmit } from '@app/types/general';
+import { DeepOmit, PartialExcept } from '@app/types/general';
 import {
   QueryGalleriesBasicQuery,
   QueryGalleryBySlugQuery,
 } from '@app/graphql/__generated__/graphql';
+import { Comment, mapCommentData } from '../comments/utils';
 
 type QueryGallery = NonNullable<QueryGalleryBySlugQuery['gallery']>;
 
@@ -11,24 +12,26 @@ export type GalleryBasic = DeepOmit<
   '__typename'
 >;
 
-export type Gallery = DeepOmit<
-  Omit<QueryGallery, 'gallerySettings'> & {
-    photosId: string[];
-  },
-  '__typename'
+export type Gallery = PartialExcept<
+  DeepOmit<
+    Omit<QueryGallery, 'gallerySettings' | 'comments'> & {
+      photosId: string[];
+      comments: Comment[];
+    },
+    '__typename'
+  >,
+  'id' | 'databaseId'
 >;
 
 export const mapGallery = (gallery: QueryGallery): Gallery => {
-  const { id, title, slug, status, gallerySettings } = gallery;
+  const { __typename, gallerySettings, comments, ...rest } = gallery;
 
   return {
-    id,
-    title,
-    slug,
-    status,
+    ...rest,
     photosId:
       gallerySettings?.galleryPhotos?.map(photo =>
         photo?.databaseId ? photo?.databaseId.toString() : ''
       ) ?? [],
+    comments: comments?.nodes.map(mapCommentData) ?? [],
   };
 };

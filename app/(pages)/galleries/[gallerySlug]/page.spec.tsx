@@ -1,9 +1,11 @@
+/* eslint-disable sonarjs/no-duplicate-string */
 import GalleriesService from '@app/services/GalleriesService';
 import { render, screen, waitFor } from '@testing-library/react';
 import { notFound } from 'next/navigation';
 import MediaItemsService from '@app/services/MediaItemsService';
 import { act } from 'react-dom/test-utils';
 import { MediaItem } from '@app/api/wp/media-items/utils';
+import { CommentStatusEnum } from '@app/graphql/__generated__/graphql';
 import Gallery, { generateStaticParams } from './page';
 
 type GalleryObject = NonNullable<
@@ -68,11 +70,15 @@ window.IntersectionObserver = MockIntersectionObserver;
 describe('Gallery component', () => {
   const galleryData: GalleryObject = {
     gallery: {
-      photosId: ['photo01', 'photo02', 'photo03', 'photo04', 'photo05'],
       id: 'gallery01',
+      databaseId: 1,
+      photosId: ['photo01', 'photo02', 'photo03', 'photo04', 'photo05'],
       title: 'Test Gallery',
       slug: 'test-page-slug',
       status: 'publish',
+      commentStatus: 'open',
+      comments: [],
+      commentCount: 0,
     },
   };
 
@@ -171,6 +177,115 @@ describe('Gallery component', () => {
     await waitFor(() => {
       expect(notFound).toHaveBeenCalled();
     });
+  });
+
+  it('should render comments if commentStatus is open', async () => {
+    const galleryDataUpdated = {
+      ...galleryData,
+      gallery: {
+        ...galleryData.gallery,
+        commentStatus: 'open',
+        commentCount: 2,
+        comments: [
+          {
+            id: 'comment01',
+            databaseId: 1,
+            status: CommentStatusEnum.Approve,
+            parentId: undefined,
+            date: '2021-01-01',
+            content: 'Test comment 1',
+            author: {
+              name: 'Test Author 1',
+              avatar: {
+                url: '/avatar01.jpg',
+                height: 100,
+                width: 100,
+              },
+            },
+          },
+          {
+            id: 'comment02',
+            databaseId: 2,
+            status: CommentStatusEnum.Approve,
+            parentId: 'comment01',
+            date: '2021-01-02',
+            content: 'Test comment 2',
+            author: {
+              name: 'Test Author 2',
+              avatar: {
+                url: '/avatar02.jpg',
+                height: 100,
+                width: 100,
+              },
+            },
+          },
+        ],
+      },
+    } as GalleryObject;
+
+    jest
+      .spyOn(GalleriesService, 'getGalleryBySlug')
+      .mockResolvedValue(galleryDataUpdated);
+    jest
+      .spyOn(MediaItemsService, 'getMediaItemsById')
+      .mockResolvedValue(images);
+
+    await renderGallery();
+
+    expect(await screen.findByText('2 Thoughts')).toBeInTheDocument();
+    expect(screen.getByText('on Test Gallery')).toBeInTheDocument();
+    expect(screen.getByText('Test comment 1')).toBeInTheDocument();
+    expect(screen.getByText('Test comment 2')).toBeInTheDocument();
+    expect(screen.getByText('Test Author 1')).toBeInTheDocument();
+    expect(screen.getByText('Test Author 2')).toBeInTheDocument();
+    expect(
+      screen.getByText('January 1st, 2021 at 12:00 AM')
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText('January 2nd, 2021 at 12:00 AM')
+    ).toBeInTheDocument();
+  });
+
+  it('should not render comments if commentStatus is closed', async () => {
+    const galleryDataUpdated = {
+      ...galleryData,
+      gallery: {
+        ...galleryData.gallery,
+        commentStatus: 'closed',
+        commentCount: 2,
+        comments: [
+          {
+            id: 'comment01',
+            databaseId: 1,
+            status: CommentStatusEnum.Approve,
+            parentId: undefined,
+            date: '2021-01-01',
+            content: 'Test comment 1',
+            author: {
+              name: 'Test Author 1',
+              avatar: {
+                url: '/avatar01.jpg',
+                height: 100,
+                width: 100,
+              },
+            },
+          },
+        ],
+      },
+    } as GalleryObject;
+
+    jest
+      .spyOn(GalleriesService, 'getGalleryBySlug')
+      .mockResolvedValue(galleryDataUpdated);
+    jest
+      .spyOn(MediaItemsService, 'getMediaItemsById')
+      .mockResolvedValue(images);
+
+    await renderGallery();
+
+    expect(screen.queryByText('2 Thoughts')).toBeNull();
+    expect(screen.queryByText('Test comment 1')).toBeNull();
+    expect(screen.queryByTestId('post-comments')).toBeNull();
   });
 });
 

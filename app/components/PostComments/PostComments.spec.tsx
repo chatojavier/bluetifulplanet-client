@@ -3,8 +3,13 @@ import { render, screen } from '@testing-library/react';
 import useSWRInfinite, { SWRInfiniteResponse } from 'swr/infinite';
 import { Comment } from '@app/api/wp/comments/utils';
 import { CommentStatusEnum } from '@app/graphql/__generated__/graphql';
-import CommentsService from '@app/services/commentsService';
+import CommentsService, {
+  GetCommentsByPostIdReturn,
+} from '@app/services/commentsService';
 import userEvent from '@testing-library/user-event';
+import fetchData from '@app/utils/fetchData';
+import { ApiRoutes } from '@app/api/api.types';
+import { KeyedMutator } from 'swr';
 import PostComments from './PostComments';
 
 jest.mock('swr/infinite', () => {
@@ -24,6 +29,16 @@ jest.mock('@app/services/commentsService', () => {
     default: {
       getCommentsByPostId: jest.fn(),
       postCommentForm: jest.fn(),
+    },
+  };
+});
+
+jest.mock('@app/utils/fetchData', () => {
+  return {
+    __esModule: true,
+    default: {
+      get: jest.fn(),
+      post: jest.fn(),
     },
   };
 });
@@ -103,20 +118,16 @@ const mockPostId = '123';
 const mockInitialCommentCount = 1;
 const mockInitialComments: Comment[] = [mockComments[0]];
 
-const mockMutate = jest.fn();
 const mockSetSize = jest.fn();
 
-const mockData: SWRInfiniteResponse<{
-  comments: Comment[];
-  commentCount: number;
-}> = {
+const mockSWRData: SWRInfiniteResponse<GetCommentsByPostIdReturn> = {
   data: [
     {
       comments: mockComments,
       commentCount: mockCommentCount,
     },
   ],
-  mutate: mockMutate,
+  mutate: jest.fn(),
   isLoading: false,
   isValidating: false,
   size: 1,
@@ -136,9 +147,23 @@ describe('PostComments', () => {
       typeof CommentsService.postCommentForm
     >;
 
+  const mockUseSWRInfiniteReturnValue = (
+    mockReturnValue: SWRInfiniteResponse<{
+      comments: Comment[];
+      commentCount: number;
+    }>
+  ) =>
+    mockUseSWRInfinite.mockImplementation((getKey, callback) => {
+      const key = getKey(0, null);
+      if (callback) {
+        callback(key);
+      }
+      return mockReturnValue;
+    });
+
   beforeEach(() => {
     jest.clearAllMocks();
-    mockUseSWRInfinite.mockReturnValue(mockData);
+    mockUseSWRInfiniteReturnValue(mockSWRData);
 
     const scrollIntoViewMock = jest.fn();
     window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock;
@@ -158,11 +183,15 @@ describe('PostComments', () => {
       screen.getByText(`${mockCommentCount} Thoughts`)
     ).toBeInTheDocument();
     expect(screen.getByText(`on ${mockTitle}`)).toBeInTheDocument();
+    expect(fetchData.get).toHaveBeenCalledWith(
+      `${ApiRoutes.COMMENTS}/${mockPostId}?page=1`,
+      { cache: 'no-store' }
+    );
   });
 
   it('should render the initial comments', () => {
     const mockDataUpdated = {
-      ...mockData,
+      ...mockSWRData,
       data: [
         {
           comments: mockInitialComments,
@@ -170,7 +199,7 @@ describe('PostComments', () => {
         },
       ],
     };
-    mockUseSWRInfinite.mockReturnValue(mockDataUpdated);
+    mockUseSWRInfiniteReturnValue(mockDataUpdated);
     render(
       <PostComments
         title={mockTitle}
@@ -197,10 +226,56 @@ describe('PostComments', () => {
   });
 
   it('should call handleSubmitValid when submitting a comment form', async () => {
-    const createdComment = mockComments[1];
+    const createdComment = {
+      id: 'mock-comment-id-004',
+      databaseId: 4,
+      status: CommentStatusEnum.Approve,
+      author: {
+        name: 'Parent 3 Author Name',
+        avatar: {
+          url: 'https://www.example-parent-2.com/avatar.jpg',
+          width: 100,
+          height: 100,
+        },
+      },
+      content: 'Sample Parent 3 comment content',
+      date: '2021-01-04T00:00:00',
+      parentId: null,
+    };
+
     mockPostCommentForm.mockResolvedValue({
       createdComment,
     });
+
+    const mockNewCommentPayload = {
+      content: 'New comment',
+      author: 'John Doe',
+      authorEmail: 'john.doe@email.com',
+      authorUrl: 'https://www.example.com',
+    };
+
+    const currentComments = mockSWRData.data as GetCommentsByPostIdReturn[];
+    let mockMutateReturnValue = currentComments;
+
+    const mockMutate = jest.fn(
+      (
+        callback?: (
+          items: GetCommentsByPostIdReturn[]
+        ) => GetCommentsByPostIdReturn[],
+        // eslint-disable-next-line no-unused-vars
+        _opts?: Record<string, boolean>
+      ) => {
+        if (callback) {
+          mockMutateReturnValue = callback(currentComments);
+          return mockMutateReturnValue;
+        }
+
+        mockMutateReturnValue = currentComments;
+        return mockMutateReturnValue;
+      }
+    ) as unknown as KeyedMutator<GetCommentsByPostIdReturn[]>;
+
+    mockUseSWRInfiniteReturnValue({ ...mockSWRData, mutate: mockMutate });
 
     render(
       <PostComments
@@ -228,18 +303,19 @@ describe('PostComments', () => {
 
     expect(CommentsService.postCommentForm).toHaveBeenCalledWith(
       mockPostId,
-      {
-        content: 'New comment',
-        author: 'John Doe',
-        authorEmail: 'john.doe@email.com',
-        authorUrl: 'https://www.example.com',
-      },
+      mockNewCommentPayload,
       undefined
     );
-    expect(mockMutate).toHaveBeenCalledWith(
-      expect.any(Function),
-      expect.any(Object)
-    );
+    expect(mockMutate).toHaveBeenCalledWith(expect.any(Function), {
+      revalidate: false,
+    });
+    expect(mockMutateReturnValue).toEqual([
+      {
+        comments: [createdComment],
+        commentCount: currentComments?.[0].commentCount,
+      },
+      ...currentComments,
+    ]);
   });
 
   it('should call setSize when clicking the "Show more" button', async () => {
