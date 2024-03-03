@@ -7,7 +7,7 @@ import userEvent from '@testing-library/user-event';
 import useOnScreen from '@app/hooks/useOnScreen';
 import useWindowSize from '@app/hooks/useWindowSize';
 import { preload } from 'swr';
-import { DisplayOrientation } from '@app/types/general';
+import { Breakpoint, DisplayOrientation } from '@app/types/general';
 import MediaItemsService from '@app/services/MediaItemsService';
 import GalleryGrid from './GalleryGrid';
 
@@ -78,7 +78,7 @@ const swrMockReturnValue = {
 
 const windowSizeMock = {
   size: [1920, 1080] as [number, number],
-  breakpoint: 0,
+  breakpoint: Breakpoint.LG,
   windowOrientation: 'landscape' as DisplayOrientation,
   isMobile: false,
 };
@@ -98,7 +98,7 @@ describe('GalleryGrid', () => {
 
   beforeEach(() => {
     mockUseOnScreen.mockReturnValue([{ current: null }, false]);
-    mockUseWindowSize.mockReturnValue({ ...windowSizeMock, breakpoint: 0 });
+    mockUseWindowSize.mockReturnValue({ ...windowSizeMock });
   });
 
   afterEach(() => {
@@ -295,5 +295,15 @@ describe('GalleryGrid', () => {
         photosIdUpdated.slice(10)
       );
     });
+  });
+
+  it('should render the spinner when breaking point is undefined', () => {
+    mockUseWindowSize.mockReturnValue({
+      ...windowSizeMock,
+      breakpoint: undefined,
+    });
+    render(<GalleryGrid photosId={photosId} />);
+    expect(screen.getByTestId('spinner')).toBeInTheDocument();
+    expect(screen.queryByTestId('gallery-grid')).toBeNull();
   });
 });

@@ -6,6 +6,7 @@ import SiteService from '@app/services/SiteService';
 import { MenuLocationEnum } from '@app/graphql/__generated__/graphql';
 import { Metadata } from 'next';
 import PreventContextMenu from '@app/components/PreventContextMenu';
+import { PreloadOptions, preload } from 'react-dom';
 import { gilda, nunito, raleway } from './fonts';
 
 export const generateMetadata = async (): Promise<Metadata> => {
@@ -67,6 +68,11 @@ export default async function RootLayout({
 }) {
   const { mainMenu, language, socialMedia, disableContextMenu } =
     await getData();
+
+  preload('/blurImage.jpg', {
+    as: 'image',
+    fetchPriority: 'high',
+  } as unknown as PreloadOptions);
 
   return (
     <html
