@@ -37,7 +37,9 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  const [preloadImages, setPreloadImages] = useState<MediaItem[]>([]);
+  const [preloadImages, setPreloadImages] = useState<MediaItem[]>(
+    fallback.mediaItems
+  );
   const [scrollRef, isVisible] = useOnScreen({
     threshold: 0,
   });
@@ -133,7 +135,7 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
   );
 
   useEffect(() => {
-    const timeout = setTimeout(async () => {
+    const showNextPage = async () => {
       if (
         isVisible &&
         !isLoading &&
@@ -143,7 +145,8 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
       ) {
         await setSize(pageSize + 1);
       }
-    }, 100);
+    };
+    const timeout = setTimeout(showNextPage, 100);
     return () => clearTimeout(timeout);
   }, [breakpoint, data, isLoading, isVisible, pageSize, setSize, totalPages]);
 
@@ -163,56 +166,65 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
       }
     };
     runPreloadImages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageSize]);
 
   return (
-    <div className="gallery-grid" data-testid="gallery-grid">
-      <div className="flex mx-3 sm:gap-4 min-h-screen">
-        {columns.map((column, index) => (
-          <div
-            // eslint-disable-next-line react/no-array-index-key
-            key={index}
-            className="grid-column | flex flex-col flex-1 gap-4"
-          >
-            {column.map(
-              image =>
-                image.sourceUrl && (
-                  <GalleryImage
-                    key={image.id}
-                    src={image.sourceUrl}
-                    alt={image.altText || ''}
-                    width={image.mediaDetails?.width || 0}
-                    height={image.mediaDetails?.height || 0}
-                    sizes={imageSizes}
-                    placeholder="blur"
-                    blurDataURL="/blurImage.jpg"
-                    className="cursor-pointer"
-                    onClick={() => handleGalleryImageClick(image)}
-                  />
-                )
-            )}
+    <>
+      {breakpoint ? (
+        <div className="gallery-grid" data-testid="gallery-grid">
+          <div className="flex mx-3 sm:gap-4 min-h-screen">
+            {columns.map((column, index) => (
+              <div
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
+                className="grid-column | flex flex-col flex-1 gap-4"
+              >
+                {column.map(
+                  image =>
+                    image.sourceUrl && (
+                      <GalleryImage
+                        key={image.id}
+                        src={image.sourceUrl}
+                        alt={image.altText || ''}
+                        width={image.mediaDetails?.width || 0}
+                        height={image.mediaDetails?.height || 0}
+                        sizes={imageSizes}
+                        placeholder="blur"
+                        blurDataURL="/blurImage.jpg"
+                        className="cursor-pointer"
+                        onClick={() => handleGalleryImageClick(image)}
+                      />
+                    )
+                )}
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      {(data?.length || 0) < totalPages &&
-        (isLoadingMore ? (
-          <Spinner size="sm" className="mx-auto !block my-8" />
-        ) : (
-          <div className="mx-auto my-8 p-4" />
-        ))}
-      {(!isLoadingMore || breakpoint || columns.length > 0) && (
-        <span ref={scrollRef} data-testid="observable-element" />
+          {(data?.length || 0) < totalPages &&
+            (isLoadingMore ? (
+              <Spinner size="sm" className="mx-auto !block my-8" />
+            ) : (
+              <div className="mx-auto my-8 p-4" />
+            ))}
+          {(!isLoadingMore || columns.length > 0) && (
+            <span ref={scrollRef} data-testid="observable-element" />
+          )}
+          <GalleryModal
+            imageData={notNestedDataArray[currentImageIndex]}
+            open={isOpen}
+            onClose={() => setIsOpen(false)}
+            onPrev={() => handlePrevNext('prev')}
+            onNext={() => handlePrevNext('next')}
+            loading={isLoadingMore && !notNestedDataArray[currentImageIndex]}
+            hasPrev={currentImageIndex > 0}
+            hasNext={currentImageIndex < (notNestedDataArray?.length || 0) - 1}
+          />
+        </div>
+      ) : (
+        <div className="spinner-wrapper | h-[calc(100vh-3rem)] w-full flex justify-center items-center">
+          <Spinner size="md" />
+        </div>
       )}
-      <GalleryModal
-        imageData={notNestedDataArray[currentImageIndex]}
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-        onPrev={() => handlePrevNext('prev')}
-        onNext={() => handlePrevNext('next')}
-        loading={isLoadingMore && !notNestedDataArray[currentImageIndex]}
-        hasPrev={currentImageIndex > 0}
-        hasNext={currentImageIndex < (notNestedDataArray?.length || 0) - 1}
-      />
       <div className="preload-images | hidden">
         {preloadImages.map(image =>
           image.sourceUrl ? (
@@ -228,7 +240,7 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
           ) : null
         )}
       </div>
-    </div>
+    </>
   );
 };
 

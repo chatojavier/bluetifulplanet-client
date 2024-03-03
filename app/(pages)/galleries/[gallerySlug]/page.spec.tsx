@@ -144,19 +144,19 @@ describe('Gallery component', () => {
         pageProps.params.gallerySlug
       );
       expect(
-        screen.getByAltText(images.mediaItems[0].altText as string)
+        screen.getAllByAltText(images.mediaItems[0].altText as string)[0]
       ).toBeInTheDocument();
       expect(
-        screen.getByAltText(images.mediaItems[1].altText as string)
+        screen.getAllByAltText(images.mediaItems[1].altText as string)[0]
       ).toBeInTheDocument();
       expect(
-        screen.getByAltText(images.mediaItems[2].altText as string)
+        screen.getAllByAltText(images.mediaItems[2].altText as string)[0]
       ).toBeInTheDocument();
       expect(
-        screen.getByAltText(images.mediaItems[3].altText as string)
+        screen.getAllByAltText(images.mediaItems[3].altText as string)[0]
       ).toBeInTheDocument();
       expect(
-        screen.getByAltText(images.mediaItems[4].altText as string)
+        screen.getAllByAltText(images.mediaItems[4].altText as string)[0]
       ).toBeInTheDocument();
     });
   });
