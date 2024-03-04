@@ -14,11 +14,11 @@ import { Breakpoint } from '@app/types/general';
 import { MediaItem } from '@app/api/wp/media-items/utils';
 import MediaItemsService from '@app/services/MediaItemsService';
 import { preload } from 'swr';
-import NextImage from 'next/image';
 import Spinner from '../Spinner/Spinner';
 import { getItemsPerPage, concatColumns, concatNestedArray } from './utils';
 import GalleryImage from '../GalleryImage/GalleryImage';
 import GalleryModal from '../GalleryModal/GalleryModal';
+import PreloadImages from './PreloadImages';
 
 export type ImageResponse = {
   mediaItems: MediaItem[];
@@ -225,21 +225,12 @@ const GalleryGrid: FunctionComponent<GalleryGridProps> = ({
           <Spinner size="md" />
         </div>
       )}
-      <div className="preload-images | hidden">
-        {preloadImages.map(image =>
-          image.sourceUrl ? (
-            <NextImage
-              key={image.id}
-              src={image.sourceUrl}
-              alt={image.altText || ''}
-              width={image.mediaDetails?.width || 0}
-              height={image.mediaDetails?.height || 0}
-              sizes={imageSizes}
-              priority
-            />
-          ) : null
-        )}
-      </div>
+      <PreloadImages
+        gridImages={preloadImages}
+        imageSizes={imageSizes}
+        notNestedDataArray={notNestedDataArray}
+        currentImageIndex={currentImageIndex}
+      />
     </>
   );
 };
