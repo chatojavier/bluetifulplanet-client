@@ -17,6 +17,7 @@ describe('postContactForm', () => {
     message: 'Hello world',
     source: 'test',
     system: 'test',
+    formId: '1',
   };
 
   const MOCK_RESPONSE: ContactFormReturn = {

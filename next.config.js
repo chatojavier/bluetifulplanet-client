@@ -5,6 +5,7 @@ const nextConfig = {
     WORDPRESS_HOST: process.env.WORDPRESS_HOST,
     MENU_BAR_LOCATION: process.env.MENU_BAR_LOCATION,
     IMAGE_FOLDER_URL: process.env.IMAGE_FOLDER_URL,
+    CONTACT_FORMID: process.env.CONTACT_FORMID,
   },
   images: {
     domains: [

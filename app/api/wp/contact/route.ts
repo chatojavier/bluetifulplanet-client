@@ -4,9 +4,10 @@ import postContactForm, { ContactFormData } from './service';
 
 export async function POST(req: NextRequest) {
   const body: ContactFormData = await req.json();
+  const host = req.headers.get('host');
 
   try {
-    const data = await postContactForm(body);
+    const data = await postContactForm(body, host);
 
     if (!data) {
       throw new Error('Failed to load data');
@@ -17,9 +18,8 @@ export async function POST(req: NextRequest) {
     // eslint-disable-next-line no-console
     console.error('[api/wp/contact] error ', error);
 
-    return new Response(JSON.stringify(error), {
+    return NextResponse.json(error, {
       status: 500,
-      statusText: 'Server Error',
     });
   }
 }

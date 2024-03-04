@@ -1,5 +1,6 @@
 'use client';
 
+import { ContactFormData } from '@app/api/wp/contact/service';
 import ButtonSquare from '@app/components/ButtonSquare/ButtonSquare';
 import InputText from '@app/components/InputText/InputText';
 import InputTextArea from '@app/components/InputTextArea';
@@ -17,11 +18,8 @@ enum InputLabel {
   MESSAGE = 'message',
 }
 
-export type ContactFormOutput = {
-  [key in InputLabel]: string;
-};
-
 const ContactForm: FunctionComponent = () => {
+  const formId = process.env.CONTACT_FORMID;
   const [message, setMessage] = useState('');
   const [isServerError, setIsServerError] = useState(false);
   const {
@@ -29,7 +27,7 @@ const ContactForm: FunctionComponent = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<ContactFormOutput>();
+  } = useForm<ContactFormData>();
 
   const { os, browser } = useOSAndBrowserInfo();
   const pathname = usePathname();
@@ -39,15 +37,23 @@ const ContactForm: FunctionComponent = () => {
     email: 'The email format is wrong',
   };
 
-  const onSubmit: SubmitHandler<ContactFormOutput> = async data => {
+  const onSubmit: SubmitHandler<ContactFormData> = async data => {
     setMessage('');
     const payload = {
       ...data,
       system: `OS: ${os}; Browser: ${browser};`,
       source: pathname ?? '',
+      formId,
     };
+
     try {
-      const res = await ContactService.postContactForm(payload);
+      if (!payload.formId) {
+        throw new Error('Form ID is not defined');
+      }
+
+      const res = await ContactService.postContactForm(
+        payload as ContactFormData
+      );
 
       if (res.message) {
         if (res.status === 'mail_sent') {
@@ -65,7 +71,7 @@ const ContactForm: FunctionComponent = () => {
   };
 
   return (
-    <form className="md:w-1/2" onSubmit={handleSubmit(onSubmit)}>
+    <form className="md:w-1/2" onSubmit={handleSubmit(onSubmit)} id={formId}>
       <div className="form-inputs | flex flex-col gap-4 mb-6">
         <InputText
           {...register(InputLabel.NAME, { required: errorMessages.required })}
