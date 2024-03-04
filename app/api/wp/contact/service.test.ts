@@ -17,6 +17,7 @@ describe('postContactForm', () => {
     message: 'Hello world',
     source: 'test',
     system: 'test',
+    formId: '1',
   };
 
   const MOCK_RESPONSE: ContactFormReturn = {
@@ -39,8 +40,16 @@ describe('postContactForm', () => {
     await postContactForm(MOCK_FORM_DATA);
 
     expect(mockFetchDataPost).toHaveBeenCalledWith(
-      `${process.env.WORDPRESS_HOST}${ApiRoutes.CONTACT_FORM}/${process.env.CONTACT_FORMID}/feedback`,
-      MOCK_FORM_DATA
+      `${process.env.WORDPRESS_HOST}${ApiRoutes.CONTACT_FORM}/${MOCK_FORM_DATA.formId}/feedback`,
+      expect.any(FormData),
+      {
+        headers: {
+          Accept: 'application/json',
+          Authorization: `Basic ${Buffer.from(
+            `${process.env.WP_REST_API_USER}:${process.env.WP_REST_API_PASS}`
+          ).toString('base64')}`,
+        },
+      }
     );
   });
 

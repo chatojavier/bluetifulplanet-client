@@ -5,7 +5,17 @@ export type CustomInit = Omit<RequestInit, 'next'> & NextFetchRequestConfig;
 
 const post = async <T = unknown>(
   url: string,
-  body: Record<string, unknown>,
+  body:
+    | Record<string, unknown>
+    | string
+    | FormData
+    | URLSearchParams
+    | Blob
+    | ArrayBufferView
+    | ArrayBuffer
+    | ReadableStream<Uint8Array>
+    | null
+    | undefined,
   init?: CustomInit
 ) => {
   const { headers, ...rest } = init || {};
@@ -15,7 +25,7 @@ const post = async <T = unknown>(
     headers: headers ?? {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(body),
+    body: body instanceof FormData ? body : JSON.stringify(body),
     ...rest,
   });
 

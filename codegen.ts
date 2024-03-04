@@ -3,8 +3,8 @@ import { ApiRoutes } from './app/api/api.types';
 
 const host = process.env.WORDPRESS_HOST;
 const endpoint = ApiRoutes.GRAPHQL;
-const username = process.env.WP_REST_API_USER;
-const password = process.env.WP_REST_API_PASS;
+const username = process.env.WP_GRAPHQL_USER;
+const password = process.env.WP_GRAPHQL_PASS;
 const authPair = `${username}:${password}`;
 
 const config: CodegenConfig = {
