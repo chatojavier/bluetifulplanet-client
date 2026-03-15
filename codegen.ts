@@ -1,5 +1,8 @@
 import { CodegenConfig } from '@graphql-codegen/cli';
+import { loadEnvConfig } from '@next/env';
 import { ApiRoutes } from './app/api/api.types';
+
+loadEnvConfig(process.cwd(), process.env.NODE_ENV !== 'production');
 
 const host = process.env.WORDPRESS_HOST;
 const endpoint = ApiRoutes.GRAPHQL;
